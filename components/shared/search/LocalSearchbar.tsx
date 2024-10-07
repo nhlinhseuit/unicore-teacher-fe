@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -23,7 +23,7 @@ const LocalSearchbar = ({
     <div
       className={`
   background-light800_darkgradient flex min-h-[56px]
-  grow items-center gap-4 rounded-[10px] px-4
+  grow items-center gap-4 rounded-[10px] px-4 max-md:hidden
   ${otherClasses}`}
     >
       {iconPosition === "left" && (
@@ -45,13 +45,14 @@ const LocalSearchbar = ({
         shadow-none outline-none border-none truncate"
       />
       {iconPosition === "right" && (
-        <Image
-          src={imgSrc}
-          alt="search icon"
-          width={24}
-          height={24}
-          className="cursor-pointer"
-        />
+        <div className="cursor-pointer bg-primary-500 min-h-[56px] flex items-center px-4 translate-x-4 rounded-tr-[10px] rounded-br-[10px]">
+          <Image
+            src={imgSrc}
+            alt="search icon"
+            width={24}
+            height={24}
+          />
+        </div>
       )}
     </div>
   );
