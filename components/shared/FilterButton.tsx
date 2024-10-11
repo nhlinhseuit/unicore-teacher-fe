@@ -1,10 +1,9 @@
 import React from "react";
 import Image from "next/image";
 
-
 const FilterButton = () => {
   return (
-    <div className="flex-between gap-2 paragraph-semibold">
+    <div className="flex-center gap-2 paragraph-semibold max-lg:hidden cursor-pointer">
       <Image
         src={"/assets/icons/filter.svg"}
         width={22}

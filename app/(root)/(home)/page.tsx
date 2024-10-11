@@ -6,8 +6,11 @@ import IconButton from "@/components/shared/IconButton";
 import NoResult from "@/components/shared/NoResult";
 import PureButton from "@/components/shared/PureButton";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
+import DataTable from "@/components/shared/Table/DataTable";
+import SimpleDataTable from "@/components/shared/Table/UnicoreTable/SimpleDataTable";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
+import FORMATTER from "@/utils/formatter";
 import Link from "next/link";
 
 const questions = [
@@ -53,26 +56,27 @@ const Home = () => {
     <>
       <div
         className="
-      flex w-full justify-between gap-6 sm:flex-row sm:items-center"
+      flex w-full gap-6 sm:flex-row sm:items-center justify-between"
       >
-        <h1 className="h1-bold text-dark100_light900">SE - UIT</h1>
+        <div className="flex-center">
+          <LocalSearchbar
+            route="/"
+            iconPosition="right"
+            imgSrc="/assets/icons/search.svg"
+            placeholder="Tìm kiếm thông báo"
+            otherClasses="flex-1 mr-6"
+          />
 
-        <LocalSearchbar
-          route="/"
-          iconPosition="right"
-          imgSrc="/assets/icons/search.svg"
-          placeholder="Tìm kiếm thông báo"
-          otherClasses="flex-1"
-        />
+          <FilterButton />
+        </div>
 
-        <FilterButton />
-
-        <Link href="/ask-question" className="flex justify-end max-sm:w-full">
+        <Link href="/create-announcement">
           <IconButton text="Tạo thông báo" />
         </Link>
       </div>
 
       <div className="mt-10 flex w-full flex-col gap-6">
+
         {questions.length > 0 ? (
           questions.map((question) => (
             <QuestionCard

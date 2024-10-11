@@ -22,8 +22,9 @@ const LocalSearchbar = ({
   return (
     <div
       className={`
-  background-light800_darkgradient flex min-h-[56px]
-  grow items-center gap-4 rounded-[10px] px-4 max-md:hidden
+  background-light800_darkgradient flex h-[50px]
+  grow items-center gap-4 rounded-[10px] px-4 max-sm:hidden hover:shadow-sm
+  max-w-[600px]
   ${otherClasses}`}
     >
       {iconPosition === "left" && (
@@ -45,7 +46,7 @@ const LocalSearchbar = ({
         shadow-none outline-none border-none truncate"
       />
       {iconPosition === "right" && (
-        <div className="cursor-pointer bg-primary-500 min-h-[56px] flex items-center px-4 translate-x-4 rounded-tr-[10px] rounded-br-[10px]">
+        <div className="cursor-pointer bg-primary-500 h-[50px] flex items-center px-4 translate-x-4 rounded-tr-[10px] rounded-br-[10px]">
           <Image
             src={imgSrc}
             alt="search icon"

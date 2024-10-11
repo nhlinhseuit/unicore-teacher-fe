@@ -120,15 +120,15 @@
   }
 
   .base-medium {
-    @apply text-[18px] font-medium leading-[25.2px];
+    @apply text-[16px] font-medium leading-[25.2px];
   }
 
   .base-semibold {
-    @apply text-[18px] font-semibold leading-[25.2px];
+    @apply text-[16px] font-semibold leading-[25.2px];
   }
 
   .base-bold {
-    @apply text-[18px] font-bold leading-[140%];
+    @apply text-[16px] font-bold leading-[140%];
   }
 
   .paragraph-regular {

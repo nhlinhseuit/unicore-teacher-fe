@@ -73,7 +73,7 @@ const LeftSideBar = () => {
                   isActive
                     ? "primary-gradient rounded-lg text-light-900"
                     : "text-dark300_light900"
-                }  flex items-center justify-start gap-4 
+                }  flex items-center justify-start gap-4
                   max-lg:w-[52px]
                   bg-transparent px-4 py-2`}
               >
