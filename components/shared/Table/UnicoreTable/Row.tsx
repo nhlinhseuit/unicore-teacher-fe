@@ -79,6 +79,7 @@ const Row = (params: RowParams) => {
               <input
                 type="checkbox"
                 checked={value as boolean}
+                onChange={() => {}}
                 className="w-4 h-4"
               />
             ) : (isEdit || params.isEditTable) ? (
