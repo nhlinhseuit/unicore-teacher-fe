@@ -15,27 +15,25 @@ interface MoreButtonParams {
 
 const MoreButtonComponent = (params: MoreButtonParams) => {
   return (
-    <Menubar className="relative border-none bg-transparent shadow-none">
+    <Menubar className="relative border-none bg-transparent shadow-none z-100">
       <MenubarMenu>
         <MenubarTrigger
           className="
-        focus:bg-light-900 
-        data-[state=open]:bg-light-900 
-        dark:focus:bg-dark-200
-        dark:data-[state=open]:bg-dark-200 "
+         w-10 h-10"
         >
           <Image
             src="/assets/icons/more.svg"
             alt="edit"
-            width={30}
-            height={30}
+            width={40}
+            height={40}
             className="cursor-pointer"
           />
         </MenubarTrigger>
 
         <MenubarContent
           className="
-        absolute right-[-3rem] mt-0 min-w-[120px] rounded border py-2 bg-white 
+        -translate-y-2
+        absolute right-[-3rem] mt-0 min-w-[120px] rounded border py-2 bg-white  
         dark:border-dark-400 dark:bg-dark-300"
         >
           {TableDataMoreComponentItems.map((item) => (

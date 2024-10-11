@@ -99,7 +99,7 @@ export function Row<T>({
               {/* <Button btnType="secondary">
               <HiOutlineDotsVertical className=" w-4 h-4" />
             </Button> */}
-              <PureButton text="HiOutlineDotsVertical" />
+              <PureButton text="HiOutlineDotsVertical" onClick={() => {}}/>
             </div>
           )}
           dismissOnClick={false}

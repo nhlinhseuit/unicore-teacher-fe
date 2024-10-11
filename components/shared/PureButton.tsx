@@ -4,18 +4,20 @@ import Image from "next/image";
 
 interface Props {
   text: string;
+  onClick: () => void;
   icon?: string;
   otherClasses?: string;
 }
 
-const PureButton = ({ icon, text, otherClasses }: Props) => {
+const PureButton = (params: Props) => {
   return (
     <Button
+      onClick={params.onClick}
       className="primary-gradient min-h-[56px] 
             px-4 py-3 !text-light-900 rounded-[10px]
           "
     >
-      Tạo thông báo
+      {params.text}
     </Button>
   );
 };
