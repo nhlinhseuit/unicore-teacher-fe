@@ -1,16 +1,11 @@
+"use client";
+
 import QuestionCard from "@/components/cards/QuestionCard";
-import HomeFilters from "@/components/home/HomeFilters";
-import Filter from "@/components/shared/Filter";
 import FilterButton from "@/components/shared/FilterButton";
 import IconButton from "@/components/shared/IconButton";
 import NoResult from "@/components/shared/NoResult";
-import PureButton from "@/components/shared/PureButton";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
-import DataTable from "@/components/shared/Table/DataTable";
-import SimpleDataTable from "@/components/shared/Table/UnicoreTable/CoursesDataTable";
-import { Button } from "@/components/ui/button";
-import { HomePageFilters } from "@/constants/filters";
-import FORMATTER from "@/utils/formatter";
+import TabsComponent from "@/components/shared/TabsComponent";
 import Link from "next/link";
 
 const questions = [
@@ -54,6 +49,8 @@ const questions = [
 const Home = () => {
   return (
     <>
+      <TabsComponent type="courses" />
+
       <div
         className="
       flex w-full gap-6 sm:flex-row sm:items-center justify-between"

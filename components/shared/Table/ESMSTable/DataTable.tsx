@@ -7,7 +7,7 @@ import { Row } from "./Row";
 
 export default function DataTable<T extends Object & BaseEntity>({
   data,
-//   entityType,
+  //   entityType,
   isLoading = false,
   pick,
   className,
@@ -93,7 +93,7 @@ export const tableTheme: CustomFlowbiteTheme["table"] = {
 
 type PropTypes<T> = {
   data: [];
-//   entityType?: EntityType;
+  //   entityType?: EntityType;
   isLoading?: boolean;
   onEdit?: (product: T) => any;
   onDelete?: (product: T) => any;
