@@ -5,13 +5,18 @@ import { useState } from "react";
 import * as XLSX from "xlsx";
 import { SubjectDataItem } from "@/types";
 import DataTable from "./DataTable";
+import ErrorComponent from "../Status/ErrorComponent";
 
 export default function SubjectsDataTable() {
   const [isEditTable, setIsEditTable] = useState(false);
   const [dataTable, setDataTable] = useState<SubjectDataItem[]>([]);
+  const [errorMessages, setErrorMessages] = useState<string[]>([]);
 
   // XỬ LÝ UPLOAD FILE MÔN HỌC
   const handleCoursesFileUpload = (e: any) => {
+    setErrorMessages([]);
+    setDataTable([]);
+
     const reader = new FileReader();
     reader.readAsArrayBuffer(e.target.files[0]);
     reader.onload = (e) => {
@@ -19,17 +24,17 @@ export default function SubjectsDataTable() {
       const workbook = XLSX.read(data, { type: "binary" });
       const sheetName = workbook.SheetNames[0];
       const sheet = workbook.Sheets[sheetName];
-      // const parsedData = XLSX.utils.sheet_to_json(sheet);
-
       // Bỏ 5 dòng đầu của tên file
       const parsedData = XLSX.utils.sheet_to_json(sheet, {
         range: 5, // Chỉ số 5 đại diện cho hàng 6 (vì index bắt đầu từ 0)
+        defval: "",
       });
 
-      const transformedData = parsedData.map((item: any) => ({
-        type: "subject",
-        STT: item.STT,
-        data: {
+      let errorMessages: string[] = [];
+
+      const transformedData = parsedData.map((item: any, index: number) => {
+        // Kiểm tra các trường quan trọng (required fields)
+        const requiredFields = {
           "Khoa QL": item["Khoa QL"],
           "Mã MH": item["Mã MH"],
           "Hình thức thi LT GIỮA KỲ": item["Hình thức thi\r\nLT GIỮA KỲ"],
@@ -37,7 +42,7 @@ export default function SubjectsDataTable() {
           "Hình thức thi LT CUỐI KỲ": item["Hình thức thi\r\nLT CUỐI KỲ"],
           "Thời gian thi CUỐI KỲ": item["Thời gian thi\r\nCUỐI KỲ"],
           "Hình thức thi THỰC HÀNH CUỐI KỲ":
-            item["Hình thức thi THỰC HÀNH CUỐI KỲ"],
+            item["Hình thức thi \r\nTHỰC HÀNH CUỐI KỲ"],
           "Trọng số QUÁ TRÌNH": item["Trọng số\r\nQUÁ TRÌNH"],
           "Trọng số THỰC HÀNH": item["Trọng số\r\nTHỰC HÀNH"],
           "Trọng số GIỮA KỲ": item["Trọng số\r\nGIỮA KỲ"],
@@ -47,42 +52,104 @@ export default function SubjectsDataTable() {
           "Học kỳ": item["Học kỳ"],
           "Năm học": item[" Năm học"],
           "Tên môn học": item["Tên Môn học"],
-        },
-      }));
+        };
 
-      setDataTable(transformedData as []);
+        // Lặp qua các trường để kiểm tra nếu có giá trị undefined
+        if (index === 0) {
+          Object.entries(requiredFields).forEach(([fieldName, value]) => {
+            if (value === undefined) {
+              errorMessages.push(`Trường "${fieldName}" bị thiếu hoặc lỗi.`);
+            }
+          });
+        }
+
+        return {
+          type: "subject",
+          STT: item.STT,
+          data: {
+            "Khoa QL": item["Khoa QL"],
+            "Mã MH": item["Mã MH"],
+            "Hình thức thi LT GIỮA KỲ": item["Hình thức thi\r\nLT GIỮA KỲ"],
+            "Thời gian thi LT GIỮA KỲ": item["Thời gian thi\r\nLT GIỮA KỲ"],
+            "Hình thức thi LT CUỐI KỲ": item["Hình thức thi\r\nLT CUỐI KỲ"],
+            "Thời gian thi CUỐI KỲ": item["Thời gian thi\r\nCUỐI KỲ"],
+            "Hình thức thi THỰC HÀNH CUỐI KỲ":
+              item["Hình thức thi \r\nTHỰC HÀNH CUỐI KỲ"],
+            "Trọng số QUÁ TRÌNH": item["Trọng số\r\nQUÁ TRÌNH"],
+            "Trọng số THỰC HÀNH": item["Trọng số\r\nTHỰC HÀNH"],
+            "Trọng số GIỮA KỲ": item["Trọng số\r\nGIỮA KỲ"],
+            "Trọng số CUỐI KỲ": item["Trọng số\r\nCUỐI KỲ"],
+            "Hệ ĐT": item["Hệ ĐT"],
+            "Lớp CDIO": item["Lớp\r\nCDIO"],
+            "Học kỳ": item["Học kỳ"],
+            "Năm học": item[" Năm học"],
+            "Tên môn học": item["Tên Môn học"],
+          },
+        };
+      });
+
+      if (errorMessages.length > 0) {
+        setErrorMessages(errorMessages);
+      } else {
+        setDataTable(transformedData as []);
+      }
     };
   };
 
   return (
     <div>
+      {errorMessages.length > 0 && (
+        <div className="mb-6">
+          {errorMessages.map((item, index) => (
+            <ErrorComponent
+              text={item}
+              onClickClose={() => {
+                setErrorMessages((prevErrors) =>
+                  prevErrors.filter((_, i) => i !== index)
+                );
+              }}
+            />
+          ))}
+        </div>
+      )}
+
       <input
         type="file"
         accept=".xlsx, .xls"
         onChange={handleCoursesFileUpload}
       />
 
-      <div className="flex justify-end gap-4 mb-5 items-center">
-        <p>Để scroll ngang, nhấn nút Shift và cuộn chuột</p>
-        <PureButton
-          text="Chỉnh sửa"
-          onClick={() => {
-            setIsEditTable(true);
-          }}
-        />
-        <PureButton
-          text="Lưu"
-          onClick={() => {
-            setIsEditTable(false);
+      <a
+        href="/assets/KLTN - Mẫu thông tin môn học.xlsx"
+        download
+        className="text-blue-500 underline"
+      >
+        Tải xuống template file import môn học
+      </a>
 
-            // API post data lên server
-          }}
-        />
-      </div>
+      {dataTable.length > 0 && (
+        <>
+          <div className="flex justify-end gap-4 mb-5 items-center">
+            <p>Để scroll ngang, nhấn nút Shift và cuộn chuột</p>
+            <PureButton
+              text="Chỉnh sửa"
+              onClick={() => {
+                setIsEditTable(true);
+              }}
+            />
+            <PureButton
+              text="Lưu"
+              onClick={() => {
+                setIsEditTable(false);
 
-      {/* {JSON.stringify(dataTable)} */}
+                // API post data lên server
+              }}
+            />
+          </div>
 
-      <DataTable dataTable={dataTable} isEditTable={isEditTable} />
+          <DataTable dataTable={dataTable} isEditTable={isEditTable} />
+        </>
+      )}
     </div>
   );
 }
