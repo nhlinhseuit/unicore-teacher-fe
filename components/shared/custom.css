@@ -1,0 +1,12 @@
+.custom-tabs-title {
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 2px solid transparent; /* Thiết lập border trong suốt khi chưa active */
+  }
+  
+  .custom-tabs-title-active {
+    border-bottom: 2px solid red; /* Khi tab active, thêm border-bottom màu đỏ */
+  }
+  

@@ -7,7 +7,7 @@ import NoResult from "@/components/shared/NoResult";
 import PureButton from "@/components/shared/PureButton";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import DataTable from "@/components/shared/Table/DataTable";
-import SimpleDataTable from "@/components/shared/Table/UnicoreTable/SimpleDataTable";
+import SimpleDataTable from "@/components/shared/Table/UnicoreTable/CoursesDataTable";
 import { Button } from "@/components/ui/button";
 import { HomePageFilters } from "@/constants/filters";
 import FORMATTER from "@/utils/formatter";
@@ -76,7 +76,6 @@ const Home = () => {
       </div>
 
       <div className="mt-10 flex w-full flex-col gap-6">
-
         {questions.length > 0 ? (
           questions.map((question) => (
             <QuestionCard

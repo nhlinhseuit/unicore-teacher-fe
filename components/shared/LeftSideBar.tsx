@@ -26,7 +26,7 @@ const LeftSideBar = () => {
     left-0
     top-0
     border-r
-    pt-6
+    pt-4
     shadow-light-300
     dark:shadow-none
     custom-scrollbar
@@ -34,7 +34,7 @@ const LeftSideBar = () => {
     "
     >
       {/* LOGO */}
-      <div className="px-6 mt-4 mb-2 ml-2">
+      <div className="px-6 mb-2 ml-2">
         <Link href="/" className="flex items-center gap-1">
           <Image
             src={"/assets/images/site-logo.svg"}
@@ -63,8 +63,6 @@ const LeftSideBar = () => {
             pathName === item.route;
 
           if (item.route !== "/profile") {
-            console.log(item.route);
-
             return (
               <Link
                 href={item.route}

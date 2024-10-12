@@ -64,7 +64,6 @@ const MoreButtonComponent = (params: MoreButtonParams) => {
                     ? params.handleEdit
                     : item.value === "delete"
                     ? () => {
-                        console.log("setIsShowDialog");
                         setIsShowDialog(true);
                       }
                     : undefined
