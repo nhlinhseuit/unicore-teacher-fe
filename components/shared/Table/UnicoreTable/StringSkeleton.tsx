@@ -4,8 +4,8 @@ import { motion } from "framer-motion";
 
 export default function StringSkeleton({
     className = "",
-    from = 300,
-    to = 400,
+    from = 80,
+    to = 200,
 }: {
     className?: string;
     from?: number;
@@ -13,8 +13,8 @@ export default function StringSkeleton({
 }) {
     return (
         <motion.div
-            className={`h-9 ${className} bg-secondary-100`}
-            initial={{ width: 0 }}
+            className={`h-6 ${className} background-light800_darkgradient rounded-md`}
+            initial={{ width: 60 }}
             animate={{
                 width: Math.floor(Math.random() * (to - from) + from),
             }}

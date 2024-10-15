@@ -6,27 +6,19 @@ import { Button } from "../ui/button";
 interface Props {
   title: string;
   description: string;
-  link: string;
-  linkTitle: string;
+  link?: string;
+  linkTitle?: string;
 }
 
 const NoResult = ({ title, description, link, linkTitle }: Props) => {
   return (
     <div className="mt-10 flex w-full flex-col items-center justify-center">
       <Image
-        src="/assets/images/light-illustration.png"
+        src="/assets/images/no_data.svg"
         alt="No reuslt illustration"
-        width={270}
-        height={270}
+        width={300}
+        height={300}
         className="block object-contain dark:hidden"
-      />
-
-      <Image
-        src="/assets/images/dark-illustration.png"
-        alt="No reuslt illustration"
-        width={270}
-        height={270}
-        className="hidden object-contain dark:flex"
       />
 
       <h2 className="h2-bold text-dark200_light900 mt-8">{title}</h2>
@@ -34,11 +26,13 @@ const NoResult = ({ title, description, link, linkTitle }: Props) => {
         {description}
       </p>
 
-      <Link href={link}>
-        <Button className="paragraph-medium mt-5 min-h-[46px] rounded-lg bg-primary-500 px-4 py-3 text-light-900 hover:bg-primary-500 dark:bg-primary-500 dark:text-light-900">
-          {linkTitle}
-        </Button>
-      </Link>
+      {link && linkTitle && (
+        <Link href={link}>
+          <Button className="paragraph-medium mt-5 min-h-[46px] rounded-lg bg-primary-500 px-4 py-3 text-light-900 hover:bg-primary-500 dark:bg-primary-500 dark:text-light-900">
+            {linkTitle}
+          </Button>
+        </Link>
+      )}
     </div>
   );
 };

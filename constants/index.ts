@@ -1,5 +1,32 @@
 import { SidebarLink } from "@/types";
 
+export enum FilterType {
+  Sort,
+  DetailFilter,
+  None,
+}
+
+export enum DetailFilter {
+  Semester,
+  Year,
+  Subject,
+  Teacher
+}
+
+export const FilterTable = [
+  { type: "sort" },
+  {
+    type: "detailFilter",
+    data: [
+      { type: "semester" },
+      { type: "year" },
+      { type: "subject" },
+      { type: "teacher" },
+    ],
+  },
+];
+
+
 export const themes = [
   { value: "light", label: "Light", icon: "/assets/icons/sun.svg" },
   { value: "dark", label: "Dark", icon: "/assets/icons/moon.svg" },

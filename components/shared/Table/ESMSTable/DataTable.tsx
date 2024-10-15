@@ -2,7 +2,7 @@
 
 import BaseEntity from "@/types/entity/BaseEntity";
 import { CustomFlowbiteTheme, Table } from "flowbite-react";
-import TableSketon from "./TableSkeleton";
+import TableSketon from "../UnicoreTable/TableSkeleton";
 import { Row } from "./Row";
 
 export default function DataTable<T extends Object & BaseEntity>({

@@ -1,19 +1,24 @@
 "use client";
 
-import PureButton from "../../PureButton";
+import IconButton from "../../IconButton";
 import { useState } from "react";
 import * as XLSX from "xlsx";
 import { CourseDataItem } from "@/types";
 import DataTable from "./DataTable";
 import ErrorComponent from "../Status/ErrorComponent";
+import TableSkeleton from "./TableSkeleton";
+import NoResult from "../../NoResult";
 
 export default function CoursesDataTable() {
   const [isEditTable, setIsEditTable] = useState(false);
+  const [isMultipleDelete, setIsMultipleDelete] = useState(false);
   const [dataTable, setDataTable] = useState<CourseDataItem[]>([]);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // XỬ LÝ UPLOAD FILE LỚP HỌC
   const handleCoursesFileUpload = (e: any) => {
+    setIsLoading(true);
     setErrorMessages([]);
     setDataTable([]);
 
@@ -83,6 +88,8 @@ export default function CoursesDataTable() {
       } else {
         setDataTable(transformedData as []);
       }
+
+      setIsLoading(false);
     };
   };
 
@@ -117,28 +124,40 @@ export default function CoursesDataTable() {
         Tải xuống template file import lớp học
       </a>
 
-      {dataTable.length > 0 && (
+      {isLoading ? (
+        <TableSkeleton />
+      ) : dataTable.length > 0 ? (
         <>
           <div className="flex justify-end gap-4 mb-5 items-center">
             <p>Để scroll ngang, nhấn nút Shift và cuộn chuột</p>
-            <PureButton
-              text="Chỉnh sửa"
-              onClick={() => {
-                setIsEditTable(true);
-              }}
-            />
-            <PureButton
-              text="Lưu"
-              onClick={() => {
-                setIsEditTable(false);
-
-                // API post data lên server
-              }}
-            />
           </div>
 
-          <DataTable dataTable={dataTable} isEditTable={isEditTable} />
+          <DataTable
+            dataTable={dataTable}
+            isEditTable={isEditTable}
+            isMultipleDelete={isMultipleDelete}
+            onClickEditTable={() => {
+              setIsEditTable(true);
+            }}
+            onSaveEditTable={() => {
+              setIsEditTable(false);
+            }}
+            onClickMultipleDelete={() => {
+              setIsMultipleDelete(true);
+            }}
+            onClickDelete={() => {}}
+            onClickGetOut={() => {
+              setIsMultipleDelete(false);
+            }}
+          />
         </>
+      ) : (
+        <NoResult
+          title="Không có dữ liệu!"
+          description="🚀 Import file danh sách để thấy được dữ liệu."
+          link="/"
+          linkTitle="Choose file"
+        />
       )}
     </div>
   );

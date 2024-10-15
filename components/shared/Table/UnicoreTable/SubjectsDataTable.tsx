@@ -1,19 +1,23 @@
 "use client";
 
-import PureButton from "../../PureButton";
+import IconButton from "../../IconButton";
 import { useState } from "react";
 import * as XLSX from "xlsx";
 import { SubjectDataItem } from "@/types";
 import DataTable from "./DataTable";
 import ErrorComponent from "../Status/ErrorComponent";
+import TableSkeleton from "./TableSkeleton";
 
 export default function SubjectsDataTable() {
   const [isEditTable, setIsEditTable] = useState(false);
+  const [isMultipleDelete, setIsMultipleDelete] = useState(false);
   const [dataTable, setDataTable] = useState<SubjectDataItem[]>([]);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   // XỬ LÝ UPLOAD FILE MÔN HỌC
   const handleCoursesFileUpload = (e: any) => {
+    setIsLoading(true);
     setErrorMessages([]);
     setDataTable([]);
 
@@ -93,6 +97,8 @@ export default function SubjectsDataTable() {
       } else {
         setDataTable(transformedData as []);
       }
+
+      setIsLoading(false);
     };
   };
 
@@ -127,28 +133,32 @@ export default function SubjectsDataTable() {
         Tải xuống template file import môn học
       </a>
 
-      {dataTable.length > 0 && (
-        <>
-          <div className="flex justify-end gap-4 mb-5 items-center">
-            <p>Để scroll ngang, nhấn nút Shift và cuộn chuột</p>
-            <PureButton
-              text="Chỉnh sửa"
-              onClick={() => {
-                setIsEditTable(true);
-              }}
-            />
-            <PureButton
-              text="Lưu"
-              onClick={() => {
-                setIsEditTable(false);
+      {isLoading ? (
+        <TableSkeleton />
+      ) : (
+        dataTable.length > 0 && (
+          <>
+            <div className="flex justify-end gap-4 mb-5 items-center">
+              <p>Để scroll ngang, nhấn nút Shift và cuộn chuột</p>
+              <IconButton
+                text="Chỉnh sửa"
+                onClick={() => {
+                  setIsEditTable(true);
+                }}
+              />
+              <IconButton
+                text="Lưu"
+                onClick={() => {
+                  setIsEditTable(false);
 
-                // API post data lên server
-              }}
-            />
-          </div>
+                  // API post data lên server
+                }}
+              />
+            </div>
 
-          <DataTable dataTable={dataTable} isEditTable={isEditTable} />
-        </>
+            <DataTable dataTable={dataTable} isEditTable={isEditTable} isMultipleDelete={isMultipleDelete} />
+          </>
+        )
       )}
     </div>
   );

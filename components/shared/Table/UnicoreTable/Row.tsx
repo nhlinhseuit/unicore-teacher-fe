@@ -8,6 +8,8 @@ import { CourseDataItem, SubjectDataItem } from "@/types";
 interface RowParams {
   dataItem: CourseDataItem | SubjectDataItem;
   isEditTable?: boolean;
+  isMultipleDelete?: boolean;
+  onClickCheckBox?: (item: string) => void;
 }
 
 const Row = (params: RowParams) => {
@@ -28,7 +30,7 @@ const Row = (params: RowParams) => {
       className={`bg-background-secondary  text-left ${
         isEdit || params.isEditTable
           ? "hover:bg-white cursor-default"
-          : "hover:bg-light-800 cursor-pointer"
+          : "hover:bg-light-800 cursor-default"
       } duration-100`}
     >
       <Table.Cell className="w-10 border-r-[1px] z-100 ">
@@ -37,7 +39,33 @@ const Row = (params: RowParams) => {
             e.stopPropagation(); // Ngăn sự kiện lan truyền đến Table.Row
           }}
         >
-          <MoreButtonComponent handleEdit={handleEdit} />
+          {params.isMultipleDelete ? (
+            <div className="w-10 h-10 flex justify-center items-center">
+              <input
+                id="apple"
+                type="checkbox"
+                name="filterOptions"
+                value={
+                  params.dataItem.type === "course"
+                    ? (params.dataItem as CourseDataItem).data["Mã lớp"]
+                    : (params.dataItem as SubjectDataItem).data["Mã MH"]
+                }
+                onChange={() => {
+                  {
+                    params.onClickCheckBox &&
+                      params.onClickCheckBox(
+                        params.dataItem.type === "course"
+                          ? (params.dataItem as CourseDataItem).data["Mã lớp"]
+                          : (params.dataItem as SubjectDataItem).data["Mã MH"]
+                      );
+                  }
+                }}
+                className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 cursor-pointer"
+              />
+            </div>
+          ) : (
+            <MoreButtonComponent handleEdit={handleEdit} />
+          )}
         </div>
       </Table.Cell>
 
@@ -49,11 +77,11 @@ const Row = (params: RowParams) => {
         let keyId;
         let data;
         switch (params.dataItem.type) {
-          case "courses":
+          case "course":
             data = params.dataItem as CourseDataItem;
             keyId = data.data["Mã lớp"];
             break;
-          case "subjects":
+          case "subject":
             data = params.dataItem as SubjectDataItem;
             keyId = data.data["Mã MH"];
             break;

@@ -4,7 +4,6 @@ import { Button, Dropdown, Table } from "flowbite-react";
 import { HiOutlineDotsVertical, HiPencil, HiTrash } from "react-icons/hi";
 // import Button from "../Button/Button";
 import { Column, tableTheme } from "./DataTable";
-import PureButton from "../../PureButton";
 // import { usePermission } from "@/hooks/usePermission";
 // import {
 //     EntityType,
@@ -99,7 +98,6 @@ export function Row<T>({
               {/* <Button btnType="secondary">
               <HiOutlineDotsVertical className=" w-4 h-4" />
             </Button> */}
-              <PureButton text="HiOutlineDotsVertical" onClick={() => {}} />
             </div>
           )}
           dismissOnClick={false}

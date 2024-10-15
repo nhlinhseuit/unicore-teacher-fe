@@ -88,9 +88,8 @@ const MoreButtonComponent = (params: MoreButtonParams) => {
             <AlertDialogHeader>
               <AlertDialogTitle>Bạn có chắc chắn muốn xóa?</AlertDialogTitle>
               <AlertDialogDescription>
-                {/* This action cannot be undone. This will permanently delete your
-                account and remove your data from our servers. */}
-                Thao tác này không thể hoàn tác, dữ liệu của bạn sẽ bị xóa vĩnh viễn và không thể khôi phục.
+                Thao tác này không thể hoàn tác, dữ liệu của bạn sẽ bị xóa vĩnh
+                viễn và không thể khôi phục.
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>

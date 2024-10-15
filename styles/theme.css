@@ -195,6 +195,14 @@
     background: linear-gradient(129deg, #7FC9FA 0%, #d9ebff 100%);
   }
 
+  .bg-gray {
+    background: #F9F9FB
+  }
+
+  .bg-danger {
+    background: #F02021
+  }
+
   .dark-gradient {
     background: linear-gradient(
       232deg,
