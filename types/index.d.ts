@@ -6,11 +6,7 @@ export interface SidebarLink {
   label: string;
 }
 
-
-export interface CourseDataItem {
-  type: string,
-  STT: string;
-  data: {
+export interface CourseData {
     "Mã môn học": string;
     "Mã lớp": string;
     "Tên môn học": string;
@@ -24,7 +20,12 @@ export interface CourseDataItem {
     "Ngày KT": string;
     "Học kỳ": number;
     "Năm học": number;
-  };
+}
+
+export interface CourseDataItem {
+  type: string,
+  STT: string;
+  data: CourseData
 }
 
 
@@ -45,8 +46,8 @@ export interface SubjectDataItem {
     "Trọng số CUỐI KỲ": number;
     "Hệ ĐT": string;
     "Lớp CDIO": string;
-    "Học kỳ": string;
+    "Học kỳ": number;
     "Năm học": number;
-    "Tên môn học": number;
+    "Tên môn học": string;
   };
 }

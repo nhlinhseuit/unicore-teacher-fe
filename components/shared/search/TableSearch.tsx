@@ -3,29 +3,26 @@ import Image from "next/image";
 import React from "react";
 
 interface TableSearchParams {
-    searchTerm: string
-    setSearchTerm: (value: string) => void
-
+  searchTerm: string;
+  setSearchTerm: (value: string) => void;
+  otherClasses?: string;
 }
 
 const TableSearch = (params: TableSearchParams) => {
   return (
-    <form className="flex items-center">
+    <form className={`flex items-center ${params.otherClasses}`}>
       <label className="sr-only">Tìm kiếm</label>
-      <div className="relative w-full bg-white border border-gray-300 rounded-md">
+      <div className="relative w-full bg-white border border-gray-300 rounded-lg ">
         {/* searchTerm */}
         <div className="flex justify-between">
           <Input
             type="text"
-            placeholder="Search"
+            placeholder="Tìm kiếm"
             value={params.searchTerm}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault(); // Ngăn không cho hành động mặc định xảy ra
-              }
-            }}
+            onKeyDown={(e) => e.stopPropagation()}
             onChange={(e) => params.setSearchTerm(e.target.value)}
             className=" 
+             rounded-lg
           h-auto
           pl-12 text-sm 
           paragraph-regular no-focus placeholder 

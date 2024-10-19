@@ -5,6 +5,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const normalizeSearchItem = (term: string|number) => {
+  const lowerCaseTerm = term.toString().trim().toLowerCase();
+  // Chuyển đổi ký tự có dấu thành không dấu
+  const normalizedTerm = lowerCaseTerm.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  // Giữ lại khoảng trắng và ký tự chữ và số
+  return normalizedTerm.replace(/[^a-z0-9\s]/g, '');
+}
+
+
 export const getTimestamp = (createdAt: Date): string => {
   const now = new Date();
   const diff = Math.floor((now.getTime() - createdAt.getTime()) / 1000); // difference in seconds

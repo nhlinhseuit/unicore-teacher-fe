@@ -1,7 +1,8 @@
 import { SidebarLink } from "@/types";
 
 export enum FilterType {
-  Sort,
+  SortNewer,
+  SortOlder,
   DetailFilter,
   None,
 }

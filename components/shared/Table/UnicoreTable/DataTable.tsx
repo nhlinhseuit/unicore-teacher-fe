@@ -3,11 +3,9 @@
 import { CustomFlowbiteTheme, Dropdown, Table } from "flowbite-react";
 import Row from "./Row";
 import { CourseDataItem, SubjectDataItem } from "@/types";
-import Image from "next/image";
 import IconButton from "../../IconButton";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { DetailFilter, FilterType } from "@/constants";
-import { Input } from "@/components/ui/input";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -17,10 +15,14 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import NoResult from "../../NoResult";
 import TableSearch from "../../search/TableSearch";
+import { normalizeSearchItem } from "@/lib/utils";
+import Image from "next/image";
+import useSetDebounceSearchTerm from "@/hooks/useSetDebounceSearchTerm";
+import useDebounceSearch from "@/hooks/useDebounceSearchDropdown";
+import useDebounceSearchDataTable from "@/hooks/useDebounceSearchDataTable";
 
 interface DataTableParams {
   isEditTable: boolean;
@@ -30,7 +32,10 @@ interface DataTableParams {
   onClickMultipleDelete?: () => void;
   onClickDelete?: () => void;
   onClickGetOut?: () => void;
-  dataTable: CourseDataItem[] | SubjectDataItem[];
+  dataTable:
+    | CourseDataItem[]
+    | SubjectDataItem[]
+    | (CourseDataItem | SubjectDataItem)[];
 }
 
 const DataTable = (params: DataTableParams) => {
@@ -38,50 +43,233 @@ const DataTable = (params: DataTableParams) => {
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
   const [isShowDialog, setIsShowDialog] = useState(false);
 
+  // SEARCH
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [filteredDataTable, setFilteredDataTable] = useState<
     (CourseDataItem | SubjectDataItem)[]
   >(params.dataTable);
 
-  const handleChooseFilter = (type: FilterType) => {
-    setTypeFilter(type);
+  useSetDebounceSearchTerm(setDebouncedSearchTerm, searchTerm);
+  useDebounceSearchDataTable(
+    debouncedSearchTerm,
+    setFilteredDataTable,
+    params.dataTable
+  );
+
+  // FILTER
+  const [semesterFilterSelected, setSemesterFilterSelected] = useState(0);
+  const [yearFilterSelected, setYearFilterSelected] = useState(0);
+  const [subjectFilterSelected, setSubjectFilterSelected] = useState("");
+  const [teacherFilterSelected, setTeacherFilterSelected] = useState("");
+
+  // Sử dụng useMemo để tạo các giá trị chỉ một lần khi render component
+  const { semesterValues, yearValues, subjectValues, teacherValues } =
+    useMemo(() => {
+      const semesterSet: Set<number> = new Set();
+      const yearSet: Set<number> = new Set();
+      const subjectSet: Set<string> = new Set();
+      const teacherSet: Set<string> = new Set();
+
+      params.dataTable.forEach((item) => {
+        semesterSet.add(Number(item.data["Học kỳ"]));
+        yearSet.add(item.data["Năm học"]);
+
+        if (item.type === "course") {
+          subjectSet.add((item as CourseDataItem).data["Tên môn học"]);
+
+          (item as CourseDataItem).data["Tên GV"]
+            .split(/\r\n|\n/)
+            .forEach((name) => {
+              teacherSet.add(name);
+            });
+        }
+      });
+
+      return {
+        semesterValues: Array.from(semesterSet).sort((a, b) => a - b),
+        yearValues: Array.from(yearSet).sort((a, b) => a - b),
+        subjectValues: Array.from(subjectSet),
+        teacherValues: Array.from(teacherSet),
+      };
+    }, [params.dataTable]); // Chỉ tính toán lại khi params.dataTable thay đổi
+
+  const cancleDetailFilter = () => {
+    setSemesterFilterSelected(0);
+    setYearFilterSelected(0);
+    setSubjectFilterSelected("");
+    setTeacherFilterSelected("");
   };
 
   useEffect(() => {
-    const handler = setTimeout(() => {
-      setDebouncedSearchTerm(searchTerm);
-    }, 400);
+    //  APPLY FILTER
 
-    return () => {
-      clearTimeout(handler); // Clear timeout nếu searchTerm thay đổi trong vòng 300ms
-    };
-  }, [searchTerm]);
+    let filteredData = params.dataTable;
 
-  useEffect(() => {
-    if (debouncedSearchTerm.trim() === "") {
-      setFilteredDataTable(params.dataTable); // Nếu không có từ khóa tìm kiếm, hiển thị tất cả dữ liệu
-    } else {
-      const filteredData = params.dataTable.filter((dataItem) => {
-        return Object.values(dataItem.data).some((value) => {
-          if (typeof value === "string")
-            return value
-              .toLowerCase()
-              .includes(debouncedSearchTerm.toLowerCase());
-          else {
-            value = value.toString();
-            return value.includes(debouncedSearchTerm.toLowerCase());
-          }
-        });
+    if (semesterFilterSelected !== 0) {
+      filteredData = filteredData.filter((dataItem) => {
+        return dataItem.data["Học kỳ"]
+          .toString()
+          .includes(semesterFilterSelected.toString());
       });
-      setFilteredDataTable(filteredData);
     }
-  }, [debouncedSearchTerm, params.dataTable]);
+
+    if (yearFilterSelected !== 0) {
+      filteredData = filteredData.filter((dataItem: any) => {
+        return dataItem.data["Năm học"]
+          .toString()
+          .includes(yearFilterSelected.toString());
+      });
+    }
+
+    if (subjectFilterSelected !== "") {
+      filteredData = filteredData.filter((dataItem) => {
+        if (dataItem.type === "course") {
+          return (dataItem as CourseDataItem).data["Tên môn học"].includes(
+            subjectFilterSelected
+          );
+        }
+      });
+    }
+
+    if (teacherFilterSelected !== "") {
+      filteredData = filteredData.filter((dataItem) => {
+        if (dataItem.type === "course") {
+          return (dataItem as CourseDataItem).data["Tên GV"].includes(
+            teacherFilterSelected
+          );
+        }
+      });
+    }
+
+    setFilteredDataTable(filteredData);
+  }, [
+    semesterFilterSelected,
+    yearFilterSelected,
+    subjectFilterSelected,
+    teacherFilterSelected,
+  ]);
+
+  // SEARCH IN EACH DETAIL FILTER
+
+  // semester
+  const [searchTermSemesterFilter, setSearchTermSemesterFilter] = useState("");
+  const [
+    debouncedSearchTermSemesterFilter,
+    setDebouncedSearchTermSemesterFilter,
+  ] = useState(searchTermSemesterFilter);
+  const [filteredSemesterValues, setFilteredSemesterValues] =
+    useState<number[]>(semesterValues);
+
+  useSetDebounceSearchTerm(
+    setDebouncedSearchTermSemesterFilter,
+    searchTermSemesterFilter
+  );
+
+  useDebounceSearch(
+    debouncedSearchTermSemesterFilter,
+    setFilteredSemesterValues,
+    semesterValues
+  );
+
+  // year   
+  // here
+  const [searchTermYearFilter, setSearchTermYearFilter] = useState("");
+  const [debouncedSearchTermYearFilter, setDebouncedSearchTermYearFilter] =
+    useState(searchTermYearFilter);
+  const [filteredYearValues, setFilteredYearValues] =
+    useState<number[]>(yearValues);
+
+  useSetDebounceSearchTerm(
+    setDebouncedSearchTermYearFilter,
+    searchTermYearFilter
+  );
+
+  useDebounceSearch(
+    debouncedSearchTermYearFilter,
+    setFilteredYearValues,
+    yearValues
+  );
+
+  // subject
+  const [searchTermSubjectFilter, setSearchTermSubjectFilter] = useState("");
+  const [debouncedSearchTermSubjectFilter, setDebouncedSearchTermSubjectFilter] =
+    useState(searchTermSubjectFilter);
+  const [filteredSubjectValues, setFilteredSubjectValues] =
+    useState<string[]>(subjectValues);
+
+  useSetDebounceSearchTerm(
+    setDebouncedSearchTermSubjectFilter,
+    searchTermSubjectFilter
+  );
+
+  useDebounceSearch(
+    debouncedSearchTermSubjectFilter,
+    setFilteredSubjectValues,
+    subjectValues
+  );
+
+  // teacher
+  const [searchTermTeacherFilter, setSearchTermTeacherFilter] = useState("");
+
+  // FUNCTION
+  const handleChooseFilter = (type: FilterType) => {
+    setTypeFilter(type);
+    var sortedNewerDataTable = [] as (CourseDataItem | SubjectDataItem)[];
+
+    sortedNewerDataTable = sortDataTable(params.dataTable, type);
+
+    setFilteredDataTable(sortedNewerDataTable);
+  };
+
+  const sortDataTable = (
+    data:
+      | CourseDataItem[]
+      | SubjectDataItem[]
+      | (CourseDataItem | SubjectDataItem)[],
+    sortOrder: FilterType
+  ) => {
+    if (sortOrder === FilterType.None) {
+      return data.sort((a, b) => {
+        const noA = parseInt(a.STT);
+        const noB = parseInt(b.STT);
+        return noA - noB;
+      });
+    } else if (sortOrder === FilterType.DetailFilter) {
+      return data.sort((a, b) => {
+        const noA = parseInt(a.STT);
+        const noB = parseInt(b.STT);
+        return noA - noB;
+      });
+    } else {
+      return data.sort((a, b) => {
+        const yearA = a.data["Năm học"];
+        const yearB = b.data["Năm học"];
+
+        // Xác định thứ tự sắp xếp dựa trên sortOrder
+        const orderMultiplier = sortOrder === FilterType.SortNewer ? 1 : -1;
+
+        // So sánh năm học
+        if (yearA !== yearB) {
+          return (yearB - yearA) * orderMultiplier;
+        }
+
+        // Nếu năm học bằng nhau, so sánh học kỳ
+        const semesterA = a.data["Học kỳ"] as number;
+        const semesterB = b.data["Học kỳ"] as number;
+
+        return (semesterB - semesterA) * orderMultiplier;
+      });
+    }
+  };
+
+  console.log("rerender");
 
   return (
     <div>
       <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 p-4">
-        <div className="w-full md:w-1/2">
+        {/* ACTION VỚI TABLE */}
+        <div className="w-full md:w-1/2 mr-3">
           <TableSearch
             setSearchTerm={(value) => setSearchTerm(value)}
             searchTerm={searchTerm}
@@ -126,7 +314,7 @@ const DataTable = (params: DataTableParams) => {
               </>
             ) : (
               <Dropdown
-                className="z-30"
+                className="z-30 rounded-lg"
                 label=""
                 dismissOnClick={false}
                 renderTrigger={() => (
@@ -156,14 +344,13 @@ const DataTable = (params: DataTableParams) => {
               <></>
             ) : (
               <Dropdown
-                className="z-30"
+                className="z-30 rounded-lg"
                 label=""
                 dismissOnClick={false}
                 renderTrigger={() => (
                   <div>
                     <IconButton
                       text="Bộ lọc"
-                      onClick={() => {}}
                       iconLeft={
                         typeFilter === FilterType.None
                           ? "/assets/icons/filter.svg"
@@ -181,7 +368,8 @@ const DataTable = (params: DataTableParams) => {
                 <Dropdown.Header>
                   <span
                     onClick={() => {
-                      setTypeFilter(FilterType.None);
+                      cancleDetailFilter();
+                      handleChooseFilter(FilterType.None);
                     }}
                     className="block truncate text-sm font-medium cursor-pointer"
                   >
@@ -201,19 +389,47 @@ const DataTable = (params: DataTableParams) => {
                   "
                   >
                     <input
-                      checked={typeFilter === FilterType.Sort}
-                      id="Sort"
+                      checked={typeFilter === FilterType.SortNewer}
+                      id="SortNewer"
                       type="radio"
                       name="filterOptions"
-                      value={FilterType.Sort}
-                      onChange={() => handleChooseFilter(FilterType.Sort)}
+                      value={FilterType.SortNewer}
+                      onChange={() => handleChooseFilter(FilterType.SortNewer)}
                       className="w-4 h-4  cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600"
                     />
                     <label
-                      htmlFor="Sort"
+                      htmlFor="SortNewer"
                       className="ml-2 cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-100"
                     >
-                      Gần nhất
+                      Mới nhất
+                    </label>
+                  </li>
+
+                  <li
+                    className="flex items-center
+                  w-full
+                  justify-start
+                  px-4
+                  py-2
+                  text-sm
+                  text-gray-700
+                  focus:outline-none
+                  "
+                  >
+                    <input
+                      checked={typeFilter === FilterType.SortOlder}
+                      id="SortOlder"
+                      type="radio"
+                      name="filterOptions"
+                      value={FilterType.SortOlder}
+                      onChange={() => handleChooseFilter(FilterType.SortOlder)}
+                      className="w-4 h-4  cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600"
+                    />
+                    <label
+                      htmlFor="SortOlder"
+                      className="ml-2 cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-100"
+                    >
+                      Cũ nhất
                     </label>
                   </li>
                   <li
@@ -232,8 +448,10 @@ const DataTable = (params: DataTableParams) => {
                       type="radio"
                       name="filterOptions"
                       value={FilterType.DetailFilter}
-                      onChange={() =>
-                        handleChooseFilter(FilterType.DetailFilter)
+                      onChange={
+                        () => handleChooseFilter(FilterType.DetailFilter)
+
+                        // filterDataTable
                       }
                       className="w-4 h-4  cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600"
                     />
@@ -253,30 +471,108 @@ const DataTable = (params: DataTableParams) => {
 
       {/* DETAIL FILTER typeFilter */}
       {typeFilter === FilterType.DetailFilter && (
-        <div className="flex gap-2 w-full space-y-3 md:space-y-0 px-4 mb-4">
+        <div className="flex gap-2 w-full px-4 mb-4">
           {Object.values(DetailFilter)
             .filter((item) => isNaN(Number(item)))
             .map((item) => {
-              console.log("DetailFilter", item);
               let width = "";
               let text = "";
+              let dataDropdown: any = [];
+              let searchTermDropdown = "";
+              let setSearchTermDropdown = (value: any) => {};
+              let handleClickFilter = (item: any) => {};
+              let checkIsActive = (item: any): boolean => {
+                return false;
+              };
+              let checkIsShowFilterIcon = (item: any): any => {
+                return "";
+              };
+
               switch (item) {
                 case "Semester":
                   text = "Học kỳ";
                   width = "w-[15%]";
+                  dataDropdown = filteredSemesterValues;
+                  
+                  searchTermDropdown = searchTermSemesterFilter;
+                  setSearchTermDropdown = (value) => setSearchTermSemesterFilter(value);
+                  
+                  handleClickFilter = (i) => {
+                    if (i === semesterFilterSelected) {
+                      setSemesterFilterSelected(0);
+                    } else setSemesterFilterSelected(i);
+                  };
+                  checkIsActive = (i) => {
+                    return i === semesterFilterSelected;
+                  };
+                  checkIsShowFilterIcon = (i) => {
+                    return semesterFilterSelected !== 0
+                      ? "/assets/icons/filter_active.svg"
+                      : undefined;
+                  };
+
                   break;
                 case "Year":
                   text = "Năm học";
                   width = "w-[15%]";
-                  break;
+                  dataDropdown = filteredYearValues;
 
+                  searchTermDropdown = searchTermYearFilter;
+                  setSearchTermDropdown = (value) => setSearchTermYearFilter(value);
+
+                  handleClickFilter = (i) => {
+                    if (i === yearFilterSelected) {
+                      setYearFilterSelected(0);
+                    } else setYearFilterSelected(i);
+                  };
+                  checkIsActive = (i) => {
+                    return i === yearFilterSelected;
+                  };
+                  checkIsShowFilterIcon = (i) => {
+                    return yearFilterSelected !== 0
+                      ? "/assets/icons/filter_active.svg"
+                      : undefined;
+                  };
+                  break;
                 case "Subject":
                   text = "Môn học";
                   width = "w-[35%]";
+                  dataDropdown = subjectValues;
+
+                  searchTermDropdown = searchTermSubjectFilter;
+                  setSearchTermDropdown = (value) => setSearchTermSubjectFilter(value);
+
+                  handleClickFilter = (i) => {
+                    if (i === subjectFilterSelected) {
+                      setSubjectFilterSelected("");
+                    } else setSubjectFilterSelected(i);
+                  };
+                  checkIsActive = (i) => {
+                    return i === subjectFilterSelected;
+                  };
+                  checkIsShowFilterIcon = (i) => {
+                    return subjectFilterSelected !== ""
+                      ? "/assets/icons/filter_active.svg"
+                      : undefined;
+                  };
                   break;
                 case "Teacher":
                   text = "Giảng viên";
                   width = "w-[35%]";
+                  dataDropdown = teacherValues;
+                  handleClickFilter = (i) => {
+                    if (i === teacherFilterSelected) {
+                      setTeacherFilterSelected("");
+                    } else setTeacherFilterSelected(i);
+                  };
+                  checkIsActive = (i) => {
+                    return i === teacherFilterSelected;
+                  };
+                  checkIsShowFilterIcon = (i) => {
+                    return teacherFilterSelected !== ""
+                      ? "/assets/icons/filter_active.svg"
+                      : undefined;
+                  };
                   break;
                 default:
                   width = "";
@@ -286,7 +582,8 @@ const DataTable = (params: DataTableParams) => {
               return (
                 <div className={`${width}`}>
                   <Dropdown
-                    className="z-30"
+                    key={item}
+                    className="z-30 rounded-lg"
                     label=""
                     dismissOnClick={false}
                     renderTrigger={() => (
@@ -294,7 +591,7 @@ const DataTable = (params: DataTableParams) => {
                         <IconButton
                           otherClasses="w-full"
                           text={text}
-                          onClick={() => {}}
+                          iconLeft={checkIsShowFilterIcon(item)}
                           iconRight={"/assets/icons/chevron-down.svg"}
                           bgColor="bg-white"
                           textColor="text-black"
@@ -304,11 +601,41 @@ const DataTable = (params: DataTableParams) => {
                       </div>
                     )}
                   >
-                    <Dropdown.Item onClick={params.onClickEditTable}>
-                      Chỉnh sửa
-                    </Dropdown.Item>
-
-                    <Dropdown.Item>Xóa nhiều</Dropdown.Item>
+                    <TableSearch
+                      setSearchTerm={setSearchTermDropdown}
+                      searchTerm={searchTermDropdown}
+                      otherClasses="p-2"
+                    />
+                    <div className="scroll-container scroll-container-dropdown-content">
+                      {dataDropdown.map((item: any, index: number) => {
+                        if (typeof item === "string" && item === "") {
+                          return <></>;
+                        }
+                        return (
+                          <Dropdown.Item
+                            key={`${item}_${index}`}
+                            onClick={() => {
+                              handleClickFilter(item);
+                            }}
+                          >
+                            <div className="flex justify-between w-full">
+                              <p className="w-[80%] text-left line-clamp-1">
+                                {item}
+                              </p>
+                              {checkIsActive(item) && (
+                                <Image
+                                  src="/assets/icons/check.svg"
+                                  alt="search"
+                                  width={21}
+                                  height={21}
+                                  className="cursor-pointer mr-2"
+                                />
+                              )}
+                            </div>
+                          </Dropdown.Item>
+                        );
+                      })}
+                    </div>
                   </Dropdown>
                 </div>
               );
@@ -320,10 +647,20 @@ const DataTable = (params: DataTableParams) => {
       {params.dataTable.length > 0 && filteredDataTable.length === 0 ? (
         <NoResult
           title="Không có dữ liệu!"
-          description="💡 Bạn hãy thử tìm kiếm lại 1 từ khóa khác nhé."
+          description="💡 Bạn hãy thử tìm kiếm 1 từ khóa khác nhé."
         />
       ) : (
-        <div className="overflow-auto max-w-full h-fit rounded-lg border-[1px] border-secondary-200">
+        <div
+          className="
+          scroll-container 
+          overflow-auto
+          max-w-full
+          h-fit
+          rounded-lg
+          border-[1px]
+          border-secondary-200
+          "
+        >
           <Table hoverable theme={tableTheme}>
             {/* HEADER */}
             <Table.Head
@@ -363,7 +700,6 @@ const DataTable = (params: DataTableParams) => {
                   isMultipleDelete={params.isMultipleDelete}
                   onClickCheckBox={(item: string) => {
                     setItemsSelected((prev) => [...prev, item]);
-                    console.log(itemsSelected);
                   }}
                 />
               ))}
