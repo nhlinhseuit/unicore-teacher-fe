@@ -172,8 +172,7 @@ const DataTable = (params: DataTableParams) => {
     semesterValues
   );
 
-  // year   
-  // here
+  // year
   const [searchTermYearFilter, setSearchTermYearFilter] = useState("");
   const [debouncedSearchTermYearFilter, setDebouncedSearchTermYearFilter] =
     useState(searchTermYearFilter);
@@ -193,8 +192,10 @@ const DataTable = (params: DataTableParams) => {
 
   // subject
   const [searchTermSubjectFilter, setSearchTermSubjectFilter] = useState("");
-  const [debouncedSearchTermSubjectFilter, setDebouncedSearchTermSubjectFilter] =
-    useState(searchTermSubjectFilter);
+  const [
+    debouncedSearchTermSubjectFilter,
+    setDebouncedSearchTermSubjectFilter,
+  ] = useState(searchTermSubjectFilter);
   const [filteredSubjectValues, setFilteredSubjectValues] =
     useState<string[]>(subjectValues);
 
@@ -211,6 +212,23 @@ const DataTable = (params: DataTableParams) => {
 
   // teacher
   const [searchTermTeacherFilter, setSearchTermTeacherFilter] = useState("");
+  const [
+    debouncedSearchTermTeacherFilter,
+    setDebouncedSearchTermTeacherFilter,
+  ] = useState(searchTermTeacherFilter);
+  const [filteredTeacherValues, setFilteredTeacherValues] =
+    useState<string[]>(teacherValues);
+
+  useSetDebounceSearchTerm(
+    setDebouncedSearchTermTeacherFilter,
+    searchTermTeacherFilter
+  );
+
+  useDebounceSearch(
+    debouncedSearchTermTeacherFilter,
+    setFilteredTeacherValues,
+    teacherValues
+  );
 
   // FUNCTION
   const handleChooseFilter = (type: FilterType) => {
@@ -262,8 +280,6 @@ const DataTable = (params: DataTableParams) => {
       });
     }
   };
-
-  console.log("rerender");
 
   return (
     <div>
@@ -493,10 +509,11 @@ const DataTable = (params: DataTableParams) => {
                   text = "Học kỳ";
                   width = "w-[15%]";
                   dataDropdown = filteredSemesterValues;
-                  
+
                   searchTermDropdown = searchTermSemesterFilter;
-                  setSearchTermDropdown = (value) => setSearchTermSemesterFilter(value);
-                  
+                  setSearchTermDropdown = (value) =>
+                    setSearchTermSemesterFilter(value);
+
                   handleClickFilter = (i) => {
                     if (i === semesterFilterSelected) {
                       setSemesterFilterSelected(0);
@@ -515,10 +532,11 @@ const DataTable = (params: DataTableParams) => {
                 case "Year":
                   text = "Năm học";
                   width = "w-[15%]";
-                  dataDropdown = filteredYearValues;
 
+                  dataDropdown = filteredYearValues;
                   searchTermDropdown = searchTermYearFilter;
-                  setSearchTermDropdown = (value) => setSearchTermYearFilter(value);
+                  setSearchTermDropdown = (value) =>
+                    setSearchTermYearFilter(value);
 
                   handleClickFilter = (i) => {
                     if (i === yearFilterSelected) {
@@ -537,10 +555,11 @@ const DataTable = (params: DataTableParams) => {
                 case "Subject":
                   text = "Môn học";
                   width = "w-[35%]";
-                  dataDropdown = subjectValues;
 
+                  dataDropdown = filteredSubjectValues;
                   searchTermDropdown = searchTermSubjectFilter;
-                  setSearchTermDropdown = (value) => setSearchTermSubjectFilter(value);
+                  setSearchTermDropdown = (value) =>
+                    setSearchTermSubjectFilter(value);
 
                   handleClickFilter = (i) => {
                     if (i === subjectFilterSelected) {
@@ -559,7 +578,12 @@ const DataTable = (params: DataTableParams) => {
                 case "Teacher":
                   text = "Giảng viên";
                   width = "w-[35%]";
-                  dataDropdown = teacherValues;
+
+                  dataDropdown = filteredTeacherValues;
+                  searchTermDropdown = searchTermTeacherFilter;
+                  setSearchTermDropdown = (value) =>
+                    setSearchTermTeacherFilter(value);
+
                   handleClickFilter = (i) => {
                     if (i === teacherFilterSelected) {
                       setTeacherFilterSelected("");

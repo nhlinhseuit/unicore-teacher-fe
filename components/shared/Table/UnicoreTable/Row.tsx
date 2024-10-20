@@ -97,14 +97,14 @@ const Row = (params: RowParams) => {
               group-last/body:group-last/row:last:rounded-br-lg
               px-4 py-4 text-center text-secondary-900`,
             }}
-            className="border-r-[1px] px-2 py-4 normal-case whitespace-nowrap  text-left"
+            className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left ${key === "Khoa quản lý" ? 'text-center': ''}`}
           >
             {key === "Khoa quản lý" ? (
               <input
                 type="checkbox"
                 checked={value as boolean}
                 onChange={() => {}}
-                className="w-4 h-4"
+                className="w-4 h-4 "
               />
             ) : isEdit || params.isEditTable ? (
               <InputComponent
