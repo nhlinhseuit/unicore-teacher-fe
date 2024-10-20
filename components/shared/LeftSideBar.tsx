@@ -49,11 +49,11 @@ const LeftSideBar = () => {
         </Link>
       </div>
 
-      <div className="h-[1px] mx-4 bg-[#ECECEC]"></div>
+      {/* <div className="h-[1px] mx-4 bg-[#ECECEC]"></div> */}
 
       <div
         className="
-    flex  flex-col gap-6 px-6 h-full mt-8
+    flex  flex-col gap-6 px-6 h-full mt-6
     "
       >
         {/* ITEM */}

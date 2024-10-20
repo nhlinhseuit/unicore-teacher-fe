@@ -3,17 +3,24 @@ import React from "react";
 import InputComponent from "./InputComponent";
 import { useState } from "react";
 import MoreButtonComponent from "./MoreButtonComponent";
-import { CourseDataItem, SubjectDataItem } from "@/types";
+import {
+  CourseData,
+  SubjectData,
+  CourseDataItem,
+  SubjectDataItem,
+} from "@/types";
 
 interface RowParams {
   dataItem: CourseDataItem | SubjectDataItem;
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
   onClickCheckBox?: (item: string) => void;
+  onChangeRow?: (item: any) => void;
 }
 
 const Row = (params: RowParams) => {
   const [isEdit, setIsEdit] = useState(false);
+  const [editDataItem, setEditDataItem] = useState(params.dataItem);
 
   const handleEdit = () => {
     if (isEdit === false) {
@@ -21,6 +28,24 @@ const Row = (params: RowParams) => {
     } else {
       setIsEdit(false);
     }
+  };
+
+  const handleInputChange = (
+    key: keyof CourseData | keyof SubjectData,
+    newValue: any
+  ) => {
+    //@ts-ignore
+    const updatedDataItem: CourseDataItem | SubjectDataItem = {
+      ...editDataItem,
+      data: {
+        ...editDataItem.data,
+        [key]: newValue
+      }
+    };
+
+    setEditDataItem(updatedDataItem); // ??
+
+    params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
   };
 
   return (
@@ -97,7 +122,9 @@ const Row = (params: RowParams) => {
               group-last/body:group-last/row:last:rounded-br-lg
               px-4 py-4 text-center text-secondary-900`,
             }}
-            className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left ${key === "Khoa quản lý" ? 'text-center': ''}`}
+            className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left ${
+              key === "Khoa quản lý" ? "text-center" : ""
+            }`}
           >
             {key === "Khoa quản lý" ? (
               <input
@@ -110,6 +137,8 @@ const Row = (params: RowParams) => {
               <InputComponent
                 value={value as string | number}
                 placeholder={value as string | number}
+                //@ts-ignore
+                onChange={(newValue) => handleInputChange(key, newValue)}
               />
             ) : typeof value === "string" ? (
               // Thay thế ký tự xuống dòng bằng thẻ <br />

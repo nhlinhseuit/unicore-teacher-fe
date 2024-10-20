@@ -1,4 +1,5 @@
 import LeftSideBar from "@/components/shared/LeftSideBar";
+import Navbar from "@/components/shared/navbar/Navbar";
 import React from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -10,7 +11,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
     >
       {/* NAVBAR */}
       {/* <Navbar /> */}
-      
+
       <div className="flex">
         {/* LEFT SIDEBAR */}
         <LeftSideBar />

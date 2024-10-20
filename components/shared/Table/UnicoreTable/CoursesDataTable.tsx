@@ -139,8 +139,11 @@ export default function CoursesDataTable() {
             onClickEditTable={() => {
               setIsEditTable(true);
             }}
-            onSaveEditTable={() => {
+            onSaveEditTable={(localDataTable) => {
               setIsEditTable(false);
+              // set lại data import hoặc patch API
+              localDataTable = localDataTable as CourseDataItem[];
+              setDataTable(localDataTable);
             }}
             onClickMultipleDelete={() => {
               setIsMultipleDelete(true);

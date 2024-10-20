@@ -22,17 +22,7 @@ export interface CourseData {
     "Năm học": number;
 }
 
-export interface CourseDataItem {
-  type: string,
-  STT: string;
-  data: CourseData
-}
-
-
-export interface SubjectDataItem {
-  type: string,
-  STT: string;
-  data: {
+export interface SubjectData {
     "Khoa QL": string;
     "Mã MH": string;
     "Hình thức thi LT GIỮA KỲ": string;
@@ -49,5 +39,17 @@ export interface SubjectDataItem {
     "Học kỳ": number;
     "Năm học": number;
     "Tên môn học": string;
-  };
+}
+
+export interface CourseDataItem {
+  type: string,
+  STT: string;
+  data: CourseData
+}
+
+
+export interface SubjectDataItem {
+  type: string,
+  STT: string;
+  data: SubjectData
 }

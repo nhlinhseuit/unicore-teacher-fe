@@ -28,7 +28,7 @@ interface DataTableParams {
   isEditTable: boolean;
   isMultipleDelete: boolean;
   onClickEditTable?: () => void;
-  onSaveEditTable?: () => void;
+  onSaveEditTable?: (localDataTable: any) => void;
   onClickMultipleDelete?: () => void;
   onClickDelete?: () => void;
   onClickGetOut?: () => void;
@@ -39,6 +39,11 @@ interface DataTableParams {
 }
 
 const DataTable = (params: DataTableParams) => {
+
+
+  // local dataTable sử dụng để edit lại data import hoặc PATCH API
+  const [localDataTable, setLocalDataTable] = useState(params.dataTable);
+
   const [typeFilter, setTypeFilter] = useState(FilterType.None);
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
   const [isShowDialog, setIsShowDialog] = useState(false);
@@ -304,7 +309,9 @@ const DataTable = (params: DataTableParams) => {
             )}
 
             {params.isEditTable ? (
-              <IconButton text="Lưu" onClick={params.onSaveEditTable} />
+              <IconButton text="Lưu" onClick={() => {
+                params.onSaveEditTable && params.onSaveEditTable(localDataTable)
+              }} />
             ) : params.isMultipleDelete ? (
               <>
                 <p className="text-sm font-medium">
@@ -724,6 +731,17 @@ const DataTable = (params: DataTableParams) => {
                   isMultipleDelete={params.isMultipleDelete}
                   onClickCheckBox={(item: string) => {
                     setItemsSelected((prev) => [...prev, item]);
+                  }}
+                  onChangeRow={(updatedDataItem) => {
+                    var updatedDataTable = localDataTable.map((item) => {
+                      if (item.STT === updatedDataItem.STT) {
+                        return updatedDataItem;
+                      } else {
+                        return item;
+                      }
+                    });
+                    
+                    setLocalDataTable(updatedDataTable)
                   }}
                 />
               ))}

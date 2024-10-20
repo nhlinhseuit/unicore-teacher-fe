@@ -1,21 +1,24 @@
-// import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Theme from "./Theme";
 import MobileNav from "./MobileNav";
 import GlobalSearch from "../search/GlobalSearch";
+import TabsComponent from "../TabsComponent";
 
 const Navbar = () => {
   return (
+    // shadow-light-300
+
     <nav
       className="
     flex-between
-    background-light900_dark200 
-    fixed z-50 w-full gap-5 p-6 
-    shadow-light-300
-    dark:shadow-none
+    background-light900_dark200
+    fixed z-50 w-full gap-5 px-0 py-2
     sm:px-12
+    shadow-md
      "
     >
       {/* LOGO */}
@@ -32,29 +35,8 @@ const Navbar = () => {
         </p>
       </Link>
 
-      {/* Global Search */}
-      <GlobalSearch />
-
       <div className="flex-between gap-5">
-        {/* THEME */}
-        <Theme />
-
-        {/* AVATAR */}
-        {/* <SignedOut>
-          <SignInButton />
-        </SignedOut>
-        <SignedIn>
-          <UserButton
-            appearance={{
-              elements: {
-                avatarBox: "h-10  w-10",
-              },
-              variables: {
-                colorPrimary: "#ff7000",
-              },
-            }}
-          />
-        </SignedIn> */}
+        {/* <TabsComponent type="courses" /> */}
 
         {/* MOBILE NAV */}
         <MobileNav />

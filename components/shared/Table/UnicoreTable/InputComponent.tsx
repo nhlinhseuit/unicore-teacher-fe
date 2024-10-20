@@ -1,12 +1,21 @@
 import { Input } from "@/components/ui/input";
-import React from "react";
+import React, { useState } from "react";
 
 interface InputParams {
   placeholder: string | number;
   value: string | number;
+  onChange: (newValue: string | number) => void;
 }
 
 const InputComponent = (params: InputParams) => {
+  const [inputValue, setInputValue] = useState(params.value);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value); // Cập nhật state cục bộ
+
+    params.onChange(e.target.value); // Gọi hàm onChange để truyền giá trị ra ngoài
+  };
+
   return (
     <div className="relative inline-block">
       <span
@@ -20,9 +29,9 @@ const InputComponent = (params: InputParams) => {
       </span>
       <Input
         type="text"
-        placeholder='Trống'
-        value={params.value}
-        onChange={() => {}}
+        placeholder="Trống"
+        value={inputValue}
+        onChange={handleInputChange}
         style={{ width: 200 }}
         className="
           paragraph-regular no-focus placeholder  
