@@ -14,13 +14,24 @@ interface RowParams {
   dataItem: CourseDataItem | SubjectDataItem;
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
-  onClickCheckBox?: (item: string) => void;
+  onClickCheckBoxSelect?: (item: string) => void;
   onChangeRow?: (item: any) => void;
+}
+interface handleInputChangeParams {
+  key: keyof CourseData | keyof SubjectData;
+  newValue: any;
+  isMultipleInput?: boolean;
+  currentIndex?: number;
+  isCheckbox?: boolean;
 }
 
 const Row = (params: RowParams) => {
   const [isEdit, setIsEdit] = useState(false);
   const [editDataItem, setEditDataItem] = useState(params.dataItem);
+  const [isChecked, setIsChecked] = useState(
+    //@ts-ignore
+    params.dataItem.data["Khoa quản lý"] as boolean
+  );
 
   const handleEdit = () => {
     if (isEdit === false) {
@@ -30,17 +41,27 @@ const Row = (params: RowParams) => {
     }
   };
 
-  const handleInputChange = (
-    key: keyof CourseData | keyof SubjectData,
-    newValue: any
-  ) => {
+  const handleInputChange = ({
+    key,
+    newValue,
+    isMultipleInput,
+    currentIndex,
+    isCheckbox,
+  }: handleInputChangeParams) => {
+
     //@ts-ignore
     const updatedDataItem: CourseDataItem | SubjectDataItem = {
       ...editDataItem,
       data: {
         ...editDataItem.data,
-        [key]: newValue
-      }
+        [key]: isMultipleInput
+          ? //@ts-ignore
+            (editDataItem.data[key] as string)
+              .split(/\r\n|\n/)
+              .map((line, index) => (index === currentIndex ? newValue : line))
+              .join("\r\n")
+          : newValue,
+      },
     };
 
     setEditDataItem(updatedDataItem); // ??
@@ -58,6 +79,7 @@ const Row = (params: RowParams) => {
           : "hover:bg-light-800 cursor-default"
       } duration-100`}
     >
+      {/* checkbox */}
       <Table.Cell className="w-10 border-r-[1px] z-100 ">
         <div
           onClick={(e) => {
@@ -77,8 +99,8 @@ const Row = (params: RowParams) => {
                 }
                 onChange={() => {
                   {
-                    params.onClickCheckBox &&
-                      params.onClickCheckBox(
+                    params.onClickCheckBoxSelect &&
+                      params.onClickCheckBoxSelect(
                         params.dataItem.type === "course"
                           ? (params.dataItem as CourseDataItem).data["Mã lớp"]
                           : (params.dataItem as SubjectDataItem).data["Mã MH"]
@@ -94,10 +116,12 @@ const Row = (params: RowParams) => {
         </div>
       </Table.Cell>
 
+      {/* STT */}
       <Table.Cell className="w-10 border-r-[1px]  text-left">
         {params.dataItem.STT}
       </Table.Cell>
 
+      {/* Các giá trị khác */}
       {Object.entries(params.dataItem.data).map(([key, value]) => {
         let keyId;
         let data;
@@ -127,20 +151,53 @@ const Row = (params: RowParams) => {
             }`}
           >
             {key === "Khoa quản lý" ? (
-              <input
+              isEdit || params.isEditTable ? <input
                 type="checkbox"
-                checked={value as boolean}
-                onChange={() => {}}
-                className="w-4 h-4 "
-              />
-            ) : isEdit || params.isEditTable ? (
-              <InputComponent
-                value={value as string | number}
-                placeholder={value as string | number}
-                //@ts-ignore
-                onChange={(newValue) => handleInputChange(key, newValue)}
-              />
-            ) : typeof value === "string" ? (
+                checked={isChecked}
+                onChange={(e) => {
+                    setIsChecked(e.target.checked);
+                    handleInputChange({
+                          key: key,
+                          newValue: e.target.checked,
+                          isCheckbox: true,
+                        });
+                }}
+                className="w-4 h-4 cursor-pointer"
+              /> : <input
+              type="checkbox"
+              checked={isChecked}
+              className="w-4 h-4 cursor-pointer"
+            />
+            )
+ : // TH 1 thẻ Input hoặc nhiều thẻ Input do nhiều GV và nhiều mã GV (so on...)
+            isEdit || params.isEditTable ? (
+              typeof value === "string" ? (
+                <div className="flex flex-col gap-1">
+                  {value
+                    .split(/\r\n|\n/)
+                    .filter((line, index, array) => array.length > 1 ? line.trim() !== "" : true)
+                    .map((line, index) => (
+                      <InputComponent
+                        value={line as string | number}
+                        placeholder={line as string | number}
+                        //@ts-ignore
+                        onChange={(newValue) =>
+                          //@ts-ignore
+                          handleInputChange({key: key, newValue: newValue, isMultipleInput: true, currentIndex: index})
+                        }
+                      />
+                    ))}
+                </div>
+              ) : (
+                <InputComponent
+                  value={value as string | number}
+                  placeholder={value as string | number}
+                  //@ts-ignore
+                  onChange={(newValue) => handleInputChange({key: key, newValue: newValue})}
+                />
+              )
+            ) : // TH 1 thẻ dòng text hoặc nhiều thẻ dòng text do nhiều GV
+            typeof value === "string" ? (
               // Thay thế ký tự xuống dòng bằng thẻ <br />
               value.split(/\r\n|\n/).map((line, index) => (
                 <React.Fragment key={index}>

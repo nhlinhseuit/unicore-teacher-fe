@@ -18,11 +18,11 @@ import {
 } from "@/components/ui/alert-dialog";
 import NoResult from "../../NoResult";
 import TableSearch from "../../search/TableSearch";
-import { normalizeSearchItem } from "@/lib/utils";
 import Image from "next/image";
 import useSetDebounceSearchTerm from "@/hooks/useSetDebounceSearchTerm";
 import useDebounceSearch from "@/hooks/useDebounceSearchDropdown";
 import useDebounceSearchDataTable from "@/hooks/useDebounceSearchDataTable";
+import Footer from "./Footer";
 
 interface DataTableParams {
   isEditTable: boolean;
@@ -39,10 +39,19 @@ interface DataTableParams {
 }
 
 const DataTable = (params: DataTableParams) => {
+  //Footer
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 30; // 30 items mỗi trang
+  const totalItems = params.dataTable.length; // Tổng số items, có thể lấy từ API
 
+  // Tính toán các items hiển thị dựa trên currentPage
+  const currentItems = params.dataTable.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
+  );
 
   // local dataTable sử dụng để edit lại data import hoặc PATCH API
-  const [localDataTable, setLocalDataTable] = useState(params.dataTable);
+  const [localDataTable, setLocalDataTable] = useState(currentItems);
 
   const [typeFilter, setTypeFilter] = useState(FilterType.None);
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
@@ -53,13 +62,13 @@ const DataTable = (params: DataTableParams) => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [filteredDataTable, setFilteredDataTable] = useState<
     (CourseDataItem | SubjectDataItem)[]
-  >(params.dataTable);
+  >(currentItems);
 
   useSetDebounceSearchTerm(setDebouncedSearchTerm, searchTerm);
   useDebounceSearchDataTable(
     debouncedSearchTerm,
     setFilteredDataTable,
-    params.dataTable
+    currentItems
   );
 
   // FILTER
@@ -76,7 +85,7 @@ const DataTable = (params: DataTableParams) => {
       const subjectSet: Set<string> = new Set();
       const teacherSet: Set<string> = new Set();
 
-      params.dataTable.forEach((item) => {
+      currentItems.forEach((item) => {
         semesterSet.add(Number(item.data["Học kỳ"]));
         yearSet.add(item.data["Năm học"]);
 
@@ -97,7 +106,7 @@ const DataTable = (params: DataTableParams) => {
         subjectValues: Array.from(subjectSet),
         teacherValues: Array.from(teacherSet),
       };
-    }, [params.dataTable]); // Chỉ tính toán lại khi params.dataTable thay đổi
+    }, [currentItems]); // Chỉ tính toán lại khi currentItems thay đổi
 
   const cancleDetailFilter = () => {
     setSemesterFilterSelected(0);
@@ -109,7 +118,7 @@ const DataTable = (params: DataTableParams) => {
   useEffect(() => {
     //  APPLY FILTER
 
-    let filteredData = params.dataTable;
+    let filteredData = currentItems;
 
     if (semesterFilterSelected !== 0) {
       filteredData = filteredData.filter((dataItem) => {
@@ -240,7 +249,7 @@ const DataTable = (params: DataTableParams) => {
     setTypeFilter(type);
     var sortedNewerDataTable = [] as (CourseDataItem | SubjectDataItem)[];
 
-    sortedNewerDataTable = sortDataTable(params.dataTable, type);
+    sortedNewerDataTable = sortDataTable(currentItems, type);
 
     setFilteredDataTable(sortedNewerDataTable);
   };
@@ -309,9 +318,13 @@ const DataTable = (params: DataTableParams) => {
             )}
 
             {params.isEditTable ? (
-              <IconButton text="Lưu" onClick={() => {
-                params.onSaveEditTable && params.onSaveEditTable(localDataTable)
-              }} />
+              <IconButton
+                text="Lưu"
+                onClick={() => {
+                  params.onSaveEditTable &&
+                    params.onSaveEditTable(localDataTable);
+                }}
+              />
             ) : params.isMultipleDelete ? (
               <>
                 <p className="text-sm font-medium">
@@ -330,6 +343,7 @@ const DataTable = (params: DataTableParams) => {
                 <IconButton
                   text="Thoát"
                   onClick={() => {
+                    setItemsSelected([]);
                     params.onClickGetOut && params.onClickGetOut();
                   }}
                   bgColor="bg-gray-500"
@@ -675,7 +689,7 @@ const DataTable = (params: DataTableParams) => {
       )}
 
       {/* TABLE */}
-      {params.dataTable.length > 0 && filteredDataTable.length === 0 ? (
+      {currentItems.length > 0 && filteredDataTable.length === 0 ? (
         <NoResult
           title="Không có dữ liệu!"
           description="💡 Bạn hãy thử tìm kiếm 1 từ khóa khác nhé."
@@ -729,7 +743,7 @@ const DataTable = (params: DataTableParams) => {
                   dataItem={dataItem}
                   isEditTable={params.isEditTable}
                   isMultipleDelete={params.isMultipleDelete}
-                  onClickCheckBox={(item: string) => {
+                  onClickCheckBoxSelect={(item: string) => {
                     setItemsSelected((prev) => [...prev, item]);
                   }}
                   onChangeRow={(updatedDataItem) => {
@@ -740,8 +754,8 @@ const DataTable = (params: DataTableParams) => {
                         return item;
                       }
                     });
-                    
-                    setLocalDataTable(updatedDataTable)
+
+                    setLocalDataTable(updatedDataTable);
                   }}
                 />
               ))}
@@ -749,6 +763,14 @@ const DataTable = (params: DataTableParams) => {
           </Table>
         </div>
       )}
+
+      {/* FOOTER */}
+      <Footer
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        totalItems={totalItems}
+        onPageChange={(newPage) => setCurrentPage(newPage)}
+      />
 
       {/* ALERT CONFIRM */}
       {isShowDialog ? (
@@ -773,6 +795,7 @@ const DataTable = (params: DataTableParams) => {
               <AlertDialogAction
                 onClick={() => {
                   setIsShowDialog(false);
+                  setItemsSelected([]);
                   params.onClickGetOut && params.onClickGetOut();
                   params.onClickDelete && params.onClickDelete();
                 }}
