@@ -41,17 +41,24 @@ interface DataTableParams {
 const DataTable = (params: DataTableParams) => {
   //Footer
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 30; // 30 items mỗi trang
-  const totalItems = params.dataTable.length; // Tổng số items, có thể lấy từ API
+  const itemsPerPage = 30;
+  const totalItems = params.dataTable.length;
 
   // Tính toán các items hiển thị dựa trên currentPage
-  const currentItems = params.dataTable.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  const currentItems = useMemo(() => {
+    return params.dataTable.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+  }, [params.dataTable, currentPage]); // Chỉ tính toán lại khi params.dataTable hoặc currentPage thay đổi
 
   // local dataTable sử dụng để edit lại data import hoặc PATCH API
   const [localDataTable, setLocalDataTable] = useState(currentItems);
+  // Biến localDataTable dùng để edit data phân trang từ data gốc
+  // nên data phân trang thay đổi thì cũng update localDataTable
+  useEffect(() => {
+    setLocalDataTable(currentItems);
+  }, [currentItems]);
 
   const [typeFilter, setTypeFilter] = useState(FilterType.None);
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
@@ -60,9 +67,8 @@ const DataTable = (params: DataTableParams) => {
   // SEARCH
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
-  const [filteredDataTable, setFilteredDataTable] = useState<
-    (CourseDataItem | SubjectDataItem)[]
-  >(currentItems);
+  const [filteredDataTable, setFilteredDataTable] =
+    useState<(CourseDataItem | SubjectDataItem)[]>(currentItems);
 
   useSetDebounceSearchTerm(setDebouncedSearchTerm, searchTerm);
   useDebounceSearchDataTable(
@@ -321,8 +327,20 @@ const DataTable = (params: DataTableParams) => {
               <IconButton
                 text="Lưu"
                 onClick={() => {
+                  // Kết hợp localDataTable với params.dataTable
+                  const updatedDataTable = [
+                    ...params.dataTable.slice(
+                      0,
+                      (currentPage - 1) * itemsPerPage
+                    ), // Các phần trước currentItems
+                    ...localDataTable, // Dữ liệu đã chỉnh sửa
+                    ...params.dataTable.slice(currentPage * itemsPerPage), // Các phần sau currentItems
+                  ];
+
+                  console.log("mangr 2", localDataTable);
+
                   params.onSaveEditTable &&
-                    params.onSaveEditTable(localDataTable);
+                    params.onSaveEditTable(updatedDataTable);
                 }}
               />
             ) : params.isMultipleDelete ? (
@@ -769,7 +787,7 @@ const DataTable = (params: DataTableParams) => {
         currentPage={currentPage}
         itemsPerPage={itemsPerPage}
         totalItems={totalItems}
-        onPageChange={(newPage) => setCurrentPage(newPage)}
+        onPageChange={(newPage) => setCurrentPage(newPage)} //HERE
       />
 
       {/* ALERT CONFIRM */}
