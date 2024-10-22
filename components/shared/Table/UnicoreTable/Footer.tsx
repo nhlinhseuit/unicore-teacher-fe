@@ -15,7 +15,15 @@ const Footer: React.FC<FooterProps> = ({
   onPageChange,
 }) => {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const [visibleRange, setVisibleRange] = useState<number[]>([1, 5]);
+  // Luôn đảm bảo currentPage nằm trong range
+  const getRangeForCurrentPage = (page: number): number[] => {
+    const start = Math.max(1, page - 2); // Hiển thị 2 trang trước currentPage
+    const end = Math.min(totalPages, page + 2); // Hiển thị 2 trang sau currentPage
+    return [start, end];
+  };
+
+  const [visibleRange, setVisibleRange] = useState<number[]>(getRangeForCurrentPage(currentPage));
+
 
   const handleNextRange = () => {
     const start = visibleRange[0] + 5;
