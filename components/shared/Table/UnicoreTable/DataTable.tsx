@@ -39,7 +39,8 @@ interface DataTableParams {
 }
 
 const DataTable = (params: DataTableParams) => {
-  //Footer
+  // ! FOOTER
+  const [isShowFooter, setIsShowFooter] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 30;
   const totalItems = params.dataTable.length;
@@ -52,19 +53,23 @@ const DataTable = (params: DataTableParams) => {
     );
   }, [params.dataTable, currentPage]); // Chỉ tính toán lại khi params.dataTable hoặc currentPage thay đổi
 
-  // local dataTable sử dụng để edit lại data import hoặc PATCH API
+  // * Local dataTable sử dụng để edit lại data import hoặc PATCH API
   const [localDataTable, setLocalDataTable] = useState(currentItems);
+
+  // *
   // Biến localDataTable dùng để edit data phân trang từ data gốc
   // nên data phân trang thay đổi thì cũng update localDataTable
+  // *
   useEffect(() => {
     setLocalDataTable(currentItems);
+    setFilteredDataTable(currentItems);
   }, [currentItems]);
 
   const [typeFilter, setTypeFilter] = useState(FilterType.None);
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
   const [isShowDialog, setIsShowDialog] = useState(false);
 
-  // SEARCH
+  // ! SEARCH GENERAL
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [filteredDataTable, setFilteredDataTable] =
@@ -74,10 +79,11 @@ const DataTable = (params: DataTableParams) => {
   useDebounceSearchDataTable(
     debouncedSearchTerm,
     setFilteredDataTable,
+    params.dataTable,
     currentItems
   );
 
-  // FILTER
+  // ! DETAIL FILTER
   const [semesterFilterSelected, setSemesterFilterSelected] = useState(0);
   const [yearFilterSelected, setYearFilterSelected] = useState(0);
   const [subjectFilterSelected, setSubjectFilterSelected] = useState("");
@@ -91,7 +97,7 @@ const DataTable = (params: DataTableParams) => {
       const subjectSet: Set<string> = new Set();
       const teacherSet: Set<string> = new Set();
 
-      currentItems.forEach((item) => {
+      params.dataTable.forEach((item) => {
         semesterSet.add(Number(item.data["Học kỳ"]));
         yearSet.add(item.data["Năm học"]);
 
@@ -121,10 +127,30 @@ const DataTable = (params: DataTableParams) => {
     setTeacherFilterSelected("");
   };
 
+  //  ! APPLY FILTER
   useEffect(() => {
-    //  APPLY FILTER
+    // * Filter là filter trong dataTable
+    // *
+    // chỉ cần 1 trong các filter dropdown có giá trị thì tắt footer pagination
+    // bật footer pagination lại nếu kh có giá trị
+    // *
 
-    let filteredData = currentItems;
+    let filteredData;
+    
+    if (
+      !(
+        semesterFilterSelected == 0 &&
+        yearFilterSelected == 0 &&
+        subjectFilterSelected == "" &&
+        teacherFilterSelected == ""
+      )
+    ) {
+      filteredData = params.dataTable;
+      setIsShowFooter(false)
+    } else {
+      filteredData = currentItems;
+      setIsShowFooter(true)
+    }
 
     if (semesterFilterSelected !== 0) {
       filteredData = filteredData.filter((dataItem) => {
@@ -170,7 +196,7 @@ const DataTable = (params: DataTableParams) => {
     teacherFilterSelected,
   ]);
 
-  // SEARCH IN EACH DETAIL FILTER
+  // ! SEARCH IN EACH DETAIL FILTER
 
   // semester
   const [searchTermSemesterFilter, setSearchTermSemesterFilter] = useState("");
@@ -250,14 +276,22 @@ const DataTable = (params: DataTableParams) => {
     teacherValues
   );
 
-  // FUNCTION
+  // ! OTHERS FUNCTION
+  // Bộ lọc mới - cũ
   const handleChooseFilter = (type: FilterType) => {
     setTypeFilter(type);
     var sortedNewerDataTable = [] as (CourseDataItem | SubjectDataItem)[];
 
-    sortedNewerDataTable = sortDataTable(currentItems, type);
+    sortedNewerDataTable = sortDataTable(params.dataTable, type);
 
-    setFilteredDataTable(sortedNewerDataTable);
+    // lấy data mới đã sort, sau đó hiển thị bằng pagination từ trang 1
+    if (currentPage != 1) setCurrentPage(1);
+    var updatedDataTablePagination =  sortedNewerDataTable.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+
+    setFilteredDataTable(updatedDataTablePagination);
   };
 
   const sortDataTable = (
@@ -503,10 +537,8 @@ const DataTable = (params: DataTableParams) => {
                       type="radio"
                       name="filterOptions"
                       value={FilterType.DetailFilter}
-                      onChange={
-                        () => handleChooseFilter(FilterType.DetailFilter)
-
-                        // filterDataTable
+                      onChange={() =>
+                        handleChooseFilter(FilterType.DetailFilter)
                       }
                       className="w-4 h-4  cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600"
                     />
@@ -783,12 +815,16 @@ const DataTable = (params: DataTableParams) => {
       )}
 
       {/* FOOTER */}
-      <Footer
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage}
-        totalItems={totalItems}
-        onPageChange={(newPage) => setCurrentPage(newPage)} //HERE
-      />
+      {!isShowFooter || searchTerm !== "" ? (
+        <></>
+      ) : (
+        <Footer
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          totalItems={totalItems}
+          onPageChange={(newPage) => setCurrentPage(newPage)} //HERE
+        />
+      )}
 
       {/* ALERT CONFIRM */}
       {isShowDialog ? (

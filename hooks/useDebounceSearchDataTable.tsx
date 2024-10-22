@@ -8,10 +8,13 @@ const useDebounceSearchDataTable = (
   dataSource: | CourseDataItem[]
   | SubjectDataItem[]
   | (CourseDataItem | SubjectDataItem)[],
+  currentItems: | CourseDataItem[]
+  | SubjectDataItem[]
+  | (CourseDataItem | SubjectDataItem)[],
 ) => {
     useEffect(() => {
         if (debouncedSearchTerm.trim() === "") {
-          setFilteredDataTable(dataSource); // Nếu không có từ khóa tìm kiếm, hiển thị tất cả dữ liệu
+          setFilteredDataTable(currentItems); // Nếu không có từ khóa tìm kiếm, hiển thị tất cả dữ liệu
         } else {
           const filteredData = dataSource.filter((dataItem) => {
             return Object.values(dataItem.data).some((value) => {
