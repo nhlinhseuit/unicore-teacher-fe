@@ -8,6 +8,7 @@ import DataTable from "./DataTable";
 import ErrorComponent from "../Status/ErrorComponent";
 import TableSkeleton from "./TableSkeleton";
 import NoResult from "../../NoResult";
+import { useToast } from "@/hooks/use-toast";
 
 export default function CoursesDataTable() {
   const [isEditTable, setIsEditTable] = useState(false);
@@ -94,6 +95,8 @@ export default function CoursesDataTable() {
     };
   };
 
+  const { toast } = useToast();
+
   return (
     <div>
       {errorMessages.length > 0 && (
@@ -150,16 +153,24 @@ export default function CoursesDataTable() {
               setIsMultipleDelete(true);
             }}
             onClickDelete={(itemsSelected: string[]) => {
-              setDataTable(prevData => {
-                return prevData.map(item => {
+              setDataTable((prevData) => {
+                return prevData.map((item) => {
                   if (itemsSelected.includes(item.data["Mã lớp"])) {
                     return {
                       ...item,
-                      isDeleted: true
+                      isDeleted: true,
                     };
                   }
                   return item;
                 });
+              });
+
+              toast({
+                title: "Xóa thành công",
+                description: `${`Các lớp ${itemsSelected.join(
+                  ", "
+                )} đã được xóa.`}`,
+                variant: "success",
               });
             }}
             onClickGetOut={() => {

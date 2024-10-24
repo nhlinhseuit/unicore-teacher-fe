@@ -1,5 +1,5 @@
 import LeftSideBar from "@/components/shared/LeftSideBar";
-import Navbar from "@/components/shared/navbar/Navbar";
+import { Toaster } from "@/components/ui/toaster";
 import React from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
@@ -26,6 +26,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
         {/* RIGHT SIDEBAR */}
         {/* <RightSideBar /> */}
+
+        {/* TOAST */}
+        <div className="fixed top-10 right-10 z-50">
+          <Toaster />
+        </div>
       </div>
 
       {/* Toaster */}
