@@ -20,9 +20,15 @@ import NoResult from "../../NoResult";
 import TableSearch from "../../search/TableSearch";
 import Image from "next/image";
 import useSetDebounceSearchTerm from "@/hooks/useSetDebounceSearchTerm";
-import useDebounceSearch from "@/hooks/useDebounceSearchDropdown";
+import useDebounceSearchDropdown from "@/hooks/useDebounceSearchDropdown";
 import useDebounceSearchDataTable from "@/hooks/useDebounceSearchDataTable";
 import Footer from "./Footer";
+
+// TODO: filteredData là để render giao diện (search, filter old new, detail filter)
+// TODO: localData là để handle save (khi edit từ search, filter old new, detail filter, pagination)
+// TODO: currentItems là để pagination cho dataTable (footer)
+
+// ! KHI LÀM NÚT XÓA, THÌ CHUYỂN BIẾN DELETED = 1 => KH HIỆN TRÊN BẢNG ===> ĐỒNG NHẤT VỚI CODE HANDLE SAVE
 
 interface DataTableParams {
   isEditTable: boolean;
@@ -51,92 +57,14 @@ const DataTable = (params: DataTableParams) => {
       (currentPage - 1) * itemsPerPage,
       currentPage * itemsPerPage
     );
-  }, [params.dataTable, currentPage]); // Chỉ tính toán lại khi params.dataTable hoặc currentPage thay đổi
+  }, [params.dataTable, currentPage]); // * Khi dataTable thì currentItems cũng cập nhật để update dữ liệu kh bị cũ
 
   // * Local dataTable sử dụng để edit lại data import hoặc PATCH API
   const [localDataTable, setLocalDataTable] = useState(currentItems);
 
-  // *
-  // Biến localDataTable dùng để edit data phân trang từ data gốc
-  // nên data phân trang thay đổi thì cũng update localDataTable
-  // *
-  useEffect(() => {
-    setLocalDataTable(currentItems);
-    setFilteredDataTable(currentItems);
-  }, [currentItems]);
-
-  const [typeFilter, setTypeFilter] = useState(FilterType.None);
-  const [itemsSelected, setItemsSelected] = useState<string[]>([]);
-  const [isShowDialog, setIsShowDialog] = useState(false);
-
-  // ! SEARCH GENERAL
-  const [searchTerm, setSearchTerm] = useState("");
-  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
-  const [filteredDataTable, setFilteredDataTable] =
-    useState<(CourseDataItem | SubjectDataItem)[]>(currentItems);
-
-  useSetDebounceSearchTerm(setDebouncedSearchTerm, searchTerm);
-  useDebounceSearchDataTable(
-    debouncedSearchTerm,
-    setFilteredDataTable,
-    params.dataTable,
-    currentItems
-  );
-
-  // ! DETAIL FILTER
-  const [semesterFilterSelected, setSemesterFilterSelected] = useState(0);
-  const [yearFilterSelected, setYearFilterSelected] = useState(0);
-  const [subjectFilterSelected, setSubjectFilterSelected] = useState("");
-  const [teacherFilterSelected, setTeacherFilterSelected] = useState("");
-
-  // Sử dụng useMemo để tạo các giá trị chỉ một lần khi render component
-  const { semesterValues, yearValues, subjectValues, teacherValues } =
-    useMemo(() => {
-      const semesterSet: Set<number> = new Set();
-      const yearSet: Set<number> = new Set();
-      const subjectSet: Set<string> = new Set();
-      const teacherSet: Set<string> = new Set();
-
-      params.dataTable.forEach((item) => {
-        semesterSet.add(Number(item.data["Học kỳ"]));
-        yearSet.add(item.data["Năm học"]);
-
-        if (item.type === "course") {
-          subjectSet.add((item as CourseDataItem).data["Tên môn học"]);
-
-          (item as CourseDataItem).data["Tên GV"]
-            .split(/\r\n|\n/)
-            .forEach((name) => {
-              teacherSet.add(name);
-            });
-        }
-      });
-
-      return {
-        semesterValues: Array.from(semesterSet).sort((a, b) => a - b),
-        yearValues: Array.from(yearSet).sort((a, b) => a - b),
-        subjectValues: Array.from(subjectSet),
-        teacherValues: Array.from(teacherSet),
-      };
-    }, [currentItems]); // Chỉ tính toán lại khi currentItems thay đổi
-
-  const cancleDetailFilter = () => {
-    setSemesterFilterSelected(0);
-    setYearFilterSelected(0);
-    setSubjectFilterSelected("");
-    setTeacherFilterSelected("");
-  };
-
-  //  ! APPLY FILTER
-  useEffect(() => {
-    // * Filter là filter trong dataTable
-    // *
-    // chỉ cần 1 trong các filter dropdown có giá trị thì tắt footer pagination
-    // bật footer pagination lại nếu kh có giá trị
-    // *
-
+  let applyFilter = () => {
     let filteredData;
-    
+
     if (
       !(
         semesterFilterSelected == 0 &&
@@ -145,11 +73,15 @@ const DataTable = (params: DataTableParams) => {
         teacherFilterSelected == ""
       )
     ) {
+      setSearchTerm("");
       filteredData = params.dataTable;
-      setIsShowFooter(false)
+      setIsShowFooter(false);
     } else {
+      // TODO: Nếu không có detail filter, hiển thị dữ liệu về dạng pagination (giống trong debounce search)
       filteredData = currentItems;
-      setIsShowFooter(true)
+      setIsShowFooter(true);
+      setFilteredDataTable(filteredData);
+      return;
     }
 
     if (semesterFilterSelected !== 0) {
@@ -189,6 +121,118 @@ const DataTable = (params: DataTableParams) => {
     }
 
     setFilteredDataTable(filteredData);
+  };
+
+  useEffect(() => {
+    // * => (HANDLE ĐƯỢC 2 TRƯỜNG HỢP)
+    // TODO. TH1: CLICK SANG TRANG MỚI -> CURRENTPAGE ĐỔI -> CURRENT ITEMS ĐỔI (KHÔNG CÓ FILTER) => APPLYFILTER VẪN HANDLE ĐƯỢC
+    // TODO. TH2: ĐANG Ở DETAIL FILTER DATA, THÌ DATATABLE CẬP NHẬT -> VÀO APPLY FILTER LẠI
+
+    applyFilter();
+    // setFilteredDataTable(currentItems);
+  }, [currentItems]);
+
+  const [typeFilter, setTypeFilter] = useState(FilterType.None);
+  // Bộ lọc mới - cũ
+  const handleChooseFilter = (type: FilterType) => {
+    if (type !== FilterType.None) setSearchTerm("");
+    setTypeFilter(type);
+    var sortedNewerDataTable = [] as (CourseDataItem | SubjectDataItem)[];
+
+    sortedNewerDataTable = sortDataTable(params.dataTable, type);
+
+    // lấy data mới đã sort, sau đó hiển thị bằng pagination từ trang 1
+    if (currentPage != 1) setCurrentPage(1);
+    var updatedDataTablePagination = sortedNewerDataTable.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
+    );
+
+    setFilteredDataTable(updatedDataTablePagination);
+  };
+
+  const cancelDetailFilter = () => {
+    setSemesterFilterSelected(0);
+    setYearFilterSelected(0);
+    setSubjectFilterSelected("");
+    setTeacherFilterSelected("");
+  };
+
+  const [itemsSelected, setItemsSelected] = useState<string[]>([]);
+  const [isShowDialog, setIsShowDialog] = useState(false);
+
+  // ! SEARCH GENERAL
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+  const [filteredDataTable, setFilteredDataTable] =
+    useState<(CourseDataItem | SubjectDataItem)[]>(currentItems);
+
+  useSetDebounceSearchTerm(setDebouncedSearchTerm, searchTerm);
+  useDebounceSearchDataTable(
+    debouncedSearchTerm,
+    setFilteredDataTable,
+    applyFilter,
+    cancelDetailFilter,
+    handleChooseFilter,
+    params.dataTable,
+    currentItems
+  );
+
+  // TODO Đồng bộ filteredDataTable với localDataTable khi localDataTable thay đổi
+  // *
+  // Biến localDataTable dùng để edit data phân trang từ data gốc
+  // nên data phân trang thay đổi thì cũng update localDataTable
+  // *
+  useEffect(() => {
+    setLocalDataTable([...filteredDataTable]);
+  }, [filteredDataTable]); // Chạy mỗi khi filteredDataTable thay đổi
+
+  // ! DETAIL FILTER
+  const [semesterFilterSelected, setSemesterFilterSelected] = useState(0);
+  const [yearFilterSelected, setYearFilterSelected] = useState(0);
+  const [subjectFilterSelected, setSubjectFilterSelected] = useState("");
+  const [teacherFilterSelected, setTeacherFilterSelected] = useState("");
+
+  // Sử dụng useMemo để tạo các giá trị chỉ một lần khi render component
+  const { semesterValues, yearValues, subjectValues, teacherValues } =
+    useMemo(() => {
+      const semesterSet: Set<number> = new Set();
+      const yearSet: Set<number> = new Set();
+      const subjectSet: Set<string> = new Set();
+      const teacherSet: Set<string> = new Set();
+
+      params.dataTable.forEach((item) => {
+        semesterSet.add(Number(item.data["Học kỳ"]));
+        yearSet.add(item.data["Năm học"]);
+
+        if (item.type === "course") {
+          subjectSet.add((item as CourseDataItem).data["Tên môn học"]);
+
+          (item as CourseDataItem).data["Tên GV"]
+            .split(/\r\n|\n/)
+            .forEach((name) => {
+              teacherSet.add(name);
+            });
+        }
+      });
+
+      return {
+        semesterValues: Array.from(semesterSet).sort((a, b) => a - b),
+        yearValues: Array.from(yearSet).sort((a, b) => a - b),
+        subjectValues: Array.from(subjectSet),
+        teacherValues: Array.from(teacherSet),
+      };
+    }, [currentItems]); // Chỉ tính toán lại khi currentItems thay đổi
+
+  //  ! APPLY FILTER
+  useEffect(() => {
+    // * Filter là filter trong dataTable
+    // *
+    // chỉ cần 1 trong các filter dropdown có giá trị thì tắt footer pagination
+    // bật footer pagination lại nếu kh có giá trị
+    // *
+
+    applyFilter();
   }, [
     semesterFilterSelected,
     yearFilterSelected,
@@ -212,7 +256,7 @@ const DataTable = (params: DataTableParams) => {
     searchTermSemesterFilter
   );
 
-  useDebounceSearch(
+  useDebounceSearchDropdown(
     debouncedSearchTermSemesterFilter,
     setFilteredSemesterValues,
     semesterValues
@@ -230,7 +274,7 @@ const DataTable = (params: DataTableParams) => {
     searchTermYearFilter
   );
 
-  useDebounceSearch(
+  useDebounceSearchDropdown(
     debouncedSearchTermYearFilter,
     setFilteredYearValues,
     yearValues
@@ -250,7 +294,7 @@ const DataTable = (params: DataTableParams) => {
     searchTermSubjectFilter
   );
 
-  useDebounceSearch(
+  useDebounceSearchDropdown(
     debouncedSearchTermSubjectFilter,
     setFilteredSubjectValues,
     subjectValues
@@ -270,29 +314,13 @@ const DataTable = (params: DataTableParams) => {
     searchTermTeacherFilter
   );
 
-  useDebounceSearch(
+  useDebounceSearchDropdown(
     debouncedSearchTermTeacherFilter,
     setFilteredTeacherValues,
     teacherValues
   );
 
   // ! OTHERS FUNCTION
-  // Bộ lọc mới - cũ
-  const handleChooseFilter = (type: FilterType) => {
-    setTypeFilter(type);
-    var sortedNewerDataTable = [] as (CourseDataItem | SubjectDataItem)[];
-
-    sortedNewerDataTable = sortDataTable(params.dataTable, type);
-
-    // lấy data mới đã sort, sau đó hiển thị bằng pagination từ trang 1
-    if (currentPage != 1) setCurrentPage(1);
-    var updatedDataTablePagination =  sortedNewerDataTable.slice(
-      (currentPage - 1) * itemsPerPage,
-      currentPage * itemsPerPage
-    );
-
-    setFilteredDataTable(updatedDataTablePagination);
-  };
 
   const sortDataTable = (
     data:
@@ -340,10 +368,14 @@ const DataTable = (params: DataTableParams) => {
       <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 p-4">
         {/* ACTION VỚI TABLE */}
         <div className="w-full md:w-1/2 mr-3">
-          <TableSearch
-            setSearchTerm={(value) => setSearchTerm(value)}
-            searchTerm={searchTerm}
-          />
+          {params.isEditTable || params.isMultipleDelete ? (
+            <></>
+          ) : (
+            <TableSearch
+              setSearchTerm={(value) => setSearchTerm(value)}
+              searchTerm={searchTerm}
+            />
+          )}
         </div>
         <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end flex-shrink-0">
           <div className="flex gap-2 items-center w-full md:w-auto">
@@ -361,20 +393,38 @@ const DataTable = (params: DataTableParams) => {
               <IconButton
                 text="Lưu"
                 onClick={() => {
-                  // Kết hợp localDataTable với params.dataTable
-                  const updatedDataTable = [
-                    ...params.dataTable.slice(
-                      0,
-                      (currentPage - 1) * itemsPerPage
-                    ), // Các phần trước currentItems
-                    ...localDataTable, // Dữ liệu đã chỉnh sửa
-                    ...params.dataTable.slice(currentPage * itemsPerPage), // Các phần sau currentItems
-                  ];
+                  // // ? HÀM LƯU ĐỐI VỚI PAGINATION
+                  // // Kết hợp localDataTable với params.dataTable
+                  // const updatedDataTable = [
+                  //   ...params.dataTable.slice(
+                  //     0,
+                  //     (currentPage - 1) * itemsPerPage
+                  //   ), // Các phần trước currentItems
+                  //   ...localDataTable, // Dữ liệu đã chỉnh sửa (currentItems)
+                  //   ...params.dataTable.slice(currentPage * itemsPerPage), // Các phần sau currentItems
+                  // ];
+                  // params.onSaveEditTable &&
+                  //   params.onSaveEditTable(updatedDataTable);
 
-                  console.log("mangr 2", localDataTable);
+                  // // ? HÀM LƯU ĐỐI VỚI FILTERDATA
+                  // params.onSaveEditTable &&
+                  //   params.onSaveEditTable(updatedDataTable);
 
-                  params.onSaveEditTable &&
+                  // * HÀM LƯU GỘP CHUNG
+                  const updatedDataTable = params.dataTable.map((item) => {
+                    // Tìm item tương ứng trong localDataTable dựa vào STT (hoặc một identifier khác)
+                    const localItem = localDataTable.find(
+                      (local) => local.STT === item.STT
+                    );
+
+                    // * Nếu tìm thấy, cập nhật giá trị bằng localItem, ngược lại giữ nguyên item
+                    // * Trải item và localitem ra, nếu trùng nhau thì localItem ghi đè
+                    return localItem ? { ...item, ...localItem } : item;
+                  });
+
+                  if (params.onSaveEditTable) {
                     params.onSaveEditTable(updatedDataTable);
+                  }
                 }}
               />
             ) : params.isMultipleDelete ? (
@@ -457,7 +507,7 @@ const DataTable = (params: DataTableParams) => {
                 <Dropdown.Header>
                   <span
                     onClick={() => {
-                      cancleDetailFilter();
+                      cancelDetailFilter();
                       handleChooseFilter(FilterType.None);
                     }}
                     className="block truncate text-sm font-medium cursor-pointer"
@@ -815,7 +865,10 @@ const DataTable = (params: DataTableParams) => {
       )}
 
       {/* FOOTER */}
-      {!isShowFooter || searchTerm !== "" ? (
+      {!isShowFooter ||
+      searchTerm !== "" ||
+      params.isEditTable ||
+      params.isMultipleDelete ? (
         <></>
       ) : (
         <Footer
