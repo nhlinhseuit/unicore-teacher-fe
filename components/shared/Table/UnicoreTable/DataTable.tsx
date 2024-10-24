@@ -19,9 +19,9 @@ import {
 import NoResult from "../../NoResult";
 import TableSearch from "../../search/TableSearch";
 import Image from "next/image";
-import useSetDebounceSearchTerm from "@/hooks/useSetDebounceSearchTerm";
-import useDebounceSearchDropdown from "@/hooks/useDebounceSearchDropdown";
-import useDebounceSearchDataTable from "@/hooks/useDebounceSearchDataTable";
+import useSetDebounceSearchTerm from "@/hooks/table/useSetDebounceSearchTerm";
+import useDetailFilter from "@/hooks/table/useDetailFilter";
+import useDebounceSearchDataTable from "@/hooks/table/useDebounceSearchDataTable";
 import Footer from "./Footer";
 
 // TODO: filteredData là để render giao diện (search, filter old new, detail filter)
@@ -247,82 +247,35 @@ const DataTable = (params: DataTableParams) => {
   // ! SEARCH IN EACH DETAIL FILTER
 
   // semester
-  const [searchTermSemesterFilter, setSearchTermSemesterFilter] = useState("");
-  const [
-    debouncedSearchTermSemesterFilter,
-    setDebouncedSearchTermSemesterFilter,
-  ] = useState(searchTermSemesterFilter);
-  const [filteredSemesterValues, setFilteredSemesterValues] =
-    useState<number[]>(semesterValues);
-
-  useSetDebounceSearchTerm(
-    setDebouncedSearchTermSemesterFilter,
-    searchTermSemesterFilter
-  );
-
-  useDebounceSearchDropdown(
-    debouncedSearchTermSemesterFilter,
-    setFilteredSemesterValues,
-    semesterValues
-  );
+  const {
+    searchTerm: searchTermSemesterFilter,
+    setSearchTerm: setSearchTermSemesterFilter,
+    filteredValues: filteredSemesterValues
+  } = useDetailFilter<number>(semesterValues);
 
   // year
-  const [searchTermYearFilter, setSearchTermYearFilter] = useState("");
-  const [debouncedSearchTermYearFilter, setDebouncedSearchTermYearFilter] =
-    useState(searchTermYearFilter);
-  const [filteredYearValues, setFilteredYearValues] =
-    useState<number[]>(yearValues);
+  const {
+    searchTerm: searchTermYearFilter,
+    setSearchTerm: setSearchTermYearFilter,
+    filteredValues: filteredYearValues
+  } = useDetailFilter<number>(yearValues);
 
-  useSetDebounceSearchTerm(
-    setDebouncedSearchTermYearFilter,
-    searchTermYearFilter
-  );
-
-  useDebounceSearchDropdown(
-    debouncedSearchTermYearFilter,
-    setFilteredYearValues,
-    yearValues
-  );
 
   // subject
-  const [searchTermSubjectFilter, setSearchTermSubjectFilter] = useState("");
-  const [
-    debouncedSearchTermSubjectFilter,
-    setDebouncedSearchTermSubjectFilter,
-  ] = useState(searchTermSubjectFilter);
-  const [filteredSubjectValues, setFilteredSubjectValues] =
-    useState<string[]>(subjectValues);
-
-  useSetDebounceSearchTerm(
-    setDebouncedSearchTermSubjectFilter,
-    searchTermSubjectFilter
-  );
-
-  useDebounceSearchDropdown(
-    debouncedSearchTermSubjectFilter,
-    setFilteredSubjectValues,
-    subjectValues
-  );
+  const {
+    searchTerm: searchTermSubjectFilter,
+    setSearchTerm: setSearchTermSubjectFilter,
+    filteredValues: filteredSubjectValues
+  } = useDetailFilter<string>(subjectValues);
+  
 
   // teacher
-  const [searchTermTeacherFilter, setSearchTermTeacherFilter] = useState("");
-  const [
-    debouncedSearchTermTeacherFilter,
-    setDebouncedSearchTermTeacherFilter,
-  ] = useState(searchTermTeacherFilter);
-  const [filteredTeacherValues, setFilteredTeacherValues] =
-    useState<string[]>(teacherValues);
+  const {
+    searchTerm: searchTermTeacherFilter,
+    setSearchTerm: setSearchTermTeacherFilter,
+    filteredValues: filteredTeacherValues
+  } = useDetailFilter<string>(teacherValues);
 
-  useSetDebounceSearchTerm(
-    setDebouncedSearchTermTeacherFilter,
-    searchTermTeacherFilter
-  );
-
-  useDebounceSearchDropdown(
-    debouncedSearchTermTeacherFilter,
-    setFilteredTeacherValues,
-    teacherValues
-  );
 
   // ! OTHERS FUNCTION
 
