@@ -153,6 +153,7 @@ export default function CoursesDataTable() {
               setIsMultipleDelete(true);
             }}
             onClickDelete={(itemsSelected: string[]) => {
+              // ? DELETE THEO MÃ LỚP
               setDataTable((prevData) => {
                 return prevData.map((item) => {
                   if (itemsSelected.includes(item.data["Mã lớp"])) {

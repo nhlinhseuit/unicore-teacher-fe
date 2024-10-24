@@ -45,19 +45,23 @@ interface DataTableParams {
 }
 
 const DataTable = (params: DataTableParams) => {
+  const dataTable = useMemo(() => {
+    return params.dataTable.filter((dataItem) => dataItem.isDeleted !== true);
+  }, [params.dataTable]);
+
   // ! FOOTER
   const [isShowFooter, setIsShowFooter] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 30;
-  const totalItems = params.dataTable.length;
+  const totalItems = dataTable.length;
 
   // Tính toán các items hiển thị dựa trên currentPage
   const currentItems = useMemo(() => {
-    return params.dataTable.slice(
+    return dataTable.slice(
       (currentPage - 1) * itemsPerPage,
       currentPage * itemsPerPage
     );
-  }, [params.dataTable, currentPage]); // * Khi dataTable thì currentItems cũng cập nhật để update dữ liệu kh bị cũ
+  }, [dataTable, currentPage]); // * Khi dataTable thì currentItems cũng cập nhật để update dữ liệu kh bị cũ
 
   // * Local dataTable sử dụng để edit lại data import hoặc PATCH API
   const [localDataTable, setLocalDataTable] = useState(currentItems);
@@ -74,7 +78,7 @@ const DataTable = (params: DataTableParams) => {
       )
     ) {
       setSearchTerm("");
-      filteredData = params.dataTable;
+      filteredData = dataTable;
       setIsShowFooter(false);
     } else {
       // TODO: Nếu không có detail filter, hiển thị dữ liệu về dạng pagination (giống trong debounce search)
@@ -139,7 +143,7 @@ const DataTable = (params: DataTableParams) => {
     setTypeFilter(type);
     var sortedNewerDataTable = [] as (CourseDataItem | SubjectDataItem)[];
 
-    sortedNewerDataTable = sortDataTable(params.dataTable, type);
+    sortedNewerDataTable = sortDataTable(dataTable, type);
 
     // lấy data mới đã sort, sau đó hiển thị bằng pagination từ trang 1
     if (currentPage != 1) setCurrentPage(1);
@@ -174,7 +178,7 @@ const DataTable = (params: DataTableParams) => {
     applyFilter,
     cancelDetailFilter,
     handleChooseFilter,
-    params.dataTable,
+    dataTable,
     currentItems
   );
 
@@ -201,7 +205,7 @@ const DataTable = (params: DataTableParams) => {
       const subjectSet: Set<string> = new Set();
       const teacherSet: Set<string> = new Set();
 
-      params.dataTable.forEach((item) => {
+      dataTable.forEach((item) => {
         semesterSet.add(Number(item.data["Học kỳ"]));
         yearSet.add(item.data["Năm học"]);
 
@@ -394,14 +398,14 @@ const DataTable = (params: DataTableParams) => {
                 text="Lưu"
                 onClick={() => {
                   // // ? HÀM LƯU ĐỐI VỚI PAGINATION
-                  // // Kết hợp localDataTable với params.dataTable
+                  // // Kết hợp localDataTable với dataTable
                   // const updatedDataTable = [
-                  //   ...params.dataTable.slice(
+                  //   ...dataTable.slice(
                   //     0,
                   //     (currentPage - 1) * itemsPerPage
                   //   ), // Các phần trước currentItems
                   //   ...localDataTable, // Dữ liệu đã chỉnh sửa (currentItems)
-                  //   ...params.dataTable.slice(currentPage * itemsPerPage), // Các phần sau currentItems
+                  //   ...dataTable.slice(currentPage * itemsPerPage), // Các phần sau currentItems
                   // ];
                   // params.onSaveEditTable &&
                   //   params.onSaveEditTable(updatedDataTable);
@@ -411,7 +415,7 @@ const DataTable = (params: DataTableParams) => {
                   //   params.onSaveEditTable(updatedDataTable);
 
                   // * HÀM LƯU GỘP CHUNG
-                  const updatedDataTable = params.dataTable.map((item) => {
+                  const updatedDataTable = dataTable.map((item) => {
                     // Tìm item tương ứng trong localDataTable dựa vào STT (hoặc một identifier khác)
                     const localItem = localDataTable.find(
                       (local) => local.STT === item.STT
