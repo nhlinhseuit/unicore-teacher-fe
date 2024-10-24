@@ -5,13 +5,19 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const normalizeSearchItem = (term: string|number) => {
+export const normalizeSearchItem = (term: string | number) => {
   const lowerCaseTerm = term.toString().trim().toLowerCase();
   // Chuyển đổi ký tự có dấu thành không dấu
-  const normalizedTerm = lowerCaseTerm.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+  const normalizedTerm = lowerCaseTerm
+    .normalize("NFD") // Phân tách các ký tự có dấu
+    .replace(/[\u0300-\u036f]/g, '') // Loại bỏ dấu
+    .replace(/đ/g, 'd') // Thay thế "đ" thành "d"
+    .replace(/Đ/g, 'D'); // Thay thế "Đ" thành "D"
+    
   // Giữ lại khoảng trắng và ký tự chữ và số
   return normalizedTerm.replace(/[^a-z0-9\s]/g, '');
 }
+
 
 
 export const getTimestamp = (createdAt: Date): string => {
