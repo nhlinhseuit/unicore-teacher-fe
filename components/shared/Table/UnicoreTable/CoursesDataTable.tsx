@@ -65,6 +65,7 @@ export default function CoursesDataTable() {
         return {
           type: "course",
           STT: item.STT,
+          isDeleted: false,
           data: {
             "Mã môn học": item["MÃ MH"],
             "Mã lớp": item["MÃ LỚP"],
@@ -148,7 +149,19 @@ export default function CoursesDataTable() {
             onClickMultipleDelete={() => {
               setIsMultipleDelete(true);
             }}
-            onClickDelete={() => {}}
+            onClickDelete={(itemsSelected: string[]) => {
+              setDataTable(prevData => {
+                return prevData.map(item => {
+                  if (itemsSelected.includes(item.data["Mã lớp"])) {
+                    return {
+                      ...item,
+                      isDeleted: true
+                    };
+                  }
+                  return item;
+                });
+              });
+            }}
             onClickGetOut={() => {
               setIsMultipleDelete(false);
             }}

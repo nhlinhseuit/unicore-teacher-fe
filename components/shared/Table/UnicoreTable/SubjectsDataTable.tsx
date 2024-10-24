@@ -70,6 +70,7 @@ export default function SubjectsDataTable() {
         return {
           type: "subject",
           STT: item.STT,
+          isDeleted: false,
           data: {
             "Khoa QL": item["Khoa QL"],
             "Mã MH": item["Mã MH"],

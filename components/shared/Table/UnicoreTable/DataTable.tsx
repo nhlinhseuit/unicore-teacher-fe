@@ -36,7 +36,7 @@ interface DataTableParams {
   onClickEditTable?: () => void;
   onSaveEditTable?: (localDataTable: any) => void;
   onClickMultipleDelete?: () => void;
-  onClickDelete?: () => void;
+  onClickDelete?: (itemsSelected: string[]) => void;
   onClickGetOut?: () => void;
   dataTable:
     | CourseDataItem[]
@@ -837,28 +837,32 @@ const DataTable = (params: DataTableParams) => {
 
             {/* BODY */}
             <Table.Body className="divide-y text-left">
-              {filteredDataTable.map((dataItem) => (
-                <Row
-                  key={dataItem.STT}
-                  dataItem={dataItem}
-                  isEditTable={params.isEditTable}
-                  isMultipleDelete={params.isMultipleDelete}
-                  onClickCheckBoxSelect={(item: string) => {
-                    setItemsSelected((prev) => [...prev, item]);
-                  }}
-                  onChangeRow={(updatedDataItem) => {
-                    var updatedDataTable = localDataTable.map((item) => {
-                      if (item.STT === updatedDataItem.STT) {
-                        return updatedDataItem;
-                      } else {
-                        return item;
-                      }
-                    });
+              {filteredDataTable.map((dataItem) =>
+                dataItem.isDeleted ? (
+                  <></>
+                ) : (
+                  <Row
+                    key={dataItem.STT}
+                    dataItem={dataItem}
+                    isEditTable={params.isEditTable}
+                    isMultipleDelete={params.isMultipleDelete}
+                    onClickCheckBoxSelect={(item: string) => {
+                      setItemsSelected((prev) => [...prev, item]);
+                    }}
+                    onChangeRow={(updatedDataItem) => {
+                      var updatedDataTable = localDataTable.map((item) => {
+                        if (item.STT === updatedDataItem.STT) {
+                          return updatedDataItem;
+                        } else {
+                          return item;
+                        }
+                      });
 
-                    setLocalDataTable(updatedDataTable);
-                  }}
-                />
-              ))}
+                      setLocalDataTable(updatedDataTable);
+                    }}
+                  />
+                )
+              )}
             </Table.Body>
           </Table>
         </div>
@@ -904,7 +908,7 @@ const DataTable = (params: DataTableParams) => {
                   setIsShowDialog(false);
                   setItemsSelected([]);
                   params.onClickGetOut && params.onClickGetOut();
-                  params.onClickDelete && params.onClickDelete();
+                  params.onClickDelete && params.onClickDelete(itemsSelected);
                 }}
               >
                 Đồng ý

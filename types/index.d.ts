@@ -44,6 +44,7 @@ export interface SubjectData {
 export interface CourseDataItem {
   type: string,
   STT: string;
+  isDeleted: boolean,
   data: CourseData
 }
 
@@ -51,5 +52,6 @@ export interface CourseDataItem {
 export interface SubjectDataItem {
   type: string,
   STT: string;
+  isDeleted: boolean,
   data: SubjectData
 }
