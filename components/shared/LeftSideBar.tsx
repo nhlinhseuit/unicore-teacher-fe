@@ -17,12 +17,13 @@ const LeftSideBar = () => {
     flex-col
     justify-between
     background-light900_dark200
-    lg:w-[265px]
+    min-w-[265px]
+    max-w-[265px]
+    max-h-screen
+    z-50
     max-sm:hidden
 
-    light-border
     overflow-y-auto
-    sticky
     left-0
     top-0
     border-r
