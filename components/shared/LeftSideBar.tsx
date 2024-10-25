@@ -134,9 +134,6 @@ const LeftSideBar = () => {
             height={20}
             className="
                 invert-colors 
-                flex 
-                items-center 
-                justify-start gap-4 
                 max-lg:w-[52px]
                 bg-transparent p-4
                 lg:hidden"
@@ -166,9 +163,6 @@ const LeftSideBar = () => {
             height={20}
             className="
                 invert-colors 
-                flex 
-                items-center 
-                justify-start gap-4 
                 max-lg:w-[52px]
                 bg-transparent p-4
                 lg:hidden"

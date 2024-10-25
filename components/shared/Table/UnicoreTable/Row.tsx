@@ -123,7 +123,7 @@ const Row = (params: RowParams) => {
 
       {/* Các giá trị khác */}
       {Object.entries(params.dataItem.data).map(([key, value]) => {
-        let keyId;
+        let keyId: any;
         let data;
         switch (params.dataItem.type) {
           case "course":
@@ -160,12 +160,13 @@ const Row = (params: RowParams) => {
                           key: key,
                           newValue: e.target.checked,
                           isCheckbox: true,
-                        });
+                      });
                 }}
                 className="w-4 h-4 cursor-pointer"
               /> : <input
               type="checkbox"
               checked={isChecked}
+              onChange={() => {}}
               className="w-4 h-4 cursor-pointer"
             />
             )
@@ -178,6 +179,7 @@ const Row = (params: RowParams) => {
                     .filter((line, index, array) => array.length > 1 ? line.trim() !== "" : true)
                     .map((line, index) => (
                       <InputComponent
+                        key={`${keyId}_${line}_${index}`}
                         value={line as string | number}
                         placeholder={line as string | number}
                         //@ts-ignore
@@ -190,6 +192,7 @@ const Row = (params: RowParams) => {
                 </div>
               ) : (
                 <InputComponent
+                  key={`${keyId}_input_${key}_${value}`}
                   value={value as string | number}
                   placeholder={value as string | number}
                   //@ts-ignore
