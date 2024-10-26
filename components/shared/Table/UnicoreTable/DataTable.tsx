@@ -68,6 +68,9 @@ const DataTable = (params: DataTableParams) => {
     //   params.onSaveEditTable(updatedDataTable);
 
     // * HÀM LƯU GỘP CHUNG
+
+    console.log("localDataTable", localDataTable);
+
     const updatedDataTable = dataTable.map((item) => {
       // Tìm item tương ứng trong localDataTable dựa vào STT (hoặc một identifier khác)
       const localItem = localDataTable.find((local) => local.STT === item.STT);
@@ -76,6 +79,7 @@ const DataTable = (params: DataTableParams) => {
       // * Trải item và localitem ra, nếu trùng nhau thì localItem ghi đè
       return localItem ? { ...item, ...localItem } : item;
     });
+    console.log("save", updatedDataTable);
 
     if (params.onSaveEditTable) {
       params.onSaveEditTable(updatedDataTable);
@@ -359,7 +363,8 @@ const DataTable = (params: DataTableParams) => {
     }
   };
 
-  console.log('re-render datatable')
+  console.log("re-render datatable");
+  console.log("localDataTable", localDataTable);
 
   return (
     <div>
@@ -823,9 +828,15 @@ const DataTable = (params: DataTableParams) => {
                         }
                       });
 
-                      setLocalDataTable(updatedDataTable);
+                      setLocalDataTable((prevTable) =>
+                        prevTable.map((item) =>
+                          item.STT === updatedDataItem.STT
+                            ? updatedDataItem
+                            : item
+                        )
+                      );
                     }}
-                    saveDataTable={saveDataTable}
+                    // saveDataTable={saveDataTable}
                   />
                 )
               )}
