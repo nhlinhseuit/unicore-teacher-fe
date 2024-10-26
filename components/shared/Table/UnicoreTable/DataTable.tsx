@@ -384,7 +384,9 @@ const DataTable = (params: DataTableParams) => {
               <></>
             ) : (
               <IconButton
-                text="Tạo lớp học"
+                text={`${
+                  params.dataTable[0].type === "course" ? "Tạo lớp học" : "Tạo môn học"
+                }`}
                 onClick={() => {}}
                 iconLeft={"/assets/icons/add.svg"}
               />

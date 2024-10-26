@@ -2,6 +2,11 @@ import { SidebarLink } from "@/types";
 
 export const itemsPerPage = 30;
 
+export const DepartmentCoursesTabItems = [
+  { value: "listCourses", label: "Danh sách lớp học" },
+  { value: "joinedCourses", label: "Lớp học có tham gia" },
+];
+
 export enum FilterType {
   SortNewer,
   SortOlder,
@@ -13,7 +18,7 @@ export enum DetailFilter {
   Semester,
   Year,
   Subject,
-  Teacher
+  Teacher,
 }
 
 export const FilterTable = [
@@ -28,7 +33,6 @@ export const FilterTable = [
     ],
   },
 ];
-
 
 export const themes = [
   { value: "light", label: "Light", icon: "/assets/icons/sun.svg" },

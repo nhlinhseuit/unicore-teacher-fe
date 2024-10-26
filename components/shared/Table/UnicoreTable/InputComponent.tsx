@@ -34,7 +34,7 @@ const InputComponent = (params: InputParams) => {
         onChange={handleInputChange}
         style={{ width: 200 }}
         className="
-          max-w-full paragraph-regular no-focus placeholder  
+          paragraph-regular no-focus placeholder  
           background-light800_darkgradient
           shadow-none outline-none border-none truncate"
       />

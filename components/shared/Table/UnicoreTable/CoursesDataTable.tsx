@@ -1,6 +1,5 @@
 "use client";
 
-import IconButton from "../../IconButton";
 import { useState } from "react";
 import * as XLSX from "xlsx";
 import { CourseDataItem } from "@/types";
@@ -132,8 +131,13 @@ export default function CoursesDataTable() {
         <TableSkeleton />
       ) : dataTable.length > 0 ? (
         <>
-          <div className="flex justify-end gap-4 mb-5 items-center">
-            <p>Để scroll ngang, nhấn nút Shift và cuộn chuột</p>
+          <div className="flex justify-end gap-4 mb-3 items-center">
+            <p className="italic text-sm">* Học kỳ hiện tại: HK1, năm 2024</p>
+          </div>
+          <div className="flex justify-end gap-4 mb-3 items-center">
+            <p className="italic text-sm">
+              * Để scroll ngang, nhấn nút Shift và cuộn chuột
+            </p>
           </div>
 
           <DataTable

@@ -25,7 +25,7 @@ const LeftSideBar = () => {
     z-50
     max-sm:hidden
     overflow-y-auto
-    left-0
+    left-
     top-0
     border-r
     pt-4
