@@ -95,7 +95,8 @@ const Row = (params: RowParams) => {
                 value={
                   params.dataItem.type === "course"
                     ? (params.dataItem as CourseDataItem).data["Mã lớp"]
-                    : (params.dataItem as SubjectDataItem).data["Mã MH"]
+                     // ? DELETE THEO STT VÌ MÃ MÔN GIỐNG NHAU KHÁC HỆ ĐÀO TẠO
+                    : (params.dataItem as SubjectDataItem)["STT"]
                 }
                 onChange={() => {
                   {
@@ -103,7 +104,8 @@ const Row = (params: RowParams) => {
                       params.onClickCheckBoxSelect(
                         params.dataItem.type === "course"
                           ? (params.dataItem as CourseDataItem).data["Mã lớp"]
-                          : (params.dataItem as SubjectDataItem).data["Mã MH"]
+                           // ? DELETE THEO STT VÌ MÃ MÔN GIỐNG NHAU KHÁC HỆ ĐÀO TẠO
+                          : (params.dataItem as SubjectDataItem)["STT"]
                       );
                   }
                 }}

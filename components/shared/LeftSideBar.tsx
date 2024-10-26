@@ -19,10 +19,11 @@ const LeftSideBar = () => {
     background-light900_dark200
     min-w-[265px]
     max-w-[265px]
+    max-lg:min-w-fit
+
     max-h-screen
     z-50
     max-sm:hidden
-
     overflow-y-auto
     left-0
     top-0

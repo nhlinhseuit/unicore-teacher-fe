@@ -783,8 +783,8 @@ const DataTable = (params: DataTableParams) => {
 
               {Object.keys(filteredDataTable[0]?.data || {}).map((key) => (
                 <Table.HeadCell
-                  theme={tableTheme?.head?.cell}
                   key={key}
+                  theme={tableTheme?.head?.cell}
                   className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
                 >
                   {key}

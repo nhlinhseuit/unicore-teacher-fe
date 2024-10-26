@@ -7,6 +7,7 @@ import { SubjectDataItem } from "@/types";
 import DataTable from "./DataTable";
 import ErrorComponent from "../Status/ErrorComponent";
 import TableSkeleton from "./TableSkeleton";
+import { useToast } from "@/hooks/use-toast";
 
 export default function SubjectsDataTable() {
   const [isEditTable, setIsEditTable] = useState(false);
@@ -16,7 +17,7 @@ export default function SubjectsDataTable() {
   const [isLoading, setIsLoading] = useState(false);
 
   // XỬ LÝ UPLOAD FILE MÔN HỌC
-  const handleCoursesFileUpload = (e: any) => {
+  const handleSubjectsFileUpload = (e: any) => {
     setIsLoading(true);
     setErrorMessages([]);
     setDataTable([]);
@@ -74,6 +75,7 @@ export default function SubjectsDataTable() {
           data: {
             "Khoa QL": item["Khoa QL"],
             "Mã MH": item["Mã MH"],
+            "Tên môn học": item["Tên Môn học"],
             "Hình thức thi LT GIỮA KỲ": item["Hình thức thi\r\nLT GIỮA KỲ"],
             "Thời gian thi LT GIỮA KỲ": item["Thời gian thi\r\nLT GIỮA KỲ"],
             "Hình thức thi LT CUỐI KỲ": item["Hình thức thi\r\nLT CUỐI KỲ"],
@@ -88,7 +90,6 @@ export default function SubjectsDataTable() {
             "Lớp CDIO": item["Lớp\r\nCDIO"],
             "Học kỳ": item["Học kỳ"],
             "Năm học": item[" Năm học"],
-            "Tên môn học": item["Tên Môn học"],
           },
         };
       });
@@ -103,12 +104,15 @@ export default function SubjectsDataTable() {
     };
   };
 
+  const { toast } = useToast();
+
   return (
     <div>
       {errorMessages.length > 0 && (
         <div className="mb-6">
           {errorMessages.map((item, index) => (
             <ErrorComponent
+              key={item}
               text={item}
               onClickClose={() => {
                 setErrorMessages((prevErrors) =>
@@ -123,7 +127,7 @@ export default function SubjectsDataTable() {
       <input
         type="file"
         accept=".xlsx, .xls"
-        onChange={handleCoursesFileUpload}
+        onChange={handleSubjectsFileUpload}
       />
 
       <a
@@ -141,23 +145,50 @@ export default function SubjectsDataTable() {
           <>
             <div className="flex justify-end gap-4 mb-5 items-center">
               <p>Để scroll ngang, nhấn nút Shift và cuộn chuột</p>
-              <IconButton
-                text="Chỉnh sửa"
-                onClick={() => {
-                  setIsEditTable(true);
-                }}
-              />
-              <IconButton
-                text="Lưu"
-                onClick={() => {
-                  setIsEditTable(false);
-
-                  // API post data lên server
-                }}
-              />
             </div>
 
-            <DataTable dataTable={dataTable} isEditTable={isEditTable} isMultipleDelete={isMultipleDelete} />
+            <DataTable
+              dataTable={dataTable}
+              isEditTable={isEditTable}
+              isMultipleDelete={isMultipleDelete}
+              onClickEditTable={() => {
+                setIsEditTable(true);
+              }}
+              onSaveEditTable={(localDataTable) => {
+                setIsEditTable(false);
+                // set lại data import hoặc patch API
+                localDataTable = localDataTable as SubjectDataItem[];
+                setDataTable(localDataTable);
+              }}
+              onClickMultipleDelete={() => {
+                setIsMultipleDelete(true);
+              }}
+              onClickDelete={(itemsSelected: string[]) => {
+                // ? DELETE THEO STT VÌ MÃ MÔN GIỐNG NHAU KHÁC HỆ ĐÀO TẠO
+                setDataTable((prevData) => {
+                  return prevData.map((item) => {
+                    if (itemsSelected.includes(item["STT"])) {
+                      return {
+                        ...item,
+                        isDeleted: true,
+                      };
+                    }
+                    return item;
+                  });
+                });
+  
+                toast({
+                  title: "Xóa thành công",
+                  description: `${`Các lớp ${itemsSelected.join(
+                    ", "
+                  )} đã được xóa.`}`,
+                  variant: "success",
+                });
+              }}
+              onClickGetOut={() => {
+                setIsMultipleDelete(false);
+              }}
+            />
           </>
         )
       )}
