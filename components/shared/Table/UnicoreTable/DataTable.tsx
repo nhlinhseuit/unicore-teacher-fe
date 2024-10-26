@@ -5,7 +5,7 @@ import Row from "./Row";
 import { CourseDataItem, SubjectDataItem } from "@/types";
 import IconButton from "../../IconButton";
 import { useState, useEffect, useMemo } from "react";
-import { DetailFilter, FilterType } from "@/constants";
+import { DetailFilter, FilterType, itemsPerPage } from "@/constants";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -49,10 +49,42 @@ const DataTable = (params: DataTableParams) => {
     return params.dataTable.filter((dataItem) => dataItem.isDeleted !== true);
   }, [params.dataTable]);
 
+  const saveDataTable = () => {
+    // ? HÀM LƯU ĐỐI VỚI PAGINATION
+    // // Kết hợp localDataTable với dataTable
+    // const updatedDataTable = [
+    //   ...dataTable.slice(
+    //     0,
+    //     (currentPage - 1) * itemsPerPage
+    //   ), // Các phần trước currentItems
+    //   ...localDataTable, // Dữ liệu đã chỉnh sửa (currentItems)
+    //   ...dataTable.slice(currentPage * itemsPerPage), // Các phần sau currentItems
+    // ];
+    // params.onSaveEditTable &&
+    //   params.onSaveEditTable(updatedDataTable);
+
+    // ? HÀM LƯU ĐỐI VỚI FILTERDATA
+    // params.onSaveEditTable &&
+    //   params.onSaveEditTable(updatedDataTable);
+
+    // * HÀM LƯU GỘP CHUNG
+    const updatedDataTable = dataTable.map((item) => {
+      // Tìm item tương ứng trong localDataTable dựa vào STT (hoặc một identifier khác)
+      const localItem = localDataTable.find((local) => local.STT === item.STT);
+
+      // * Nếu tìm thấy, cập nhật giá trị bằng localItem, ngược lại giữ nguyên item
+      // * Trải item và localitem ra, nếu trùng nhau thì localItem ghi đè
+      return localItem ? { ...item, ...localItem } : item;
+    });
+
+    if (params.onSaveEditTable) {
+      params.onSaveEditTable(updatedDataTable);
+    }
+  };
+
   // ! FOOTER
   const [isShowFooter, setIsShowFooter] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 30;
   const totalItems = dataTable.length;
 
   // Tính toán các items hiển thị dựa trên currentPage
@@ -198,8 +230,18 @@ const DataTable = (params: DataTableParams) => {
   const [teacherFilterSelected, setTeacherFilterSelected] = useState("");
 
   // Sử dụng useMemo để tạo các giá trị chỉ một lần khi render component
+  // * subject kh co detail filter
   const { semesterValues, yearValues, subjectValues, teacherValues } =
     useMemo(() => {
+      if (dataTable[0].type === "subject") {
+        return {
+          semesterValues: [],
+          yearValues: [],
+          subjectValues: [],
+          teacherValues: [],
+        };
+      }
+
       const semesterSet: Set<number> = new Set();
       const yearSet: Set<number> = new Set();
       const subjectSet: Set<string> = new Set();
@@ -250,32 +292,29 @@ const DataTable = (params: DataTableParams) => {
   const {
     searchTerm: searchTermSemesterFilter,
     setSearchTerm: setSearchTermSemesterFilter,
-    filteredValues: filteredSemesterValues
+    filteredValues: filteredSemesterValues,
   } = useDetailFilter<number>(semesterValues);
 
   // year
   const {
     searchTerm: searchTermYearFilter,
     setSearchTerm: setSearchTermYearFilter,
-    filteredValues: filteredYearValues
+    filteredValues: filteredYearValues,
   } = useDetailFilter<number>(yearValues);
-
 
   // subject
   const {
     searchTerm: searchTermSubjectFilter,
     setSearchTerm: setSearchTermSubjectFilter,
-    filteredValues: filteredSubjectValues
+    filteredValues: filteredSubjectValues,
   } = useDetailFilter<string>(subjectValues);
-  
 
   // teacher
   const {
     searchTerm: searchTermTeacherFilter,
     setSearchTerm: setSearchTermTeacherFilter,
-    filteredValues: filteredTeacherValues
+    filteredValues: filteredTeacherValues,
   } = useDetailFilter<string>(teacherValues);
-
 
   // ! OTHERS FUNCTION
 
@@ -320,6 +359,8 @@ const DataTable = (params: DataTableParams) => {
     }
   };
 
+  console.log('re-render datatable')
+
   return (
     <div>
       <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 p-4">
@@ -347,43 +388,7 @@ const DataTable = (params: DataTableParams) => {
             )}
 
             {params.isEditTable ? (
-              <IconButton
-                text="Lưu"
-                onClick={() => {
-                  // // ? HÀM LƯU ĐỐI VỚI PAGINATION
-                  // // Kết hợp localDataTable với dataTable
-                  // const updatedDataTable = [
-                  //   ...dataTable.slice(
-                  //     0,
-                  //     (currentPage - 1) * itemsPerPage
-                  //   ), // Các phần trước currentItems
-                  //   ...localDataTable, // Dữ liệu đã chỉnh sửa (currentItems)
-                  //   ...dataTable.slice(currentPage * itemsPerPage), // Các phần sau currentItems
-                  // ];
-                  // params.onSaveEditTable &&
-                  //   params.onSaveEditTable(updatedDataTable);
-
-                  // // ? HÀM LƯU ĐỐI VỚI FILTERDATA
-                  // params.onSaveEditTable &&
-                  //   params.onSaveEditTable(updatedDataTable);
-
-                  // * HÀM LƯU GỘP CHUNG
-                  const updatedDataTable = dataTable.map((item) => {
-                    // Tìm item tương ứng trong localDataTable dựa vào STT (hoặc một identifier khác)
-                    const localItem = localDataTable.find(
-                      (local) => local.STT === item.STT
-                    );
-
-                    // * Nếu tìm thấy, cập nhật giá trị bằng localItem, ngược lại giữ nguyên item
-                    // * Trải item và localitem ra, nếu trùng nhau thì localItem ghi đè
-                    return localItem ? { ...item, ...localItem } : item;
-                  });
-
-                  if (params.onSaveEditTable) {
-                    params.onSaveEditTable(updatedDataTable);
-                  }
-                }}
-              />
+              <IconButton text="Lưu" onClick={saveDataTable} />
             ) : params.isMultipleDelete ? (
               <>
                 <p className="text-sm font-medium">
@@ -528,8 +533,9 @@ const DataTable = (params: DataTableParams) => {
                       Cũ nhất
                     </label>
                   </li>
-                  <li
-                    className="flex items-center
+                  {dataTable[0].type !== "subject" ? (
+                    <li
+                      className="flex items-center
                   w-full
                   justify-start
                   px-4
@@ -537,214 +543,216 @@ const DataTable = (params: DataTableParams) => {
                   text-sm
                   text-gray-700
                   focus:outline-none"
-                  >
-                    <input
-                      checked={typeFilter === FilterType.DetailFilter}
-                      id="DetailFilter"
-                      type="radio"
-                      name="filterOptions"
-                      value={FilterType.DetailFilter}
-                      onChange={() =>
-                        handleChooseFilter(FilterType.DetailFilter)
-                      }
-                      className="w-4 h-4  cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600"
-                    />
-                    <label
-                      htmlFor="DetailFilter"
-                      className="ml-2 text-sm cursor-pointer font-medium text-gray-900 dark:text-gray-100"
                     >
-                      Bộ lọc chi tiết
-                    </label>
-                  </li>
+                      <input
+                        checked={typeFilter === FilterType.DetailFilter}
+                        id="DetailFilter"
+                        type="radio"
+                        name="filterOptions"
+                        value={FilterType.DetailFilter}
+                        onChange={() =>
+                          handleChooseFilter(FilterType.DetailFilter)
+                        }
+                        className="w-4 h-4  cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600"
+                      />
+                      <label
+                        htmlFor="DetailFilter"
+                        className="ml-2 text-sm cursor-pointer font-medium text-gray-900 dark:text-gray-100"
+                      >
+                        Bộ lọc chi tiết
+                      </label>
+                    </li>
+                  ) : (
+                    <></>
+                  )}
                 </ul>
               </Dropdown>
             )}
           </div>
         </div>
       </div>
-
       {/* DETAIL FILTER typeFilter */}
-      {typeFilter === FilterType.DetailFilter && (
-        <div className="flex gap-2 w-full px-4 mb-4">
-          {Object.values(DetailFilter)
-            .filter((item) => isNaN(Number(item)))
-            .map((item) => {
-              let width = "";
-              let text = "";
-              let dataDropdown: any = [];
-              let searchTermDropdown = "";
-              let setSearchTermDropdown = (value: any) => {};
-              let handleClickFilter = (item: any) => {};
-              let checkIsActive = (item: any): boolean => {
-                return false;
-              };
-              let checkIsShowFilterIcon = (item: any): any => {
-                return "";
-              };
+      {dataTable[0].type !== "subject" &&
+        typeFilter === FilterType.DetailFilter && (
+          <div className="flex gap-2 w-full px-4 mb-4">
+            {Object.values(DetailFilter)
+              .filter((item) => isNaN(Number(item)))
+              .map((item) => {
+                let width = "";
+                let text = "";
+                let dataDropdown: any = [];
+                let searchTermDropdown = "";
+                let setSearchTermDropdown = (value: any) => {};
+                let handleClickFilter = (item: any) => {};
+                let checkIsActive = (item: any): boolean => {
+                  return false;
+                };
+                let checkIsShowFilterIcon = (item: any): any => {
+                  return "";
+                };
 
-              switch (item) {
-                case "Semester":
-                  text = "Học kỳ";
-                  width = "w-[15%]";
-                  dataDropdown = filteredSemesterValues;
+                switch (item) {
+                  case "Semester":
+                    text = "Học kỳ";
+                    width = "w-[15%]";
+                    dataDropdown = filteredSemesterValues;
 
-                  searchTermDropdown = searchTermSemesterFilter;
-                  setSearchTermDropdown = (value) =>
-                    setSearchTermSemesterFilter(value);
+                    searchTermDropdown = searchTermSemesterFilter;
+                    setSearchTermDropdown = (value) =>
+                      setSearchTermSemesterFilter(value);
 
-                  handleClickFilter = (i) => {
-                    if (i === semesterFilterSelected) {
-                      setSemesterFilterSelected(0);
-                    } else setSemesterFilterSelected(i);
-                  };
-                  checkIsActive = (i) => {
-                    return i === semesterFilterSelected;
-                  };
-                  checkIsShowFilterIcon = (i) => {
-                    return semesterFilterSelected !== 0
-                      ? "/assets/icons/filter_active.svg"
-                      : undefined;
-                  };
+                    handleClickFilter = (i) => {
+                      if (i === semesterFilterSelected) {
+                        setSemesterFilterSelected(0);
+                      } else setSemesterFilterSelected(i);
+                    };
+                    checkIsActive = (i) => {
+                      return i === semesterFilterSelected;
+                    };
+                    checkIsShowFilterIcon = (i) => {
+                      return semesterFilterSelected !== 0
+                        ? "/assets/icons/filter_active.svg"
+                        : undefined;
+                    };
 
-                  break;
-                case "Year":
-                  text = "Năm học";
-                  width = "w-[15%]";
+                    break;
+                  case "Year":
+                    text = "Năm học";
+                    width = "w-[15%]";
 
-                  dataDropdown = filteredYearValues;
-                  searchTermDropdown = searchTermYearFilter;
-                  setSearchTermDropdown = (value) =>
-                    setSearchTermYearFilter(value);
+                    dataDropdown = filteredYearValues;
+                    searchTermDropdown = searchTermYearFilter;
+                    setSearchTermDropdown = (value) =>
+                      setSearchTermYearFilter(value);
 
-                  handleClickFilter = (i) => {
-                    if (i === yearFilterSelected) {
-                      setYearFilterSelected(0);
-                    } else setYearFilterSelected(i);
-                  };
-                  checkIsActive = (i) => {
-                    return i === yearFilterSelected;
-                  };
-                  checkIsShowFilterIcon = (i) => {
-                    return yearFilterSelected !== 0
-                      ? "/assets/icons/filter_active.svg"
-                      : undefined;
-                  };
-                  break;
-                case "Subject":
-                  text = "Môn học";
-                  width = "w-[35%]";
+                    handleClickFilter = (i) => {
+                      if (i === yearFilterSelected) {
+                        setYearFilterSelected(0);
+                      } else setYearFilterSelected(i);
+                    };
+                    checkIsActive = (i) => {
+                      return i === yearFilterSelected;
+                    };
+                    checkIsShowFilterIcon = (i) => {
+                      return yearFilterSelected !== 0
+                        ? "/assets/icons/filter_active.svg"
+                        : undefined;
+                    };
+                    break;
+                  case "Subject":
+                    text = "Môn học";
+                    width = "w-[35%]";
 
-                  dataDropdown = filteredSubjectValues;
-                  searchTermDropdown = searchTermSubjectFilter;
-                  setSearchTermDropdown = (value) =>
-                    setSearchTermSubjectFilter(value);
+                    dataDropdown = filteredSubjectValues;
+                    searchTermDropdown = searchTermSubjectFilter;
+                    setSearchTermDropdown = (value) =>
+                      setSearchTermSubjectFilter(value);
 
-                  handleClickFilter = (i) => {
-                    if (i === subjectFilterSelected) {
-                      setSubjectFilterSelected("");
-                    } else setSubjectFilterSelected(i);
-                  };
-                  checkIsActive = (i) => {
-                    return i === subjectFilterSelected;
-                  };
-                  checkIsShowFilterIcon = (i) => {
-                    return subjectFilterSelected !== ""
-                      ? "/assets/icons/filter_active.svg"
-                      : undefined;
-                  };
-                  break;
-                case "Teacher":
-                  text = "Giảng viên";
-                  width = "w-[35%]";
+                    handleClickFilter = (i) => {
+                      if (i === subjectFilterSelected) {
+                        setSubjectFilterSelected("");
+                      } else setSubjectFilterSelected(i);
+                    };
+                    checkIsActive = (i) => {
+                      return i === subjectFilterSelected;
+                    };
+                    checkIsShowFilterIcon = (i) => {
+                      return subjectFilterSelected !== ""
+                        ? "/assets/icons/filter_active.svg"
+                        : undefined;
+                    };
+                    break;
+                  case "Teacher":
+                    text = "Giảng viên";
+                    width = "w-[35%]";
 
-                  dataDropdown = filteredTeacherValues;
-                  searchTermDropdown = searchTermTeacherFilter;
-                  setSearchTermDropdown = (value) =>
-                    setSearchTermTeacherFilter(value);
+                    dataDropdown = filteredTeacherValues;
+                    searchTermDropdown = searchTermTeacherFilter;
+                    setSearchTermDropdown = (value) =>
+                      setSearchTermTeacherFilter(value);
 
-                  handleClickFilter = (i) => {
-                    if (i === teacherFilterSelected) {
-                      setTeacherFilterSelected("");
-                    } else setTeacherFilterSelected(i);
-                  };
-                  checkIsActive = (i) => {
-                    return i === teacherFilterSelected;
-                  };
-                  checkIsShowFilterIcon = (i) => {
-                    return teacherFilterSelected !== ""
-                      ? "/assets/icons/filter_active.svg"
-                      : undefined;
-                  };
-                  break;
-                default:
-                  width = "";
-                  break;
-              }
+                    handleClickFilter = (i) => {
+                      if (i === teacherFilterSelected) {
+                        setTeacherFilterSelected("");
+                      } else setTeacherFilterSelected(i);
+                    };
+                    checkIsActive = (i) => {
+                      return i === teacherFilterSelected;
+                    };
+                    checkIsShowFilterIcon = (i) => {
+                      return teacherFilterSelected !== ""
+                        ? "/assets/icons/filter_active.svg"
+                        : undefined;
+                    };
+                    break;
+                  default:
+                    width = "";
+                    break;
+                }
 
-              return (
-                <div className={`${width}`}>
-                  <Dropdown
-                    key={item}
-                    className="z-30 rounded-lg"
-                    label=""
-                    dismissOnClick={false}
-                    renderTrigger={() => (
-                      <div>
-                        <IconButton
-                          otherClasses="w-full"
-                          text={text}
-                          iconLeft={checkIsShowFilterIcon(item)}
-                          iconRight={"/assets/icons/chevron-down.svg"}
-                          bgColor="bg-white"
-                          textColor="text-black"
-                          border
-                          isFilter={typeFilter === FilterType.DetailFilter}
-                        />
+                return (
+                  <div className={`${width}`}>
+                    <Dropdown
+                      key={item}
+                      className="z-30 rounded-lg"
+                      label=""
+                      dismissOnClick={false}
+                      renderTrigger={() => (
+                        <div>
+                          <IconButton
+                            otherClasses="w-full"
+                            text={text}
+                            iconLeft={checkIsShowFilterIcon(item)}
+                            iconRight={"/assets/icons/chevron-down.svg"}
+                            bgColor="bg-white"
+                            textColor="text-black"
+                            border
+                            isFilter={typeFilter === FilterType.DetailFilter}
+                          />
+                        </div>
+                      )}
+                    >
+                      <TableSearch
+                        setSearchTerm={setSearchTermDropdown}
+                        searchTerm={searchTermDropdown}
+                        otherClasses="p-2"
+                      />
+                      <div className="scroll-container scroll-container-dropdown-content">
+                        {dataDropdown.map((item: any, index: number) => {
+                          if (typeof item === "string" && item === "") {
+                            return <></>;
+                          }
+                          return (
+                            <Dropdown.Item
+                              key={`${item}_${index}`}
+                              onClick={() => {
+                                handleClickFilter(item);
+                              }}
+                            >
+                              <div className="flex justify-between w-full">
+                                <p className="w-[80%] text-left line-clamp-1">
+                                  {item}
+                                </p>
+                                {checkIsActive(item) && (
+                                  <Image
+                                    src="/assets/icons/check.svg"
+                                    alt="search"
+                                    width={21}
+                                    height={21}
+                                    className="cursor-pointer mr-2"
+                                  />
+                                )}
+                              </div>
+                            </Dropdown.Item>
+                          );
+                        })}
                       </div>
-                    )}
-                  >
-                    <TableSearch
-                      setSearchTerm={setSearchTermDropdown}
-                      searchTerm={searchTermDropdown}
-                      otherClasses="p-2"
-                    />
-                    <div className="scroll-container scroll-container-dropdown-content">
-                      {dataDropdown.map((item: any, index: number) => {
-                        if (typeof item === "string" && item === "") {
-                          return <></>;
-                        }
-                        return (
-                          <Dropdown.Item
-                            key={`${item}_${index}`}
-                            onClick={() => {
-                              handleClickFilter(item);
-                            }}
-                          >
-                            <div className="flex justify-between w-full">
-                              <p className="w-[80%] text-left line-clamp-1">
-                                {item}
-                              </p>
-                              {checkIsActive(item) && (
-                                <Image
-                                  src="/assets/icons/check.svg"
-                                  alt="search"
-                                  width={21}
-                                  height={21}
-                                  className="cursor-pointer mr-2"
-                                />
-                              )}
-                            </div>
-                          </Dropdown.Item>
-                        );
-                      })}
-                    </div>
-                  </Dropdown>
-                </div>
-              );
-            })}
-        </div>
-      )}
-
+                    </Dropdown>
+                  </div>
+                );
+              })}
+          </div>
+        )}
       {/* TABLE */}
       {currentItems.length > 0 && filteredDataTable.length === 0 ? (
         <NoResult
@@ -806,7 +814,7 @@ const DataTable = (params: DataTableParams) => {
                     onClickCheckBoxSelect={(item: string) => {
                       setItemsSelected((prev) => [...prev, item]);
                     }}
-                    onChangeRow={(updatedDataItem) => {
+                    onChangeRow={(updatedDataItem: any) => {
                       var updatedDataTable = localDataTable.map((item) => {
                         if (item.STT === updatedDataItem.STT) {
                           return updatedDataItem;
@@ -817,6 +825,7 @@ const DataTable = (params: DataTableParams) => {
 
                       setLocalDataTable(updatedDataTable);
                     }}
+                    saveDataTable={saveDataTable}
                   />
                 )
               )}
@@ -824,7 +833,6 @@ const DataTable = (params: DataTableParams) => {
           </Table>
         </div>
       )}
-
       {/* FOOTER */}
       {!isShowFooter ||
       searchTerm !== "" ||
@@ -839,7 +847,6 @@ const DataTable = (params: DataTableParams) => {
           onPageChange={(newPage) => setCurrentPage(newPage)} //HERE
         />
       )}
-
       {/* ALERT CONFIRM */}
       {isShowDialog ? (
         <AlertDialog open={isShowDialog}>

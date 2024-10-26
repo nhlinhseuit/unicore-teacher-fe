@@ -1,5 +1,7 @@
 import { SidebarLink } from "@/types";
 
+export const itemsPerPage = 30;
+
 export enum FilterType {
   SortNewer,
   SortOlder,

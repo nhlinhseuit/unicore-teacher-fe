@@ -1,5 +1,5 @@
 import { Table } from "flowbite-react";
-import React from "react";
+import React, { useEffect } from "react";
 import InputComponent from "./InputComponent";
 import { useState } from "react";
 import MoreButtonComponent from "./MoreButtonComponent";
@@ -9,11 +9,13 @@ import {
   CourseDataItem,
   SubjectDataItem,
 } from "@/types";
+import IconButton from "../../IconButton";
 
 interface RowParams {
   dataItem: CourseDataItem | SubjectDataItem;
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
+  saveDataTable?: () => void;
   onClickCheckBoxSelect?: (item: string) => void;
   onChangeRow?: (item: any) => void;
 }
@@ -25,13 +27,17 @@ interface handleInputChangeParams {
   isCheckbox?: boolean;
 }
 
-const Row = (params: RowParams) => {
+const Row = React.memo((params: RowParams) => {
   const [isEdit, setIsEdit] = useState(false);
   const [editDataItem, setEditDataItem] = useState(params.dataItem);
   const [isChecked, setIsChecked] = useState(
     //@ts-ignore
     params.dataItem.data["Khoa quản lý"] as boolean
   );
+
+  useEffect(() => {
+    if (params.isEditTable) setIsEdit(false);
+  }, [[params.isEditTable]]);
 
   const handleEdit = () => {
     if (isEdit === false) {
@@ -48,7 +54,6 @@ const Row = (params: RowParams) => {
     currentIndex,
     isCheckbox,
   }: handleInputChangeParams) => {
-
     //@ts-ignore
     const updatedDataItem: CourseDataItem | SubjectDataItem = {
       ...editDataItem,
@@ -68,6 +73,8 @@ const Row = (params: RowParams) => {
 
     params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
   };
+
+  console.log("re-render ROW");
 
   return (
     <Table.Row
@@ -95,8 +102,8 @@ const Row = (params: RowParams) => {
                 value={
                   params.dataItem.type === "course"
                     ? (params.dataItem as CourseDataItem).data["Mã lớp"]
-                     // ? DELETE THEO STT VÌ MÃ MÔN GIỐNG NHAU KHÁC HỆ ĐÀO TẠO
-                    : (params.dataItem as SubjectDataItem)["STT"]
+                    : // ? DELETE THEO STT VÌ MÃ MÔN GIỐNG NHAU KHÁC HỆ ĐÀO TẠO
+                      (params.dataItem as SubjectDataItem)["STT"]
                 }
                 onChange={() => {
                   {
@@ -104,14 +111,22 @@ const Row = (params: RowParams) => {
                       params.onClickCheckBoxSelect(
                         params.dataItem.type === "course"
                           ? (params.dataItem as CourseDataItem).data["Mã lớp"]
-                           // ? DELETE THEO STT VÌ MÃ MÔN GIỐNG NHAU KHÁC HỆ ĐÀO TẠO
-                          : (params.dataItem as SubjectDataItem)["STT"]
+                          : // ? DELETE THEO STT VÌ MÃ MÔN GIỐNG NHAU KHÁC HỆ ĐÀO TẠO
+                            (params.dataItem as SubjectDataItem)["STT"]
                       );
                   }
                 }}
                 className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 cursor-pointer"
               />
             </div>
+          ) : isEdit ? (
+            <IconButton
+              text="Lưu"
+              onClick={() => {
+                setIsEdit(false);
+                params.saveDataTable && params.saveDataTable();
+              }}
+            />
           ) : (
             <MoreButtonComponent handleEdit={handleEdit} />
           )}
@@ -153,32 +168,37 @@ const Row = (params: RowParams) => {
             }`}
           >
             {key === "Khoa quản lý" ? (
-              isEdit || params.isEditTable ? <input
-                type="checkbox"
-                checked={isChecked}
-                onChange={(e) => {
+              isEdit || params.isEditTable ? (
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={(e) => {
                     setIsChecked(e.target.checked);
                     handleInputChange({
-                          key: key,
-                          newValue: e.target.checked,
-                          isCheckbox: true,
-                      });
-                }}
-                className="w-4 h-4 cursor-pointer"
-              /> : <input
-              type="checkbox"
-              checked={isChecked}
-              onChange={() => {}}
-              className="w-4 h-4 cursor-pointer"
-            />
-            )
- : // TH 1 thẻ Input hoặc nhiều thẻ Input do nhiều GV và nhiều mã GV (so on...)
+                      key: key,
+                      newValue: e.target.checked,
+                      isCheckbox: true,
+                    });
+                  }}
+                  className="w-4 h-4 cursor-pointer"
+                />
+              ) : (
+                <input
+                  type="checkbox"
+                  checked={isChecked}
+                  onChange={() => {}}
+                  className="w-4 h-4 cursor-pointer"
+                />
+              )
+            ) : // TH 1 thẻ Input hoặc nhiều thẻ Input do nhiều GV và nhiều mã GV (so on...)
             isEdit || params.isEditTable ? (
               typeof value === "string" ? (
                 <div className="flex flex-col gap-1">
                   {value
                     .split(/\r\n|\n/)
-                    .filter((line, index, array) => array.length > 1 ? line.trim() !== "" : true)
+                    .filter((line, index, array) =>
+                      array.length > 1 ? line.trim() !== "" : true
+                    )
                     .map((line, index) => (
                       <InputComponent
                         key={`${keyId}_${line}_${index}`}
@@ -187,7 +207,13 @@ const Row = (params: RowParams) => {
                         //@ts-ignore
                         onChange={(newValue) =>
                           //@ts-ignore
-                          handleInputChange({key: key, newValue: newValue, isMultipleInput: true, currentIndex: index})
+                          handleInputChange({
+                            //@ts-ignore
+                            key: key,
+                            newValue: newValue,
+                            isMultipleInput: true,
+                            currentIndex: index,
+                          })
                         }
                       />
                     ))}
@@ -198,7 +224,10 @@ const Row = (params: RowParams) => {
                   value={value as string | number}
                   placeholder={value as string | number}
                   //@ts-ignore
-                  onChange={(newValue) => handleInputChange({key: key, newValue: newValue})}
+                  onChange={(newValue) =>
+                    //@ts-ignore
+                    handleInputChange({ key: key, newValue: newValue })
+                  }
                 />
               )
             ) : // TH 1 thẻ dòng text hoặc nhiều thẻ dòng text do nhiều GV
@@ -219,6 +248,12 @@ const Row = (params: RowParams) => {
       })}
     </Table.Row>
   );
-};
+}, (prevProps, nextProps) => {
+  // Kiểm tra nếu `dataItem` của Row không thay đổi thì không cần re-render
+  return prevProps.dataItem === nextProps.dataItem &&
+         prevProps.isEditTable === nextProps.isEditTable &&
+         prevProps.isMultipleDelete === nextProps.isMultipleDelete;
+});
+
 
 export default Row;
