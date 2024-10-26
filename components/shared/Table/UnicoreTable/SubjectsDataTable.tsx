@@ -164,10 +164,10 @@ export default function SubjectsDataTable() {
                 setIsMultipleDelete(true);
               }}
               onClickDelete={(itemsSelected: string[]) => {
-                // ? DELETE THEO STT VÌ MÃ MÔN GIỐNG NHAU KHÁC HỆ ĐÀO TẠO
+                // ? MÔN CÓ MÃ MH UNIQUE VÌ CHỈ 1 HỆ ĐÀO TẠO
                 setDataTable((prevData) => {
                   return prevData.map((item) => {
-                    if (itemsSelected.includes(item["STT"])) {
+                    if (itemsSelected.includes(item.data["Mã MH"])) {
                       return {
                         ...item,
                         isDeleted: true,
@@ -176,13 +176,14 @@ export default function SubjectsDataTable() {
                     return item;
                   });
                 });
-  
+
                 toast({
                   title: "Xóa thành công",
                   description: `${`Các lớp ${itemsSelected.join(
                     ", "
                   )} đã được xóa.`}`,
                   variant: "success",
+                  duration: 3000,
                 });
               }}
               onClickGetOut={() => {

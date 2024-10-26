@@ -69,8 +69,6 @@ const DataTable = (params: DataTableParams) => {
 
     // * HÀM LƯU GỘP CHUNG
 
-    console.log("localDataTable", localDataTable);
-
     const updatedDataTable = dataTable.map((item) => {
       // Tìm item tương ứng trong localDataTable dựa vào STT (hoặc một identifier khác)
       const localItem = localDataTable.find((local) => local.STT === item.STT);
@@ -836,7 +834,8 @@ const DataTable = (params: DataTableParams) => {
                         )
                       );
                     }}
-                    // saveDataTable={saveDataTable}
+                    saveDataTable={saveDataTable}
+                    onClickDelete={params.onClickDelete}
                   />
                 )
               )}

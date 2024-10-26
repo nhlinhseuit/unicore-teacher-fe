@@ -25,6 +25,7 @@ import React, { useState } from "react";
 
 interface MoreButtonParams {
   handleEdit: () => void;
+  onClickDelete?: () => void
 }
 
 const MoreButtonComponent = (params: MoreButtonParams) => {
@@ -97,6 +98,7 @@ const MoreButtonComponent = (params: MoreButtonParams) => {
               <AlertDialogAction
                 onClick={() => {
                   setIsShowDialog(false);
+                  params.onClickDelete && params.onClickDelete()
                 }}
               >
                 Đồng ý

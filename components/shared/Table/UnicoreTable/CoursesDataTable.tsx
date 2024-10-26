@@ -172,6 +172,7 @@ export default function CoursesDataTable() {
                   ", "
                 )} đã được xóa.`}`,
                 variant: "success",
+                duration: 3000,
               });
             }}
             onClickGetOut={() => {
