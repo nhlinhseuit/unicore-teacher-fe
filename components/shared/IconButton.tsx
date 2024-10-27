@@ -7,6 +7,8 @@ interface IconButtonProps {
   onClick?: () => void;
   iconLeft?: string;
   iconRight?: string;
+  iconWidth?: number;
+  iconHeight?: number;
   bgColor?: string;
   textColor?: string;
   border?: boolean;
@@ -21,10 +23,11 @@ const IconButton = (params: IconButtonProps) => {
       className={`
         ${params.otherClasses}
         flex
+        gap-1
         items-center
         justify-center
         ${params.border && "border border-gray-200"}
-        ${params.isFilter && 'border-[#2563EB]'}
+        ${params.isFilter && "border-[#2563EB]"}
         ${params.textColor ? `${params.textColor}` : "text-white"} 
         ${params.bgColor ? `${params.bgColor}` : "bg-primary-500"} 
         hover:bg-primary-800
@@ -47,9 +50,10 @@ const IconButton = (params: IconButtonProps) => {
       {params.iconLeft && (
         <Image
           src={params.iconLeft}
-          width={20}
-          height={20}
+          width={params.iconWidth ? params.iconWidth : 20}
+          height={params.iconHeight ? params.iconHeight : 20}
           alt="DevFlow"
+          color="text-white"
         />
       )}
 
@@ -57,16 +61,10 @@ const IconButton = (params: IconButtonProps) => {
 
       {/* RIGHT ICON */}
       {params.iconRight && (
-        <Image
-          src={params.iconRight}
-          width={18}
-          height={18}
-          alt="DevFlow"
-        />
+        <Image src={params.iconRight} width={18} height={18} alt="DevFlow" />
       )}
     </Button>
   );
 };
-
 
 export default IconButton;

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { CourseDataItem } from "@/types";
 import DataTable from "./DataTable";
@@ -8,6 +8,7 @@ import ErrorComponent from "../Status/ErrorComponent";
 import TableSkeleton from "./TableSkeleton";
 import NoResult from "../../NoResult";
 import { useToast } from "@/hooks/use-toast";
+import IconButton from "../../IconButton";
 
 export default function CoursesDataTable() {
   const [isEditTable, setIsEditTable] = useState(false);
@@ -94,6 +95,12 @@ export default function CoursesDataTable() {
     };
   };
 
+  // Tạo một reference để liên kết với thẻ input file
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const handleButtonClick = () => {
+    fileInputRef.current?.click();
+  };
+
   const { toast } = useToast();
 
   return (
@@ -113,16 +120,33 @@ export default function CoursesDataTable() {
         </div>
       )}
 
-      <input
-        type="file"
-        accept=".xlsx, .xls"
-        onChange={handleCoursesFileUpload}
-      />
+      <div className="flex mb-2">
+        <div> 
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".xlsx, .xls"
+            onChange={handleCoursesFileUpload}
+            style={{ display: "none" }}
+          />
+
+          <IconButton
+            text="Import danh sách lớp"
+            onClick={handleButtonClick}
+            iconLeft={"/assets/icons/upload-white.svg"}
+            iconWidth={16}
+            iconHeight={16}
+          />
+        </div>
+        {dataTable.length > 0 && (
+          <IconButton text="Lưu" onClick={() => {}} otherClasses="ml-2" />
+        )}
+      </div>
 
       <a
         href="/assets/KLTN - template import ds lớp.xlsx"
         download
-        className="text-blue-500 underline"
+        className="text-blue-500 underline text-base italic"
       >
         Tải xuống template file import lớp học
       </a>
@@ -188,8 +212,8 @@ export default function CoursesDataTable() {
         <NoResult
           title="Không có dữ liệu!"
           description="🚀 Import file danh sách để thấy được dữ liệu."
-          link="/"
-          linkTitle="Choose file"
+          linkTitle="Import danh sách lớp"
+          handleFileUpload={handleCoursesFileUpload}
         />
       )}
     </div>

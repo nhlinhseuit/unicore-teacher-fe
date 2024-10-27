@@ -3,8 +3,17 @@ import { SidebarLink } from "@/types";
 export const itemsPerPage = 30;
 
 export const DepartmentCoursesTabItems = [
-  { value: "listCourses", label: "Danh sách lớp học" },
-  { value: "joinedCourses", label: "Lớp học có tham gia" },
+  { value: "listCourses", label: "Danh sách lớp học", route: "/courses" },
+  { value: "createCourse", label: "Tạo lớp học", route: "/courses/create" },
+  {
+    value: "joinedCourses",
+    label: "Lớp học đã tham gia",
+    route: "/courses/joined",
+  },
+];
+export const DepartmentSubjectsTabItems = [
+  { value: "listSubjects", label: "Danh sách môn học", route: "/subjects" },
+  { value: "subjectTypes", label: "Loại môn học", route: "/subjects/types" },
 ];
 
 export enum FilterType {

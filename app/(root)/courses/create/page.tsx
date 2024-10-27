@@ -7,7 +7,7 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 
-const JoinedCourses = () => {
+const CreateCourse = () => {
   return (
     <div className="mt-3">
       <SubTabs defaultValue="account" className="w-[400px]">
@@ -24,4 +24,4 @@ const JoinedCourses = () => {
   );
 };
 
-export default JoinedCourses;
+export default CreateCourse;
