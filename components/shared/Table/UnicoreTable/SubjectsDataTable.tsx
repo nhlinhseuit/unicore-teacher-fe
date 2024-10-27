@@ -4,11 +4,12 @@ import IconButton from "../../IconButton";
 import { useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { SubjectDataItem } from "@/types";
-import DataTable from "./DataTable";
+import DataTable from "./components/DataTable";
 import ErrorComponent from "../Status/ErrorComponent";
-import TableSkeleton from "./TableSkeleton";
+import TableSkeleton from "./components/TableSkeleton";
 import { useToast } from "@/hooks/use-toast";
 import NoResult from "../../NoResult";
+import { DataTableType } from "@/constants";
 
 export default function SubjectsDataTable() {
   const [isEditTable, setIsEditTable] = useState(false);
@@ -164,65 +165,66 @@ export default function SubjectsDataTable() {
 
       {isLoading ? (
         <TableSkeleton />
-      ) : (
-        dataTable.length > 0 ? (
-          <>
-            <div className="flex justify-end gap-4 mb-5 items-center">
-              <p>Để scroll ngang, nhấn nút Shift và cuộn chuột</p>
-            </div>
+      ) : dataTable.length > 0 ? (
+        <>
+          <div className="flex justify-end gap-4 mb-5 items-center">
+            <p className="italic text-sm">
+              * Để scroll ngang, nhấn nút Shift và cuộn chuột
+            </p>
+          </div>
 
-            <DataTable
-              dataTable={dataTable}
-              isEditTable={isEditTable}
-              isMultipleDelete={isMultipleDelete}
-              onClickEditTable={() => {
-                setIsEditTable(true);
-              }}
-              onSaveEditTable={(localDataTable) => {
-                setIsEditTable(false);
-                // set lại data import hoặc patch API
-                localDataTable = localDataTable as SubjectDataItem[];
-                setDataTable(localDataTable);
-              }}
-              onClickMultipleDelete={() => {
-                setIsMultipleDelete(true);
-              }}
-              onClickDelete={(itemsSelected: string[]) => {
-                // ? MÔN CÓ MÃ MH UNIQUE VÌ CHỈ 1 HỆ ĐÀO TẠO
-                setDataTable((prevData) => {
-                  return prevData.map((item) => {
-                    if (itemsSelected.includes(item.data["Mã MH"])) {
-                      return {
-                        ...item,
-                        isDeleted: true,
-                      };
-                    }
-                    return item;
-                  });
+          <DataTable
+            type={DataTableType.Subject}
+            dataTable={dataTable}
+            isEditTable={isEditTable}
+            isMultipleDelete={isMultipleDelete}
+            onClickEditTable={() => {
+              setIsEditTable(true);
+            }}
+            onSaveEditTable={(localDataTable) => {
+              setIsEditTable(false);
+              // set lại data import hoặc patch API
+              localDataTable = localDataTable as SubjectDataItem[];
+              setDataTable(localDataTable);
+            }}
+            onClickMultipleDelete={() => {
+              setIsMultipleDelete(true);
+            }}
+            onClickDelete={(itemsSelected: string[]) => {
+              // ? MÔN CÓ MÃ MH UNIQUE VÌ CHỈ 1 HỆ ĐÀO TẠO
+              setDataTable((prevData) => {
+                return prevData.map((item) => {
+                  if (itemsSelected.includes(item.data["Mã MH"])) {
+                    return {
+                      ...item,
+                      isDeleted: true,
+                    };
+                  }
+                  return item;
                 });
+              });
 
-                toast({
-                  title: "Xóa thành công",
-                  description: `${`Các lớp ${itemsSelected.join(
-                    ", "
-                  )} đã được xóa.`}`,
-                  variant: "success",
-                  duration: 3000,
-                });
-              }}
-              onClickGetOut={() => {
-                setIsMultipleDelete(false);
-              }}
-            />
-          </>
-        ) : (
-          <NoResult
-            title="Không có dữ liệu!"
-            description="🚀 Import file danh sách để thấy được dữ liệu."
-            linkTitle="Import danh sách môn"
-            handleFileUpload={handleSubjectsFileUpload}
+              toast({
+                title: "Xóa thành công",
+                description: `${`Các môn ${itemsSelected.join(
+                  ", "
+                )} đã được xóa.`}`,
+                variant: "success",
+                duration: 3000,
+              });
+            }}
+            onClickGetOut={() => {
+              setIsMultipleDelete(false);
+            }}
           />
-        )
+        </>
+      ) : (
+        <NoResult
+          title="Không có dữ liệu!"
+          description="🚀 Import file danh sách để thấy được dữ liệu."
+          linkTitle="Import danh sách môn"
+          handleFileUpload={handleSubjectsFileUpload}
+        />
       )}
     </div>
   );

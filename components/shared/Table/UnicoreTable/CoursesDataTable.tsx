@@ -3,12 +3,13 @@
 import { useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { CourseDataItem } from "@/types";
-import DataTable from "./DataTable";
+import DataTable from "./components/DataTable";
 import ErrorComponent from "../Status/ErrorComponent";
-import TableSkeleton from "./TableSkeleton";
+import TableSkeleton from "./components/TableSkeleton";
 import NoResult from "../../NoResult";
 import { useToast } from "@/hooks/use-toast";
 import IconButton from "../../IconButton";
+import { DataTableType } from "@/constants";
 
 export default function CoursesDataTable() {
   const [isEditTable, setIsEditTable] = useState(false);
@@ -121,7 +122,7 @@ export default function CoursesDataTable() {
       )}
 
       <div className="flex mb-2">
-        <div> 
+        <div>
           <input
             ref={fileInputRef}
             type="file"
@@ -165,6 +166,7 @@ export default function CoursesDataTable() {
           </div>
 
           <DataTable
+            type={DataTableType.Course}
             dataTable={dataTable}
             isEditTable={isEditTable}
             isMultipleDelete={isMultipleDelete}
@@ -193,7 +195,7 @@ export default function CoursesDataTable() {
                   return item;
                 });
               });
-
+              
               toast({
                 title: "Xóa thành công",
                 description: `${`Các lớp ${itemsSelected.join(
