@@ -60,9 +60,15 @@ const LeftSideBar = () => {
       >
         {/* ITEM */}
         {sidebarDepartmentLinks.map((item) => {
-          const isActive =
-            (pathName.includes(item.route) && item.route.length > 1) ||
-            pathName === item.route;
+          let isActive;
+          // TODO: handle cho tab HOME
+          if (pathName === "/create-announcement" && item.route === "/") {
+            isActive = true;
+          } else {
+            isActive =
+              (pathName.includes(item.route) && item.route.length > 1) ||
+              pathName === item.route;
+          }
 
           if (item.route !== "/profile") {
             return (

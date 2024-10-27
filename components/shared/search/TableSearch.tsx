@@ -23,11 +23,11 @@ const TableSearch = (params: TableSearchParams) => {
             onChange={(e) => params.setSearchTerm(e.target.value)}
             className=" 
              rounded-lg
-          h-auto
-          pl-12 text-sm 
-          paragraph-regular no-focus placeholder 
-          bg-gray-50
-          shadow-none outline-none border-none truncate"
+              h-auto
+              pl-12 text-sm 
+              paragraph-regular no-focus placeholder 
+              bg-gray-50
+              shadow-none outline-none border-none truncate"
           />
           {params.searchTerm !== "" && (
             <Image

@@ -2,6 +2,20 @@ import { SidebarLink } from "@/types";
 
 export const itemsPerPage = 30;
 
+export const DepartmentAnnouncementTabs = [
+  { value: "postedAnnouncement", label: "Thông báo đã đăng" },
+  { value: "createdAnnouncement", label: "Thông báo đã tạo" },
+  { value: "hidedAnnouncement", label: "Thông báo đã ẩn" },
+];
+
+export const DepartmentAnnouncementsTabItems = [
+  { value: "listAnnouncements", label: "Danh sách thông báo", route: "/" },
+  {
+    value: "createAnnouncement",
+    label: "Tạo thông báo",
+    route: "/create-announcement",
+  },
+];
 export const DepartmentCoursesTabItems = [
   { value: "listCourses", label: "Danh sách lớp học", route: "/courses" },
   { value: "createCourse", label: "Tạo lớp học", route: "/courses/create" },

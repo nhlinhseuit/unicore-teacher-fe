@@ -21,7 +21,6 @@ const IconButton = (params: IconButtonProps) => {
     <Button
       onClick={params.onClick ? params.onClick : undefined}
       className={`
-        ${params.otherClasses}
         flex
         gap-1
         items-center
@@ -44,6 +43,8 @@ const IconButton = (params: IconButtonProps) => {
         dark:focus:ring-primary-800
         h-auto
         text-center
+        
+        ${params.otherClasses}
         `}
     >
       {/* LEFT ICON */}

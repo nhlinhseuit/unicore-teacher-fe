@@ -479,6 +479,7 @@ const DataTable = (params: DataTableParams) => {
                 <Dropdown.Item onClick={params.onClickMultipleDelete}>
                   Xóa nhiều
                 </Dropdown.Item>
+                <Dropdown.Item onClick={() => {}}>Xóa tất cảd</Dropdown.Item>
               </Dropdown>
             )}
 
