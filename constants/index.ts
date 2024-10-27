@@ -16,6 +16,13 @@ export const DepartmentSubjectsTabItems = [
   { value: "subjectTypes", label: "Loại môn học", route: "/subjects/types" },
 ];
 
+export enum DataTableType {
+  Course = "Lớp học",
+  Subject = "Môn học",
+  Student = "Sinh viên",
+  Teacher = "Giảng viên",
+}
+
 export enum FilterType {
   SortNewer,
   SortOlder,
