@@ -1,6 +1,11 @@
 import { FilterType } from "@/constants";
 import { normalizeSearchItem } from "@/lib/utils";
-import { CourseDataItem, StudentDataItem, SubjectDataItem } from "@/types";
+import {
+  CourseDataItem,
+  StudentDataItem,
+  SubjectDataItem,
+  TeacherDataItem,
+} from "@/types";
 import { useEffect } from "react";
 
 const useDebounceSearchDataTable = (
@@ -13,12 +18,14 @@ const useDebounceSearchDataTable = (
     | CourseDataItem[]
     | SubjectDataItem[]
     | StudentDataItem[]
-    | (CourseDataItem | SubjectDataItem | StudentDataItem)[],
+    | TeacherDataItem[]
+    | (CourseDataItem | SubjectDataItem | StudentDataItem | TeacherDataItem)[],
   currentItems:
     | CourseDataItem[]
     | SubjectDataItem[]
     | StudentDataItem[]
-    | (CourseDataItem | SubjectDataItem | StudentDataItem)[]
+    | TeacherDataItem[]
+    | (CourseDataItem | SubjectDataItem | StudentDataItem | TeacherDataItem)[]
 ) => {
   useEffect(() => {
     if (debouncedSearchTerm.trim() === "") {

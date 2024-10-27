@@ -2,7 +2,12 @@
 
 import { CustomFlowbiteTheme, Dropdown, Table } from "flowbite-react";
 import Row from "./Row";
-import { CourseDataItem, StudentDataItem, SubjectDataItem } from "@/types";
+import {
+  CourseDataItem,
+  StudentDataItem,
+  SubjectDataItem,
+  TeacherDataItem,
+} from "@/types";
 import IconButton from "../../../IconButton";
 import { useState, useEffect, useMemo } from "react";
 import {
@@ -48,7 +53,8 @@ interface DataTableParams {
     | CourseDataItem[]
     | SubjectDataItem[]
     | StudentDataItem[]
-    | (CourseDataItem | SubjectDataItem | StudentDataItem)[];
+    | TeacherDataItem[]
+    | (CourseDataItem | SubjectDataItem | StudentDataItem | TeacherDataItem)[];
 }
 
 const DataTable = (params: DataTableParams) => {
@@ -187,6 +193,7 @@ const DataTable = (params: DataTableParams) => {
       | CourseDataItem
       | SubjectDataItem
       | StudentDataItem
+      | TeacherDataItem
     )[];
 
     sortedNewerDataTable = sortDataTable(dataTable, type);
@@ -215,9 +222,9 @@ const DataTable = (params: DataTableParams) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [filteredDataTable, setFilteredDataTable] =
-    useState<(CourseDataItem | SubjectDataItem | StudentDataItem)[]>(
-      currentItems
-    );
+    useState<
+      (CourseDataItem | SubjectDataItem | StudentDataItem | TeacherDataItem)[]
+    >(currentItems);
 
   useSetDebounceSearchTerm(setDebouncedSearchTerm, searchTerm);
   useDebounceSearchDataTable(
@@ -343,7 +350,13 @@ const DataTable = (params: DataTableParams) => {
       | CourseDataItem[]
       | SubjectDataItem[]
       | StudentDataItem[]
-      | (CourseDataItem | SubjectDataItem | StudentDataItem)[],
+      | TeacherDataItem[]
+      | (
+          | CourseDataItem
+          | SubjectDataItem
+          | StudentDataItem
+          | TeacherDataItem
+        )[],
     sortOrder: FilterType
   ) => {
     if (params.type === DataTableType.Student) return [];
@@ -388,7 +401,6 @@ const DataTable = (params: DataTableParams) => {
 
   console.log("re-render datatable");
   console.log("localDataTable", localDataTable);
-
 
   return (
     <div>
@@ -472,7 +484,8 @@ const DataTable = (params: DataTableParams) => {
 
             {params.isEditTable ||
             params.isMultipleDelete ||
-            params.type === DataTableType.Student ? (
+            params.type === DataTableType.Student ||
+            params.type === DataTableType.Teacher ? (
               <></>
             ) : (
               <Dropdown
@@ -863,6 +876,7 @@ const DataTable = (params: DataTableParams) => {
                       );
                     }}
                     saveSingleRow={saveDataTable}
+                    onClickGetOut={params.onClickGetOut}
                     deleteSingleRow={params.onClickDelete}
                   />
                 )

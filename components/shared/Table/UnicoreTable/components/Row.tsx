@@ -10,20 +10,31 @@ import {
   SubjectDataItem,
   StudentDataItem,
   StudentData,
+  TeacherData,
+  TeacherDataItem,
 } from "@/types";
 import IconButton from "../../../IconButton";
 
 interface RowParams {
-  dataItem: CourseDataItem | SubjectDataItem | StudentDataItem;
+  dataItem:
+    | CourseDataItem
+    | SubjectDataItem
+    | StudentDataItem
+    | TeacherDataItem;
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
+  onClickGetOut?: () => void;
   saveSingleRow?: () => void;
   deleteSingleRow?: (itemsSelected: string[]) => void;
   onClickCheckBoxSelect?: (item: string) => void;
   onChangeRow?: (item: any) => void;
 }
 interface handleInputChangeParams {
-  key: keyof CourseData | keyof SubjectData | keyof StudentData;
+  key:
+    | keyof CourseData
+    | keyof SubjectData
+    | keyof StudentData
+    | keyof TeacherData;
   newValue: any;
   isMultipleInput?: boolean;
   currentIndex?: number;
@@ -62,7 +73,8 @@ const Row = React.memo(
       const updatedDataItem:
         | CourseDataItem
         | SubjectDataItem
-        | StudentDataItem = {
+        | StudentDataItem
+        | TeacherDataItem = {
         ...editDataItem,
         data: {
           ...editDataItem.data,
@@ -95,6 +107,11 @@ const Row = React.memo(
         break;
       case "student":
         valueUniqueInput = (params.dataItem as StudentDataItem).data["MSSV"];
+        break;
+      case "teacher":
+        valueUniqueInput = (params.dataItem as TeacherDataItem).data[
+          "Mã cán bộ"
+        ];
         break;
     }
 
@@ -142,6 +159,7 @@ const Row = React.memo(
             ) : (
               <MoreButtonComponent
                 handleEdit={handleEdit}
+                onClickGetOut={params.onClickGetOut}
                 onClickDelete={() => {
                   params.deleteSingleRow &&
                     params.deleteSingleRow([valueUniqueInput]);
@@ -172,6 +190,10 @@ const Row = React.memo(
             case "student":
               data = params.dataItem as StudentDataItem;
               keyId = data.data["MSSV"];
+              break;
+            case "student":
+              data = params.dataItem as TeacherDataItem;
+              keyId = data.data["Mã cán bộ"];
               break;
           }
 

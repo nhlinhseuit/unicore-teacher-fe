@@ -25,7 +25,8 @@ import React, { useState } from "react";
 
 interface MoreButtonParams {
   handleEdit: () => void;
-  onClickDelete?: () => void
+  onClickGetOut?: () => void;
+  onClickDelete?: () => void;
 }
 
 const MoreButtonComponent = (params: MoreButtonParams) => {
@@ -94,11 +95,18 @@ const MoreButtonComponent = (params: MoreButtonParams) => {
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Hủy</AlertDialogCancel>
+              <AlertDialogCancel
+                onClick={() => {
+                  setIsShowDialog(false);
+                  params.onClickGetOut && params.onClickGetOut();
+                }}
+              >
+                Hủy
+              </AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => {
                   setIsShowDialog(false);
-                  params.onClickDelete && params.onClickDelete()
+                  params.onClickDelete && params.onClickDelete();
                 }}
               >
                 Đồng ý
