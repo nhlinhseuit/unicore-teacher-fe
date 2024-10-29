@@ -1,6 +1,6 @@
 "use client";
 
-import QuestionCard from "@/components/cards/QuestionCard";
+import Announcement from "@/components/cards/Announcement";
 import FilterButton from "@/components/shared/FilterButton";
 import IconButton from "@/components/shared/IconButton";
 import NoResult from "@/components/shared/NoResult";
@@ -11,42 +11,69 @@ import { DepartmentAnnouncementTabs, FilterType } from "@/constants";
 import { useState } from "react";
 import TableSearch from "@/components/shared/search/TableSearch";
 import { Dropdown } from "flowbite-react";
+import RightSideBar from "@/components/shared/RightSideBar";
 
 const questions = [
   {
     _id: "1",
-    title:
-      "How to Ensure Unique User Profile with ON CONFLICT in PostgreSQL Using Drizzle ORM?",
+    title: "Đăng ký đề tài đồ án 1 và đồ án 2 học kỳ 1 năm học 2024 - 2025",
+    description:
+      "Khoa Công nghệ Phần mềm thông báo các sinh viên đăng ký học phần thực tập doanh nghiệp học kỳ 1 năm học 2024 - 2025 lớp SE501.P11 và SE501.P11.PMCL cập nhật thông tin thực tập doanh nghiệp vào các file sau...",
     tags: [
-      { _id: "1", name: "python" },
-      { _id: "2", name: "sql" },
+      { _id: "1", name: "Thông báo học vụ" },
+      { _id: "2", name: "Khoa học - công nghệ" },
+    ],
+    files: [
+      { _id: "1", name: "thong_bao_dinh_kem.docx" },
+      { _id: "2", name: "thong_bao_dinh_kem.docx" },
     ],
     author: {
       _id: "2",
-      name: "Jane Smith",
+      name: "Trần Hạnh Xuân",
       picture: "jane-smith.jpg",
     },
-    upvotes: 10,
-    views: 100,
-    answers: [],
-    createdAt: new Date("2021-09-01T12:00:00.000Z"),
+    createdAt: "T2, 22/07/2024 - 09:45",
   },
   {
     _id: "2",
-    title: "How to center a div?",
+    title: "Đăng ký đề tài đồ án 1 và đồ án 2 học kỳ 1 năm học 2024 - 2025",
+    description:
+      "Khoa Công nghệ Phần mềm thông báo các sinh viên đăng ký học phần thực tập doanh nghiệp học kỳ 1 năm học 2024 - 2025 lớp SE501.P11 và SE501.P11.PMCL cập nhật thông tin thực tập doanh nghiệp vào các file sau...",
     tags: [
-      { _id: "1", name: "python" },
-      { _id: "2", name: "sql" },
+      { _id: "1", name: "Thông báo học vụ" },
+      { _id: "2", name: "Khoa học - công nghệ" },
+      { _id: "2", name: "Khoa học" },
+    ],
+    files: [
+      { _id: "1", name: "thong_bao_dinh_kem.docx" },
+      { _id: "2", name: "thong_bao_dinh_kem.docx" },
     ],
     author: {
-      _id: "1",
-      name: "Jhon Doe",
-      picture: "john-doe.jpg",
+      _id: "2",
+      name: "Trần Hạnh Xuân",
+      picture: "jane-smith.jpg",
     },
-    upvotes: 10,
-    views: 100,
-    answers: [],
-    createdAt: new Date("2021-09-01T12:00:00.000Z"),
+    createdAt: "T2, 22/07/2024 - 09:45",
+  },
+  {
+    _id: "3",
+    title: "Đăng ký đề tài đồ án 1 và đồ án 2 học kỳ 1 năm học 2024 - 2025",
+    description:
+      "Khoa Công nghệ Phần mềm thông báo các sinh viên đăng ký học phần thực tập doanh nghiệp học kỳ 1 năm học 2024 - 2025 lớp SE501.P11 và SE501.P11.PMCL cập nhật thông tin thực tập doanh nghiệp vào các file sau...",
+    tags: [
+      { _id: "1", name: "Thông báo học vụ" },
+      { _id: "2", name: "Khoa học - công nghệ" },
+    ],
+    files: [
+      { _id: "1", name: "thong_bao_dinh_kem.docx" },
+      { _id: "2", name: "thong_bao_dinh_kem.docx" },
+    ],
+    author: {
+      _id: "2",
+      name: "Trần Hạnh Xuân",
+      picture: "jane-smith.jpg",
+    },
+    createdAt: "T2, 22/07/2024 - 09:45",
   },
 ];
 
@@ -192,31 +219,37 @@ const Home = () => {
       </div>
 
       {/* LIST ANNOUNCEMENTS */}
-      <div className="mt-6 flex w-full flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((question) => (
-            <QuestionCard
-              key={question._id}
-              _id={question._id}
-              title={question.title}
-              tags={question.tags}
-              author={question.author}
-              upvotes={question.upvotes}
-              views={question.views}
-              answers={question.answers}
-              createdAt={question.createdAt}
+      <div className="flex">
+        <div className="mt-6 flex w-full flex-col gap-4">
+          {questions.length > 0 ? (
+            questions.map((question) => (
+              <Announcement
+                key={question._id}
+                _id={question._id}
+                title={question.title}
+                description={question.description}
+                tags={question.tags}
+                files={question.files}
+                author={question.author}
+                createdAt={question.createdAt}
+              />
+            ))
+          ) : (
+            <NoResult
+              title="There's no question to show"
+              description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
+          discussion. our query could be the next big thing others learn from. Get
+          involved! 💡"
+              link="/ask-question"
+              linkTitle="Ask a question"
             />
-          ))
-        ) : (
-          <NoResult
-            title="There's no question to show"
-            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the
-        discussion. our query could be the next big thing others learn from. Get
-        involved! 💡"
-            link="/ask-question"
-            linkTitle="Ask a question"
-          />
-        )}
+          )}
+        </div>
+
+        {/* RIGHT SIDEBAR */}
+
+        {/* // !  */}
+        {/* <RightSideBar /> */}
       </div>
     </>
   );

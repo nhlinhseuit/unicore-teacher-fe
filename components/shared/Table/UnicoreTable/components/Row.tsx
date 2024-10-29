@@ -95,8 +95,6 @@ const Row = React.memo(
       params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
     };
 
-    console.log("re-render ROW");
-
     var valueUniqueInput = "";
     switch (params.dataItem.type) {
       case "course":

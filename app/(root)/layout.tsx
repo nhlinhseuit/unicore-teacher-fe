@@ -1,8 +1,12 @@
+"use client";
+
 import LeftSideBar from "@/components/shared/LeftSideBar";
 import { Toaster } from "@/components/ui/toaster";
 import React from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  const isBrowser = () => typeof window !== "undefined";
+
   return (
     <main
       className="
@@ -12,7 +16,23 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {/* NAVBAR */}
       {/* <Navbar /> */}
 
-      <div className="flex">
+      <div className="relative flex">
+        {/* SCROLL TO TOP */}
+        {/* <div className="absolute bottom-4 right-4 z-50 translate-x-[50% sticky]">
+          <IconButton
+            text="Top"
+            iconWidth={16}
+            iconHeight={16}
+            onClick={() => {
+              // if (!isBrowser()) return;
+              const teachersTable = document.getElementById("teachers-data-table");
+              if (teachersTable) {
+                teachersTable.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+          />
+        </div> */}
+
         {/* LEFT SIDEBAR */}
         <LeftSideBar />
 

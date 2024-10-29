@@ -91,7 +91,6 @@ const DataTable = (params: DataTableParams) => {
       // * Trải item và localitem ra, nếu trùng nhau thì localItem ghi đè
       return localItem ? { ...item, ...localItem } : item;
     });
-    console.log("save", updatedDataTable);
 
     if (params.onSaveEditTable) {
       params.onSaveEditTable(updatedDataTable);
@@ -400,9 +399,6 @@ const DataTable = (params: DataTableParams) => {
       });
     }
   };
-
-  console.log("re-render datatable");
-  console.log("localDataTable", localDataTable);
 
   return (
     <div>

@@ -189,13 +189,10 @@ export default function StudentsDataTable() {
               });
             }}
             onClickDelete={(itemsSelected: string[]) => {
-              console.log("itemsSelected onClickDelete", itemsSelected);
-
               // ? DELETE THEO MSSV
               setDataTable((prevData) => {
                 return prevData.map((item) => {
                   if (itemsSelected.includes(item.data["MSSV"])) {
-                    console.log("item.data", item.data);
                     return {
                       ...item,
                       isDeleted: true,
