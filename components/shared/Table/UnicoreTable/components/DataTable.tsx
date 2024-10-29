@@ -48,6 +48,7 @@ interface DataTableParams {
   onSaveEditTable?: (localDataTable: any) => void;
   onClickMultipleDelete?: () => void;
   onClickDelete?: (itemsSelected: string[]) => void;
+  onClickDeleteAll?: () => void;
   onClickGetOut?: () => void;
   dataTable:
     | CourseDataItem[]
@@ -216,7 +217,8 @@ const DataTable = (params: DataTableParams) => {
   };
 
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
-  const [isShowDialog, setIsShowDialog] = useState(false);
+  // * DELETE MULTIPLE: 1. DELETE ALL: 2
+  const [isShowDialog, setIsShowDialog] = useState(-1);
 
   // ! SEARCH GENERAL
   const [searchTerm, setSearchTerm] = useState("");
@@ -441,7 +443,7 @@ const DataTable = (params: DataTableParams) => {
                 <IconButton
                   text="Xóa"
                   onClick={() => {
-                    setIsShowDialog(true);
+                    setIsShowDialog(1);
                   }}
                   bgColor="bg-danger"
                 />
@@ -479,7 +481,14 @@ const DataTable = (params: DataTableParams) => {
                 <Dropdown.Item onClick={params.onClickMultipleDelete}>
                   Xóa nhiều
                 </Dropdown.Item>
-                <Dropdown.Item onClick={() => {}}>Xóa tất cảd</Dropdown.Item>
+
+                <Dropdown.Item
+                  onClick={() => {
+                    setIsShowDialog(2);
+                  }}
+                >
+                  Xóa tất cả
+                </Dropdown.Item>
               </Dropdown>
             )}
 
@@ -578,7 +587,7 @@ const DataTable = (params: DataTableParams) => {
                       Cũ nhất
                     </label>
                   </li>
-                  {dataTable[0].type !== "subject" ? (
+                  {params.type !== DataTableType.Subject ? (
                     <li
                       className="flex items-center
                   w-full
@@ -901,8 +910,8 @@ const DataTable = (params: DataTableParams) => {
         />
       )}
       {/* ALERT CONFIRM */}
-      {isShowDialog ? (
-        <AlertDialog open={isShowDialog}>
+      {isShowDialog !== -1 ? (
+        <AlertDialog open={isShowDialog !== -1}>
           <AlertDialogContent>
             <AlertDialogHeader>
               <AlertDialogTitle>Bạn có chắc chắn muốn xóa?</AlertDialogTitle>
@@ -914,7 +923,8 @@ const DataTable = (params: DataTableParams) => {
             <AlertDialogFooter>
               <AlertDialogCancel
                 onClick={() => {
-                  setIsShowDialog(false);
+                  setIsShowDialog(-1);
+                  setItemsSelected([]);
                   params.onClickGetOut && params.onClickGetOut();
                 }}
               >
@@ -922,10 +932,14 @@ const DataTable = (params: DataTableParams) => {
               </AlertDialogCancel>
               <AlertDialogAction
                 onClick={() => {
-                  setIsShowDialog(false);
                   setItemsSelected([]);
                   params.onClickGetOut && params.onClickGetOut();
-                  params.onClickDelete && params.onClickDelete(itemsSelected);
+                  if (isShowDialog === 1) {
+                    params.onClickDelete && params.onClickDelete(itemsSelected);
+                  } else if (isShowDialog === 2) {
+                    params.onClickDeleteAll && params.onClickDeleteAll();
+                  }
+                  setIsShowDialog(-1);
                 }}
               >
                 Đồng ý

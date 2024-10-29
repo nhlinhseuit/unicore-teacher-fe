@@ -190,6 +190,21 @@ export default function SubjectsDataTable() {
             onClickMultipleDelete={() => {
               setIsMultipleDelete(true);
             }}
+            onClickDeleteAll={() => {
+              setDataTable((prevData) => {
+                return prevData.map((item) => ({
+                  ...item,
+                  isDeleted: true,
+                }));
+              });
+              
+              toast({
+                title: "Xóa thành công",
+                description: `Đã xóa tất cả môn học`,
+                variant: "success",
+                duration: 3000,
+              });
+            }}
             onClickDelete={(itemsSelected: string[]) => {
               // ? MÔN CÓ MÃ MH UNIQUE VÌ CHỈ 1 HỆ ĐÀO TẠO
               setDataTable((prevData) => {

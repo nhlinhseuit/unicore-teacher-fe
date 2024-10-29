@@ -182,6 +182,21 @@ export default function CoursesDataTable() {
             onClickMultipleDelete={() => {
               setIsMultipleDelete(true);
             }}
+            onClickDeleteAll={() => {
+              setDataTable((prevData) => {
+                return prevData.map((item) => ({
+                  ...item,
+                  isDeleted: true,
+                }));
+              });
+              
+              toast({
+                title: "Xóa thành công",
+                description: `Đã xóa tất cả lớp học`,
+                variant: "success",
+                duration: 3000,
+              });
+            }}
             onClickDelete={(itemsSelected: string[]) => {
               // ? DELETE THEO MÃ LỚP
               setDataTable((prevData) => {

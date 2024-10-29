@@ -189,14 +189,27 @@ export default function TeachersDataTable() {
             onClickMultipleDelete={() => {
               setIsMultipleDelete(true);
             }}
+            onClickDeleteAll={() => {
+              setDataTable((prevData) => {
+                return prevData.map((item) => ({
+                  ...item,
+                  isDeleted: true,
+                }));
+              });
+              
+              toast({
+                title: "Xóa thành công",
+                description: `Đã xóa tất cả giảng viên`,
+                variant: "success",
+                duration: 3000,
+              });
+            }}
+            
             onClickDelete={(itemsSelected: string[]) => {
-              console.log("itemsSelected onClickDelete", itemsSelected);
-
               // ? DELETE THEO MSSV
               setDataTable((prevData) => {
                 return prevData.map((item) => {
                   if (itemsSelected.includes(item.data["Mã cán bộ"])) {
-                    console.log("item.data", item.data);
                     return {
                       ...item,
                       isDeleted: true,
