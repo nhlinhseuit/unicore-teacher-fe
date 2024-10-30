@@ -4,6 +4,7 @@ import RenderTag from "../shared/RenderTag";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import Image from "next/image";
 import RenderFile from "../shared/RenderFile";
+import { Dropdown } from "flowbite-react";
 
 interface Props {
   _id: string;
@@ -38,14 +39,82 @@ const AnnouncementDetail = ({
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex w-full gap-4 p-4">
         {/* EDIT */}
-        <div className="absolute top-4 right-2">
-          <Image
-            src={"/assets/icons/edit-black.svg"}
-            width={26}
-            height={26}
-            alt={"edit"}
-            className={`object-contain cursor-pointer`}
-          />
+        <div className="absolute top-4 right-3 flex justify-end w-[50%]">
+          <div className="flex gap-1">
+            <Image
+              src={"/assets/icons/edit-black.svg"}
+              width={26}
+              height={26}
+              alt={"edit"}
+              className={`object-contain cursor-pointer`}
+            />
+            <Dropdown
+              className="z-30 rounded-lg"
+              label=""
+              renderTrigger={() => (
+                <Image
+                  src={"/assets/icons/history.svg"}
+                  width={27}
+                  height={27}
+                  alt={"edit"}
+                  className={`object-contain cursor-pointer`}
+                />
+              )}
+            >
+              <Dropdown.Header>
+                <span className="block truncate text-sm font-medium text-center">
+                  Nhật ký chỉnh sửa
+                </span>
+              </Dropdown.Header>
+              <ul>
+                <li role="menuitem">
+                  <button
+                    type="button"
+                    className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
+                    "
+                  >
+                    Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    type="button"
+                    className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
+                    "
+                  >
+                    Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    type="button"
+                    className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
+                    "
+                  >
+                    Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    type="button"
+                    className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
+                    "
+                  >
+                    Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    type="button"
+                    className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
+                    "
+                  >
+                    Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
+                  </button>
+                </li>
+              </ul>
+            </Dropdown>
+          </div>
         </div>
 
         {/* IMAGE */}
@@ -68,17 +137,21 @@ const AnnouncementDetail = ({
               </p>
             </Link>
 
+            <span className="block mt-2 small-regular italic text-[#636363] ">
+              {createdAt}
+            </span>
+
+            <span className="mt-2 small-regular italic text-[#636363] ">
+              Đăng bởi: GV. Trần Hạnh Xuân
+            </span>
+
             <div className="mt-2 flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
               ))}
             </div>
 
-            <span className="mt-2 small-regular italic text-[#636363] ">
-              {createdAt}
-            </span>
-
-            <p className="mt-2 body-regular text-dark200_light900 flex-1">
+            <p className="mt-4 body-regular text-dark200_light900 flex-1">
               {description}
             </p>
 

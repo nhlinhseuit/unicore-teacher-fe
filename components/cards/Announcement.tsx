@@ -68,17 +68,17 @@ const Announcement = ({
               </p>
             </Link>
 
+            <span className="mt-2 small-regular italic text-[#636363] line-clamp-1 ">
+              {createdAt}
+            </span>
+
             <div className="mt-2 flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
               ))}
             </div>
 
-            <span className="mt-2 small-regular italic text-[#636363] line-clamp-1 ">
-              {createdAt}
-            </span>
-
-            <p className="mt-2 body-regular text-dark200_light900 line-clamp-2 flex-1">
+            <p className="mt-4 body-regular text-dark200_light900 line-clamp-2 flex-1">
               {description}
             </p>
 
