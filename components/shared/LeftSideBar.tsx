@@ -17,8 +17,8 @@ const LeftSideBar = () => {
     flex-col
     justify-between
     background-light900_dark200
-    min-w-[265px]
-    max-w-[265px]
+    min-w-[200px]
+    max-w-[200px]
     max-lg:min-w-fit
 
     max-h-screen
@@ -55,7 +55,7 @@ const LeftSideBar = () => {
 
       <div
         className="
-    flex  flex-col gap-6 px-6 h-full mt-6
+    flex  flex-col gap-4 px-6 h-full mt-6
     "
       >
         {/* ITEM */}
@@ -77,8 +77,8 @@ const LeftSideBar = () => {
           if (item.route !== "/profile") {
             return (
               <Link
-                href={item.route}
                 key={item.route}
+                href={item.route}
                 className={`${
                   isActive
                     ? "primary-gradient rounded-lg text-light-900"
@@ -135,7 +135,7 @@ const LeftSideBar = () => {
                 max-lg:hidden
                 primary-text-gradient"
             >
-              Log in
+              Đăng nhập
             </span>
           </Button>
           <Image
@@ -164,7 +164,7 @@ const LeftSideBar = () => {
                         px-4 py-3 shadow-none text-dark400_light900
                         max-lg:hidden"
           >
-            Sign up
+            Đăng ký
           </Button>
 
           <Image

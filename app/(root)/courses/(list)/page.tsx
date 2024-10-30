@@ -13,7 +13,7 @@ const Courses = () => {
     <>
       {!isImport ? (
         <div>
-          <div className="flex justify-end mt-3 mb-3">
+          <div className="flex justify-end mb-3">
             <IconButton
               text="Import danh sách lớp mới"
               onClick={() => {

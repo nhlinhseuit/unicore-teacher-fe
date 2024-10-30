@@ -70,6 +70,7 @@ export default function TeachersDataTable() {
         if (index === 0) {
           Object.entries(requiredFields).forEach(([fieldName, value]) => {
             if (value === undefined) {
+              console.log("errorMessages");
               errorMessages.push(`Trường "${fieldName}" bị thiếu hoặc lỗi.`);
             }
           });
@@ -81,7 +82,7 @@ export default function TeachersDataTable() {
           isDeleted: false,
           data: {
             "Mã cán bộ": item["Mã cán bộ"],
-            "Tài khoản": generateUsername(item["Họ và tên"]),
+            "Tài khoản": generateUsername(item["Họ và tên"] ?? ""),
             "Mật khẩu": "1",
             "Họ và tên": item["Họ và tên"],
             "Học vị": item["Học vị"],
@@ -97,6 +98,7 @@ export default function TeachersDataTable() {
       });
 
       if (errorMessages.length > 0) {
+        console.log("setErrorMessages");
         setErrorMessages(errorMessages);
       } else {
         setDataTable(transformedData as []);
@@ -114,12 +116,15 @@ export default function TeachersDataTable() {
 
   const { toast } = useToast();
 
+  console.log("errorMessages", errorMessages);
+
   return (
     <div>
       {errorMessages.length > 0 && (
         <div className="mb-6">
           {errorMessages.map((item, index) => (
             <ErrorComponent
+              key={`${item}_${index}`}
               text={item}
               onClickClose={() => {
                 setErrorMessages((prevErrors) =>
@@ -131,47 +136,52 @@ export default function TeachersDataTable() {
         </div>
       )}
 
-      <div className="flex mb-2">
+      {/* DESCRIPTION */}
+      <div className="flex justify-between">
         <div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".xlsx, .xls"
-            onChange={handleTeacherFileUpload}
-            style={{ display: "none" }}
-          />
+          <div className="flex mb-2">
+            <div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".xlsx, .xls"
+                onChange={handleTeacherFileUpload}
+                style={{ display: "none" }}
+              />
 
-          <IconButton
-            text="Import danh sách giảng viên"
-            onClick={handleButtonClick}
-            iconLeft={"/assets/icons/upload-white.svg"}
-            iconWidth={16}
-            iconHeight={16}
-          />
+              <IconButton
+                text="Import danh sách giảng viên"
+                onClick={handleButtonClick}
+                iconLeft={"/assets/icons/upload-white.svg"}
+                iconWidth={16}
+                iconHeight={16}
+              />
+            </div>
+            {dataTable.length > 0 && (
+              <IconButton text="Lưu" onClick={() => {}} otherClasses="ml-2" />
+            )}
+          </div>
+
+          <a
+            href="/assets/KTLN - template import ds giảng viên.xlsx"
+            download
+            className="text-blue-500 underline text-base italic"
+          >
+            Tải xuống template file import giảng viên
+          </a>
         </div>
-        {dataTable.length > 0 && (
-          <IconButton text="Lưu" onClick={() => {}} otherClasses="ml-2" />
-        )}
-      </div>
 
-      <a
-        href="/assets/KTLN - template import ds giảng viên.xlsx"
-        download
-        className="text-blue-500 underline text-base italic"
-      >
-        Tải xuống template file import giảng viên
-      </a>
+        <div className="flex justify-end gap-4 mb-3 items-center">
+          <p className="italic text-sm">
+            * Để scroll ngang, nhấn nút Shift và cuộn chuột
+          </p>
+        </div>
+      </div>
 
       {isLoading ? (
         <TableSkeleton />
       ) : dataTable.length > 0 ? (
         <>
-          <div className="flex justify-end gap-4 mb-3 items-center">
-            <p className="italic text-sm">
-              * Để scroll ngang, nhấn nút Shift và cuộn chuột
-            </p>
-          </div>
-
           <DataTable
             type={DataTableType.Teacher}
             dataTable={dataTable}
@@ -196,7 +206,7 @@ export default function TeachersDataTable() {
                   isDeleted: true,
                 }));
               });
-              
+
               toast({
                 title: "Xóa thành công",
                 description: `Đã xóa tất cả giảng viên`,
@@ -204,7 +214,6 @@ export default function TeachersDataTable() {
                 duration: 3000,
               });
             }}
-            
             onClickDelete={(itemsSelected: string[]) => {
               // ? DELETE THEO MSSV
               setDataTable((prevData) => {

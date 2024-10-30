@@ -49,7 +49,7 @@ const Announcement = ({
         </div>
 
         {/* IMAGE */}
-        <div className="w-[20%] ">
+        <div className="w-[20%]">
           <Image
             src={"/assets/images/department-annoucement.svg"}
             width={16}

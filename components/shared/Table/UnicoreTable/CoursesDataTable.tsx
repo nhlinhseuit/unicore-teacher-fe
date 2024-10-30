@@ -110,6 +110,7 @@ export default function CoursesDataTable() {
         <div className="mb-6">
           {errorMessages.map((item, index) => (
             <ErrorComponent
+              key={`${item}_${index}`}
               text={item}
               onClickClose={() => {
                 setErrorMessages((prevErrors) =>
@@ -121,50 +122,55 @@ export default function CoursesDataTable() {
         </div>
       )}
 
-      <div className="flex mb-2">
+      {/* DESCRIPTION */}
+      <div className="flex justify-between">
         <div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".xlsx, .xls"
-            onChange={handleCoursesFileUpload}
-            style={{ display: "none" }}
-          />
+          <div className="flex mb-2">
+            <div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".xlsx, .xls"
+                onChange={handleCoursesFileUpload}
+                style={{ display: "none" }}
+              />
 
-          <IconButton
-            text="Import danh sách lớp"
-            onClick={handleButtonClick}
-            iconLeft={"/assets/icons/upload-white.svg"}
-            iconWidth={16}
-            iconHeight={16}
-          />
+              <IconButton
+                text="Import danh sách lớp"
+                onClick={handleButtonClick}
+                iconLeft={"/assets/icons/upload-white.svg"}
+                iconWidth={16}
+                iconHeight={16}
+              />
+            </div>
+            {dataTable.length > 0 && (
+              <IconButton text="Lưu" onClick={() => {}} otherClasses="ml-2" />
+            )}
+          </div>
+
+          <a
+            href="/assets/KLTN - template import ds lớp.xlsx"
+            download
+            className="text-blue-500 underline text-base italic"
+          >
+            Tải xuống template file import lớp học
+          </a>
         </div>
-        {dataTable.length > 0 && (
-          <IconButton text="Lưu" onClick={() => {}} otherClasses="ml-2" />
-        )}
-      </div>
 
-      <a
-        href="/assets/KLTN - template import ds lớp.xlsx"
-        download
-        className="text-blue-500 underline text-base italic"
-      >
-        Tải xuống template file import lớp học
-      </a>
+        <div>
+          <p className="italic text-sm text-right ">
+            * Học kỳ hiện tại: HK1, năm 2024
+          </p>
+          <p className="italic text-sm text-right">
+            * Để scroll ngang, nhấn nút Shift và cuộn chuột
+          </p>
+        </div>
+      </div>
 
       {isLoading ? (
         <TableSkeleton />
       ) : dataTable.length > 0 ? (
         <>
-          <div className="flex justify-end gap-4 mb-3 items-center">
-            <p className="italic text-sm">* Học kỳ hiện tại: HK1, năm 2024</p>
-          </div>
-          <div className="flex justify-end gap-4 mb-3 items-center">
-            <p className="italic text-sm">
-              * Để scroll ngang, nhấn nút Shift và cuộn chuột
-            </p>
-          </div>
-
           <DataTable
             type={DataTableType.Course}
             dataTable={dataTable}
@@ -189,7 +195,7 @@ export default function CoursesDataTable() {
                   isDeleted: true,
                 }));
               });
-              
+
               toast({
                 title: "Xóa thành công",
                 description: `Đã xóa tất cả lớp học`,
@@ -210,7 +216,7 @@ export default function CoursesDataTable() {
                   return item;
                 });
               });
-              
+
               toast({
                 title: "Xóa thành công",
                 description: `${`Các lớp ${itemsSelected.join(

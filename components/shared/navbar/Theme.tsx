@@ -52,10 +52,10 @@ const Theme = () => {
         >
           {themes.map((item) => (
             <MenubarItem
+              key={item.value}
               className="
                     flex items-center gap-4 px-2.5 py-2 hover:bg-light-800
                     dark:focus:bg-dark-400"
-              key={item.value}
               onClick={() => {
                 setMode(item.value)
 

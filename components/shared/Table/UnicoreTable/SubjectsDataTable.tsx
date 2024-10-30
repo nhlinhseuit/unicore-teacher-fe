@@ -132,47 +132,52 @@ export default function SubjectsDataTable() {
         </div>
       )}
 
-      <div className="flex mb-2">
+      {/* DESCRIPTION */}
+      <div className="flex justify-between">
         <div>
-          <input
-            ref={fileInputRef}
-            type="file"
-            accept=".xlsx, .xls"
-            onChange={handleSubjectsFileUpload}
-            style={{ display: "none" }}
-          />
+          <div className="flex mb-2">
+            <div>
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".xlsx, .xls"
+                onChange={handleSubjectsFileUpload}
+                style={{ display: "none" }}
+              />
 
-          <IconButton
-            text="Import danh sách môn"
-            onClick={handleButtonClick}
-            iconLeft={"/assets/icons/upload-white.svg"}
-            iconWidth={16}
-            iconHeight={16}
-          />
+              <IconButton
+                text="Import danh sách môn"
+                onClick={handleButtonClick}
+                iconLeft={"/assets/icons/upload-white.svg"}
+                iconWidth={16}
+                iconHeight={16}
+              />
+            </div>
+            {dataTable.length > 0 && (
+              <IconButton text="Lưu" onClick={() => {}} otherClasses="ml-2" />
+            )}
+          </div>
+
+          <a
+            href="/assets/KLTN - template import môn.xlsx"
+            download
+            className="text-blue-500 underline text-base italic"
+          >
+            Tải xuống template file import môn học
+          </a>
         </div>
-        {dataTable.length > 0 && (
-          <IconButton text="Lưu" onClick={() => {}} otherClasses="ml-2" />
-        )}
-      </div>
 
-      <a
-        href="/assets/KLTN - template import môn.xlsx"
-        download
-        className="text-blue-500 underline text-base italic"
-      >
-        Tải xuống template file import môn học
-      </a>
+        <div className="flex justify-end gap-4 mb-5 items-center">
+          <p className="italic text-sm">
+            * Để scroll ngang, nhấn nút Shift và cuộn chuột
+          </p>
+        </div>
+      </div>
 
       {isLoading ? (
         <TableSkeleton />
       ) : dataTable.length > 0 ? (
         <>
-          <div className="flex justify-end gap-4 mb-5 items-center">
-            <p className="italic text-sm">
-              * Để scroll ngang, nhấn nút Shift và cuộn chuột
-            </p>
-          </div>
-
           <DataTable
             type={DataTableType.Subject}
             dataTable={dataTable}
@@ -197,7 +202,7 @@ export default function SubjectsDataTable() {
                   isDeleted: true,
                 }));
               });
-              
+
               toast({
                 title: "Xóa thành công",
                 description: `Đã xóa tất cả môn học`,

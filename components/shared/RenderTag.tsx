@@ -14,9 +14,10 @@ const RenderTag = ({ _id, name, totalQuestions, showCount }: Props) => {
     <Link href={`/tags/${_id}`} className="flex justify-between gap-2">
       <Badge
         className="
+        uppercase
       borde-2 border-gray-200
       shadow-sm
-      text-[10px] 
+      text-[11px] 
       font-semibold 
       leading-[12px]
       text-[#1F86E8] 

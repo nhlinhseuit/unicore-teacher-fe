@@ -25,7 +25,7 @@ const BorderButton = (params: BorderButtonProps) => {
         rounded-lg
         text-sm
         px-4
-        py-2
+        py-[8px]
         dark:bg-primary-600
         dark:hover:bg-primary-700
         focus:outline-none
@@ -35,7 +35,7 @@ const BorderButton = (params: BorderButtonProps) => {
         !bg-transparent
         ${
           params.isActive
-            ? " border-2 border-primary-500 text-primary-500 font-semibold"
+            ? " border-[1.5px] border-primary-500 text-primary-500 font-semibold"
             : "border-[1px] border-gray-400 font-medium text-gray-400"
         }
         `}

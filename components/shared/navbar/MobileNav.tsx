@@ -99,37 +99,37 @@ const MobileNav = () => {
           {/* <SignedOut>
           </SignedOut> */}
           <div className="flex flex-col gap-3">
-              <SheetClose asChild>
-                <Link href="/sign-in">
-                  <Button
-                    className="
+            <SheetClose asChild>
+              <Link href="/sign-in">
+                <Button
+                  className="
                         small-medium btn-secondary 
                         min-h-[41px] w-full rounded-lg
                         px-4 py-3 shadow-none"
-                  >
-                    <span
-                      className="
-                            primary-text-gradient"
-                    >
-                      Log In
-                    </span>
-                  </Button>
-                </Link>
-              </SheetClose>
-
-              <SheetClose asChild>
-                <Link href="/sign-up">
-                  <Button
+                >
+                  <span
                     className="
+                            primary-text-gradient"
+                  >
+                    Đăng nhập
+                  </span>
+                </Button>
+              </Link>
+            </SheetClose>
+
+            <SheetClose asChild>
+              <Link href="/sign-up">
+                <Button
+                  className="
                         small-medium btn-tertiary light-border-2 
                         min-h-[41px] w-full rounded-lg
                         px-4 py-3 shadow-none text-dark400_light900"
-                  >
-                    Sign Up
-                  </Button>
-                </Link>
-              </SheetClose>
-            </div>
+                >
+                  Đăng ký
+                </Button>
+              </Link>
+            </SheetClose>
+          </div>
         </div>
       </SheetContent>
     </Sheet>

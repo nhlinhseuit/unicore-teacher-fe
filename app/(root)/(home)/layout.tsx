@@ -17,14 +17,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div
         aria-label="Tabs with underline"
         role="tablist"
-        className="flex text-center -mb-px flex-wrap border-b border-gray-200 dark:border-gray-700"
+        className="mb-4 flex text-center flex-wrap border-b border-gray-200 dark:border-gray-700"
       >
         {DepartmentAnnouncementsTabItems.map((item) => {
           const isActive =
             pathName === item.route || pathName.startsWith(`/${item.route}/`);
 
           return (
-            <Link href={item.route}>
+            <Link key={item.route} href={item.route}>
               <button
                 type="button"
                 className={`
@@ -39,7 +39,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   disabled:text-gray-400
                   disabled:dark:text-gray-500
                   rounded-t-lg
-                  ${isActive ? "border-b-2 border-gray-400" : ""}`}
+                  ${isActive ? "border-b-[1.5px] border-gray-300" : ""}`}
                 role="tab"
               >
                 {item.label}
