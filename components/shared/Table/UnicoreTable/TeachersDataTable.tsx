@@ -70,7 +70,6 @@ export default function TeachersDataTable() {
         if (index === 0) {
           Object.entries(requiredFields).forEach(([fieldName, value]) => {
             if (value === undefined) {
-              console.log("errorMessages");
               errorMessages.push(`Trường "${fieldName}" bị thiếu hoặc lỗi.`);
             }
           });
@@ -98,7 +97,6 @@ export default function TeachersDataTable() {
       });
 
       if (errorMessages.length > 0) {
-        console.log("setErrorMessages");
         setErrorMessages(errorMessages);
       } else {
         setDataTable(transformedData as []);
@@ -115,8 +113,6 @@ export default function TeachersDataTable() {
   };
 
   const { toast } = useToast();
-
-  console.log("errorMessages", errorMessages);
 
   return (
     <div>
