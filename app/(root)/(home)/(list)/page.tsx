@@ -13,7 +13,7 @@ import IconButton from "@/components/shared/IconButton";
 import Link from "next/link";
 import Image from "next/image";
 import FilterAnnoucements from "@/components/shared/Table/Annoucements/FilterAnnoucements";
-import CollapsedButton from "@/components/shared/Table/Annoucements/CollapsedButton";
+import ClosedButton from "@/components/shared/Table/Annoucements/ClosedButton";
 
 const announcements = [
   {
@@ -224,13 +224,13 @@ const Home = () => {
 
         <div className="flex gap-1">
           {selectedMiniButton === 1 ? (
-            <CollapsedButton
+            <ClosedButton
               onClose={() => {
                 setSelectedMiniButton(-1);
               }}
             >
               <TableSearch setSearchTerm={() => {}} searchTerm={""} />
-            </CollapsedButton>
+            </ClosedButton>
           ) : (
             <MiniButton
               key={1}
@@ -245,13 +245,13 @@ const Home = () => {
 
           {selectedMiniButton === 2 ? (
             <div className="">
-              <CollapsedButton
+              <ClosedButton
                 onClose={() => {
                   setSelectedMiniButton(-1);
                 }}
               >
                 <FilterAnnoucements typeFilter={typeFilter} />
-              </CollapsedButton>
+              </ClosedButton>
             </div>
           ) : (
             <MiniButton
@@ -265,7 +265,7 @@ const Home = () => {
           )}
 
           {selectedMiniButton === 3 ? (
-            <CollapsedButton
+            <ClosedButton
               onClose={() => {
                 setSelectedMiniButton(-1);
               }}
@@ -276,7 +276,7 @@ const Home = () => {
                   iconLeft="/assets/icons/add.svg"
                 />
               </Link>
-            </CollapsedButton>
+            </ClosedButton>
           ) : (
             <MiniButton
               key={3}

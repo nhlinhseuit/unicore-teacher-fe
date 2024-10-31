@@ -34,14 +34,14 @@ const RightSideBar = () => {
             <p className="base-semibold line-clamp-1 text-center">Danh mục</p>
 
             {categoryList.map((item) => (
-              <div key={item.id} className="flex items-center gap-4">
+              <div key={item.id} className="flex gap-4">
                 <input
                   type="checkbox"
                   checked={true}
                   onChange={(e) => {}}
                   className="w-4 h-4 cursor-pointer"
                 />
-                <p className="body-regular text-dark200_light900 line-clamp-2 flex-1 m-0">
+                <p className="body-regular -translate-y-[1px] text-dark200_light900 line-clamp-2 flex-1 m-0">
                   {item.value}
                 </p>
               </div>

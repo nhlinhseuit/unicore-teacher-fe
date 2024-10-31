@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 
-const questions = [
+const announcements = [
   {
     _id: "1",
     title: "Đăng ký đề tài đồ án 1 và đồ án 2 học kỳ 1 năm học 2024 - 2025",
@@ -93,7 +93,8 @@ const page = () => {
   // ! Get ID từ param, muốn truyền cả object qua route mới thì sd Context / Redux
   const params = useParams() as { announcementId: string };
   const { announcementId } = params;
-  const question: any = questions[parseInt(announcementId) - 1];
+  const question: any = announcements[parseInt(announcementId) - 1];
+
 
   return (
     <>

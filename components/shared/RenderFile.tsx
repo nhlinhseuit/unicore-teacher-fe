@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
 interface Props {
-  _id: string;
+  _id: string | number;
   name: String;
 }
 

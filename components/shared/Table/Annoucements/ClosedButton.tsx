@@ -1,26 +1,28 @@
 import Image from "next/image";
 import React, { ReactNode } from "react";
 
-interface CollapsedButtonProps {
+interface ClosedButtonProps {
   children: ReactNode;
-  onClose?: () => void;
+  _id?: string | number;
+  onClose?: (index: number) => void;
 }
 
-const CollapsedButton: React.FC<CollapsedButtonProps> = ({
+const ClosedButton: React.FC<ClosedButtonProps> = ({
   children,
   onClose,
+  _id,
 }) => {
   return (
     <div className="relative">
       {children}
-      <div className="absolute top-0 right-0 translate-x-[30%] -translate-y-[30%] flex items-center">
+      <div className="absolute top-0 right-0 translate-x-[30%] -translate-y-[40%] flex items-center">
         <Image
           src="/assets/icons/close_circle.svg"
           alt="close"
           width={18}
           height={18}
           onClick={() => {
-            if (onClose) onClose();
+            if (onClose) onClose(_id as number);
           }}
           className="cursor-pointer"
         />
@@ -29,4 +31,4 @@ const CollapsedButton: React.FC<CollapsedButtonProps> = ({
   );
 };
 
-export default CollapsedButton;
+export default ClosedButton;

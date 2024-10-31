@@ -1,19 +1,14 @@
-import Image from "next/image";
 import React from "react";
+interface Category {
+  id: number;
+  value: string;
+}
 
-const categoryList = [
-  { id: 1, value: "Thông báo - tin tức" },
-  { id: 2, value: "Khoa học - Công nghệ" },
-  { id: 3, value: "Sự kiện nổi bật" },
-  { id: 4, value: "Thông báo - tin tức" },
-  { id: 5, value: "Khoa học - Công nghệ" },
-  { id: 6, value: "Sự kiện nổi bật" },
-  { id: 7, value: "Thông báo - tin tức" },
-  { id: 8, value: "Khoa học - Công nghệ" },
-  { id: 9, value: "Sự kiện nổi bật" },
-];
+interface CategoryProps {
+  categoryList: Category[];
+}
 
-const Category = () => {
+const Category = (params: CategoryProps) => {
   return (
     <div
       className="w-full rounded-[10px]
@@ -26,15 +21,15 @@ const Category = () => {
 "
     >
       <div className="flex flex-wrap w-full gap-4 p-4">
-        {categoryList.map((item) => (
-          <div key={item.id} className="flex items-center gap-2 w-full ">
+        {params.categoryList.map((item) => (
+          <div key={item.id} className="flex gap-2 w-full ">
             <input
               type="checkbox"
               checked={true}
               onChange={(e) => {}}
               className="w-4 h-4 cursor-pointer"
             />
-            <p className="body-regular text-dark200_light900 line-clamp-2 flex-1 m-0">
+            <p className="body-regular -translate-y-[1px] text-dark200_light900 line-clamp-2 flex-1 m-0">
               {item.value}
             </p>
           </div>
