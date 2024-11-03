@@ -113,8 +113,6 @@ const Row = React.memo(
         break;
     }
 
-    console.log("row");
-
     return (
       <Table.Row
         key={params.dataItem.STT}

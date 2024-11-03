@@ -93,7 +93,6 @@ const CreateAnnouncement = () => {
 
       if (image.type.startsWith("image/")) {
         const imageURL = URL.createObjectURL(image);
-        console.log("imageURL", imageURL);
         setPreviewImage(imageURL);
       } else {
         alert("Vui lòng chọn một file ảnh (png, jpg, jpeg, ...)");
