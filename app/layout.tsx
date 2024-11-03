@@ -6,10 +6,10 @@ import {
   UserButton,
 } from "@clerk/nextjs";
 import { Inter, Space_Grotesk } from "next/font/google";
-import "./globals.css";
 import { Metadata } from "next";
 
 import "./globals.css";
+import "../styles/prism.css";
 import { ThemeProvider } from "@/context/ThemeProvider";
 
 const inter = Inter({
@@ -26,8 +26,7 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   title: "Unicore",
-  description:
-    "A class management system",
+  description: "A class management system",
   icons: "/assets/images/site-logo.svg",
 };
 
@@ -48,10 +47,10 @@ export default function RootLayout({
           }}
         >
         </ClerkProvider> */}
-          <ThemeProvider>
-            {/*  */}
-            {children}
-          </ThemeProvider>
+        <ThemeProvider>
+          {/*  */}
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

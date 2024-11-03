@@ -95,7 +95,6 @@ const page = () => {
   const { announcementId } = params;
   const question: any = announcements[parseInt(announcementId) - 1];
 
-
   return (
     <>
       <div
@@ -111,7 +110,7 @@ const page = () => {
           height={21}
           className="cursor-pointer mr-2"
         />
-        <p>Quay lại danh sách lớp học</p>
+        <p>Quay lại danh sách thông báo</p>
       </div>
 
       <AnnouncementDetail

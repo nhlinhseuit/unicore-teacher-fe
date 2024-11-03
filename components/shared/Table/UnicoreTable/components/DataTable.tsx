@@ -400,6 +400,8 @@ const DataTable = (params: DataTableParams) => {
     }
   };
 
+  console.log('data table')
+
   return (
     <div>
       <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 p-4">

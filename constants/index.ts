@@ -1,6 +1,20 @@
 import { SidebarLink } from "@/types";
 
 export const itemsPerPage = 30;
+export const MAX_FILE_VALUE = 25; // 25MB
+export const MAX_FILE_SIZE = MAX_FILE_VALUE * 1024 * 1024; // 25MB
+export const ALLOWED_FILE_TYPES = [
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+  "application/pdf", // .pdf
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation", // .pptx
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+  "application/vnd.ms-excel", // .xls
+  "text/plain", // .txt
+  "image/jpeg",
+  "image/png",
+  "image/svg+xml",
+];
+export const MAX_CATEGORIES = 5; // Số danh mục tối đa chọn khi đăng thông báo
 
 export const DepartmentAnnouncementTabs = [
   { value: "postedAnnouncement", label: "Thông báo đã đăng" },

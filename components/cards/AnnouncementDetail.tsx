@@ -1,10 +1,34 @@
 import Link from "next/link";
-import React from "react";
+import React, { useEffect } from "react";
 import RenderTag from "../shared/RenderTag";
-import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import Image from "next/image";
 import RenderFile from "../shared/RenderFile";
 import { Dropdown } from "flowbite-react";
+
+import Prism from "prismjs";
+import parse from "html-react-parser";
+
+import "prismjs/components/prism-java";
+import "prismjs/components/prism-c";
+import "prismjs/components/prism-cpp";
+import "prismjs/components/prism-csharp";
+import "prismjs/components/prism-aspnet";
+import "prismjs/components/prism-sass";
+import "prismjs/components/prism-jsx";
+import "prismjs/components/prism-typescript";
+import "prismjs/components/prism-solidity";
+import "prismjs/components/prism-json";
+import "prismjs/components/prism-dart";
+import "prismjs/components/prism-ruby";
+import "prismjs/components/prism-rust";
+import "prismjs/components/prism-r";
+import "prismjs/components/prism-kotlin";
+import "prismjs/components/prism-go";
+import "prismjs/components/prism-bash";
+import "prismjs/components/prism-sql";
+import "prismjs/components/prism-mongodb";
+import "prismjs/plugins/line-numbers/prism-line-numbers.js";
+import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 
 interface Props {
   _id: string;
@@ -27,15 +51,24 @@ interface Props {
 }
 
 const object = {
-  title:
-    "Thông Báo Cập Nhật Thông Tin Thực Tập Doanh Nghiệp Học Kỳ 1 Năm Học 2024 - 2025",
-  description:
-    '<p><strong>Khoa C&ocirc;ng nghệ Phần mềm th&ocirc;ng b&aacute;o c&aacute;c sinh vi&ecirc;n đăng k&yacute; học phần thực tập doanh nghiệp học kỳ 1 năm học 2024 - 2025 lớp SE501.P11 v&agrave; SE501.P11.PMCL cập nhật th&ocirc;ng tin thực tập doanh nghiệp v&agrave;o c&aacute;c file sau từ nay đến ng&agrave;y&nbsp;15/09/2024.</strong><br><span style="text-decoration: underline;">Lớp SE501.P11&nbsp;</span><br><span style="text-decoration: underline;">Lớp SE501.P11.PMCL</span></p>\n<p><br>Lưu &yacute;: Sinh vi&ecirc;n n&agrave;o chưa li&ecirc;n hệ được nơi thực tập th&igrave; cập nhật v&agrave;o cột "Nơi thực tập" l&agrave; "Chưa c&oacute;".<br>Để nắm được c&aacute;c th&ocirc;ng tin chi tiết về việc thực tập doanh nghiệp học kỳ 1 năm học 2024 - 2025, đề nghị to&agrave;n bộ c&aacute;c sinh vi&ecirc;n lớp&nbsp;SE501.P11 v&agrave; SE501.P11.PMCL tham dự SEMINAR HƯỚNG DẪN THỰC TẬP DOANH NGHIỆP KHOA C&Ocirc;NG NGHỆ PHẦN MỀM cụ thể như sau:</p>\n<ol>\n<li>&nbsp;Thời gian: 15h00 thứ s&aacute;u ng&agrave;y 13/09/2024</li>\n<li>H&igrave;nh thức: online tr&ecirc;n MS Team với Passcode : r96y1rg</li>\n<li>Người tr&igrave;nh b&agrave;y: ThS. L&ecirc; Thanh Trọng_Ph&oacute; Trưởng khoa C&ocirc;ng nghệ Phần mềm</li>\n</ol>',
-  photo: null,
-  file: null,
-  category: [],
-  target: [],
-  path: "/create-announcement",
+  description: `
+    <p>Th&ocirc;ng tin chi tiết của th&ocirc;ng b&aacute;o. Tối thiểu 20 k&iacute; tự Th&ocirc;ng tin chi tiết của th&ocirc;ng b&aacute;o. Tối thiểu 20 k&iacute; tự</p>
+    <p><a href="https://www.facebook.com/groups/471238578728684/permalink/494427639743111/?rdid=3HUf1H5EW4wGztlE&amp;share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fp%2FvhvpTxPeAtUxaurV%2F">https://www.facebook.com/groups/471238578728684/permalink/494427639743111/?rdid=3HUf1H5EW4wGztlE&amp;share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fp%2FvhvpTxPeAtUxaurV%2F</a></p>
+<p>&nbsp;</p>
+    <p>&nbsp;</p>
+    <pre class="language-javascript"><code>const innerObject = {
+      description: \`&lt;pre class="language-markup"&gt;&lt;code&gt;&amp;lt;div class="w-[20%]"&amp;gt;
+        &amp;lt;Image
+          src="/assets/images/department-annoucement.svg"
+          width="16"
+          height="16"
+          alt="annoucement"
+          class="w-full object-contain"
+        /&amp;gt;
+      &amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
+      &lt;p&gt;c&amp;aacute;c em l&amp;agrave;m b&amp;agrave;i tập n&amp;agrave;y nh&amp;eacute;&lt;/p&gt;\`,
+    };</code></pre>
+  `,
 };
 
 const AnnouncementDetail = ({
@@ -47,6 +80,10 @@ const AnnouncementDetail = ({
   author,
   createdAt,
 }: Props) => {
+  useEffect(() => {
+    Prism.highlightAll();
+  }, []);
+
   return (
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex w-full gap-4 p-4">
@@ -66,8 +103,8 @@ const AnnouncementDetail = ({
               renderTrigger={() => (
                 <Image
                   src={"/assets/icons/history.svg"}
-                  width={27}
-                  height={27}
+                  width={18}
+                  height={18}
                   alt={"edit"}
                   className={`object-contain cursor-pointer`}
                 />
@@ -78,53 +115,37 @@ const AnnouncementDetail = ({
                   Nhật ký chỉnh sửa
                 </span>
               </Dropdown.Header>
-              <ul>
-                <li role="menuitem">
-                  <button
-                    type="button"
-                    className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
+              <div className="scroll-container scroll-container-dropdown-content">
+                <ul>
+                  <li role="menuitem">
+                    <button
+                      type="button"
+                      className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
                     "
-                  >
-                    Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
-                  </button>
-                </li>
-                <li role="menuitem">
-                  <button
-                    type="button"
-                    className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
+                    >
+                      Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
+                    </button>
+                  </li>
+                  <li role="menuitem">
+                    <button
+                      type="button"
+                      className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
                     "
-                  >
-                    Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
-                  </button>
-                </li>
-                <li role="menuitem">
-                  <button
-                    type="button"
-                    className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
+                    >
+                      Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
+                    </button>
+                  </li>
+                  <li role="menuitem">
+                    <button
+                      type="button"
+                      className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
                     "
-                  >
-                    Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
-                  </button>
-                </li>
-                <li role="menuitem">
-                  <button
-                    type="button"
-                    className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
-                    "
-                  >
-                    Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
-                  </button>
-                </li>
-                <li role="menuitem">
-                  <button
-                    type="button"
-                    className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
-                    "
-                  >
-                    Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
-                  </button>
-                </li>
-              </ul>
+                    >
+                      Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
+                    </button>
+                  </li>
+                </ul>
+              </div>
             </Dropdown>
           </div>
         </div>
@@ -142,7 +163,7 @@ const AnnouncementDetail = ({
 
         {/* CONTENT */}
         <div className="w-[80%] flex items-start justify-between sm:flex-row ml-2 mr-8">
-          <div>
+          <div className="w-full">
             <Link href={`/announcementDetailAnnouncementDetail/${_id}`}>
               <p className="base-semibold text-[#1F86E8] underline flex-1">
                 {title}
@@ -163,15 +184,9 @@ const AnnouncementDetail = ({
               ))}
             </div>
 
-            {/* <p className="mt-4 body-regular text-dark200_light900 flex-1">
-              {description}
-            </p> */}
-
-            <div
-              className="html-content
-              mt-4 body-regular text-dark200_light900 flex-1"
-              dangerouslySetInnerHTML={{ __html: object.description }}
-            ></div>
+            <div className="mt-4 body-regular text-dark200_light900 flex-1">
+              {parse(object.description)}
+            </div>
 
             <div className="mt-2 flex flex-wrap gap-2">
               {files.map((tag) => (

@@ -1,0 +1,109 @@
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #d6e7ff;
+  background: #161b22; /* Màu nền thống nhất */
+  text-shadow: none;
+  font-family: "Fira Code", "Fira Mono", Menlo, Consolas, "DejaVu Sans Mono",
+    monospace;
+  font-size: 1em;
+  line-height: 1.5;
+  letter-spacing: 0.2px;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  text-align: left;
+  -moz-tab-size: 4;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+pre[class*="language-"] {
+  background: #161b22;
+  border: 5px solid #242c38;
+  border-radius: 5px;
+  padding: 1.5em 1em;
+  margin: 1em 0;
+  overflow: auto;
+  scrollbar-width: thin; /* Thanh scroll mỏng hơn */
+  scrollbar-color: #888 #161b22; /* Màu thanh scroll và nền */
+}
+
+:not(pre) > code[class*="language-"] {
+  color: #f0f6f6;
+  background: #161b22;
+  padding: 0.2em 0.3em;
+  border-radius: 0.2em;
+  box-decoration-break: clone;
+}
+
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: #446e69;
+  background: transparent; /* Loại bỏ màu nền nếu có */
+}
+
+.token.punctuation {
+  color: #d6b007;
+  background: transparent;
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: #d6e7ff;
+  background: transparent;
+}
+
+.token.selector,
+.token.attr-name,
+.token.builtin,
+.token.inserted {
+  color: #e60067;
+  background: transparent;
+}
+
+.token.string,
+.token.char {
+  color: #49c6ec;
+  background: transparent;
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: #ec8e01;
+  background: transparent;
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: #0fe468;
+  background: transparent;
+}
+
+.token.function,
+.token.class-name {
+  color: #78f3e9;
+  background: transparent;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: #d6e7ff;
+  background: transparent;
+}

@@ -15,20 +15,32 @@ import { useRouter, usePathname } from "next/navigation";
 import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { Input } from "@/components/ui/input";
-import { Badge, Button, Dropdown } from "flowbite-react";
+import { Dropdown } from "flowbite-react";
 import IconButton from "@/components/shared/IconButton";
 import PickFileImageButton from "@/components/shared/Table/Annoucements/PickFileImageButton";
-import Category from "@/components/shared/Table/Annoucements/Category";
 import PreviewImage from "@/components/shared/Table/Annoucements/PreviewImage";
 import RenderFile from "@/components/shared/RenderFile";
 import ClosedButton from "@/components/shared/Table/Annoucements/ClosedButton";
 import SubmitButton from "@/components/shared/SubmitButton";
+import CategoryItem from "@/components/shared/Table/Annoucements/CategoryItem";
+import Image from "next/image";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import {
+  ALLOWED_FILE_TYPES,
+  MAX_FILE_SIZE,
+  MAX_CATEGORIES,
+  MAX_FILE_VALUE,
+} from "@/constants";
+import { useToast } from "@/hooks/use-toast";
 
+// ! CẬP NHẬT
 const type: any = "create";
 
-const files = [
-  { _id: "1", name: "thong_bao_dinh_kem.docx" },
-  { _id: "2", name: "thong_bao_dinh_kem.docx" },
+const targetList = [
+  { id: 1, value: "Giảng viên" },
+  { id: 2, value: "Sinh viên" },
+  { id: 3, value: "Tất cả" },
 ];
 
 const categoryList = [
@@ -51,12 +63,34 @@ const CreateAnnouncement = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const pathName = usePathname();
+
   const [previewImage, setPreviewImage] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const [checkedCategory, setCheckedCategory] = useState<number[]>([]);
+  const [selectedTarget, setSelectedTarget] = useState(1);
+
+  const toggleCategory = (id: number) => {
+    setCheckedCategory(
+      (prevChecked) =>
+        prevChecked.includes(id)
+          ? prevChecked.filter((catId) => catId !== id) // Bỏ nếu đã có
+          : [...prevChecked, id] // Thêm nếu chưa có
+    );
+  };
 
   const handleChooseImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const image = event.target.files?.[0];
     if (image) {
+      if (image.size > MAX_FILE_SIZE) {
+        toast({
+          title: `Kích thước ảnh vượt quá ${MAX_FILE_VALUE}MB.`,
+          description: "Vui lòng chọn file nhỏ hơn.",
+          variant: "error",
+          duration: 3000,
+        });
+        return;
+      }
+
       if (image.type.startsWith("image/")) {
         const imageURL = URL.createObjectURL(image);
         console.log("imageURL", imageURL);
@@ -68,11 +102,22 @@ const CreateAnnouncement = () => {
   };
 
   const handleChooseFile = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("handleChooseFile");
     const files = event.target.files;
     if (files) {
-      console.log("setSelectedFiles", files);
-      setSelectedFiles((prevFiles) => [...prevFiles, ...Array.from(files)]);
+      const validFiles = Array.from(files).filter((file) => {
+        if (file.size > MAX_FILE_SIZE) {
+          toast({
+            title: `Kích thước file vượt quá ${MAX_FILE_VALUE}MB.`,
+            description: "Vui lòng chọn file nhỏ hơn.",
+            variant: "error",
+            duration: 3000,
+          });
+          return false;
+        }
+        return true;
+      });
+
+      setSelectedFiles((prevFiles) => [...prevFiles, ...validFiles]);
     }
   };
 
@@ -112,22 +157,60 @@ const CreateAnnouncement = () => {
 
   // TODO: HỆ THỐNG TỰ GHI NHẬN NGƯỜI ĐĂNG
 
+  const VALID_CATEGORY_IDS = checkedCategory.map((item) => item.toString());
+
+  const AnnoucementSchema = z
+    .object({
+      title: z
+        .string()
+        .min(5, { message: "Tiêu đề phải chứa ít nhất 5 ký tự" })
+        .max(130),
+      description: z
+        .string()
+        .min(20, { message: "Nội dung thông báo phải chứa ít nhất 20 ký tự" }),
+      image: z.any(),
+      file: z.any(),
+      category: z.any(),
+      target: z.number().optional(),
+    })
+    .refine(
+      (data) => checkedCategory.length > 0 && checkedCategory.length <= 3,
+      {
+        message: "Bạn phải chọn ít nhất 1 danh mục và không quá 3 danh mục",
+        path: ["category"],
+      }
+    )
+    .refine((data) => previewImage !== "", {
+      message: `Trường ảnh bìa là bắt buộc. File phải có định dạng ảnh (jpg, png, svg) và kích thước tối đa ${MAX_FILE_VALUE}MB`,
+      path: ["image"],
+    })
+    .refine(
+      (data) =>
+        selectedFiles.every(
+          (file) =>
+            ALLOWED_FILE_TYPES.includes(file.type) && file.size <= MAX_FILE_SIZE
+        ),
+      {
+        message: `File không hợp lệ hoặc vượt quá ${MAX_FILE_VALUE}MB.`,
+        path: ["file"],
+      }
+    );
+
   // 1. Define your form.
-  const form = useForm({
+  const form = useForm<z.infer<typeof AnnoucementSchema>>({
+    resolver: zodResolver(AnnoucementSchema),
     defaultValues: {
       title: "",
       description: "",
-      image: null as File | null,
-      file: [],
+      image: undefined,
+      file: undefined,
       category: [],
-      target: [],
+      target: undefined,
     },
   });
 
   // 2. Define a submit handler.
   async function onSubmit(values: any) {
-    console.log("here");
-
     setIsSubmitting(true);
 
     try {
@@ -137,31 +220,34 @@ const CreateAnnouncement = () => {
       console.log({
         title: values.title,
         description: values.description,
-        image: values.image,
-        file: values.file,
-        category: values.category,
-        target: values.target,
+
+        image: previewImage,
+        file: selectedFiles,
+        category: checkedCategory,
+        target: selectedTarget,
         path: pathName,
       });
 
-      // ! PUSH
-      // router.push("/");
-
       // naviate to home page
+      router.push("/");
+
+      toast({
+        title: "Tạo thông báo thành công.",
+        description: `Thông báo đã được gửi đến ${
+          targetList.find((item) => item.id === selectedTarget)?.value
+        }`,
+        variant: "success",
+        duration: 3000,
+      });
     } catch {
     } finally {
       setIsSubmitting(false);
     }
   }
 
-  const handleTagRemove = (tag: string, field: any) => {
-    const newTags = field.value.filter((t: string) => t !== tag);
-    form.setValue("category", newTags);
-  };
-
   const tinymceKey = process.env.NEXT_PUBLIC_TINYMCE_EDITOR_API_KEY;
 
-  console.log("previewImage", previewImage);
+  const { toast } = useToast();
 
   return (
     <div className="flex-1 mt-10">
@@ -223,32 +309,26 @@ const CreateAnnouncement = () => {
                           menubar: false,
                           plugins: [
                             "advlist",
-                            "autolink",
                             "lists",
                             "link",
                             "image",
-                            "charmap",
                             "preview",
-                            "anchor",
-                            "searchreplace",
-                            "visualblocks",
-                            "fullscreen",
-                            "insertdatetime",
-                            "media",
                             "table",
                             "codesample",
                           ],
                           toolbar:
-                            "undo redo | blocks | " +
-                            "codesample | bold italic forecolor | alignleft aligncenter |" +
-                            "alignright alignjustify | bullist numlist ",
+                            "undo redo | blocks | codesample | bold italic forecolor | " +
+                            "alignleft aligncenter | alignright alignjustify | bullist numlist | link | " +
+                            "table ",
                           content_style:
                             "body { font-family:Inter; font-size:16px }",
+                          language: "vi",
                         }}
                       />
                     </FormControl>
                     <FormDescription className="body-regular mt-2.5 text-light-500">
-                      Thông tin chi tiết của thông báo. Tối thiểu 20 kí tự.
+                      Thông tin chi tiết của thông báo. Tối thiểu 20 kí tự. Nhấn
+                      tổ hợp Ctrl + V để chèn hình ảnh.
                     </FormDescription>
                     <FormMessage className="text-red-500" />
                   </FormItem>
@@ -305,7 +385,7 @@ const CreateAnnouncement = () => {
                       </>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
                         File đính kèm có thể ở các định dạng: docx, pdf, pptx,
-                        xlsx, txt... Tối đa 25MB.
+                        xlsx, txt... Tối đa {MAX_FILE_VALUE}MB.
                       </FormDescription>
                       <FormMessage className="text-red-500" />
                     </FormItem>
@@ -327,10 +407,21 @@ const CreateAnnouncement = () => {
                       Danh mục <span className="text-red-600">*</span>
                     </FormLabel>
                     <FormControl className="mt-3.5 ">
-                      <Category categoryList={categoryList} />
+                      <div className="w-full rounded-[10px] no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 border">
+                        <div className="flex flex-wrap w-full gap-4 p-4">
+                          {categoryList.map((item) => (
+                            <CategoryItem
+                              key={item.id}
+                              item={item}
+                              checked={checkedCategory.includes(item.id)}
+                              onClick={() => toggleCategory(item.id)}
+                            />
+                          ))}
+                        </div>
+                      </div>
                     </FormControl>
                     <FormDescription className="body-regular mt-2.5 text-light-500">
-                      Có thể gắn tới 3 category để miêu tả loại của thông báo
+                      Có thể gắn tối đa 5 danh mục để miêu tả loại của thông báo
                       này.
                     </FormDescription>
                     <FormMessage className="text-red-500" />
@@ -371,11 +462,33 @@ const CreateAnnouncement = () => {
                           </div>
                         )}
                       >
-                        <Dropdown.Item>Giảng viên</Dropdown.Item>
-
-                        <Dropdown.Item>Sinh viên</Dropdown.Item>
-
-                        <Dropdown.Item>Tất cả</Dropdown.Item>
+                        <div className="scroll-container scroll-container-dropdown-content">
+                          {targetList.map((target, index) => (
+                            <Dropdown.Item
+                              key={`${target}_${index}`}
+                              onClick={() => {
+                                setSelectedTarget(target.id);
+                              }}
+                            >
+                              <div className="flex justify-between w-full">
+                                <p className="w-[80%] text-left line-clamp-1">
+                                  {target.value}
+                                </p>
+                                {selectedTarget === target.id ? (
+                                  <Image
+                                    src="/assets/icons/check.svg"
+                                    alt="search"
+                                    width={21}
+                                    height={21}
+                                    className="cursor-pointer mr-2"
+                                  />
+                                ) : (
+                                  <></>
+                                )}
+                              </div>
+                            </Dropdown.Item>
+                          ))}
+                        </div>
                       </Dropdown>
                     </FormControl>
                     <FormDescription className="body-regular mt-2.5 text-light-500">
@@ -417,7 +530,8 @@ const CreateAnnouncement = () => {
                           </>
                         </div>
                         <p className="body-regular mt-2.5 text-light-500">
-                          Ảnh có thể là định dạng jpg, png, svg... Tối đa 25MB.
+                          Ảnh có thể là định dạng jpg, png, svg... Tối đa{" "}
+                          {MAX_FILE_VALUE}MB.
                         </p>
                       </div>
 
