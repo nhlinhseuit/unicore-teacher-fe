@@ -1,5 +1,5 @@
 import { Table } from "flowbite-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import InputComponent from "./InputComponent";
 import { useState } from "react";
 import MoreButtonComponent from "./MoreButtonComponent";
@@ -24,7 +24,7 @@ interface RowParams {
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
   onClickGetOut?: () => void;
-  saveSingleRow?: () => void;
+  saveSingleRow?: (item: any) => void;
   deleteSingleRow?: (itemsSelected: string[]) => void;
   onClickCheckBoxSelect?: (item: string) => void;
   onChangeRow?: (item: any) => void;
@@ -49,6 +49,8 @@ const Row = React.memo(
       //@ts-ignore
       params.dataItem.data["Khoa quản lý"] as boolean
     );
+
+    const refInput = useRef({})
 
     useEffect(() => {
       if (params.isEditTable) setIsEdit(false);
@@ -90,7 +92,13 @@ const Row = React.memo(
         },
       };
 
-      setEditDataItem(updatedDataItem); // ??
+       // TODO: inputref for save single row
+       if(isEdit) {
+        refInput.current = updatedDataItem
+        return
+      }
+
+      // setEditDataItem(updatedDataItem); // ??
 
       params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
     };
@@ -150,8 +158,8 @@ const Row = React.memo(
               <IconButton
                 text="Lưu"
                 onClick={() => {
+                  params.saveSingleRow && params.saveSingleRow(refInput.current);
                   setIsEdit(false);
-                  params.saveSingleRow && params.saveSingleRow();
                 }}
               />
             ) : (

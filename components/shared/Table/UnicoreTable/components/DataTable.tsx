@@ -865,14 +865,6 @@ const DataTable = (params: DataTableParams) => {
                       setItemsSelected((prev) => [...prev, item]);
                     }}
                     onChangeRow={(updatedDataItem: any) => {
-                      var updatedDataTable = localDataTable.map((item) => {
-                        if (item.STT === updatedDataItem.STT) {
-                          return updatedDataItem;
-                        } else {
-                          return item;
-                        }
-                      });
-
                       setLocalDataTable((prevTable) =>
                         prevTable.map((item) =>
                           item.STT === updatedDataItem.STT
@@ -881,7 +873,17 @@ const DataTable = (params: DataTableParams) => {
                         )
                       );
                     }}
-                    saveSingleRow={saveDataTable}
+                    saveSingleRow={(updatedDataItem: any) => {
+                      const updatedDataTable = dataTable.map((item) =>
+                        item.STT === updatedDataItem.STT
+                          ? updatedDataItem
+                          : item
+                      );
+
+                      if (params.onSaveEditTable) {
+                        params.onSaveEditTable(updatedDataTable);
+                      }
+                    }}
                     onClickGetOut={params.onClickGetOut}
                     deleteSingleRow={params.onClickDelete}
                   />
