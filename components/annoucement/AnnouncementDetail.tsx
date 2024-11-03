@@ -53,8 +53,6 @@ interface Props {
 const object = {
   description: `
     <p>Th&ocirc;ng tin chi tiết của th&ocirc;ng b&aacute;o. Tối thiểu 20 k&iacute; tự Th&ocirc;ng tin chi tiết của th&ocirc;ng b&aacute;o. Tối thiểu 20 k&iacute; tự</p>
-    <p><a href="https://www.facebook.com/groups/471238578728684/permalink/494427639743111/?rdid=3HUf1H5EW4wGztlE&amp;share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fp%2FvhvpTxPeAtUxaurV%2F">https://www.facebook.com/groups/471238578728684/permalink/494427639743111/?rdid=3HUf1H5EW4wGztlE&amp;share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2Fp%2FvhvpTxPeAtUxaurV%2F</a></p>
-<p>&nbsp;</p>
     <p>&nbsp;</p>
     <pre class="language-javascript"><code>const innerObject = {
       description: \`&lt;pre class="language-markup"&gt;&lt;code&gt;&amp;lt;div class="w-[20%]"&amp;gt;

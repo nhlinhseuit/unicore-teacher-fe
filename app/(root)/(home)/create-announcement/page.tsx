@@ -544,7 +544,7 @@ const CreateAnnouncement = () => {
                           />
                         ) : (
                           <PreviewImage
-                            icon={"/assets/images/department-annoucement.svg"}
+                            icon={"/assets/images/upload.svg"}
                             alt={"previewImage"}
                           />
                         )}

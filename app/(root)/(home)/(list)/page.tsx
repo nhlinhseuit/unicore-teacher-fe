@@ -1,6 +1,6 @@
 "use client";
 
-import Announcement from "@/components/cards/Announcement";
+import Announcement from "@/components/annoucement/Announcement";
 import NoResult from "@/components/shared/NoResult";
 import BorderButton from "@/components/shared/BorderButton";
 import { DepartmentAnnouncementTabs, FilterType } from "@/constants";
