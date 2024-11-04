@@ -13,7 +13,7 @@ import {
   TeacherData,
   TeacherDataItem,
 } from "@/types";
-import IconButton from "../../../IconButton";
+import IconButton from "../../Button/IconButton";
 import Image from "next/image";
 
 interface RowParams {

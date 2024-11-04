@@ -45,7 +45,7 @@ const LeftSideBar = () => {
             alt="DevFlow"
           />
 
-          <p className="h1-bold font-spaceGrotesk text-dark-100 dark:text-light-900 max-lg:hidden ml-1">
+          <p className="ml-1 h1-bold font-spaceGrotesk text-dark-100 dark:text-light-900 max-lg:hidden">
             Uni<span className="text-primary-500 ml-[2px]">Core</span>
           </p>
         </Link>
@@ -54,9 +54,7 @@ const LeftSideBar = () => {
       {/* <div className="h-[1px] mx-4 bg-[#ECECEC]"></div> */}
 
       <div
-        className="
-    flex  flex-col gap-4 px-6 h-full mt-6
-    "
+        className="flex flex-col h-full gap-4 px-6 mt-6 "
       >
         {/* ITEM */}
         {sidebarDepartmentLinks.map((item) => {
@@ -108,19 +106,13 @@ const LeftSideBar = () => {
       </div>
 
       <div
-        className="
-        mb-6 mt-6
-        flex flex-col gap-3 mx-6
-      "
+        className="flex flex-col gap-3 mx-6 mt-6 mb-6 "
       >
         {/* <SignedOut>
         </SignedOut> */}
         <Link
           href="/sign-in"
-          className="flex 
-                background-light800_dark400
-                rounded-lg
-          "
+          className="flex rounded-lg background-light800_dark400 "
         >
           <Button
             className="
@@ -131,9 +123,7 @@ const LeftSideBar = () => {
                         "
           >
             <span
-              className="
-                max-lg:hidden
-                primary-text-gradient"
+              className=" max-lg:hidden primary-text-gradient"
             >
               Đăng nhập
             </span>
@@ -153,9 +143,7 @@ const LeftSideBar = () => {
 
         <Link
           href="/sign-up"
-          className=" flex 
-                background-light700_dark300
-                rounded-lg"
+          className="flex rounded-lg background-light700_dark300"
         >
           <Button
             className="

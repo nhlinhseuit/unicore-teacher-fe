@@ -1,12 +1,12 @@
 "use client";
 import CoursesDataTable from "@/components/shared/Table/UnicoreTable/CoursesDataTable";
 import React, { useState } from "react";
-import IconButton from "@/components/shared/IconButton";
-import IconButtonStopPropagation from "@/components/shared/IconButtonStopPropagation";
+import IconButton from "@/components/shared/Button/IconButton";
+import IconButtonStopPropagation from "@/components/shared/Button/IconButtonStopPropagation";
 import Image from "next/image";
 import { DetailFilter, FilterType } from "@/constants";
 import { Button, Dropdown } from "flowbite-react";
-import TableSearch from "@/components/shared/search/TableSearch";
+import TableSearch from "@/components/shared/Search/TableSearch";
 
 const Courses = () => {
   const [isImport, setIsImport] = useState(false);
@@ -250,17 +250,20 @@ const Courses = () => {
             )}
           >
             <div className="scroll-container scroll-container-dropdown-content">
-                <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                </p>
+              <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
+              </p>
             </div>
           </Dropdown>
-          
+
           {/* Chưa nhập ds GV chấm GK, CK */}
           <Dropdown
             className="z-30 rounded-lg"
@@ -278,8 +281,8 @@ const Courses = () => {
                   2
                 </div>
                 <p className="text-[#17a1fa] body-medium">
-                  Bạn chưa nhập danh sách giảng viên chấm điểm thi Giữa kỳ - Cuối kỳ cho các lớp. Nhấn vào để xem
-                  danh sách lớp.
+                  Bạn chưa nhập danh sách giảng viên chấm điểm thi Giữa kỳ -
+                  Cuối kỳ cho các lớp. Nhấn vào để xem danh sách lớp.
                 </p>
                 <IconButtonStopPropagation
                   text="Đi tới"
@@ -294,17 +297,20 @@ const Courses = () => {
             )}
           >
             <div className="scroll-container scroll-container-dropdown-content">
-                <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                  STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
-                </p>
+              <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01:
+                SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
+              </p>
             </div>
           </Dropdown>
-          
+
           {/* Chưa import lịch thi tập trung Giữa kỳ - Cuối kỳ*/}
           <Dropdown
             className="z-30 rounded-lg"
@@ -322,8 +328,8 @@ const Courses = () => {
                   3
                 </div>
                 <p className="text-[#17a1fa] body-medium">
-                  Bạn chưa import lịch thi tập trung Giữa kỳ - Cuối kỳ. Nhấn vào để xem
-                  danh sách lớp.
+                  Bạn chưa import lịch thi tập trung Giữa kỳ - Cuối kỳ. Nhấn vào
+                  để xem danh sách lớp.
                 </p>
                 <IconButtonStopPropagation
                   text="Đi tới"
@@ -338,17 +344,20 @@ const Courses = () => {
             )}
           >
             <div className="scroll-container scroll-container-dropdown-content">
-                <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                </p>
+              <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+              </p>
             </div>
           </Dropdown>
-          
+
           {/* Chưa nhập ds sinh viên và chia nhóm cho lớp*/}
           <Dropdown
             className="z-30 rounded-lg"
@@ -366,8 +375,8 @@ const Courses = () => {
                   4
                 </div>
                 <p className="text-[#17a1fa] body-medium">
-                  Bạn chưa nhập danh sách sinh viên và chia nhóm cho các lớp. Nhấn vào để xem
-                  danh sách lớp.
+                  Bạn chưa nhập danh sách sinh viên và chia nhóm cho các lớp.
+                  Nhấn vào để xem danh sách lớp.
                 </p>
                 <IconButtonStopPropagation
                   text="Đi tới"
@@ -382,18 +391,19 @@ const Courses = () => {
             )}
           >
             <div className="scroll-container scroll-container-dropdown-content">
-                <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
-                </p>
+              <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+              </p>
             </div>
           </Dropdown>
-
-          
         </div>
       ) : (
         <>

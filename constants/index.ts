@@ -32,12 +32,12 @@ export const DepartmentAnnouncementsTabItems = [
 ];
 export const DepartmentCoursesTabItems = [
   { value: "listCourses", label: "Danh sách lớp học", route: "/courses" },
-  { value: "createCourse", label: "Tạo lớp học", route: "/courses/create" },
   {
     value: "joinedCourses",
     label: "Lớp học đã tham gia",
     route: "/courses/joined",
   },
+  { value: "createCourse", label: "Tạo lớp học", route: "/courses/create" },
 ];
 export const DepartmentSubjectsTabItems = [
   { value: "listSubjects", label: "Danh sách môn học", route: "/subjects" },

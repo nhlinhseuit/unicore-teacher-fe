@@ -13,12 +13,12 @@ const categoryList = [
   { id: 9, value: "Sự kiện nổi bật" },
 ];
 
-const RightSideBar = () => {
+const CategorySideBar = () => {
   return (
     <div className="w-full card-wrapper rounded-[10px]">
       <div className="relative flex w-full gap-4 p-4">
         {/* EDIT */}
-        <div className="absolute top-4 right-2 z-10">
+        <div className="absolute z-10 top-4 right-2">
           <Image
             src={"/assets/icons/edit-black.svg"}
             width={26}
@@ -29,9 +29,9 @@ const RightSideBar = () => {
         </div>
 
         {/* CONTENT */}
-        <div className=" w-full sm:flex-row ml-2 mr-2">
+        <div className="w-full ml-2 mr-2 sm:flex-row">
           <div className="flex flex-col gap-4">
-            <p className="base-semibold line-clamp-1 text-center">Danh mục</p>
+            <p className="text-center base-semibold line-clamp-1">Danh mục</p>
 
             {categoryList.map((item) => (
               <div key={item.id} className="flex gap-4">
@@ -53,4 +53,4 @@ const RightSideBar = () => {
   );
 };
 
-export default RightSideBar;
+export default CategorySideBar;

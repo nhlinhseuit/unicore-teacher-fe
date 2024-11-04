@@ -1,9 +1,9 @@
 import Link from "next/link";
 import React from "react";
-import RenderTag from "../shared/RenderTag";
+import RenderTag from "../shared/Annoucements/RenderTag";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import Image from "next/image";
-import RenderFile from "../shared/RenderFile";
+import RenderFile from "../shared/Annoucements/RenderFile";
 
 interface Props {
   _id: string;
@@ -72,17 +72,17 @@ const Announcement = ({
               {createdAt}
             </span>
 
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-2">
               {tags.map((tag) => (
                 <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
               ))}
             </div>
 
-            <p className="mt-4 body-regular text-dark200_light900 line-clamp-2 flex-1">
+            <p className="flex-1 mt-4 body-regular text-dark200_light900 line-clamp-2">
               {description}
             </p>
 
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-2">
               {files.map((tag) => (
                 <RenderFile key={tag._id} _id={tag._id} name={tag.name} />
               ))}

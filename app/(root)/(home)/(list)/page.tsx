@@ -1,19 +1,19 @@
 "use client";
 
 import Announcement from "@/components/annoucement/Announcement";
-import NoResult from "@/components/shared/NoResult";
-import BorderButton from "@/components/shared/BorderButton";
+import NoResult from "@/components/shared/Status/NoResult";
+import BorderButton from "@/components/shared/Button/BorderButton";
 import { DepartmentAnnouncementTabs, FilterType } from "@/constants";
 import { useState } from "react";
-import RightSideBar from "@/components/shared/RightSideBar";
-import MiniButton from "@/components/shared/MiniButton";
-import TableSearch from "@/components/shared/search/TableSearch";
+import CategorySideBar from "@/components/shared/Sidebar/CategorySideBar";
+import MiniButton from "@/components/shared/Button/MiniButton";
+import TableSearch from "@/components/shared/Search/TableSearch";
 import { Dropdown } from "flowbite-react";
-import IconButton from "@/components/shared/IconButton";
+import IconButton from "@/components/shared/Button/IconButton";
 import Link from "next/link";
 import Image from "next/image";
-import FilterAnnoucements from "@/components/shared/Table/Annoucements/FilterAnnoucements";
-import ClosedButton from "@/components/shared/Table/Annoucements/ClosedButton";
+import FilterAnnoucements from "@/components/shared/Annoucements/FilterAnnoucements";
+import ClosedButton from "@/components/shared/Annoucements/ClosedButton";
 
 const announcements = [
   {
@@ -321,7 +321,7 @@ const Home = () => {
 
         {/* RIGHT SIDEBAR */}
         <div className="w-[20%] max-lg:hidden mt-6 ml-2">
-          <RightSideBar />
+          <CategorySideBar />
         </div>
       </div>
     </>

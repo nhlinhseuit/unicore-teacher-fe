@@ -1,7 +1,7 @@
 import { FilterType } from "@/constants";
 import { Dropdown } from "flowbite-react";
 import React from "react";
-import IconButton from "../../IconButton";
+import IconButton from "../Button/IconButton";
 
 const FilterAnnoucements = (typeFilter: any) => {
   return (

@@ -1,14 +1,14 @@
 "use client";
 
-import IconButton from "../../IconButton";
+import IconButton from "../../Button/IconButton";
 import { useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { SubjectDataItem } from "@/types";
-import DataTable from "./components/DataTable";
-import ErrorComponent from "../Status/ErrorComponent";
-import TableSkeleton from "./components/TableSkeleton";
+import DataTable from "../components/DataTable";
+import ErrorComponent from "../../Status/ErrorComponent";
+import TableSkeleton from "../components/TableSkeleton";
 import { useToast } from "@/hooks/use-toast";
-import NoResult from "../../NoResult";
+import NoResult from "../../Status/NoResult";
 import { DataTableType } from "@/constants";
 
 export default function SubjectsDataTable() {

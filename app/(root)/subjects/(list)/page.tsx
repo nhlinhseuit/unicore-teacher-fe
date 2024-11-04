@@ -1,6 +1,6 @@
 "use client";
 
-import IconButton from "@/components/shared/IconButton";
+import IconButton from "@/components/shared/Button/IconButton";
 import SubjectsDataTable from "@/components/shared/Table/UnicoreTable/SubjectsDataTable";
 import Image from "next/image";
 import React, { useState } from "react";

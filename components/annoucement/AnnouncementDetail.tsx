@@ -1,8 +1,8 @@
 import Link from "next/link";
 import React, { useEffect } from "react";
-import RenderTag from "../shared/RenderTag";
+import RenderTag from "../shared/Annoucements/RenderTag";
 import Image from "next/image";
-import RenderFile from "../shared/RenderFile";
+import RenderFile from "../shared/Annoucements/RenderFile";
 import { Dropdown } from "flowbite-react";
 
 import Prism from "prismjs";
@@ -109,7 +109,7 @@ const AnnouncementDetail = ({
               )}
             >
               <Dropdown.Header>
-                <span className="block truncate text-sm font-medium text-center">
+                <span className="block text-sm font-medium text-center truncate">
                   Nhật ký chỉnh sửa
                 </span>
               </Dropdown.Header>
@@ -118,8 +118,7 @@ const AnnouncementDetail = ({
                   <li role="menuitem">
                     <button
                       type="button"
-                      className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
-                    "
+                      className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
                     >
                       Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
                     </button>
@@ -127,8 +126,7 @@ const AnnouncementDetail = ({
                   <li role="menuitem">
                     <button
                       type="button"
-                      className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
-                    "
+                      className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
                     >
                       Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
                     </button>
@@ -136,8 +134,7 @@ const AnnouncementDetail = ({
                   <li role="menuitem">
                     <button
                       type="button"
-                      className="flex w-full cursor-default items-center justify-start px-4 py-2 text-sm text-gray-700 dark:text-gray-200
-                    "
+                      className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
                     >
                       Huỳnh Hồ Thị Mộng Trinh - 8:30, 29/09/2024
                     </button>
@@ -176,17 +173,17 @@ const AnnouncementDetail = ({
               Đăng bởi: GV. Trần Hạnh Xuân
             </span>
 
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-2">
               {tags.map((tag) => (
                 <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
               ))}
             </div>
 
-            <div className="mt-4 body-regular text-dark200_light900 flex-1">
+            <div className="flex-1 mt-4 body-regular text-dark200_light900">
               {parse(object.description)}
             </div>
 
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2 mt-2">
               {files.map((tag) => (
                 <RenderFile key={tag._id} _id={tag._id} name={tag.name} />
               ))}

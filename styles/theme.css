@@ -148,11 +148,11 @@
   }
 
   .body-medium {
-    @apply text-[14px] font-medium leading-[18.2px];
+    @apply text-[13px] font-medium leading-[18.2px];
   }
 
   .body-semibold {
-    @apply text-[14px] font-semibold leading-[18.2px];
+    @apply text-[13px] font-semibold leading-[18.2px];
   }
 
   .small-regular {
@@ -192,7 +192,7 @@
   }
 
   .scroll-container-dropdown-content {
-    @apply max-h-44 overflow-y-auto; /* Kết hợp các lớp Tailwind */
+    @apply overflow-y-auto max-h-44; /* Kết hợp các lớp Tailwind */
   }
 
   .scroll-container::-webkit-scrollbar {

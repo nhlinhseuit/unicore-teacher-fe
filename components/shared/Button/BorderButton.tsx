@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import Image from "next/image";
 
 interface BorderButtonProps {
@@ -40,7 +40,7 @@ const BorderButton = (params: BorderButtonProps) => {
         }
         `}
     >
-      <span className="flex-grow text-center pl-2 pr-2">{params.text}</span>
+      <span className="flex-grow pl-2 pr-2 text-center">{params.text}</span>
     </Button>
   );
 };

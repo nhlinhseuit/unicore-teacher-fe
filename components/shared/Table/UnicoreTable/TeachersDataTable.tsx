@@ -3,12 +3,12 @@
 import { useRef, useState } from "react";
 import * as XLSX from "xlsx";
 import { TeacherDataItem } from "@/types";
-import DataTable from "./components/DataTable";
-import ErrorComponent from "../Status/ErrorComponent";
-import TableSkeleton from "./components/TableSkeleton";
-import NoResult from "../../NoResult";
+import DataTable from "../components/DataTable";
+import ErrorComponent from "../../Status/ErrorComponent";
+import TableSkeleton from "../components/TableSkeleton";
+import NoResult from "../../Status/NoResult";
 import { useToast } from "@/hooks/use-toast";
-import IconButton from "../../IconButton";
+import IconButton from "../../Button/IconButton";
 import { DataTableType } from "@/constants";
 import { normalizeSearchItem } from "@/lib/utils";
 

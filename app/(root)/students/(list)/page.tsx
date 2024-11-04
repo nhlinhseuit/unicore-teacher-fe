@@ -1,7 +1,7 @@
 "use client";
 import StudentsDataTable from "@/components/shared/Table/UnicoreTable/StudentsDataTable";
 import React, { useState } from "react";
-import IconButton from "@/components/shared/IconButton";
+import IconButton from "@/components/shared/Button/IconButton";
 import Image from "next/image";
 
 const Students = () => {

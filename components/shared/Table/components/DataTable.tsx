@@ -8,7 +8,7 @@ import {
   SubjectDataItem,
   TeacherDataItem,
 } from "@/types";
-import IconButton from "../../../IconButton";
+import IconButton from "../../Button/IconButton";
 import { useState, useEffect, useMemo } from "react";
 import {
   DataTableType,
@@ -26,8 +26,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import NoResult from "../../../NoResult";
-import TableSearch from "../../../search/TableSearch";
+import NoResult from "../../Status/NoResult";
+import TableSearch from "../../Search/TableSearch";
 import Image from "next/image";
 import useSetDebounceSearchTerm from "@/hooks/table/useSetDebounceSearchTerm";
 import useDetailFilter from "@/hooks/table/useDetailFilter";

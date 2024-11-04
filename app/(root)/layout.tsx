@@ -1,6 +1,6 @@
 "use client";
 
-import LeftSideBar from "@/components/shared/LeftSideBar";
+import LeftSideBar from "@/components/shared/Sidebar/LeftSideBar";
 import { Toaster } from "@/components/ui/toaster";
 import React from "react";
 

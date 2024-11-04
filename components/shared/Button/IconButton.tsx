@@ -1,11 +1,16 @@
 import React from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../ui/button";
 import Image from "next/image";
+import { type } from "os";
 
-interface SubmitButtonProps {
+interface IconButtonProps {
   text: string;
+  temp?: boolean;
+  red?: boolean;
+  yellow?: boolean;
+  green?: boolean;
+
   onClick?: () => void;
-  isSubmit?: boolean;
   iconLeft?: string;
   iconRight?: string;
   iconWidth?: number;
@@ -17,20 +22,25 @@ interface SubmitButtonProps {
   isFilter?: boolean;
 }
 
-const SubmitButton = (params: SubmitButtonProps) => {
+const IconButton = (params: IconButtonProps) => {
   return (
     <Button
       onClick={params.onClick ? params.onClick : undefined}
-      type="submit"
+      type="button"
       className={`
         flex
         gap-1
         items-center
         justify-center
         ${params.border && "border border-gray-200"}
-        ${params.isFilter && "border-[#2563EB]"}
+        ${params.isFilter && "border-[#2563EB]"} 
         ${params.textColor ? `${params.textColor}` : "text-white"} 
         ${params.bgColor ? `${params.bgColor}` : "bg-primary-500"} 
+
+        ${params.temp ? `bg-[#17A1FA]` : ""} 
+        ${params.yellow ? `bg-[#FFC107]` : ""} 
+        ${params.red ? `bg-[#F02021]` : ""} 
+        ${params.green ? `bg-[#77D370]` : ""} 
         hover:bg-primary-800
         focus:ring-1
         focus:ring-gray-200
@@ -60,7 +70,7 @@ const SubmitButton = (params: SubmitButtonProps) => {
         />
       )}
 
-      <span className="flex-grow text-center pl-2 pr-2">{params.text}</span>
+      <span className="flex-grow pl-2 pr-2 text-center">{params.text}</span>
 
       {/* RIGHT ICON */}
       {params.iconRight && (
@@ -70,4 +80,4 @@ const SubmitButton = (params: SubmitButtonProps) => {
   );
 };
 
-export default SubmitButton;
+export default IconButton;
