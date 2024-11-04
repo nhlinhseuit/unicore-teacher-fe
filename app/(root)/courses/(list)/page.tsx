@@ -309,7 +309,7 @@ const Courses = () => {
             </div>
           </Dropdown>
           
-          {/* Chưa nhập ds sinh viên và chia nhóm cho lớp*/}
+          {/* Chưa import lịch thi tập trung Giữa kỳ - Cuối kỳ*/}
           <Dropdown
             className="z-30 rounded-lg"
             label=""
@@ -324,6 +324,52 @@ const Courses = () => {
                 />
                 <div className="ml-12 bg-[#17a1fa] w-7 h-7 my-2 rounded-full flex-center text-white">
                   3
+                </div>
+                <p className="text-[#17a1fa] body-medium">
+                  Bạn chưa import lịch thi tập trung Giữa kỳ - Cuối kỳ. Nhấn vào để xem
+                  danh sách lớp.
+                </p>
+                <IconButtonStopPropagation
+                  text="Đi tới"
+                  green
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    console.log("123123");
+                  }}
+                  otherClasses="mr-4"
+                />
+              </div>
+            )}
+          >
+            <div className="scroll-container scroll-container-dropdown-content">
+              <li role="menuitem">
+                <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                  STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
+                </p>
+              </li>
+            </div>
+          </Dropdown>
+          
+          {/* Chưa nhập ds sinh viên và chia nhóm cho lớp*/}
+          <Dropdown
+            className="z-30 rounded-lg"
+            label=""
+            renderTrigger={() => (
+              <div className="cursor-pointer border-[1px] border-[#17a1fa] w-full h-12  rounded-lg flex-between mb-2 relative">
+                <Image
+                  src={"/assets/icons/chevron-down.svg"}
+                  width={22}
+                  height={22}
+                  alt="close"
+                  className="absolute left-0 ml-4 cursor-pointer"
+                />
+                <div className="ml-12 bg-[#17a1fa] w-7 h-7 my-2 rounded-full flex-center text-white">
+                  4
                 </div>
                 <p className="text-[#17a1fa] body-medium">
                   Bạn chưa nhập danh sách sinh viên và chia nhóm cho các lớp. Nhấn vào để xem
