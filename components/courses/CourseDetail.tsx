@@ -30,54 +30,9 @@ import "prismjs/components/prism-mongodb";
 import "prismjs/plugins/line-numbers/prism-line-numbers.js";
 import "prismjs/plugins/line-numbers/prism-line-numbers.css";
 
-interface Props {
-  _id: string;
-  title: string;
-  description: string;
-  tags: {
-    _id: string;
-    name: string;
-  }[];
-  files: {
-    _id: string;
-    name: string;
-  }[];
-  author: {
-    _id: string;
-    name: string;
-    picture: string;
-  };
-  createdAt: String;
-}
+interface Props {}
 
-const object = {
-  description: `
-    <p>Th&ocirc;ng tin chi tiết của th&ocirc;ng b&aacute;o. Tối thiểu 20 k&iacute; tự Th&ocirc;ng tin chi tiết của th&ocirc;ng b&aacute;o. Tối thiểu 20 k&iacute; tự</p>
-    <p>&nbsp;</p>
-    <pre class="language-javascript"><code>const innerObject = {
-      description: \`&lt;pre class="language-markup"&gt;&lt;code&gt;&amp;lt;div class="w-[20%]"&amp;gt;
-        &amp;lt;Image
-          src="/assets/images/department-annoucement.svg"
-          width="16"
-          height="16"
-          alt="annoucement"
-          class="w-full object-contain"
-        /&amp;gt;
-      &amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
-      &lt;p&gt;c&amp;aacute;c em l&amp;agrave;m b&amp;agrave;i tập n&amp;agrave;y nh&amp;eacute;&lt;/p&gt;\`,
-    };</code></pre>
-  `,
-};
-
-const AnnouncementDetail = ({
-  _id,
-  title,
-  description,
-  tags,
-  files,
-  author,
-  createdAt,
-}: Props) => {
+const CourseDetail = ({}: Props) => {
   useEffect(() => {
     Prism.highlightAll();
   }, []);
@@ -160,31 +115,24 @@ const AnnouncementDetail = ({
         <div className="w-[80%] flex items-start justify-between sm:flex-row ml-2 mr-8">
           <div className="w-full">
             <p className="base-semibold text-[#1F86E8] underline flex-1">
-              {title}
+              title
             </p>
+
             <span className="block mt-2 small-regular italic text-[#636363] ">
-              {createdAt}
+              createdAt
             </span>
 
             <span className="mt-2 small-regular italic text-[#636363] ">
               Đăng bởi: GV. Trần Hạnh Xuân
             </span>
 
-            <div className="flex flex-wrap gap-2 mt-2">
-              {tags.map((tag) => (
-                <RenderTag key={tag._id} _id={tag._id} name={tag.name} />
-              ))}
-            </div>
+            <div className="flex flex-wrap gap-2 mt-2">tags</div>
 
             <div className="flex-1 mt-4 body-regular text-dark200_light900">
-              {parse(object.description)}
+              123123123123
             </div>
 
-            <div className="flex flex-wrap gap-2 mt-2">
-              {files.map((tag) => (
-                <RenderFile key={tag._id} _id={tag._id} name={tag.name} />
-              ))}
-            </div>
+            <div className="flex flex-wrap gap-2 mt-2">files</div>
           </div>
         </div>
       </div>
@@ -192,4 +140,4 @@ const AnnouncementDetail = ({
   );
 };
 
-export default AnnouncementDetail;
+export default CourseDetail;

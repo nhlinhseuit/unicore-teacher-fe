@@ -60,11 +60,7 @@ const LeftSideBar = () => {
         {sidebarDepartmentLinks.map((item) => {
           let isActive;
           // TODO: handle cho tab HOME
-          if (
-            (pathName === "/create-announcement" ||
-              pathName.startsWith("/announcement")) &&
-            item.route === "/"
-          ) {
+          if (pathName === "/create-announcement" && item.route === "/") {
             isActive = true;
           } else {
             isActive =

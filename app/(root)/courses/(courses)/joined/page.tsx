@@ -1,17 +1,13 @@
 "use client";
 import React from "react";
-import {
-  Tabs as SubTabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui/tabs";
 import { Dropdown } from "flowbite-react";
 import IconButton from "@/components/shared/Button/IconButton";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import { DetailFilter, FilterType } from "@/constants";
 import Image from "next/image";
 import MoreButtonCourseItem from "@/components/joinedCourses/MoreButtonCourseItem";
+import Link from "next/link";
+import CourseItem from "@/components/joinedCourses/CourseItem";
 
 const JoinedCourses = () => {
   return (
@@ -139,18 +135,17 @@ const JoinedCourses = () => {
           })}
       </div>
 
-      <div className="flex">
-        <div
-          className="w-[25%] h-[130px] rounded-lg
-        border-[1.5px] border-primary-500 text-black p-4"
-        >
-          <div className="flex-between">
-            <h4 className="base-bold">SE114.O12.PMCL</h4>
-            <MoreButtonCourseItem handleEdit={() => {}} />
+      <div className="flex gap-2">
+        {Array.from({ length: 2 }).map((_, index) => (
+          <div className="relative">
+            <Link href={`/courses/${index + 1}`} key={index}>
+              <CourseItem />
+            </Link>
+            <div className="absolute right-0 top-0">
+              <MoreButtonCourseItem handleEdit={() => {}} />
+            </div>
           </div>
-          <p className="body-regular">Nhập môn Ứng dụng di động - SE114</p>
-          <p className="body-regular">HK1/2024</p>
-        </div>
+        ))}
       </div>
     </>
   );

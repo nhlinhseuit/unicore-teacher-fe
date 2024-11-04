@@ -30,6 +30,41 @@ export const DepartmentAnnouncementsTabItems = [
     route: "/create-announcement",
   },
 ];
+
+export const DepartmentCourseTabItems = [
+  { value: "generalPost", label: "Thông báo chung", route: "/" },
+  {
+    value: "exercises",
+    label: "Bài tập",
+    route: "/exercises",
+  },
+  {
+    value: "bigExercises",
+    label: "Bài tập lớn",
+    route: "/big-exercises",
+  },
+  {
+    value: "scoreTranscript",
+    label: "Bảng điểm",
+    route: "/score-transcript",
+  },
+  {
+    value: "timeTable",
+    label: "Thời khóa biểu",
+    route: "/time-table",
+  },
+  {
+    value: "files",
+    label: "Lưu trữ",
+    route: "/files",
+  },
+  {
+    value: "setting",
+    label: "Cài đặt",
+    route: "/setting",
+  },
+];
+
 export const DepartmentCoursesTabItems = [
   { value: "listCourses", label: "Danh sách lớp học", route: "/courses" },
   {
@@ -87,6 +122,12 @@ export const themes = [
 export const TableDataMoreComponentItems = [
   { value: "edit", label: "Chỉnh sửa" },
   { value: "delete", label: "Xóa" },
+];
+
+export const CourseItemMoreComponentItems = [
+  { value: "edit", label: "Chỉnh sửa" },
+  { value: "hide", label: "Ẩn" },
+  { value: "archive", label: "Lưu trữ" },
 ];
 
 // SIDEBAR

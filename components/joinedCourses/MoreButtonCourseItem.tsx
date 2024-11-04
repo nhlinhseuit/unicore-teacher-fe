@@ -19,7 +19,7 @@ import {
   MenubarMenu,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import { TableDataMoreComponentItems } from "@/constants";
+import { CourseItemMoreComponentItems } from "@/constants";
 import Image from "next/image";
 import React, { useState } from "react";
 
@@ -36,7 +36,13 @@ const MoreButtonCourseItem = (params: MoreButtonParams) => {
     <>
       <Menubar className="relative bg-transparent border-none shadow-none z-100">
         <MenubarMenu>
-          <MenubarTrigger className="w-10 h-10 ">
+          <MenubarTrigger
+            className="w-10 h-10 "
+            onClick={(e) => {
+              e.stopPropagation()
+              console.log('here')
+            }}
+          >
             <Image
               src="/assets/icons/more.svg"
               alt="edit"
@@ -52,7 +58,7 @@ const MoreButtonCourseItem = (params: MoreButtonParams) => {
           absolute right-[-3rem] mt-0 min-w-[120px] rounded border py-2 bg-white  
           dark:border-dark-400 dark:bg-dark-300"
           >
-            {TableDataMoreComponentItems.map((item) => (
+            {CourseItemMoreComponentItems.map((item) => (
               <MenubarItem
                 className="
                       flex items-center gap-4 px-2.5 py-2 hover:bg-light-800

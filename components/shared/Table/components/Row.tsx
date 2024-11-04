@@ -188,7 +188,7 @@ const Row = React.memo(
                 label=""
                 renderTrigger={() => (
                   <Image
-                    src="/assets/icons/chevron-down.svg"
+                    src="/assets/icons/info.svg"
                     alt="search"
                     width={21}
                     height={21}

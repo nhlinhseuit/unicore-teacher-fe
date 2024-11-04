@@ -155,6 +155,10 @@
     @apply text-[13px] font-semibold leading-[18.2px];
   }
 
+  .body-bold {
+    @apply text-[13px] font-bold leading-[18.2px];
+  }
+
   .small-regular {
     @apply text-[12px] font-normal leading-[15.6px];
   }
@@ -222,11 +226,11 @@
   }
 
   .bg-green {
-    background: #77D370;
+    background: #77d370;
   }
 
   .bg-blue {
-    background: #17A1FA;
+    background: #17a1fa;
   }
 
   .bg-red {
