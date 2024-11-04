@@ -50,7 +50,7 @@ const Row = React.memo(
       params.dataItem.data["Khoa quản lý"] as boolean
     );
 
-    const refInput = useRef({})
+    const refInput = useRef({});
 
     useEffect(() => {
       if (params.isEditTable) setIsEdit(false);
@@ -92,10 +92,10 @@ const Row = React.memo(
         },
       };
 
-       // TODO: inputref for save single row
-       if(isEdit) {
-        refInput.current = updatedDataItem
-        return
+      // TODO: inputref for save single row
+      if (isEdit) {
+        refInput.current = updatedDataItem;
+        return;
       }
 
       // setEditDataItem(updatedDataItem); // ??
@@ -158,7 +158,8 @@ const Row = React.memo(
               <IconButton
                 text="Lưu"
                 onClick={() => {
-                  params.saveSingleRow && params.saveSingleRow(refInput.current);
+                  params.saveSingleRow &&
+                    params.saveSingleRow(refInput.current);
                   setIsEdit(false);
                 }}
               />

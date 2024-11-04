@@ -3,14 +3,14 @@ import { Button } from "../ui/button";
 import Image from "next/image";
 import { type } from "os";
 
-interface IconButtonProps {
+interface IconButtonStopPropagationProps {
   text: string;
   temp?: boolean;
   red?: boolean;
   yellow?: boolean;
   green?: boolean;
 
-  onClick?: () => void;
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void;
   iconLeft?: string;
   iconRight?: string;
   iconWidth?: number;
@@ -22,7 +22,7 @@ interface IconButtonProps {
   isFilter?: boolean;
 }
 
-const IconButton = (params: IconButtonProps) => {
+const IconButtonStopPropagation = (params: IconButtonStopPropagationProps) => {
   return (
     <Button
       onClick={params.onClick ? params.onClick : undefined}
@@ -80,4 +80,4 @@ const IconButton = (params: IconButtonProps) => {
   );
 };
 
-export default IconButton;
+export default IconButtonStopPropagation;

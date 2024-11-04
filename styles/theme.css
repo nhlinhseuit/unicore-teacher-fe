@@ -221,7 +221,15 @@
     background: #f9f9fb;
   }
 
-  .bg-danger {
+  .bg-green {
+    background: #77D370;
+  }
+
+  .bg-blue {
+    background: #17A1FA;
+  }
+
+  .bg-red {
     background: #f02021;
   }
 

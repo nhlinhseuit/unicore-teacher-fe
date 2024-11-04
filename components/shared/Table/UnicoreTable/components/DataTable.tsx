@@ -402,9 +402,9 @@ const DataTable = (params: DataTableParams) => {
 
   return (
     <div>
-      <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 p-4">
+      <div className="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0">
         {/* ACTION VỚI TABLE */}
-        <div className="w-full md:w-1/2 mr-3">
+        <div className="w-full mr-3 md:w-1/2">
           {params.isEditTable || params.isMultipleDelete ? (
             <></>
           ) : (
@@ -414,8 +414,8 @@ const DataTable = (params: DataTableParams) => {
             />
           )}
         </div>
-        <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end flex-shrink-0">
-          <div className="flex gap-2 items-center w-full md:w-auto">
+        <div className="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center">
+          <div className="flex items-center w-full gap-2 md:w-auto">
             {params.isEditTable || params.isMultipleDelete ? (
               <></>
             ) : (
@@ -441,7 +441,7 @@ const DataTable = (params: DataTableParams) => {
                   onClick={() => {
                     setIsShowDialog(1);
                   }}
-                  bgColor="bg-danger"
+                  bgColor="bg-red"
                 />
                 <IconButton
                   text="Thoát"
@@ -522,23 +522,13 @@ const DataTable = (params: DataTableParams) => {
                       cancelDetailFilter();
                       handleChooseFilter(FilterType.None);
                     }}
-                    className="block truncate text-sm font-medium cursor-pointer"
+                    className="block text-sm font-medium truncate cursor-pointer"
                   >
                     Bỏ bộ lọc
                   </span>
                 </Dropdown.Header>
-                <ul className=" text-sm" aria-labelledby="filterDropdownButton">
-                  <li
-                    className="flex items-center
-                  w-full
-                  justify-start
-                  px-4
-                  py-2
-                  text-sm
-                  text-gray-700
-                  focus:outline-none
-                  "
-                  >
+                <ul className="text-sm " aria-labelledby="filterDropdownButton">
+                  <li className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 focus:outline-none ">
                     <input
                       checked={typeFilter === FilterType.SortNewer}
                       id="SortNewer"
@@ -546,27 +536,17 @@ const DataTable = (params: DataTableParams) => {
                       name="filterOptions"
                       value={FilterType.SortNewer}
                       onChange={() => handleChooseFilter(FilterType.SortNewer)}
-                      className="w-4 h-4  cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600"
+                      className="w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600"
                     />
                     <label
                       htmlFor="SortNewer"
-                      className="ml-2 cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-100"
+                      className="ml-2 text-sm font-medium text-gray-900 cursor-pointer dark:text-gray-100"
                     >
                       Mới nhất
                     </label>
                   </li>
 
-                  <li
-                    className="flex items-center
-                  w-full
-                  justify-start
-                  px-4
-                  py-2
-                  text-sm
-                  text-gray-700
-                  focus:outline-none
-                  "
-                  >
+                  <li className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 focus:outline-none ">
                     <input
                       checked={typeFilter === FilterType.SortOlder}
                       id="SortOlder"
@@ -574,26 +554,17 @@ const DataTable = (params: DataTableParams) => {
                       name="filterOptions"
                       value={FilterType.SortOlder}
                       onChange={() => handleChooseFilter(FilterType.SortOlder)}
-                      className="w-4 h-4  cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600"
+                      className="w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600"
                     />
                     <label
                       htmlFor="SortOlder"
-                      className="ml-2 cursor-pointer text-sm font-medium text-gray-900 dark:text-gray-100"
+                      className="ml-2 text-sm font-medium text-gray-900 cursor-pointer dark:text-gray-100"
                     >
                       Cũ nhất
                     </label>
                   </li>
                   {params.type !== DataTableType.Subject ? (
-                    <li
-                      className="flex items-center
-                  w-full
-                  justify-start
-                  px-4
-                  py-2
-                  text-sm
-                  text-gray-700
-                  focus:outline-none"
-                    >
+                    <li className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 focus:outline-none">
                       <input
                         checked={typeFilter === FilterType.DetailFilter}
                         id="DetailFilter"
@@ -603,11 +574,11 @@ const DataTable = (params: DataTableParams) => {
                         onChange={() =>
                           handleChooseFilter(FilterType.DetailFilter)
                         }
-                        className="w-4 h-4  cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600"
+                        className="w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600"
                       />
                       <label
                         htmlFor="DetailFilter"
-                        className="ml-2 text-sm cursor-pointer font-medium text-gray-900 dark:text-gray-100"
+                        className="ml-2 text-sm font-medium text-gray-900 cursor-pointer dark:text-gray-100"
                       >
                         Bộ lọc chi tiết
                       </label>
@@ -624,7 +595,7 @@ const DataTable = (params: DataTableParams) => {
       {/* DETAIL FILTER typeFilter */}
       {params.type !== DataTableType.Subject &&
         typeFilter === FilterType.DetailFilter && (
-          <div className="flex gap-2 w-full px-4 mb-4">
+          <div className="flex w-full gap-2 px-4 mb-4">
             {Object.values(DetailFilter)
               .filter((item) => isNaN(Number(item)))
               .map((item) => {
@@ -789,7 +760,7 @@ const DataTable = (params: DataTableParams) => {
                                     alt="search"
                                     width={21}
                                     height={21}
-                                    className="cursor-pointer mr-2"
+                                    className="mr-2 cursor-pointer"
                                   />
                                 )}
                               </div>
@@ -825,7 +796,7 @@ const DataTable = (params: DataTableParams) => {
             {/* HEADER */}
             <Table.Head
               theme={tableTheme?.head}
-              className="bg-gray border-b uppercase sticky top-0 z-10"
+              className="sticky top-0 z-10 uppercase border-b bg-gray"
             >
               <Table.HeadCell
                 theme={tableTheme?.head?.cell}
@@ -851,7 +822,7 @@ const DataTable = (params: DataTableParams) => {
             </Table.Head>
 
             {/* BODY */}
-            <Table.Body className="divide-y text-left">
+            <Table.Body className="text-left divide-y">
               {filteredDataTable.map((dataItem) =>
                 dataItem.isDeleted ? (
                   <></>
