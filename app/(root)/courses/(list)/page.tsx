@@ -250,7 +250,6 @@ const Courses = () => {
             )}
           >
             <div className="scroll-container scroll-container-dropdown-content">
-              <li role="menuitem">
                 <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
                   STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
                   STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
@@ -259,7 +258,6 @@ const Courses = () => {
                   STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
                   STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
                 </p>
-              </li>
             </div>
           </Dropdown>
           
@@ -296,7 +294,6 @@ const Courses = () => {
             )}
           >
             <div className="scroll-container scroll-container-dropdown-content">
-              <li role="menuitem">
                 <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
                   STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
                   STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
@@ -305,7 +302,6 @@ const Courses = () => {
                   STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
                   STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2, STT 01: SE100.PMCL2021.2,
                 </p>
-              </li>
             </div>
           </Dropdown>
           
@@ -342,7 +338,6 @@ const Courses = () => {
             )}
           >
             <div className="scroll-container scroll-container-dropdown-content">
-              <li role="menuitem">
                 <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
                   STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
                   STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
@@ -351,7 +346,6 @@ const Courses = () => {
                   STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
                   STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
                 </p>
-              </li>
             </div>
           </Dropdown>
           
@@ -388,7 +382,6 @@ const Courses = () => {
             )}
           >
             <div className="scroll-container scroll-container-dropdown-content">
-              <li role="menuitem">
                 <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
                   STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
                   STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
@@ -397,7 +390,6 @@ const Courses = () => {
                   STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
                   STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp, STT 01: Thực tập doanh nghiệp,
                 </p>
-              </li>
             </div>
           </Dropdown>
 

@@ -1,4 +1,4 @@
-import { Table } from "flowbite-react";
+import { Dropdown, Table } from "flowbite-react";
 import React, { useEffect, useRef } from "react";
 import InputComponent from "./InputComponent";
 import { useState } from "react";
@@ -14,6 +14,7 @@ import {
   TeacherDataItem,
 } from "@/types";
 import IconButton from "../../../IconButton";
+import Image from "next/image";
 
 interface RowParams {
   dataItem:
@@ -23,6 +24,7 @@ interface RowParams {
     | TeacherDataItem;
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
+  isHasSubCourses?: boolean;
   onClickGetOut?: () => void;
   saveSingleRow?: (item: any) => void;
   deleteSingleRow?: (itemsSelected: string[]) => void;
@@ -139,7 +141,7 @@ const Row = React.memo(
             }}
           >
             {params.isMultipleDelete ? (
-              <div className="w-10 h-10 flex justify-center items-center">
+              <div className="flex items-center justify-center w-10 h-10">
                 <input
                   id="apple"
                   type="checkbox"
@@ -151,7 +153,7 @@ const Row = React.memo(
                         params.onClickCheckBoxSelect(valueUniqueInput);
                     }
                   }}
-                  className="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 cursor-pointer"
+                  className="w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600"
                 />
               </div>
             ) : isEdit ? (
@@ -178,7 +180,46 @@ const Row = React.memo(
 
         {/* STT */}
         <Table.Cell className="w-10 border-r-[1px]  text-left">
-          {params.dataItem.STT}
+          {params.isHasSubCourses ? (
+            <div className="flex">
+              <span>{params.dataItem.STT}</span>
+              <Dropdown
+                className="z-30 rounded-lg"
+                label=""
+                renderTrigger={() => (
+                  <Image
+                    src="/assets/icons/chevron-down.svg"
+                    alt="search"
+                    width={21}
+                    height={21}
+                    className="ml-2 mr-4 cursor-pointer"
+                  />
+                )}
+              >
+                <div className="scroll-container scroll-container-dropdown-content">
+                  <ul>
+                    <li role="menuitem">
+                      <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                        Đồ án 1 - Huỳnh Hồ Thị Mộng Trinh
+                      </p>
+                    </li>
+                    <li role="menuitem">
+                      <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                        Đồ án 1 - Nguyễn Trịnh Đông
+                      </p>
+                    </li>
+                    <li role="menuitem">
+                      <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                        Đồ án 1 - Huỳnh Tuấn Anh
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </Dropdown>
+            </div>
+          ) : (
+            <span>{params.dataItem.STT}</span>
+          )}
         </Table.Cell>
 
         {/* Các giá trị khác */}

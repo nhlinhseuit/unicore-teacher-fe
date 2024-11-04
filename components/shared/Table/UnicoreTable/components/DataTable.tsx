@@ -830,6 +830,10 @@ const DataTable = (params: DataTableParams) => {
                   <Row
                     key={dataItem.STT}
                     dataItem={dataItem}
+                    isHasSubCourses={
+                      params.type === DataTableType.Course &&
+                      dataItem.STT.toString() === "1"
+                    }
                     isEditTable={params.isEditTable}
                     isMultipleDelete={params.isMultipleDelete}
                     onClickCheckBoxSelect={(item: string) => {
