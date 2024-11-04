@@ -10,6 +10,18 @@ import Link from "next/link";
 import CourseItem from "@/components/courses/CourseItem";
 
 const JoinedCourses = () => {
+  const mockCourses = [
+    {
+      id: "SE114.N21.PMCL",
+    },
+    {
+      id: "SE100.N23.PMCL",
+    },
+    {
+      id: "SE502.N21",
+    },
+  ];
+
   return (
     <>
       <div className="flex w-full gap-2 mb-8">
@@ -136,9 +148,9 @@ const JoinedCourses = () => {
       </div>
 
       <div className="flex gap-2">
-        {Array.from({ length: 2 }).map((_, index) => (
-          <div className="relative" key={index}>
-            <Link href={`/courses/${index + 1}`} key={index}>
+        {mockCourses.map((item, index) => (
+          <div className="relative" key={item.id}>
+            <Link href={`/course/${item.id}`} key={item.id}>
               <CourseItem />
             </Link>
             <div className="absolute right-0 top-0">

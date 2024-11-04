@@ -9,6 +9,18 @@ import React from "react";
 
 const LeftSideBar = () => {
   const pathName = usePathname();
+  const getCourseId = () => {
+    let courseId;
+    if (pathName.includes("course/")) {
+      const parts = pathName.split("/");
+      const coursesIndex = parts.indexOf("course");
+
+      if (coursesIndex !== -1 && parts[coursesIndex + 1]) {
+        courseId = parts[coursesIndex + 1];
+      }
+      return courseId;
+    }
+  };
 
   return (
     <section
@@ -53,9 +65,7 @@ const LeftSideBar = () => {
 
       {/* <div className="h-[1px] mx-4 bg-[#ECECEC]"></div> */}
 
-      <div
-        className="flex flex-col h-full gap-4 px-6 mt-6 "
-      >
+      <div className="flex flex-col h-full gap-4 px-6 mt-6 ">
         {/* ITEM */}
         {sidebarDepartmentLinks.map((item) => {
           let isActive;
@@ -64,46 +74,85 @@ const LeftSideBar = () => {
             isActive = true;
           } else {
             isActive =
-              (pathName.includes(item.route) && item.route.length > 1) ||
+              (pathName.startsWith(item.route) && item.route.length > 1) ||
               pathName === item.route;
           }
 
           if (item.route !== "/profile") {
-            return (
-              <Link
-                key={item.route}
-                href={item.route}
-                className={`${
-                  isActive
-                    ? "primary-gradient rounded-lg text-light-900"
-                    : "text-dark300_light900"
-                }  flex items-center justify-start gap-4
+            if (item.route === "/courses" && getCourseId()) {
+              isActive = true;
+
+              return (
+                <>
+                  <Link
+                    key={item.route}
+                    href={item.route}
+                    className={`${
+                      isActive
+                        ? "primary-gradient rounded-lg text-light-900"
+                        : "text-dark300_light900"
+                    }  flex items-center justify-start gap-4
+                    max-lg:w-[52px]
+                    bg-transparent px-4 py-2`}
+                  >
+                    <Image
+                      src={item.imgURL}
+                      alt={item.label}
+                      width={20}
+                      height={20}
+                      className={`${isActive ? "" : "invert-colors"}`}
+                    />
+                    <p
+                      className={`${isActive ? "base-bold" : "base-medium"} 
+                      max-lg:hidden
+                  `}
+                    >
+                      {item.label}
+                    </p>
+                  </Link>
+                  <div className="flex items-center gap-2">
+                    <div className="primary-gradient w-[10px] h-full rounded-sm ml-1"></div>
+                    <p className="body-semibold text-right cursor-pointer text-primary-500 line-clamp-1">
+                      {getCourseId()}
+                    </p>
+                  </div>
+                </>
+              );
+            } else {
+              return (
+                <Link
+                  key={item.route}
+                  href={item.route}
+                  className={`${
+                    isActive
+                      ? "primary-gradient rounded-lg text-light-900"
+                      : "text-dark300_light900"
+                  }  flex items-center justify-start gap-4
                   max-lg:w-[52px]
                   bg-transparent px-4 py-2`}
-              >
-                <Image
-                  src={item.imgURL}
-                  alt={item.label}
-                  width={20}
-                  height={20}
-                  className={`${isActive ? "" : "invert-colors"}`}
-                />
-                <p
-                  className={`${isActive ? "base-bold" : "base-medium"} 
-                    max-lg:hidden
-                `}
                 >
-                  {item.label}
-                </p>
-              </Link>
-            );
+                  <Image
+                    src={item.imgURL}
+                    alt={item.label}
+                    width={20}
+                    height={20}
+                    className={`${isActive ? "" : "invert-colors"}`}
+                  />
+                  <p
+                    className={`${isActive ? "base-bold" : "base-medium"} 
+                max-lg:hidden
+            `}
+                  >
+                    {item.label}
+                  </p>
+                </Link>
+              );
+            }
           }
         })}
       </div>
 
-      <div
-        className="flex flex-col gap-3 mx-6 mt-6 mb-6 "
-      >
+      <div className="flex flex-col gap-3 mx-6 mt-6 mb-6 ">
         {/* <SignedOut>
         </SignedOut> */}
         <Link
@@ -118,9 +167,7 @@ const LeftSideBar = () => {
                         max-lg:hidden
                         "
           >
-            <span
-              className=" max-lg:hidden primary-text-gradient"
-            >
+            <span className=" max-lg:hidden primary-text-gradient">
               Đăng nhập
             </span>
           </Button>

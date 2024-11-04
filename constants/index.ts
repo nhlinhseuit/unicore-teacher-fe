@@ -140,7 +140,6 @@ export const CourseItemMoreComponentItems = [
   { value: "archive", label: "Lưu trữ" },
 ];
 
-
 // TODO: SIDEBAR
 export const sidebarDepartmentLinks: SidebarLink[] = [
   {

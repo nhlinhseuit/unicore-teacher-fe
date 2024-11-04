@@ -19,13 +19,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div
         aria-label="Tabs with underline"
         role="tablist"
-        className="mb-4 flex text-center flex-wrap border-b border-gray-200 dark:border-gray-700"
+        className="relative mb-4 flex text-center flex-wrap border-b border-gray-200 dark:border-gray-700"
       >
         {DepartmentCourseTabItems.map((item) => {
           let isActive;
 
           // TODO: handle cho COURSE ITEM
-          if (pathName === `/courses/${courseId}` && item.route === "/") {
+          if (pathName === `/course/${courseId}` && item.route === "/") {
             isActive = true;
           } else {
             isActive =
@@ -35,8 +35,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
           return (
             <Link
-              key={`/courses/${courseId}${item.route}`}
-              href={`/courses/${courseId}${item.route}`}
+              key={`/course/${courseId}${item.route}`}
+              href={`/course/${courseId}${item.route}`}
             >
               <button
                 type="button"
@@ -60,6 +60,16 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </Link>
           );
         })}
+
+        {/* <div className="absolute bg-gray-200 right-[20%] top-0 bottom-0">
+          <div className="absolute w-[4px] right-[20%] top-0 bottom-0 my-2 primary-gradient rounded-sm"></div>
+          </div> */}
+
+        <div className="absolute w-[4px] right-[20%] top-0 bottom-0 my-2 primary-gradient rounded-sm">
+          12312312123123
+          Nhập tên môn ở đây
+          1 absoulute div có tên có border left
+        </div>
       </div>
       <section>
         <div className="w-full">{children}</div>
