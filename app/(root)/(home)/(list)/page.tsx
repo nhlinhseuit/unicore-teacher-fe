@@ -3,7 +3,7 @@
 import Announcement from "@/components/annoucement/Announcement";
 import NoResult from "@/components/shared/Status/NoResult";
 import BorderButton from "@/components/shared/Button/BorderButton";
-import { DepartmentAnnouncementTabs, FilterType } from "@/constants";
+import { AnnouncementTabs, FilterType } from "@/constants";
 import { useState } from "react";
 import CategorySideBar from "@/components/shared/Sidebar/CategorySideBar";
 import MiniButton from "@/components/shared/Button/MiniButton";
@@ -81,7 +81,7 @@ const announcements = [
 
 const Home = () => {
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(
-    DepartmentAnnouncementTabs[0].value
+    AnnouncementTabs[0].value
   );
   const [selectedMiniButton, setSelectedMiniButton] = useState(-1);
 
@@ -204,10 +204,10 @@ const Home = () => {
         </Link>
       </div> */}
 
-      {/* DepartmentAnnouncementTabs */}
+      {/* AnnouncementTabs */}
       <div className="flex justify-between items-center">
         <div className="flex gap-2">
-          {DepartmentAnnouncementTabs.map((item) => {
+          {AnnouncementTabs.map((item) => {
             return (
               <BorderButton
                 key={item.value}

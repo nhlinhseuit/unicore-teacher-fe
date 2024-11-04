@@ -5,9 +5,9 @@ import IconButton from "@/components/shared/Button/IconButton";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import { DetailFilter, FilterType } from "@/constants";
 import Image from "next/image";
-import MoreButtonCourseItem from "@/components/joinedCourses/MoreButtonCourseItem";
+import MoreButtonCourseItem from "@/components/courses/MoreButtonCourseItem";
 import Link from "next/link";
-import CourseItem from "@/components/joinedCourses/CourseItem";
+import CourseItem from "@/components/courses/CourseItem";
 
 const JoinedCourses = () => {
   return (
@@ -137,7 +137,7 @@ const JoinedCourses = () => {
 
       <div className="flex gap-2">
         {Array.from({ length: 2 }).map((_, index) => (
-          <div className="relative">
+          <div className="relative" key={index}>
             <Link href={`/courses/${index + 1}`} key={index}>
               <CourseItem />
             </Link>

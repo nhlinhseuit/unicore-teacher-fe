@@ -16,12 +16,14 @@ export const ALLOWED_FILE_TYPES = [
 ];
 export const MAX_CATEGORIES = 5; // Số danh mục tối đa chọn khi đăng thông báo
 
-export const DepartmentAnnouncementTabs = [
+// TODO: BORDER CONTAINER TAB
+export const AnnouncementTabs = [
   { value: "postedAnnouncement", label: "Thông báo đã đăng" },
   { value: "createdAnnouncement", label: "Thông báo đã tạo" },
   { value: "hidedAnnouncement", label: "Thông báo đã ẩn" },
 ];
 
+// TODO: NAVBAR TAB
 export const DepartmentAnnouncementsTabItems = [
   { value: "listAnnouncements", label: "Danh sách thông báo", route: "/" },
   {
@@ -29,6 +31,21 @@ export const DepartmentAnnouncementsTabItems = [
     label: "Tạo thông báo",
     route: "/create-announcement",
   },
+];
+
+export const DepartmentCoursesTabItems = [
+  { value: "listCourses", label: "Danh sách lớp học", route: "/courses" },
+  {
+    value: "joinedCourses",
+    label: "Lớp học đã tham gia",
+    route: "/courses/joined",
+  },
+  { value: "createCourse", label: "Tạo lớp học", route: "/courses/create" },
+];
+
+export const DepartmentSubjectsTabItems = [
+  { value: "listSubjects", label: "Danh sách môn học", route: "/subjects" },
+  { value: "subjectTypes", label: "Loại môn học", route: "/subjects/types" },
 ];
 
 export const DepartmentCourseTabItems = [
@@ -65,18 +82,11 @@ export const DepartmentCourseTabItems = [
   },
 ];
 
-export const DepartmentCoursesTabItems = [
-  { value: "listCourses", label: "Danh sách lớp học", route: "/courses" },
-  {
-    value: "joinedCourses",
-    label: "Lớp học đã tham gia",
-    route: "/courses/joined",
-  },
-  { value: "createCourse", label: "Tạo lớp học", route: "/courses/create" },
-];
-export const DepartmentSubjectsTabItems = [
-  { value: "listSubjects", label: "Danh sách môn học", route: "/subjects" },
-  { value: "subjectTypes", label: "Loại môn học", route: "/subjects/types" },
+// TODO: OTHERS
+export const AnnouncementTypes = [
+  { value: "post", label: "Thông báo" },
+  { value: "exercise", label: "Bài tập" },
+  { value: "report", label: "Báo cáo đồ án" },
 ];
 
 export enum DataTableType {
@@ -130,7 +140,8 @@ export const CourseItemMoreComponentItems = [
   { value: "archive", label: "Lưu trữ" },
 ];
 
-// SIDEBAR
+
+// TODO: SIDEBAR
 export const sidebarDepartmentLinks: SidebarLink[] = [
   {
     imgURL: "/assets/icons/home.svg",

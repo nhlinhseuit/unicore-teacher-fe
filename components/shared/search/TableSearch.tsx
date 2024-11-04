@@ -26,7 +26,7 @@ const TableSearch = (params: TableSearchParams) => {
               h-auto
               pl-12 text-sm 
               paragraph-regular no-focus placeholder 
-              bg-gray-50
+              bg-white
               shadow-none outline-none border-none truncate"
           />
           {params.searchTerm !== "" && (
