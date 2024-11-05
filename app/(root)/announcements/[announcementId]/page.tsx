@@ -1,6 +1,6 @@
 "use client";
 
-import AnnouncementDetail from "@/components/annoucement/AnnouncementDetail";
+import AnnouncementDetail from "@/components/announcements/AnnouncementDetail";
 import Image from "next/image";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";

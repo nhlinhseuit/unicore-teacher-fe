@@ -103,10 +103,10 @@ const CourseDetail = ({}: Props) => {
         {/* IMAGE */}
         <div className="w-[20%] ">
           <Image
-            src={"/assets/images/department-annoucement.svg"}
+            src={"/assets/images/department-announcement.svg"}
             width={16}
             height={16}
-            alt={"annoucement"}
+            alt={"announcement"}
             className={`w-full object-contain`}
           />
         </div>

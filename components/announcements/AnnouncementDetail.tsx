@@ -57,10 +57,10 @@ const object = {
     <pre class="language-javascript"><code>const innerObject = {
       description: \`&lt;pre class="language-markup"&gt;&lt;code&gt;&amp;lt;div class="w-[20%]"&amp;gt;
         &amp;lt;Image
-          src="/assets/images/department-annoucement.svg"
+          src="/assets/images/department-announcement.svg"
           width="16"
           height="16"
-          alt="annoucement"
+          alt="announcement"
           class="w-full object-contain"
         /&amp;gt;
       &amp;lt;/div&amp;gt;&lt;/code&gt;&lt;/pre&gt;
@@ -148,10 +148,10 @@ const AnnouncementDetail = ({
         {/* IMAGE */}
         <div className="w-[20%] ">
           <Image
-            src={"/assets/images/department-annoucement.svg"}
+            src={"/assets/images/department-announcement.svg"}
             width={16}
             height={16}
-            alt={"annoucement"}
+            alt={"announcement"}
             className={`w-full object-contain`}
           />
         </div>
