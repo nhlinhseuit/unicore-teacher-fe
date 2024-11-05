@@ -99,9 +99,9 @@ export const DepartmentCourseTabItems = [
 
 // TODO: OTHERS
 export const AnnouncementTypes = [
-  { value: "post", label: "Thông báo" },
-  { value: "exercise", label: "Bài tập" },
-  { value: "report", label: "Báo cáo đồ án" },
+  { route: "/create-announcement", label: "Tạo thông báo" },
+  { route: "/create-exercise", label: "Tạo bài tập" },
+  { route: "/create-report", label: "Tạo báo cáo đồ án" },
 ];
 
 export enum DataTableType {

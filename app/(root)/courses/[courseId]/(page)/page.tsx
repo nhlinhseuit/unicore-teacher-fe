@@ -6,9 +6,13 @@ import IconButton from "@/components/shared/Button/IconButton";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import { AnnouncementTabs, AnnouncementTypes, FilterType } from "@/constants";
 import { Dropdown } from "flowbite-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React, { useState } from "react";
 
 const page = () => {
+  const pathName = usePathname();
+
   var typeFilter = FilterType.SortNewer;
 
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(
@@ -193,8 +197,13 @@ const page = () => {
             )}
           >
             <div className="w-full">
-              {AnnouncementTypes.map((item, index) => (
-                <Dropdown.Item key={item.value}>{item.label}</Dropdown.Item>
+              {AnnouncementTypes.map((item) => (
+                <Link
+                  key={`${pathName}${item.route}`}
+                  href={`${pathName}${item.route}`}
+                >
+                  <Dropdown.Item>{item.label}</Dropdown.Item>
+                </Link>
               ))}
             </div>
           </Dropdown>
