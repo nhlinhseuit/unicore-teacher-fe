@@ -5,12 +5,16 @@ interface ClosedButtonProps {
   children: ReactNode;
   _id?: string | number;
   onClose?: (index: number) => void;
+  iconHeight?: number;
+  iconWidth?: number;
 }
 
 const ClosedButton: React.FC<ClosedButtonProps> = ({
   children,
   onClose,
   _id,
+  iconHeight,
+  iconWidth,
 }) => {
   return (
     <div className="relative">
@@ -19,8 +23,8 @@ const ClosedButton: React.FC<ClosedButtonProps> = ({
         <Image
           src="/assets/icons/close_circle.svg"
           alt="close"
-          width={18}
-          height={18}
+          width={iconHeight ? iconHeight : 18}
+          height={iconWidth ? iconWidth : 18}
           onClick={() => {
             if (onClose) onClose(_id as number);
           }}

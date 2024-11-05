@@ -36,14 +36,19 @@ import { Calendar as CalendarIcon } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
+import TableSearch from "@/components/shared/Search/TableSearch";
+import RenderCourse from "@/components/courses/RenderCourse";
 
 // ! CẬP NHẬT
 const type: any = "create";
 
-const targetList = [
-  { id: 1, value: "Giảng viên" },
-  { id: 2, value: "Sinh viên" },
-  { id: 3, value: "Tất cả" },
+// TODO: Search debouce tìm kiếm lớp nếu cần
+
+const coursesList = [
+  { id: 1, value: "SE114.N21.PMCL.1" },
+  { id: 2, value: "SE114.N21.PMCL.2" },
+  { id: 3, value: "SE100.N23.PMCL.1" },
+  { id: 4, value: "SE100.N23.PMCL.2" },
 ];
 
 const CreateAnnouncement = () => {
@@ -55,10 +60,8 @@ const CreateAnnouncement = () => {
   const [selectedScheduleOption, setSelectedScheduleOption] = useState(1);
   const [date, setDate] = React.useState<Date>();
 
-  const [previewImage, setPreviewImage] = useState("");
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-  const [checkedCategory, setCheckedCategory] = useState<number[]>([]);
-  const [selectedTarget, setSelectedTarget] = useState(1);
+  const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
 
   const handleChooseFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -86,14 +89,7 @@ const CreateAnnouncement = () => {
     fileRef.current?.click();
   };
 
-  const imageRef = useRef<HTMLInputElement | null>(null);
-  const handleImageButtonClick = () => {
-    imageRef.current?.click();
-  };
-
   // TODO: HỆ THỐNG TỰ GHI NHẬN NGƯỜI ĐĂNG
-
-  const VALID_CATEGORY_IDS = checkedCategory.map((item) => item.toString());
 
   const AnnoucementSchema = z
     .object({
@@ -104,21 +100,9 @@ const CreateAnnouncement = () => {
       description: z
         .string()
         .min(20, { message: "Nội dung thông báo phải chứa ít nhất 20 ký tự" }),
-      image: z.any(),
       file: z.any(),
-      category: z.any(),
-      target: z.number().optional(),
-    })
-    .refine(
-      (data) => checkedCategory.length > 0 && checkedCategory.length <= 3,
-      {
-        message: "Bạn phải chọn ít nhất 1 danh mục và không quá 3 danh mục",
-        path: ["category"],
-      }
-    )
-    .refine((data) => previewImage !== "", {
-      message: `Trường ảnh bìa là bắt buộc. File phải có định dạng ảnh (jpg, png, svg) và kích thước tối đa ${MAX_FILE_VALUE}MB`,
-      path: ["image"],
+      multipleCourses: z.number().optional(),
+      date: z.date().optional(),
     })
     .refine(
       (data) =>
@@ -138,10 +122,9 @@ const CreateAnnouncement = () => {
     defaultValues: {
       title: "",
       description: "",
-      image: undefined,
       file: undefined,
-      category: [],
-      target: undefined,
+      multipleCourses: undefined,
+      date: undefined,
     },
   });
 
@@ -156,11 +139,8 @@ const CreateAnnouncement = () => {
       console.log({
         title: values.title,
         description: values.description,
-
-        image: previewImage,
         file: selectedFiles,
-        category: checkedCategory,
-        target: selectedTarget,
+        target: selectedCourses,
         path: pathName,
       });
 
@@ -169,9 +149,7 @@ const CreateAnnouncement = () => {
 
       toast({
         title: "Tạo thông báo thành công.",
-        description: `Thông báo đã được gửi đến ${
-          targetList.find((item) => item.id === selectedTarget)?.value
-        }`,
+        description: `Thông báo đã được gửi đến ${coursesList.join(", ")}`,
         variant: "success",
         duration: 3000,
       });
@@ -353,33 +331,24 @@ const CreateAnnouncement = () => {
               {/* //TODO: SECTION 2 */}
 
               <div className="flex w-[30%] flex-col gap-10">
-                {/* TARGET */}
-                // ! SỬA TARGET THÀNH ĐĂNG TRONG CÁC nhóm 
-                // ! SỬA VALID
-                // ! XÓA TARGET Ở DƯỚI
+                {/* ĐĂNG NHIỀU LỚP */}
                 <FormField
                   control={form.control}
-                  name="target"
+                  name="multipleCourses"
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Chọn đối tượng <span className="text-red-600">*</span>
+                        Đăng nhiều lớp
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
-                        {/* <Input
-                          {...field}
-                          placeholder="Nhập tên thông báo..."
-                          className="
-                            no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
-                        /> */}
                         <Dropdown
                           className="z-30 rounded-lg"
                           label=""
-                          dismissOnClick={false}
+                          dismissOnClick={true}
                           renderTrigger={() => (
                             <div>
                               <IconButton
-                                text="Đối tượng"
+                                text="Chọn lớp khác"
                                 onClick={() => {}}
                                 iconRight={"/assets/icons/chevron-down.svg"}
                                 bgColor="bg-white"
@@ -389,19 +358,30 @@ const CreateAnnouncement = () => {
                             </div>
                           )}
                         >
+                          <TableSearch
+                            setSearchTerm={() => {}}
+                            searchTerm={""}
+                            otherClasses="p-2"
+                          />
                           <div className="scroll-container scroll-container-dropdown-content">
-                            {targetList.map((target, index) => (
+                            {coursesList.map((course, index) => (
                               <Dropdown.Item
-                                key={`${target}_${index}`}
+                                key={`${course}_${index}`}
                                 onClick={() => {
-                                  setSelectedTarget(target.id);
+                                  setSelectedCourses((prev) =>
+                                    prev.includes(course.value)
+                                      ? prev.filter(
+                                          (item) => item !== course.value
+                                        )
+                                      : [...prev, course.value]
+                                  );
                                 }}
                               >
                                 <div className="flex justify-between w-full">
                                   <p className="w-[80%] text-left line-clamp-1">
-                                    {target.value}
+                                    {course.value}
                                   </p>
-                                  {selectedTarget === target.id ? (
+                                  {selectedCourses.includes(course.value) ? (
                                     <Image
                                       src="/assets/icons/check.svg"
                                       alt="search"
@@ -418,15 +398,29 @@ const CreateAnnouncement = () => {
                           </div>
                         </Dropdown>
                       </FormControl>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedCourses.map((item: any) => (
+                          <ClosedButton
+                            iconHeight={16}
+                            iconWidth={16}
+                            onClose={() => {
+                              setSelectedCourses((prev) =>
+                                prev.filter((course) => course !== item)
+                              );
+                            }}
+                          >
+                            <RenderCourse key={item} _id={item} name={item} />
+                          </ClosedButton>
+                        ))}
+                      </div>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
-                        Chọn đối tượng mà thông báo này hướng đến, có thể là
-                        giảng viên, sinh viên, tất cả...
+                        Thông báo này sẽ được đăng trong các lớp bạn chọn ngoài
+                        lớp hiện tại.
                       </FormDescription>
                       <FormMessage className="text-red-500" />
                     </FormItem>
                   )}
                 />
-
                 <CheckboxComponent
                   id={1}
                   handleClick={() => {
@@ -443,16 +437,15 @@ const CreateAnnouncement = () => {
                   value={selectedScheduleOption}
                   text="Tạo lịch đăng thông báo"
                 />
-
                 {/* DATE */}
                 {selectedScheduleOption === 2 ? (
                   <FormField
                     control={form.control}
-                    name="target"
+                    name="date"
                     render={({ field }) => (
                       <FormItem className="flex w-full flex-col">
                         <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                          Chọn ngày <span className="text-red-600">*</span>
+                          Chọn ngày
                         </FormLabel>
                         <FormControl className="mt-3.5">
                           <Popover>

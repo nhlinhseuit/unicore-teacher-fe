@@ -11,14 +11,19 @@ const CheckboxComponent = (params: Props) => {
   return (
     <div className="flex gap-4">
       <input
+        id={params.text}
+        name={params.text}
         type="radio"
         checked={params.value === params.id}
         onChange={params.handleClick}
         className="w-4 h-4 cursor-pointer"
       />
-      <p className="body-regular -translate-y-[1px] text-dark200_light900 line-clamp-2 flex-1 m-0">
+      <label
+        htmlFor={params.text}
+        className="cursor-pointer body-regular -translate-y-[1px] text-dark200_light900 line-clamp-2 flex-1 m-0"
+      >
         {params.text}
-      </p>
+      </label>
     </div>
   );
 };
