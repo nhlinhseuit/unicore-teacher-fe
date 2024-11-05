@@ -1,21 +1,28 @@
 import React from "react";
 import MoreButtonCourseItem from "./MoreButtonCourseItem";
 
-const CourseItem = () => {
+interface Props {
+  id: string;
+  name: string;
+  semester: string;
+  teachers: string;
+}
+
+const CourseItem = (params: Props) => {
   return (
     <div
-      className="w-[250px] h-[130px] rounded-lg cursor-pointer
+      className="w-[250px] h-[140px] rounded-lg cursor-pointer
               border-[1.5px] border-primary-500 text-black p-4 flex flex-col justify-between"
     >
-      <>
-        <h4 className="body-bold">SE114.O12.PMCL</h4>
-        <p className="small-regular  leading-[8px]">
-          Nhập môn Ứng dụng di động - SE114
+      <div>
+        <h4 className="body-bold">{params.id}</h4>
+        <p className="small-regular mt-2">{params.name}</p>
+        <p className="small-regular mt-1 italic text-[#636363] line-clamp-1">
+          {params.semester}
         </p>
-        <p className="small-regular  leading-[8px]">HK1/2024</p>
-      </>
+      </div>
 
-      <p className="small-regular text-center">Trịnh Văn A, Nguyễn Văn H, +1</p>
+      <p className="small-regular text-center">{params.teachers}</p>
     </div>
   );
 };

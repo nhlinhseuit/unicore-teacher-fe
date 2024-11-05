@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Dropdown } from "flowbite-react";
 import IconButton from "@/components/shared/Button/IconButton";
 import TableSearch from "@/components/shared/Search/TableSearch";
@@ -9,18 +9,74 @@ import MoreButtonCourseItem from "@/components/courses/MoreButtonCourseItem";
 import Link from "next/link";
 import CourseItem from "@/components/courses/CourseItem";
 
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { useRouter } from "next/navigation";
+import CourseItemDialog from "@/components/courses/CourseItemDialog";
+
 const JoinedCourses = () => {
   const mockCourses = [
     {
       id: "SE114.N21.PMCL",
+      name: "Nhập môn ứng dụng di động",
+      semester: "HK1/2024",
+      teachers: "Trịnh Văn A, Nguyễn Văn H, +1",
+      subCourses: [
+        {
+          id: "SE114.N21.PMCL.1",
+          teacher: "Trịnh Văn A",
+        },
+        {
+          id: "SE114.N21.PMCL.2",
+          teacher: "Nguyễn Văn H",
+        },
+        {
+          id: "SE114.N21.PMCL.3",
+          teacher: "Nguyễn Hoàng Linh",
+        },
+      ],
     },
     {
       id: "SE100.N23.PMCL",
+      name: "Phương pháp phát triển phần mềm hướng đối tượng",
+      semester: "HK2/2024",
+      teachers: "Nguyễn Hoàng Linh, Nguyễn Văn H",
+      subCourses: [
+        {
+          id: "SE114.N23.PMCL.1",
+          teacher: "Trịnh Văn A",
+        },
+        {
+          id: "SE114.N23.PMCL.2",
+          teacher: "Trịnh Văn A",
+        },
+      ],
     },
     {
       id: "SE502.N21",
+      name: "Đồ án 1",
+      semester: "HK1/2024",
+      teachers: "Nguyễn Hoàng Linh, Lê Thành Lộc",
+      subCourses: [],
     },
   ];
+
+  const [currentCourseId, setCurrentCourseId] = useState("");
+
+  const router = useRouter();
+
+  const getCourseData = (idCourse: string) => {
+    return mockCourses.find((item) => item.id === idCourse);
+  };
 
   return (
     <>
@@ -149,16 +205,82 @@ const JoinedCourses = () => {
 
       <div className="flex gap-2">
         {mockCourses.map((item, index) => (
-          <div className="relative" key={item.id}>
-            <Link href={`/course/${item.id}`} key={item.id}>
-              <CourseItem />
-            </Link>
+          <div
+            className="relative"
+            key={item.id}
+            onClick={() => {
+              if (item.subCourses.length > 0) {
+                setCurrentCourseId(item.id);
+              } else {
+                router.push(`/course/${item.id}`);
+              }
+            }}
+          >
+            <CourseItem
+              key={item.id}
+              id={item.id}
+              name={item.name}
+              semester={item.semester}
+              teachers={item.teachers}
+            />
             <div className="absolute right-0 top-0">
               <MoreButtonCourseItem handleEdit={() => {}} />
             </div>
           </div>
         ))}
       </div>
+
+      {currentCourseId != "" && getCourseData(currentCourseId) ? (
+        <AlertDialog open={currentCourseId !== ""}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle className="text-center">
+                {currentCourseId}
+              </AlertDialogTitle>
+              <AlertDialogDescription className="text-center">
+                {getCourseData(currentCourseId)?.name}
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            {
+              <div className="flex flex-wrap gap-2">
+                {getCourseData(currentCourseId)?.subCourses.map(
+                  (item, index) => (
+                    <div className="relative w-[48%]" key={item.id}>
+                      <Link
+                        href={`/course/${
+                          getCourseData(currentCourseId)?.subCourses[index].id
+                        }`}
+                        key={item.id}
+                      >
+                        <CourseItemDialog
+                          key={item.id}
+                          id={item.id}
+                          teacher={item.teacher}
+                        />
+                      </Link>
+                      <div className="absolute right-0 top-0">
+                        <MoreButtonCourseItem handleEdit={() => {}} />
+                      </div>
+                    </div>
+                  )
+                )}
+              </div>
+            }
+            <AlertDialogFooter>
+              <AlertDialogCancel
+                onClick={() => {
+                  setCurrentCourseId("");
+                  // params.onClickGetOut && params.onClickGetOut();
+                }}
+              >
+                Đóng
+              </AlertDialogCancel>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      ) : (
+        <></>
+      )}
     </>
   );
 };

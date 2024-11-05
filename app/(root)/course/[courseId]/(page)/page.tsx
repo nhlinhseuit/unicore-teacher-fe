@@ -6,19 +6,64 @@ import IconButton from "@/components/shared/Button/IconButton";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import { AnnouncementTabs, AnnouncementTypes, FilterType } from "@/constants";
 import { Dropdown } from "flowbite-react";
-import { useParams } from "next/navigation";
 import React, { useState } from "react";
 
 const page = () => {
-  // ! Get ID từ param, muốn truyền cả object qua route mới thì sd Context / Redux
-  const params = useParams() as { courseId: string };
-  const { courseId } = params;
-
   var typeFilter = FilterType.SortNewer;
 
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(
     AnnouncementTabs[0].value
   );
+
+  const mockPostData = [
+    {
+      id: "1",
+      creator: "Huỳnh Hồ Thị Mộng Trinh",
+      createdAt: "29/8/2024 7:23AM",
+      title: "Bài tập ngày 29/9/2024",
+      fileName: "exercise.docx",
+      comments: [
+        {
+          id: "1",
+          author: "Huỳnh Hồ Thị Mộng Trinh",
+          content: "Các em mau chóng đăng ký nhóm đúng hạn",
+        },
+        {
+          id: "2",
+          author: "Lê Thành Lộc",
+          content: "Nộp bài trễ được không cô?",
+        },
+      ],
+    },
+    {
+      id: "2",
+      creator: "Huỳnh Hồ Thị Mộng Trinh",
+      createdAt: "29/8/2024 7:23AM",
+      title: "Bài tập ngày 29/9/2024",
+      fileName: "exercise.docx",
+      comments: [
+        {
+          id: "1",
+          author: "Huỳnh Hồ Thị Mộng Trinh",
+          content: "Các em mau chóng đăng ký nhóm đúng hạn",
+        },
+      ],
+    },
+    {
+      id: "3",
+      creator: "Huỳnh Hồ Thị Mộng Trinh",
+      createdAt: "29/8/2024 7:23AM",
+      title: "Bài tập ngày 29/9/2024",
+      fileName: "exercise.docx",
+      comments: [
+        {
+          id: "1",
+          author: "Huỳnh Hồ Thị Mộng Trinh",
+          content: "Các em mau chóng đăng ký nhóm đúng hạn",
+        },
+      ],
+    },
+  ];
 
   return (
     <div>
@@ -175,8 +220,16 @@ const page = () => {
 
       {/* PostList */}
       <div className="mt-6 flex flex-col gap-4">
-        {Array.from({ length: 3 }).map((item, index) => (
-          <PostItem key={index} />
+        {mockPostData.map((item, index) => (
+          <PostItem
+            key={item.id}
+            id={item.id}
+            creator={item.creator}
+            createdAt={item.createdAt}
+            title={item.title}
+            fileName={item.fileName}
+            comments={item.comments}
+          />
         ))}
       </div>
     </div>

@@ -88,7 +88,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="max-w-[200px] px-2 py-1 text-sm font-medium rounded-md ">
           <div className="flex">
             <p className="text-left overflow-hidden text-ellipsis whitespace-nowrap body-semibold text-primary-500">
-              SE114.N21.PMCL
+              {courseId}
             </p>
             <Dropdown
               className="z-30 rounded-lg"
@@ -107,7 +107,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                 <ul>
                   <li role="menuitem">
                     <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                      SE114.N21.PMCL
+                      {courseId}
                     </p>
                   </li>
                   <li role="menuitem">

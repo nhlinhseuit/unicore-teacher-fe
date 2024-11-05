@@ -5,18 +5,32 @@ import Avatar from "./Avatar";
 import OtherComment from "./OtherComment";
 import MyComment from "./MyComment";
 import Divider from "../shared/Divider";
+import { getAvatarName } from "@/lib/utils";
 
-interface Props {}
+interface Comment {
+  id: string;
+  author: string;
+  content: string;
+}
 
-const PostItem = ({}: Props) => {
+interface Props {
+  id: string;
+  creator: string;
+  createdAt: string;
+  title: string;
+  fileName: string;
+  comments: Comment[];
+}
+
+const PostItem = (params: Props) => {
   return (
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex-col w-full p-6">
         <div className="flex justify-start items-center gap-2">
           <Avatar text="MT" />
-          <p className="body-regular">Huỳnh Hồ Thị Mộng Trinh</p>
+          <p className="body-regular">{params.creator}</p>
           <p className="small-regular italic text-[#636363] line-clamp-1 ">
-            - 29/8/2024 7:23AM
+            - {params.createdAt}
           </p>
           <Image
             src={"/assets/icons/edit-black.svg"}
@@ -27,17 +41,22 @@ const PostItem = ({}: Props) => {
           />
         </div>
 
-        <p className="base-regular mt-3 ml-2 ">Bài tập ngày 29/9/2024</p>
+        <p className="base-regular mt-3 ml-2 ">{params.title}</p>
 
         <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-2 px-2"} />
 
         <Divider />
 
-        <OtherComment
-          textAvatar="MT"
-          name="Huỳnh Hồ Thị Mộng Trinh"
-          comment="Các em mau chóng đăng ký nhóm đúng hạn"
-        />
+        <div className="flex flex-col gap-4">
+          {params.comments.map((item, index) => (
+            <OtherComment
+              key={item.id}
+              textAvatar={getAvatarName(item.author)}
+              name={item.author}
+              comment={item.content}
+            />
+          ))}
+        </div>
 
         <Divider />
 

@@ -5,20 +5,26 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export const getAvatarName = (name: string) => {
+  const words = name.split(" ");
+  if (words.length >= 2) {
+    return words[0][0] + words[words.length - 1][0];
+  }
+  return name.slice(0, 2).toUpperCase();
+};
+
 export const normalizeSearchItem = (term: string | number) => {
   const lowerCaseTerm = term.toString().trim().toLowerCase();
   // Chuyển đổi ký tự có dấu thành không dấu
   const normalizedTerm = lowerCaseTerm
     .normalize("NFD") // Phân tách các ký tự có dấu
-    .replace(/[\u0300-\u036f]/g, '') // Loại bỏ dấu
-    .replace(/đ/g, 'd') // Thay thế "đ" thành "d"
-    .replace(/Đ/g, 'D'); // Thay thế "Đ" thành "D"
-    
+    .replace(/[\u0300-\u036f]/g, "") // Loại bỏ dấu
+    .replace(/đ/g, "d") // Thay thế "đ" thành "d"
+    .replace(/Đ/g, "D"); // Thay thế "Đ" thành "D"
+
   // Giữ lại khoảng trắng và ký tự chữ và số
-  return normalizedTerm.replace(/[^a-z0-9\s]/g, '');
-}
-
-
+  return normalizedTerm.replace(/[^a-z0-9\s]/g, "");
+};
 
 export const getTimestamp = (createdAt: Date): string => {
   const now = new Date();
