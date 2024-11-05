@@ -180,46 +180,7 @@ const Row = React.memo(
 
         {/* STT */}
         <Table.Cell className="w-10 border-r-[1px]  text-left">
-          {params.isHasSubCourses ? (
-            <div className="flex">
-              <span>{params.dataItem.STT}</span>
-              <Dropdown
-                className="z-30 rounded-lg"
-                label=""
-                renderTrigger={() => (
-                  <Image
-                    src="/assets/icons/info.svg"
-                    alt="search"
-                    width={21}
-                    height={21}
-                    className="ml-2 mr-4 cursor-pointer"
-                  />
-                )}
-              >
-                <div className="scroll-container scroll-container-dropdown-content">
-                  <ul>
-                    <li role="menuitem">
-                      <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                        Đồ án 1 - Huỳnh Hồ Thị Mộng Trinh
-                      </p>
-                    </li>
-                    <li role="menuitem">
-                      <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                        Đồ án 1 - Nguyễn Trịnh Đông
-                      </p>
-                    </li>
-                    <li role="menuitem">
-                      <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                        Đồ án 1 - Huỳnh Tuấn Anh
-                      </p>
-                    </li>
-                  </ul>
-                </div>
-              </Dropdown>
-            </div>
-          ) : (
-            <span>{params.dataItem.STT}</span>
-          )}
+          <span>{params.dataItem.STT}</span>
         </Table.Cell>
 
         {/* Các giá trị khác */}
@@ -230,18 +191,22 @@ const Row = React.memo(
             case "course":
               data = params.dataItem as CourseDataItem;
               keyId = data.data["Mã lớp"];
+
               break;
             case "subject":
               data = params.dataItem as SubjectDataItem;
               keyId = data.data["Mã MH"];
+
               break;
             case "student":
               data = params.dataItem as StudentDataItem;
               keyId = data.data["MSSV"];
+
               break;
             case "student":
               data = params.dataItem as TeacherDataItem;
               keyId = data.data["Mã cán bộ"];
+
               break;
           }
 
@@ -259,7 +224,44 @@ const Row = React.memo(
                 key === "Khoa quản lý" ? "text-center" : ""
               }`}
             >
-              {key === "Khoa quản lý" ? (
+              {key === "Mã lớp" && params.isHasSubCourses ? (
+                <div className="flex">
+                  <span>{value}</span>
+                  <Dropdown
+                    className="z-30 rounded-lg"
+                    label=""
+                    renderTrigger={() => (
+                      <Image
+                        src="/assets/icons/info.svg"
+                        alt="search"
+                        width={21}
+                        height={21}
+                        className="ml-2 mr-4 cursor-pointer"
+                      />
+                    )}
+                  >
+                    <div className="scroll-container scroll-container-dropdown-content">
+                      <ul>
+                        <li role="menuitem">
+                          <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                            Đồ án 1 - Huỳnh Hồ Thị Mộng Trinh
+                          </p>
+                        </li>
+                        <li role="menuitem">
+                          <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                            Đồ án 1 - Nguyễn Trịnh Đông
+                          </p>
+                        </li>
+                        <li role="menuitem">
+                          <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                            Đồ án 1 - Huỳnh Tuấn Anh
+                          </p>
+                        </li>
+                      </ul>
+                    </div>
+                  </Dropdown>
+                </div>
+              ) : key === "Khoa quản lý" ? (
                 isEdit || params.isEditTable ? (
                   <input
                     type="checkbox"

@@ -67,7 +67,7 @@ const LeftSideBar = () => {
 
       <div className="flex flex-col h-full gap-4 px-6 mt-6 ">
         {/* ITEM */}
-        {sidebarDepartmentLinks.map((item) => {
+        {sidebarDepartmentLinks.map((item, index) => {
           let isActive;
           // TODO: handle cho tab HOME
           if (pathName === "/create-announcement" && item.route === "/") {
@@ -85,7 +85,7 @@ const LeftSideBar = () => {
               return (
                 <>
                   <Link
-                    key={item.route}
+                    key={`${index}_${item.route}`}
                     href={item.route}
                     className={`${
                       isActive
