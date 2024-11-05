@@ -4,6 +4,8 @@ import React from "react";
 import Link from "next/link";
 import { useParams, usePathname } from "next/navigation";
 import { DepartmentCourseTabItems } from "@/constants";
+import { Dropdown } from "flowbite-react";
+import Image from "next/image";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathName = usePathname();
@@ -19,7 +21,20 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div
         aria-label="Tabs with underline"
         role="tablist"
-        className="relative mb-4 flex text-center flex-wrap border-b border-gray-200 dark:border-gray-700"
+        className="relative
+          scroll-container-noscroll
+          h-[54px]
+          mb-4
+          flex
+          text-center
+          whitespace-nowrap
+          overflow-x-auto
+          flex-nowrap
+          border-b
+          border-gray-200
+          dark:border-gray-700
+          pr-[230px]
+          "
       >
         {DepartmentCourseTabItems.map((item) => {
           let isActive;
@@ -40,19 +55,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             >
               <button
                 type="button"
-                className={`
-                  flex
-                  items-center
-                  justify-center
-                  p-4
-                  text-sm
-                  font-medium
-                  first:ml-0
-                  disabled:cursor-not-allowed
-                  disabled:text-gray-400
-                  disabled:dark:text-gray-500
-                  rounded-t-lg
-                  ${isActive ? "border-b-[1.5px] border-gray-300" : ""}`}
+                className={`flex items-center justify-center p-4 text-sm font-medium first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500 rounded-t-lg ${
+                  isActive ? "border-b-[1.5px] border-gray-300" : ""
+                }`}
                 role="tab"
               >
                 {item.label}
@@ -60,17 +65,72 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             </Link>
           );
         })}
+      </div>
 
-        {/* <div className="absolute bg-gray-200 right-[20%] top-0 bottom-0">
-          <div className="absolute w-[4px] right-[20%] top-0 bottom-0 my-2 primary-gradient rounded-sm"></div>
-          </div> */}
+      {/* TÊN LỚP HỌC */}
+      <div
+        className="h-[50px]
+        px-2
+        bg-white
+        flex
+        items-center
+        absolute
+        top-0
+        bottom-0
+        right-0
+        space-x-2"
+      >
+        <div
+          className="w-[4px] primary-gradient rounded-sm"
+          style={{ height: "calc(100% - 12px)" }}
+        ></div>
 
-        <div className="absolute w-[4px] right-[20%] top-0 bottom-0 my-2 primary-gradient rounded-sm">
-          12312312123123
-          Nhập tên môn ở đây
-          1 absoulute div có tên có border left
+        <div className="max-w-[200px] px-2 py-1 text-sm font-medium rounded-md ">
+          <div className="flex">
+            <p className="text-left overflow-hidden text-ellipsis whitespace-nowrap body-semibold text-primary-500">
+              SE114.N21.PMCL
+            </p>
+            <Dropdown
+              className="z-30 rounded-lg"
+              label=""
+              renderTrigger={() => (
+                <Image
+                  src="/assets/icons/info.svg"
+                  alt="search"
+                  width={18}
+                  height={18}
+                  className="ml-2 cursor-pointer"
+                />
+              )}
+            >
+              <div className="scroll-container scroll-container-dropdown-content">
+                <ul>
+                  <li role="menuitem">
+                    <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                      SE114.N21.PMCL
+                    </p>
+                  </li>
+                  <li role="menuitem">
+                    <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                      Nhập môn ứng dụng di động
+                    </p>
+                  </li>
+                  <li role="menuitem">
+                    <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                      GV: Huỳnh Hồ Thị Mộng Trinh
+                    </p>
+                  </li>
+                </ul>
+              </div>
+            </Dropdown>
+          </div>
+
+          <p className="text-left line-clamp-1 body-regular ">
+            Nhập môn ứng dụng di động
+          </p>
         </div>
       </div>
+
       <section>
         <div className="w-full">{children}</div>
       </section>

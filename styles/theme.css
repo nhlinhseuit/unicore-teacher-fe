@@ -195,6 +195,8 @@
     @apply shadow-light-100 dark:shadow-none;
   }
 
+  /* ! SCROLL CONTAINER */
+
   .scroll-container-dropdown-content {
     @apply overflow-y-auto max-h-44; /* Kết hợp các lớp Tailwind */
   }
@@ -215,6 +217,24 @@
 
   .scroll-container::-webkit-scrollbar-thumb:hover {
     background: #555;
+  }
+
+  /* ! NO SCROLL BAR */
+  .scroll-container-noscroll {
+    @apply overflow-y-auto max-h-44; /* Kết hợp các lớp Tailwind */
+    scrollbar-width: none; /* Ẩn thanh cuộn cho Firefox */
+  }
+
+  /* Ẩn thanh cuộn cho WebKit (Chrome, Safari) */
+  .scroll-container-noscroll::-webkit-scrollbar {
+    display: none; /* Hoặc bạn có thể dùng width: 0; nếu bạn muốn chiều rộng của thanh cuộn vẫn tồn tại nhưng không hiển thị */
+  }
+
+  /* ! END */
+
+  /* Đối với Firefox */
+  .scroll-container-no-scrollt {
+    scrollbar-width: none; /* Ẩn thanh cuộn cho Firefox */
   }
 
   .primary-gradient {

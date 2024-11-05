@@ -80,6 +80,21 @@ export const DepartmentCourseTabItems = [
     label: "Cài đặt",
     route: "/setting",
   },
+  // {
+  //   value: "setting1",
+  //   label: "Cài đặt1",
+  //   route: "/setting1",
+  // },
+  // {
+  //   value: "setting2",
+  //   label: "Cài đặt2",
+  //   route: "/setting2",
+  // },
+  // {
+  //   value: "setting3",
+  //   label: "Cài đặt3",
+  //   route: "/setting3",
+  // },
 ];
 
 // TODO: OTHERS

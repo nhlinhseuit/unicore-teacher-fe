@@ -111,7 +111,7 @@ const LeftSideBar = () => {
                     </p>
                   </Link>
                   <div className="flex items-center gap-2">
-                    <div className="primary-gradient w-[10px] h-full rounded-sm ml-1"></div>
+                    <div className="primary-gradient w-[6px] h-full rounded-sm ml-1"></div>
                     <p className="body-semibold text-right cursor-pointer text-primary-500 line-clamp-1">
                       {getCourseId()}
                     </p>
