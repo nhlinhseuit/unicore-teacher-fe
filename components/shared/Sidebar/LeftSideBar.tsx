@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { sidebarDepartmentLinks } from "@/constants";
+import { DepartmentCoursesTabItems, sidebarDepartmentLinks } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -9,11 +9,23 @@ import React from "react";
 
 const LeftSideBar = () => {
   const pathName = usePathname();
+
+  const isOriginalRoute = () => {
+    return DepartmentCoursesTabItems.find((item) => {
+      if (item.route === "/courses") {
+        return undefined;
+      } else {
+        return pathName.includes(item.route);
+      }
+    });
+  };
+
   const getCourseId = () => {
     let courseId;
-    if (pathName.includes("course/")) {
+    // * ROUTE CỦA SUB COURSE: courses/SE114.O12.PMCL
+    if (!isOriginalRoute() && pathName.includes("courses/")) {
       const parts = pathName.split("/");
-      const coursesIndex = parts.indexOf("course");
+      const coursesIndex = parts.indexOf("courses");
 
       if (coursesIndex !== -1 && parts[coursesIndex + 1]) {
         courseId = parts[coursesIndex + 1];

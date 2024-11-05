@@ -212,7 +212,7 @@ const JoinedCourses = () => {
               if (item.subCourses.length > 0) {
                 setCurrentCourseId(item.id);
               } else {
-                router.push(`/course/${item.id}`);
+                router.push(`/courses/${item.id}`);
               }
             }}
           >
@@ -247,7 +247,7 @@ const JoinedCourses = () => {
                   (item, index) => (
                     <div className="relative w-[48%]" key={item.id}>
                       <Link
-                        href={`/course/${
+                        href={`/courses/${
                           getCourseData(currentCourseId)?.subCourses[index].id
                         }`}
                         key={item.id}
