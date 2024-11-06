@@ -25,7 +25,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
-import CheckboxComponent from "@/components/shared/CheckboxComponent";
 import {
   Popover,
   PopoverContent,
@@ -38,6 +37,7 @@ import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import RenderCourse from "@/components/courses/RenderCourse";
+import RadioboxComponent from "@/components/shared/RadioboxComponent";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -198,19 +198,19 @@ const CreateReport = () => {
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Tên bài tập <span className="text-red-600">*</span>
+                        Tên báo cáo <span className="text-red-600">*</span>
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
                         <Input
                           {...field}
-                          placeholder="Nhập tên bài tập..."
+                          placeholder="Nhập tên báo cáo..."
                           className="
                             no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
                         />
                       </FormControl>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
-                        Tên bài tập nên cụ thể, dễ hiểu để người đọc dễ dàng
-                        nhận biết nội dung chính của bài tập.
+                        Tên báo cáo nên cụ thể, dễ hiểu để người đọc dễ dàng
+                        nhận biết nội dung chính của báo cáo.
                       </FormDescription>
                       <FormMessage className="text-red-500" />
                     </FormItem>
@@ -224,7 +224,7 @@ const CreateReport = () => {
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col gap-3">
                       <FormLabel className="text-dark400_light800  text-[14px] font-semibold leading-[20.8px]">
-                        Nội dung chi tiết của bài tập
+                        Nội dung chi tiết của báo cáo
                         <span className="text-red-600">*</span>
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
@@ -421,7 +421,7 @@ const CreateReport = () => {
                     </FormItem>
                   )}
                 />
-                <CheckboxComponent
+                <RadioboxComponent
                   id={1}
                   handleClick={() => {
                     setSelectedScheduleOption(1);
@@ -429,7 +429,7 @@ const CreateReport = () => {
                   value={selectedScheduleOption}
                   text="Đăng thông báo ngay bây giờ"
                 />
-                <CheckboxComponent
+                <RadioboxComponent
                   id={2}
                   handleClick={() => {
                     setSelectedScheduleOption(2);

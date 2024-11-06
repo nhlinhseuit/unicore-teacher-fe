@@ -25,7 +25,6 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
-import CheckboxComponent from "@/components/shared/CheckboxComponent";
 import {
   Popover,
   PopoverContent,
@@ -38,6 +37,7 @@ import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import RenderCourse from "@/components/courses/RenderCourse";
+import RadioboxComponent from "@/components/shared/RadioboxComponent";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -421,7 +421,7 @@ const CreateAnnouncement = () => {
                     </FormItem>
                   )}
                 />
-                <CheckboxComponent
+                <RadioboxComponent
                   id={1}
                   handleClick={() => {
                     setSelectedScheduleOption(1);
@@ -429,7 +429,7 @@ const CreateAnnouncement = () => {
                   value={selectedScheduleOption}
                   text="Đăng thông báo ngay bây giờ"
                 />
-                <CheckboxComponent
+                <RadioboxComponent
                   id={2}
                   handleClick={() => {
                     setSelectedScheduleOption(2);

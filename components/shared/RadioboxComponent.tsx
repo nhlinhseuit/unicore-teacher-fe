@@ -1,19 +1,20 @@
 import React from "react";
 
 interface Props {
+  id: number;
   text: string;
-  value: boolean;
+  value: number;
   handleClick: () => void;
 }
 
-const CheckboxComponent = (params: Props) => {
+const RadioboxComponent = (params: Props) => {
   return (
     <div className="flex gap-4">
       <input
         id={params.text}
         name={params.text}
-        type="checkbox"
-        checked={params.value}
+        type="radio"
+        checked={params.value === params.id}
         onChange={params.handleClick}
         className="w-4 h-4 cursor-pointer"
       />
@@ -27,4 +28,4 @@ const CheckboxComponent = (params: Props) => {
   );
 };
 
-export default CheckboxComponent;
+export default RadioboxComponent;

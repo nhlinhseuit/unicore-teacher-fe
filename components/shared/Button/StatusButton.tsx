@@ -1,10 +1,11 @@
 import React from "react";
-import { Button } from "../../ui/button";
 import Image from "next/image";
-import { Dropdown } from "flowbite-react";
+import { Dropdown, Tooltip } from "flowbite-react";
+import {} from "flowbite-react";
 
-interface IconButtonProps {
+interface StatusButtonProps {
   text: string;
+  info?: string;
   smallText?: boolean;
   temp?: boolean;
   red?: boolean;
@@ -24,11 +25,10 @@ interface IconButtonProps {
   isFilter?: boolean;
 }
 
-const IconButton = (params: IconButtonProps) => {
+const StatusButton = (params: StatusButtonProps) => {
   return (
-    <Button
+    <div
       onClick={params.onClick ? params.onClick : undefined}
-      type="button"
       className={`
         flex
         gap-1
@@ -37,7 +37,6 @@ const IconButton = (params: IconButtonProps) => {
         ${params.border && "border border-gray-200"}
         ${params.isFilter && "border-[#2563EB]"} 
         ${params.textColor ? `${params.textColor}` : "text-white"} 
-        ${params.bgColor ? `${params.bgColor}` : "bg-primary-500"} 
 
         ${params.temp ? `bg-[#17A1FA]` : ""} 
         ${params.yellow ? `bg-[#FFC107]` : ""} 
@@ -51,7 +50,7 @@ const IconButton = (params: IconButtonProps) => {
         rounded-lg
         text-sm
         px-4
-        py-2
+        py-1
         dark:bg-primary-600
         dark:hover:bg-primary-700
         focus:outline-none
@@ -62,18 +61,8 @@ const IconButton = (params: IconButtonProps) => {
         ${params.otherClasses}
         `}
     >
-      {/* LEFT ICON */}
-      {params.iconLeft && (
-        <Image
-          src={params.iconLeft}
-          width={params.iconWidth ? params.iconWidth : 20}
-          height={params.iconHeight ? params.iconHeight : 20}
-          alt="DevFlow"
-          color="text-white"
-        />
-      )}
-
       <span
+        title="diễn ra 20/12"
         className={`flex-grow pl-2 pr-2 text-center ${
           params.smallText ? "text-[12px]" : ""
         }`}
@@ -81,12 +70,24 @@ const IconButton = (params: IconButtonProps) => {
         {params.text}
       </span>
 
-      {/* RIGHT ICON */}
-      {params.iconRight && (
-        <Image src={params.iconRight} width={18} height={18} alt="DevFlow" />
+      {params.info && (
+        <Tooltip
+          content={params.info}
+          style="dark"
+          arrow={true}
+          className="bg-[#1e1e1e] text-white text-[12px] py-1"
+        >
+          <Image
+            src="/assets/icons/info.svg"
+            alt="info"
+            width={18}
+            height={18}
+            className="ml-2 cursor-pointer"
+          />
+        </Tooltip>
       )}
-    </Button>
+    </div>
   );
 };
 
-export default IconButton;
+export default StatusButton;

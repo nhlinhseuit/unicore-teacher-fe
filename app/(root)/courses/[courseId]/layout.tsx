@@ -86,7 +86,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           style={{ height: "calc(100% - 12px)" }}
         ></div>
 
-        <div className="max-w-[200px] px-2 py-1 text-sm font-medium rounded-md ">
+        <div className="max-w-[200px] py-1 text-sm font-medium rounded-md ">
           <div className="flex">
             <p className="text-left overflow-hidden text-ellipsis whitespace-nowrap body-semibold text-primary-500">
               {courseId}
