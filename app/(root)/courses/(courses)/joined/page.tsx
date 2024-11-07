@@ -141,9 +141,8 @@ const JoinedCourses = () => {
             }
 
             return (
-              <div className={`${width}`}>
+              <div key={item} className={`${width}`}>
                 <Dropdown
-                  key={item}
                   className="z-30 rounded-lg"
                   label=""
                   dismissOnClick={false}
@@ -206,8 +205,8 @@ const JoinedCourses = () => {
       <div className="flex gap-2">
         {mockCourses.map((item, index) => (
           <div
-            className="relative"
             key={item.id}
+            className="relative"
             onClick={() => {
               if (item.subCourses.length > 0) {
                 setCurrentCourseId(item.id);
@@ -245,12 +244,11 @@ const JoinedCourses = () => {
               <div className="flex flex-wrap gap-2">
                 {getCourseData(currentCourseId)?.subCourses.map(
                   (item, index) => (
-                    <div className="relative w-[48%]" key={item.id}>
+                    <div key={item.id} className="relative w-[48%]">
                       <Link
                         href={`/courses/${
                           getCourseData(currentCourseId)?.subCourses[index].id
                         }`}
-                        key={item.id}
                       >
                         <CourseItemDialog
                           key={item.id}

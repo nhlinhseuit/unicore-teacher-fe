@@ -22,6 +22,25 @@ export interface CourseData {
   "Năm học": number;
 }
 
+// nếu giữ như này thì phải đổi lại tên vì đây là data của 1 student
+export interface RegisterGroupData {
+  "Mã nhóm": string;
+  "Tên nhóm": string;
+  MSSV: string;
+  SĐT: string;
+  "Họ và tên": string;
+}
+// export interface RegisterGroupData {
+//   "Tên nhóm": string;
+//   listStudent: StudentGroupData[];
+// }
+// export interface StudentGroupData {
+//   isLeader: boolean;
+//   MSSV: string;
+//   SĐT: string;
+//   "Họ và tên": string;
+// }
+
 export interface SubjectData {
   "Khoa QL": string;
   "Mã MH": string;
@@ -66,6 +85,12 @@ export interface TeacherData {
   "Giới tính": string;
   "Địa chỉ": string;
   "Ngày sinh": string;
+}
+
+export interface RegisterGroupDataItem {
+  STT: string;
+  isDeleted: boolean;
+  data: RegisterGroupData;
 }
 
 export interface CourseDataItem {

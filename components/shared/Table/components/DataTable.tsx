@@ -113,7 +113,7 @@ const DataTable = (params: DataTableParams) => {
   // * Local dataTable sử dụng để edit lại data import hoặc PATCH API
   const [localDataTable, setLocalDataTable] = useState(currentItems);
 
-  let applyFilter = () => {
+  const applyFilter = () => {
     let filteredData;
 
     if (

@@ -1,6 +1,7 @@
 import { SidebarLink } from "@/types";
 
 export const itemsPerPage = 30;
+export const itemsPerPageRegisterTable = 10;
 export const MAX_FILE_VALUE = 25; // 25MB
 export const MAX_FILE_SIZE = MAX_FILE_VALUE * 1024 * 1024; // 25MB
 export const ALLOWED_FILE_TYPES = [
