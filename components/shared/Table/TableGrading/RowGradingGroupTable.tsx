@@ -1,25 +1,20 @@
-import { Dropdown, Table } from "flowbite-react";
+import { Table } from "flowbite-react";
 import React, { useEffect, useRef } from "react";
 import { useState } from "react";
 import {
   CourseData,
   SubjectData,
-  CourseDataItem,
-  SubjectDataItem,
-  StudentDataItem,
   StudentData,
   TeacherData,
-  TeacherDataItem,
-  RegisterGroupDataItem,
+  GradingExerciseDataItem,
 } from "@/types";
 import IconButton from "../../Button/IconButton";
-import Image from "next/image";
 import InputComponent from "../components/InputComponent";
 import MoreButtonComponent from "../components/MoreButtonComponent";
 
 interface RowParams {
   isMemberOfAboveGroup: boolean;
-  dataItem: RegisterGroupDataItem;
+  dataItem: GradingExerciseDataItem;
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
   isHasSubCourses?: boolean;
@@ -41,7 +36,7 @@ interface handleInputChangeParams {
   isCheckbox?: boolean;
 }
 
-const RowRegisterGroupTable = React.memo(
+const RowGradingGroupTable = React.memo(
   (params: RowParams) => {
     const [isEdit, setIsEdit] = useState(false);
     const [editDataItem, setEditDataItem] = useState(params.dataItem);
@@ -68,7 +63,7 @@ const RowRegisterGroupTable = React.memo(
       isCheckbox,
     }: handleInputChangeParams) => {
       //@ts-ignore
-      const updatedDataItem: RegisterGroupDataItem = {
+      const updatedDataItem: GradingExerciseDataItem = {
         ...editDataItem,
         data: {
           ...editDataItem.data,
@@ -111,7 +106,7 @@ const RowRegisterGroupTable = React.memo(
         <Table.Cell className="w-10 border-r-[1px] z-100 ">
           <div
             onClick={(e) => {
-              e.stopPropagation(); // Ngăn sự kiện lan truyền đến Table.RowRegisterGroupTable
+              e.stopPropagation(); // Ngăn sự kiện lan truyền đến Table.RowGradingGroupTable
             }}
           >
             {params.isMultipleDelete ? (
@@ -165,35 +160,7 @@ const RowRegisterGroupTable = React.memo(
         {Object.entries(params.dataItem.data).map(([key, value]) => {
           let keyId = params.dataItem.data["Tên nhóm"];
 
-          if (
-            params.isMemberOfAboveGroup &&
-            (key === "Mã nhóm" || key === "Tên nhóm")
-          )
-            return (
-              <Table.Cell className="w-10 border-r-[1px]  text-left"></Table.Cell>
-
-              //     <Table.Cell
-              //       key={`${keyId}_${key}_${value}`}
-              //       theme={{
-              //         base: `group-first/body:group-first/row:first:rounded-tl-lg
-              // group-first/body:group-first/row:last:rounded-tr-lg
-              // group-last/body:group-last/row:first:rounded-bl-lg
-              // group-last/body:group-last/row:last:rounded-br-lg
-              // px-4 py-4 text-center text-secondary-900`,
-              //       }}
-              //       className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left`}
-              //     >
-              //       123123
-              //     </Table.Cell>
-            );
-          // {params.isMemberOfAboveGroup ? (
-          //   <Table.Cell className="w-10 border-r-[1px]  text-left">
-          // </Table.Cell>
-          // ) : (
-          //   <Table.Cell className="w-10 border-r-[1px]  text-left">
-          //     <span>{params.dataItem.STT}</span>
-          //   </Table.Cell>
-          // )}
+          if (key === "Mã nhóm") return null;
           return (
             <Table.Cell
               key={`${keyId}_${key}_${value}`}
@@ -204,9 +171,13 @@ const RowRegisterGroupTable = React.memo(
               group-last/body:group-last/row:last:rounded-br-lg
               px-4 py-4 text-center text-secondary-900`,
               }}
-              className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left`}
+              className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left ${
+                key === "Bài nộp" ? "underline cursor-pointer" : ""
+              }`}
             >
-              {isEdit || params.isEditTable ? (
+              {(key === "Điểm" || key == "Góp ý") &&
+              (isEdit || params.isEditTable) ? (
+                // ! LÀ Ô ĐIỂM MỚI CHO SỬA
                 <InputComponent
                   key={`${keyId}_input_${key}_${value}`}
                   value={value as string | number}
@@ -217,6 +188,12 @@ const RowRegisterGroupTable = React.memo(
                     handleInputChange({ key: key, newValue: newValue })
                   }
                 />
+              ) : key === "Hình thức" ? (
+                value ? (
+                  "Nhóm"
+                ) : (
+                  "Cá nhân"
+                )
               ) : (
                 value
               )}
@@ -227,7 +204,7 @@ const RowRegisterGroupTable = React.memo(
     );
   },
   (prevProps, nextProps) => {
-    // Kiểm tra nếu `dataItem` của RowRegisterGroupTable không thay đổi thì không cần re-render
+    // Kiểm tra nếu `dataItem` của RowGradingGroupTable không thay đổi thì không cần re-render
     return (
       prevProps.dataItem === nextProps.dataItem &&
       prevProps.isEditTable === nextProps.isEditTable &&
@@ -236,4 +213,4 @@ const RowRegisterGroupTable = React.memo(
   }
 );
 
-export default RowRegisterGroupTable;
+export default RowGradingGroupTable;

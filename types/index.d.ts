@@ -30,16 +30,19 @@ export interface RegisterGroupData {
   SĐT: string;
   "Họ và tên": string;
 }
-// export interface RegisterGroupData {
-//   "Tên nhóm": string;
-//   listStudent: StudentGroupData[];
-// }
-// export interface StudentGroupData {
-//   isLeader: boolean;
-//   MSSV: string;
-//   SĐT: string;
-//   "Họ và tên": string;
-// }
+
+export interface GradingExerciseGroupData {
+  // 1 là có nhóm
+  // 0 là cá nhân
+  "Hình thức": boolean;
+  "Mã nhóm": string;
+  "Tên nhóm": string;
+  "Bài nộp": string;
+  MSSV: string;
+  "Họ và tên": string;
+  Điểm: number;
+  "Góp ý": string;
+}
 
 export interface SubjectData {
   "Khoa QL": string;
@@ -91,6 +94,11 @@ export interface RegisterGroupDataItem {
   STT: string;
   isDeleted: boolean;
   data: RegisterGroupData;
+}
+export interface GradingExerciseDataItem {
+  STT: string;
+  isDeleted: boolean;
+  data: GradingExerciseGroupData;
 }
 
 export interface CourseDataItem {

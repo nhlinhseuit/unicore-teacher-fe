@@ -17,7 +17,7 @@ import SubmitButton from "@/components/shared/Button/SubmitButton";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import RegisterGroupTable from "@/components/shared/Table/RegisterGroupTable/RegisterGroupTable";
+import RegisterGroupTable from "@/components/shared/Table/TableRegister/RegisterGroupTable";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -157,7 +157,7 @@ const CreateGroupRegister = () => {
 
   // ! Từ data của group đăng ký, biến đổi nó thành data dạng này để render
   // ! mỗi student 1 row
-  const dataStudentRegisterGroup = [
+  const mockDataStudentRegisterGroup = [
     {
       // TODO: Kh cần stt của sv ở đây
       // TODO: Hiện tại chỉ dùng làm key
@@ -397,7 +397,7 @@ const CreateGroupRegister = () => {
           <RegisterGroupTable
             isEditTable={false}
             isMultipleDelete={false}
-            dataTable={dataStudentRegisterGroup}
+            dataTable={mockDataStudentRegisterGroup}
           />
         </div>
       ) : (
