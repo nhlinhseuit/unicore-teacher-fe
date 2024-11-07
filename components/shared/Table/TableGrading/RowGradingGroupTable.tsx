@@ -177,7 +177,6 @@ const RowGradingGroupTable = React.memo(
             >
               {(key === "Điểm" || key == "Góp ý") &&
               (isEdit || params.isEditTable) ? (
-                // ! LÀ Ô ĐIỂM MỚI CHO SỬA
                 <InputComponent
                   key={`${keyId}_input_${key}_${value}`}
                   value={value as string | number}
