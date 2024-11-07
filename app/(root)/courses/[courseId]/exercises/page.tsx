@@ -1,7 +1,8 @@
 "use client";
 
-import PostItem from "@/components/courses/PostItem";
-import React from "react";
+import ExercisePostItem from "@/components/courses/ExercisePostItem";
+import BackToPrev from "@/components/shared/BackToPrev";
+import React, { useState } from "react";
 
 const Exercises = () => {
   const mockPostData = [
@@ -54,10 +55,21 @@ const Exercises = () => {
     },
   ];
 
-  return (
+  const [isGrading, setIsGrading] = useState(false);
+
+  return isGrading ? (
+    <>
+      <BackToPrev
+        text="Quay lại danh sách bài tập"
+        onClickPrev={() => {
+          setIsGrading(false);
+        }}
+      />
+    </>
+  ) : (
     <div className="mt-6 flex flex-col gap-4">
       {mockPostData.map((item, index) => (
-        <PostItem
+        <ExercisePostItem
           key={item.id}
           id={item.id}
           creator={item.creator}
@@ -65,6 +77,9 @@ const Exercises = () => {
           title={item.title}
           fileName={item.fileName}
           comments={item.comments}
+          setGrading={() => {
+            setIsGrading(true);
+          }}
         />
       ))}
     </div>

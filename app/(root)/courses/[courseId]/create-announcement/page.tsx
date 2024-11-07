@@ -38,6 +38,7 @@ import { vi } from "date-fns/locale";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import RenderCourse from "@/components/courses/RenderCourse";
 import RadioboxComponent from "@/components/shared/RadioboxComponent";
+import BackToPrev from "@/components/shared/BackToPrev";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -170,19 +171,10 @@ const CreateAnnouncement = () => {
 
   return (
     <div>
-      <div
-        className="flex justify-start mt-4 mb-6 text-sm cursor-pointer"
-        onClick={handleClick}
-      >
-        <Image
-          src="/assets/icons/chevron-left-table.svg"
-          alt="previous"
-          width={21}
-          height={21}
-          className="cursor-pointer mr-2"
-        />
-        <p>Quay lại danh sách thông báo</p>
-      </div>
+      <BackToPrev
+        text={"Quay lại danh sách thông báo"}
+        onClickPrev={handleClick}
+      />
 
       <div className="flex-1 mt-10">
         <Form {...form}>

@@ -1,12 +1,12 @@
 "use client";
-import CoursesDataTable from "@/components/shared/Table/UnicoreTable/CoursesDataTable";
 import React, { useState } from "react";
 import IconButton from "@/components/shared/Button/IconButton";
 import IconButtonStopPropagation from "@/components/shared/Button/IconButtonStopPropagation";
 import Image from "next/image";
 import { DetailFilter, FilterType } from "@/constants";
-import { Button, Dropdown } from "flowbite-react";
+import { Dropdown } from "flowbite-react";
 import TableSearch from "@/components/shared/Search/TableSearch";
+import BackToPrev from "@/components/shared/BackToPrev";
 
 const Courses = () => {
   const [isImport, setIsImport] = useState(false);
@@ -406,25 +406,12 @@ const Courses = () => {
           </Dropdown>
         </div>
       ) : (
-        <>
-          <div
-            className="flex justify-start mt-4 mb-6 text-sm cursor-pointer"
-            onClick={() => {
-              setIsImport(false);
-            }}
-          >
-            <Image
-              src="/assets/icons/chevron-left-table.svg"
-              alt="previous"
-              width={21}
-              height={21}
-              className="mr-2 cursor-pointer"
-            />
-            <p>Quay lại danh sách lớp học</p>
-          </div>
-
-          <CoursesDataTable />
-        </>
+        <BackToPrev
+          text={"Quay lại danh sách lớp học"}
+          onClickPrev={() => {
+            setIsImport(false);
+          }}
+        />
       )}
     </>
   );

@@ -1,8 +1,8 @@
 "use client";
 
 import AnnouncementDetail from "@/components/announcements/AnnouncementDetail";
-import Image from "next/image";
-import { useParams, useRouter } from "next/navigation";
+import BackToPrev from "@/components/shared/BackToPrev";
+import { useParams } from "next/navigation";
 import React from "react";
 
 const announcements = [
@@ -88,8 +88,6 @@ const announcements = [
 ];
 
 const page = () => {
-  const router = useRouter();
-
   // ! Get ID từ param, muốn truyền cả object qua route mới thì sd Context / Redux
   const params = useParams() as { announcementId: string };
   const { announcementId } = params;
@@ -97,21 +95,7 @@ const page = () => {
 
   return (
     <>
-      <div
-        className="flex justify-start mt-4 mb-6 text-sm cursor-pointer"
-        onClick={() => {
-          router.push("/");
-        }}
-      >
-        <Image
-          src="/assets/icons/chevron-left-table.svg"
-          alt="previous"
-          width={21}
-          height={21}
-          className="cursor-pointer mr-2"
-        />
-        <p>Quay lại danh sách thông báo</p>
-      </div>
+      <BackToPrev text={"Quay lại danh sách thông báo"} linkPrev={"/"} />
 
       <AnnouncementDetail
         key={question._id}

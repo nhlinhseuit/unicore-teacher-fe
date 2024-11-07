@@ -2,7 +2,7 @@
 import TeachersDataTable from "@/components/shared/Table/UnicoreTable/TeachersDataTable";
 import React, { useState } from "react";
 import IconButton from "@/components/shared/Button/IconButton";
-import Image from "next/image";
+import BackToPrev from "@/components/shared/BackToPrev";
 
 const Teachers = () => {
   const [isImport, setIsImport] = useState(false);
@@ -24,21 +24,12 @@ const Teachers = () => {
         </div>
       ) : (
         <>
-          <div
-            className="flex justify-start mt-4 mb-6 text-sm cursor-pointer"
-            onClick={() => {
+          <BackToPrev
+            text={"Quay lại danh sách giảng viên"}
+            onClickPrev={() => {
               setIsImport(false);
             }}
-          >
-            <Image
-              src="/assets/icons/chevron-left-table.svg"
-              alt="previous"
-              width={21}
-              height={21}
-              className="cursor-pointer mr-2"
-            />
-            <p>Quay lại danh sách giảng viên</p>
-          </div>
+          />
 
           <TeachersDataTable />
         </>

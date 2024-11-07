@@ -58,6 +58,8 @@ const IconButton = (params: IconButtonProps) => {
         dark:focus:ring-primary-800
         h-auto
         text-center
+
+        inline-block
         
         ${params.otherClasses}
         `}

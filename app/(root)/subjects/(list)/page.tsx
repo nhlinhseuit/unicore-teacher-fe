@@ -1,8 +1,8 @@
 "use client";
 
+import BackToPrev from "@/components/shared/BackToPrev";
 import IconButton from "@/components/shared/Button/IconButton";
 import SubjectsDataTable from "@/components/shared/Table/UnicoreTable/SubjectsDataTable";
-import Image from "next/image";
 import React, { useState } from "react";
 
 const Subjects = () => {
@@ -29,21 +29,12 @@ const Subjects = () => {
         </div>
       ) : (
         <>
-          <div
-            className="flex justify-start mt-4 mb-6 text-sm cursor-pointer"
-            onClick={() => {
+          <BackToPrev
+            text={"Quay lại danh sách môn học"}
+            onClickPrev={() => {
               setIsImport(false);
             }}
-          >
-            <Image
-              src="/assets/icons/chevron-left-table.svg"
-              alt="previous"
-              width={21}
-              height={21}
-              className="cursor-pointer mr-2"
-            />
-            <p>Quay lại danh sách môn học</p>
-          </div>
+          />
 
           <SubjectsDataTable />
         </>
