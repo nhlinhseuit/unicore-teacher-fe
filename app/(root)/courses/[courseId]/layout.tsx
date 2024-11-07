@@ -57,7 +57,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               <button
                 type="button"
                 className={`flex items-center justify-center p-4 text-sm font-medium first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500 rounded-t-lg ${
-                  isActive ? "border-b-[1.5px] border-primary-gradient" : ""
+                  isActive ? "border-b-[1.5px] border-gray-300" : ""
                 }`}
                 role="tab"
               >
