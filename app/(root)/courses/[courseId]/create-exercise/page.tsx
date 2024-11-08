@@ -42,6 +42,7 @@ import RadioboxComponent from "@/components/shared/RadioboxComponent";
 import BackToPrev from "@/components/shared/BackToPrev";
 import BorderContainer from "@/components/shared/BorderContainer";
 import CheckboxComponent from "@/components/shared/CheckboxComponent";
+import router from "next/router";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -67,6 +68,18 @@ const mockTeacherGradingList = [
   { id: 3, value: "Đặng Việt Dũng" },
 ];
 
+interface DateTimeState {
+  date: Date | undefined;
+  time: string;
+}
+
+interface DateTimeFields {
+  start: DateTimeState;
+  end: DateTimeState;
+  late: DateTimeState;
+  close: DateTimeState;
+}
+
 const CreateExercise = () => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -75,17 +88,33 @@ const CreateExercise = () => {
 
   const [selectedScheduleOption, setSelectedScheduleOption] = useState(1);
   const [selectedRecheckOption, setSelectedRecheckOption] = useState(1);
-  const [numberOfRecheck, setNumberOfRecheck] = useState<string>();
+  const [numberOfRecheck, setNumberOfRecheck] = useState<string>("");
   const [selectedGroupOption, setSelectedGroupOption] = useState(1);
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
   const [selectedSubmitOption, setSelectedSubmitOption] = useState<number[]>([
     1,
   ]);
+
+  const getDisplayText = (date: any, time: any) => {
+    return date
+      ? `${format(date, "dd/MM/yyyy")} - ${time !== "" ? time : "Giờ"}`
+      : "Chọn ngày & giờ";
+  };
+  // !
+
   const [datePost, setDatePost] = React.useState<Date>();
+
   const [dateStart, setDateStart] = React.useState<Date>();
+  const [timeStart, setTimeStart] = React.useState("");
+
   const [dateEnd, setDateEnd] = React.useState<Date>();
+  const [timeEnd, setTimeEnd] = React.useState("");
+
   const [dateLate, setDateLate] = React.useState<Date>();
+  const [timeLate, setTimeLate] = React.useState("");
+
   const [dateClose, setDateClose] = React.useState<Date>();
+  const [timeClose, setTimeClose] = React.useState("");
 
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [selectedGradeColumn, setSelectedGradeColumn] = useState<number>(-1);
@@ -134,12 +163,18 @@ const CreateExercise = () => {
       description: z
         .string()
         .min(20, { message: "Nội dung thông báo phải chứa ít nhất 20 ký tự" }),
-      multipleCourses: z.number().optional(),
       file: z.any(),
-      groupOption: z.any(),
-      teacherGrading: z.any(),
-      submitOption: z.number().optional(),
+      dateSubmit: z.date().optional(),
+      datePost: z.date().optional(),
+      dateLate: z.date().optional(),
+      dateClose: z.date().optional(),
+      multipleCourses: z.number().optional(),
+      groupOption: z.any().optional(),
+      submitOption: z.any().optional(),
+      gradeColumn: z.any().optional(),
+      teacherGrading: z.any().optional(),
       date: z.date().optional(),
+      maxRecheck: z.number().optional(),
     })
     .refine(
       (data) =>
@@ -151,8 +186,63 @@ const CreateExercise = () => {
         message: `File không hợp lệ hoặc vượt quá ${MAX_FILE_VALUE}MB.`,
         path: ["file"],
       }
-    );
+    )
+    .refine(
+      (data) =>
+        selectedScheduleOption === 2 ? !(datePost === undefined) : true,
 
+      {
+        message: "Bạn phải chọn lịch đăng thông báo",
+        path: ["datePost"],
+      }
+    )
+    // .refine(
+    //   (data) =>
+    //     !(
+    //       dateStart === undefined ||
+    //       timeStart === "" ||
+    //       dateEnd === undefined ||
+    //       timeEnd === ""
+    //     ),
+    //   {
+    //     message: "Bạn phải chọn thời gian bắt đầu và kết thúc (ngày & giờ)",
+    //     path: ["dateSubmit"],
+    //   }
+    // )
+    // .refine((data) => !(dateLate === undefined || timeLate === ""), {
+    //   message: "Bạn phải chọn thời gian nộp trễ (ngày & giờ)",
+    //   path: ["dateLate"],
+    // })
+    // .refine((data) => !(dateClose === undefined || timeClose === ""), {
+    //   message: "Bạn phải chọn thời gian đóng (ngày & giờ)",
+    //   path: ["dateClose"],
+    // })
+    .refine((data) => selectedSubmitOption.length > 0, {
+      message: "Bạn phải chọn hình thức nộp bài",
+      path: ["submitOption"],
+    })
+    .refine((data) => selectedGradeColumn !== -1, {
+      message: "Bạn phải chọn cột điểm cho bài tập",
+      path: ["gradeColumn"],
+    })
+    .refine(
+      (data) =>
+        selectedRecheckOption === 2
+          ? numberOfRecheck !== "" && !isNaN(parseInt(numberOfRecheck))
+          : true,
+      {
+        message: "Số lần tối đa phải là chữ số và không được để trống",
+        path: ["maxRecheck"],
+      }
+    )
+    .refine(
+      (data) =>
+        selectedRecheckOption === 2 ? parseInt(numberOfRecheck) > 0 : true,
+      {
+        message: "Số phải lớn hơn 0",
+        path: ["maxRecheck"],
+      }
+    );
   // 1. Define your form.
   const form = useForm<z.infer<typeof AnnoucementSchema>>({
     resolver: zodResolver(AnnoucementSchema),
@@ -186,7 +276,11 @@ const CreateExercise = () => {
 
       toast({
         title: "Tạo thông báo thành công.",
-        description: `Thông báo đã được gửi đến ${mockCoursesList.join(", ")}`,
+        description: `Thông báo đã được gửi đến lớp ${
+          selectedCourses.length > 0
+            ? `và các lớp ${selectedCourses.join(", ")}`
+            : ""
+        }`,
         variant: "success",
         duration: 3000,
       });
@@ -358,14 +452,14 @@ const CreateExercise = () => {
                 {/*  CUSTOM THỜI GIAN NỘP BÀI*/}
                 <div>
                   <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                    Thời gian nộp bài <span className="text-red-600">*</span>
+                    Thời gian nộp bài
                   </label>
 
                   <BorderContainer otherClasses="mt-3.5">
                     <div className="p-4 flex flex-col gap-10">
                       <FormField
                         control={form.control}
-                        name="date"
+                        name="dateSubmit"
                         render={({ field }) => (
                           <FormItem className="flex w-full flex-col">
                             <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
@@ -388,9 +482,7 @@ const CreateExercise = () => {
                                             "text-muted-foreground"
                                           }`}
                                         >
-                                          {dateStart
-                                            ? format(dateStart, "dd/MM/yyyy")
-                                            : "Chọn ngày & giờ"}
+                                          {getDisplayText(dateStart, timeStart)}
                                         </span>
                                         <CalendarIcon className="ml-2 h-4 w-4" />
                                       </Button>
@@ -400,6 +492,10 @@ const CreateExercise = () => {
                                         mode="single"
                                         selected={dateStart}
                                         onSelect={setDateStart}
+                                        selectedTime={timeStart}
+                                        setSelectTime={(time) => {
+                                          setTimeStart(time);
+                                        }}
                                         initialFocus
                                         locale={vi}
                                       />
@@ -423,9 +519,7 @@ const CreateExercise = () => {
                                             !dateEnd && "text-muted-foreground"
                                           }`}
                                         >
-                                          {dateEnd
-                                            ? format(dateEnd, "dd/MM/yyyy")
-                                            : "Chọn ngày & giờ"}
+                                          {getDisplayText(dateEnd, timeEnd)}
                                         </span>
                                         <CalendarIcon className="ml-2 h-4 w-4" />
                                       </Button>
@@ -435,6 +529,10 @@ const CreateExercise = () => {
                                         mode="single"
                                         selected={dateEnd}
                                         onSelect={setDateEnd}
+                                        selectedTime={timeEnd}
+                                        setSelectTime={(time) => {
+                                          setTimeEnd(time);
+                                        }}
                                         initialFocus
                                         locale={vi}
                                       />
@@ -443,6 +541,11 @@ const CreateExercise = () => {
                                 </div>
                               </div>
                             </FormControl>
+                            <FormDescription className="body-regular mt-2.5 text-light-500">
+                              Nếu không chọn thời gian nộp bài thì sinh viên sẽ
+                              được nộp bài ngay lập tức và không giới hạn thời
+                              gian.
+                            </FormDescription>
                             <FormMessage className="text-red-500" />
                           </FormItem>
                         )}
@@ -450,7 +553,7 @@ const CreateExercise = () => {
 
                       <FormField
                         control={form.control}
-                        name="date"
+                        name="dateLate"
                         render={({ field }) => (
                           <FormItem className="flex w-full flex-col">
                             <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
@@ -470,9 +573,7 @@ const CreateExercise = () => {
                                         !dateLate && "text-muted-foreground"
                                       }`}
                                     >
-                                      {dateLate
-                                        ? format(dateLate, "dd/MM/yyyy")
-                                        : "Chọn ngày & giờ"}
+                                      {getDisplayText(dateLate, timeLate)}
                                     </span>
                                     <CalendarIcon className="ml-2 h-4 w-4" />
                                   </Button>
@@ -482,19 +583,30 @@ const CreateExercise = () => {
                                     mode="single"
                                     selected={dateLate}
                                     onSelect={setDateLate}
+                                    selectedTime={timeLate}
+                                    setSelectTime={(time) => {
+                                      setTimeLate(time);
+                                    }}
                                     initialFocus
                                     locale={vi}
                                   />
                                 </PopoverContent>
                               </Popover>
                             </FormControl>
+                            <FormDescription className="body-regular mt-2.5 text-light-500">
+                              Khi bài tập tới hạn, vẫn cho phép sinh viên nộp
+                              bài nhưng sẽ bị đánh dấu là nộp bài trễ (nếu có).
+                              Chọn ngày đóng hạn nộp bài tập để không cho phép
+                              sinh viên nộp bài sau ngày xác định.
+                            </FormDescription>
                             <FormMessage className="text-red-500" />
                           </FormItem>
                         )}
                       />
+
                       <FormField
                         control={form.control}
-                        name="date"
+                        name="dateClose"
                         render={({ field }) => (
                           <FormItem className="flex w-full flex-col">
                             <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
@@ -514,9 +626,7 @@ const CreateExercise = () => {
                                         !dateClose && "text-muted-foreground"
                                       }`}
                                     >
-                                      {dateClose
-                                        ? format(dateClose, "dd/MM/yyyy")
-                                        : "Chọn ngày & giờ"}
+                                      {getDisplayText(dateClose, timeClose)}
                                     </span>
                                     <CalendarIcon className="ml-2 h-4 w-4" />
                                   </Button>
@@ -526,12 +636,20 @@ const CreateExercise = () => {
                                     mode="single"
                                     selected={dateClose}
                                     onSelect={setDateClose}
+                                    selectedTime={timeClose}
+                                    setSelectTime={(time) => {
+                                      setTimeClose(time);
+                                    }}
                                     initialFocus
                                     locale={vi}
                                   />
                                 </PopoverContent>
                               </Popover>
                             </FormControl>
+                            <FormDescription className="body-regular mt-2.5 text-light-500">
+                              Sinh viên sẽ không thể nộp bài tập khi quá ngày
+                              đóng bài nộp (nếu có).
+                            </FormDescription>
                             <FormMessage className="text-red-500" />
                           </FormItem>
                         )}
@@ -679,7 +797,7 @@ const CreateExercise = () => {
                 {/* SUBMIT OPTION */}
                 <FormField
                   control={form.control}
-                  name="groupOption"
+                  name="submitOption"
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
@@ -735,7 +853,7 @@ const CreateExercise = () => {
                 {/* CỘT ĐIỂM */}
                 <FormField
                   control={form.control}
-                  name="submitOption"
+                  name="gradeColumn"
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
@@ -906,7 +1024,7 @@ const CreateExercise = () => {
                       {selectedRecheckOption === 2 ? (
                         <FormField
                           control={form.control}
-                          name="date"
+                          name="maxRecheck"
                           render={({ field }) => (
                             <FormItem className="flex w-full flex-col">
                               <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
@@ -961,7 +1079,7 @@ const CreateExercise = () => {
                       {selectedScheduleOption === 2 ? (
                         <FormField
                           control={form.control}
-                          name="date"
+                          name="datePost"
                           render={({ field }) => (
                             <FormItem className="flex w-full flex-col">
                               <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">

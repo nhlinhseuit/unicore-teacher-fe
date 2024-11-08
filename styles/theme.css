@@ -201,6 +201,10 @@
     @apply overflow-y-auto max-h-44; /* Kết hợp các lớp Tailwind */
   }
 
+  .scroll-container-time-content {
+    @apply overflow-y-auto max-h-[300px]  pr-[6px]; /* Kết hợp các lớp Tailwind */
+  }
+
   .scroll-container::-webkit-scrollbar {
     width: 2px;
     height: 6px;

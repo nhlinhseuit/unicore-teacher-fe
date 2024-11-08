@@ -150,7 +150,11 @@ const CreateAnnouncement = () => {
 
       toast({
         title: "Tạo thông báo thành công.",
-        description: `Thông báo đã được gửi đến ${mockCoursesList.join(", ")}`,
+        description: `Thông báo đã được gửi đến lớp ${
+          selectedCourses.length > 0
+            ? `và các lớp ${selectedCourses.join(", ")}`
+            : ""
+        }`,
         variant: "success",
         duration: 3000,
       });

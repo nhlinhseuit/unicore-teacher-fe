@@ -6,7 +6,10 @@ import { DayPicker } from "react-day-picker";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
+  selectedTime: string;
+  setSelectTime: (time: string) => void;
+};
 
 // Tạo mảng các options thời gian
 const timeOptions = Array.from({ length: 24 * 4 }, (_, i) => {
@@ -20,13 +23,13 @@ const timeOptions = Array.from({ length: 24 * 4 }, (_, i) => {
 });
 
 function TimeCalendar({
+  selectedTime,
+  setSelectTime,
   className,
   classNames,
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
-  const [selectedTime, setSelectedTime] = React.useState<string>("12:00 AM");
-
   return (
     <div className="flex space-x-2">
       <DayPicker
@@ -82,9 +85,9 @@ function TimeCalendar({
       />
 
       {/* Time Picker Component */}
-      <div className="scroll-container scroll-container-dropdown-content p-3 flex flex-col gap-4 w-24 overflow-y-auto max-h-[300px]">
+      <div className=" p-3 flex flex-col gap-4 w-24 overflow-y-auto max-h-[300px]">
         <div
-          className="pt-1 text-sm font-medium text-center"
+          className="pt-1 text-sm font-medium text-center border-b-[1px] light-border-2"
           aria-live="polite"
           role="presentation"
           id="react-day-picker-171"
@@ -92,17 +95,17 @@ function TimeCalendar({
           Thời gian
         </div>
 
-        <div className="flex flex-col gap-1">
+        <div className="scroll-container scroll-container-time-content flex flex-col gap-1">
           {timeOptions.map((time) => (
             <button
               key={time}
               className={cn(
-                "px-2 py-1 text-sm text-center rounded-md whitespace-nowrap",
+                "px-2 py-1 text-[12px] text-center rounded-md whitespace-nowrap",
                 time === selectedTime
                   ? "bg-slate-900 text-slate-50 dark:bg-slate-50 dark:text-slate-900"
                   : "hover:bg-slate-200 dark:hover:bg-slate-700"
               )}
-              onClick={() => setSelectedTime(time)}
+              onClick={() => setSelectTime(time)}
             >
               {time}
             </button>

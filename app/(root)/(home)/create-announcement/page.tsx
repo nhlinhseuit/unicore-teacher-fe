@@ -173,7 +173,10 @@ const CreateAnnouncement = () => {
       target: z.number().optional(),
     })
     .refine(
-      (data) => checkedCategory.length > 0 && checkedCategory.length <= 3,
+      (data) => {
+        console.log("data", data);
+        checkedCategory.length > 0 && checkedCategory.length <= 3;
+      },
       {
         message: "Bạn phải chọn ít nhất 1 danh mục và không quá 3 danh mục",
         path: ["category"],
