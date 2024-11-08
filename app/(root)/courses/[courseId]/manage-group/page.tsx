@@ -242,6 +242,7 @@ const CreateGroupRegister = () => {
       {isToggleCreateSchedule ? (
         <div className="flex px-6 gap-12">
           <div className="flex w-full flex-col gap-10">
+            {/* //TODO: CUSTOM FORM FIELD */}
             <div>
               <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
                 Thời hạn <span className="text-red-600">*</span>

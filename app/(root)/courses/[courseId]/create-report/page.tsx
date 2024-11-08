@@ -45,7 +45,7 @@ const type: any = "create";
 
 // TODO: Search debouce tìm kiếm lớp nếu cần
 
-const coursesList = [
+const mockCoursesList = [
   { id: 1, value: "SE114.N21.PMCL.1" },
   { id: 2, value: "SE114.N21.PMCL.2" },
   { id: 3, value: "SE100.N23.PMCL.1" },
@@ -150,7 +150,7 @@ const CreateReport = () => {
 
       toast({
         title: "Tạo thông báo thành công.",
-        description: `Thông báo đã được gửi đến ${coursesList.join(", ")}`,
+        description: `Thông báo đã được gửi đến ${mockCoursesList.join(", ")}`,
         variant: "success",
         duration: 3000,
       });
@@ -216,7 +216,7 @@ const CreateReport = () => {
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col gap-3">
                       <FormLabel className="text-dark400_light800  text-[14px] font-semibold leading-[20.8px]">
-                        Nội dung chi tiết của báo cáo
+                        Nội dung chi tiết của báo cáo{" "}
                         <span className="text-red-600">*</span>
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
@@ -356,7 +356,7 @@ const CreateReport = () => {
                             otherClasses="p-2"
                           />
                           <div className="scroll-container scroll-container-dropdown-content">
-                            {coursesList.map((course, index) => (
+                            {mockCoursesList.map((course, index) => (
                               <Dropdown.Item
                                 key={`${course}_${index}`}
                                 onClick={() => {

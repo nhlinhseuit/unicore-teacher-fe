@@ -45,7 +45,7 @@ const type: any = "create";
 
 // TODO: Search debouce tìm kiếm lớp nếu cần
 
-const coursesList = [
+const mockCoursesList = [
   { id: 1, value: "SE114.N21.PMCL.1" },
   { id: 2, value: "SE114.N21.PMCL.2" },
   { id: 3, value: "SE100.N23.PMCL.1" },
@@ -150,7 +150,7 @@ const CreateAnnouncement = () => {
 
       toast({
         title: "Tạo thông báo thành công.",
-        description: `Thông báo đã được gửi đến ${coursesList.join(", ")}`,
+        description: `Thông báo đã được gửi đến ${mockCoursesList.join(", ")}`,
         variant: "success",
         duration: 3000,
       });
@@ -356,7 +356,7 @@ const CreateAnnouncement = () => {
                             otherClasses="p-2"
                           />
                           <div className="scroll-container scroll-container-dropdown-content">
-                            {coursesList.map((course, index) => (
+                            {mockCoursesList.map((course: any, index) => (
                               <Dropdown.Item
                                 key={`${course}_${index}`}
                                 onClick={() => {
@@ -414,6 +414,8 @@ const CreateAnnouncement = () => {
                     </FormItem>
                   )}
                 />
+
+                {/* TẠO LỊCH ĐĂNG THÔNG BÁO */}
                 <RadioboxComponent
                   id={1}
                   handleClick={() => {
