@@ -171,9 +171,10 @@ const RowGradingGroupTable = React.memo(
               group-last/body:group-last/row:last:rounded-br-lg
               px-4 py-4 text-center text-secondary-900`,
               }}
-              className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left ${
-                key === "Bài nộp" ? "underline cursor-pointer" : ""
-              }`}
+              className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left 
+                ${key === "Bài nộp" ? "underline cursor-pointer" : ""}
+                ${key === "Trễ hạn" && value !== "0" ? "text-red-500" : ""}
+              `}
             >
               {(key === "Điểm" || key == "Góp ý") &&
               (isEdit || params.isEditTable) ? (
@@ -193,6 +194,8 @@ const RowGradingGroupTable = React.memo(
                 ) : (
                   "Cá nhân"
                 )
+              ) : key === "Trễ hạn" && value === "0" ? (
+                "Không"
               ) : (
                 value
               )}

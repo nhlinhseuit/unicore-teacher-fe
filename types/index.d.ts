@@ -38,6 +38,7 @@ export interface GradingExerciseGroupData {
   "Mã nhóm": string;
   "Tên nhóm": string;
   "Bài nộp": string;
+  "Trễ hạn": string;
   MSSV: string;
   "Họ và tên": string;
   Điểm: number;
