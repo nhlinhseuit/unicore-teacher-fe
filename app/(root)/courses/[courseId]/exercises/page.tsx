@@ -1,6 +1,6 @@
 "use client";
 
-import ExercisePostItem from "@/components/courses/ExercisePostItem";
+import ExercisePostItem from "@/components/PostItem/ExercisePostItem";
 import BackToPrev from "@/components/shared/BackToPrev";
 import IconButton from "@/components/shared/Button/IconButton";
 import GradingGroupTable from "@/components/shared/Table/TableGrading/GradingGroupTable";

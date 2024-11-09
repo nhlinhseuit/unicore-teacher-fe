@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
 import RenderFile from "../shared/Annoucements/RenderFile";
-import Avatar from "./Avatar";
-import OtherComment from "./OtherComment";
-import MyComment from "./MyComment";
+import Avatar from "../courses/Avatar";
+import OtherComment from "../courses/OtherComment";
+import MyComment from "../courses/MyComment";
 import Divider from "../shared/Divider";
 import { getAvatarName } from "@/lib/utils";
-import GradingInPost from "./GradingInPost";
+import GradingInPost from "../courses/GradingInPost";
 import { Dropdown } from "flowbite-react";
 
 interface Comment {

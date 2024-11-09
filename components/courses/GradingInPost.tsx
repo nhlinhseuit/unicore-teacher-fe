@@ -15,6 +15,13 @@ const GradingInPost = (params: Props) => {
       <p className="paragraph-semibold underline ">BÀI NỘP</p>
       <div className="flex flex-col gap-2 mt-4 bg-gray-400 p-4 rounded-lg shadow-full">
         <p className="body-semibold text-white">
+          Điểm danh:{" "}
+          <span className="ml-2 body-semibold text-red-500">
+            {params.submissionNumber}{" "}
+          </span>
+          <span>/ {params.totalNumber} sĩ số lớp</span>
+        </p>
+        <p className="body-semibold text-white">
           Số lượng bài nộp:{" "}
           <span className="ml-2 body-semibold text-red-500">
             {params.submissionNumber}{" "}

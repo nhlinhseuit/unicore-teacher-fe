@@ -1,6 +1,7 @@
 "use client";
 
-import PostItem from "@/components/courses/PostItem";
+import PostItem from "@/components/PostItem/PostItem";
+import ReportPostItem from "@/components/PostItem/ReportPostItem";
 import BorderButton from "@/components/shared/Button/BorderButton";
 import IconButton from "@/components/shared/Button/IconButton";
 import TableSearch from "@/components/shared/Search/TableSearch";
@@ -22,10 +23,11 @@ const page = () => {
   const mockPostData = [
     {
       id: "1",
+      isReportPost: true,
       creator: "Huỳnh Hồ Thị Mộng Trinh",
       createdAt: "29/8/2024 7:23AM",
-      title: "Bài tập ngày 29/9/2024",
-      fileName: "exercise.docx",
+      title: "Báo cáo ngày 29/9/2024",
+      fileName: "Requirements.docx",
       comments: [
         {
           id: "1",
@@ -41,6 +43,7 @@ const page = () => {
     },
     {
       id: "2",
+      isReportPost: false,
       creator: "Huỳnh Hồ Thị Mộng Trinh",
       createdAt: "29/8/2024 7:23AM",
       title: "Bài tập ngày 29/9/2024",
@@ -55,6 +58,7 @@ const page = () => {
     },
     {
       id: "3",
+      isReportPost: false,
       creator: "Huỳnh Hồ Thị Mộng Trinh",
       createdAt: "29/8/2024 7:23AM",
       title: "Bài tập ngày 29/9/2024",
@@ -209,7 +213,6 @@ const page = () => {
           </Dropdown>
         </div>
       </div>
-
       {/* AnnouncementTabs */}
       <div className="flex gap-2">
         {AnnouncementTabs.map((item) => {
@@ -229,17 +232,35 @@ const page = () => {
 
       {/* PostList */}
       <div className="mt-6 flex flex-col gap-4">
-        {mockPostData.map((item, index) => (
-          <PostItem
-            key={item.id}
-            id={item.id}
-            creator={item.creator}
-            createdAt={item.createdAt}
-            title={item.title}
-            fileName={item.fileName}
-            comments={item.comments}
-          />
-        ))}
+        {mockPostData.map((item, index) => {
+          if (item.isReportPost)
+            return (
+              <ReportPostItem
+                key={item.id}
+                id={item.id}
+                creator={item.creator}
+                createdAt={item.createdAt}
+                title={item.title}
+                fileName={item.fileName}
+                comments={item.comments}
+                setGrading={() => {
+                  // setIsGrading(true);
+                }}
+              />
+            );
+          else
+            return (
+              <PostItem
+                key={item.id}
+                id={item.id}
+                creator={item.creator}
+                createdAt={item.createdAt}
+                title={item.title}
+                fileName={item.fileName}
+                comments={item.comments}
+              />
+            );
+        })}
       </div>
     </div>
   );
