@@ -7,6 +7,7 @@ import MyComment from "./MyComment";
 import Divider from "../shared/Divider";
 import { getAvatarName } from "@/lib/utils";
 import GradingInPost from "./GradingInPost";
+import { Dropdown } from "flowbite-react";
 
 interface Comment {
   id: string;
@@ -50,7 +51,61 @@ const ExercisePostItem = (params: Props) => {
           />
         </div>
 
-        <p className="base-regular mt-3 ml-2 ">{params.title}</p>
+        <div className=" mt-3 ml-2 flex gap-4 items-center">
+          <p className="base-regular">{params.title}</p>
+          <Dropdown
+            className="z-30 rounded-lg"
+            label=""
+            renderTrigger={() => (
+              <Image
+                src={"/assets/icons/info.svg"}
+                width={18}
+                height={18}
+                alt={"edit"}
+                className={`object-contain cursor-pointer`}
+              />
+            )}
+          >
+            <Dropdown.Header>
+              <span className="block text-sm font-medium text-center truncate">
+                Thông tin
+              </span>
+            </Dropdown.Header>
+            <div className="scroll-container scroll-container-dropdown-content">
+              <ul>
+                <li role="menuitem">
+                  <button
+                    type="button"
+                    className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
+                  >
+                    <span className="font-semibold">Thời hạn nộp bài:</span>
+                    <span> 12h SA 8/11/2024 - 11h30 SA 15/11/2024</span>
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    type="button"
+                    className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
+                  >
+                    <span className="font-semibold">Thời hạn nộp trễ:</span>
+                    <span>12h SA 8/11/2024 - 11h30 SA 15/11/2024</span>
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    type="button"
+                    className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
+                  >
+                    <span className="font-semibold">
+                      Thời hạn đóng bài nộp:
+                    </span>
+                    <span>12h SA 16/11/2024</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </Dropdown>
+        </div>
 
         <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-2 px-2"} />
 
