@@ -7,6 +7,7 @@ import {
   StudentData,
   TeacherData,
   GradingExerciseDataItem,
+  GradingReportDataItem,
 } from "@/types";
 import IconButton from "../../Button/IconButton";
 import InputComponent from "../components/InputComponent";
@@ -14,7 +15,7 @@ import MoreButtonComponent from "../components/MoreButtonComponent";
 
 interface RowParams {
   isMemberOfAboveGroup: boolean;
-  dataItem: GradingExerciseDataItem;
+  dataItem: GradingExerciseDataItem | GradingReportDataItem;
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
   isHasSubCourses?: boolean;
@@ -41,6 +42,11 @@ const RowGradingGroupTable = React.memo(
     const [isEdit, setIsEdit] = useState(false);
     const [editDataItem, setEditDataItem] = useState(params.dataItem);
 
+    const [isChecked, setIsChecked] = useState(
+      //@ts-ignore
+      params.dataItem.data["Điểm danh"] as boolean
+    );
+
     const refInput = useRef({});
 
     useEffect(() => {
@@ -63,7 +69,7 @@ const RowGradingGroupTable = React.memo(
       isCheckbox,
     }: handleInputChangeParams) => {
       //@ts-ignore
-      const updatedDataItem: GradingExerciseDataItem = {
+      const updatedDataItem: GradingExerciseDataItem | GradingReportDataItem = {
         ...editDataItem,
         data: {
           ...editDataItem.data,
@@ -91,6 +97,46 @@ const RowGradingGroupTable = React.memo(
     };
 
     var valueUniqueInput = params.dataItem.data["Tên nhóm"];
+
+    const renderTableCellValue = (
+      keyId: string,
+      key: string,
+      value: any,
+      isEdit: boolean
+    ) => {
+      if (
+        (key === "Điểm" || key === "Góp ý") &&
+        (isEdit || params.isEditTable)
+      ) {
+        return (
+          <InputComponent
+            key={`${keyId}_input_${key}_${value}`}
+            value={value as string | number}
+            placeholder={value as string | number}
+            //@ts-ignore
+            onChange={(newValue) =>
+              //@ts-ignore
+              handleInputChange({ key: key, newValue: newValue })
+            }
+          />
+        );
+      } else if (key === "Hình thức") {
+        return value ? "Nhóm" : "Cá nhân";
+      } else if (key === "Trễ hạn" && value === "0") {
+        return "Không";
+      } else if (key === "Điểm danh") {
+        return (
+          <input
+            type="checkbox"
+            checked={isChecked}
+            onChange={() => setIsChecked((prev) => !prev)} // Cập nhật state khi có thay đổi
+            className="w-4 h-4 cursor-pointer"
+          />
+        );
+      } else {
+        return value;
+      }
+    };
 
     return (
       <Table.Row
@@ -172,33 +218,12 @@ const RowGradingGroupTable = React.memo(
               px-4 py-4 text-center text-secondary-900`,
               }}
               className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left 
-                ${key === "Bài nộp" ? "underline cursor-pointer" : ""}
-                ${key === "Trễ hạn" && value !== "0" ? "text-red-500" : ""}
-              `}
+              ${key === "Bài nộp" ? "underline cursor-pointer" : ""}
+              ${key === "Trễ hạn" && value !== "0" ? "text-red-500" : ""}
+              ${key === "Điểm danh" ? "text-center" : ""}
+            `}
             >
-              {(key === "Điểm" || key == "Góp ý") &&
-              (isEdit || params.isEditTable) ? (
-                <InputComponent
-                  key={`${keyId}_input_${key}_${value}`}
-                  value={value as string | number}
-                  placeholder={value as string | number}
-                  //@ts-ignore
-                  onChange={(newValue) =>
-                    //@ts-ignore
-                    handleInputChange({ key: key, newValue: newValue })
-                  }
-                />
-              ) : key === "Hình thức" ? (
-                value ? (
-                  "Nhóm"
-                ) : (
-                  "Cá nhân"
-                )
-              ) : key === "Trễ hạn" && value === "0" ? (
-                "Không"
-              ) : (
-                value
-              )}
+              {renderTableCellValue(keyId, key, value, isEdit)}
             </Table.Cell>
           );
         })}

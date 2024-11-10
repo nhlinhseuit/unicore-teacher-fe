@@ -3,6 +3,7 @@
 import ExercisePostItem from "@/components/PostItem/ExercisePostItem";
 import BackToPrev from "@/components/shared/BackToPrev";
 import IconButton from "@/components/shared/Button/IconButton";
+import CheckboxComponent from "@/components/shared/CheckboxComponent";
 import GradingGroupTable from "@/components/shared/Table/TableGrading/GradingGroupTable";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
@@ -156,6 +157,103 @@ const Exercises = () => {
     },
   ];
 
+  const mockDataGradingReport = [
+    {
+      // TODO: Kh cần stt của sv ở đây
+      // TODO: Hiện tại chỉ dùng làm key
+      // * FIX: STT count ++ cho row leader
+
+      STT: "1",
+      isDeleted: false,
+      data: {
+        "Điểm danh": false,
+        "Mã nhóm": "1",
+        "Tên nhóm": "Figma",
+        "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
+        "Trễ hạn": "0",
+        MSSV: "21522289",
+        "Họ và tên": "Nguyễn Hoàng Linh",
+        Điểm: 9,
+        "Góp ý": "Bài làm tốt!",
+      },
+    },
+    {
+      STT: "2",
+      isDeleted: false,
+      data: {
+        "Điểm danh": true,
+        "Mã nhóm": "2",
+        "Tên nhóm": "STYLLE",
+        "Bài nộp": "LeThanhLoc_BaiTap.docx",
+        "Trễ hạn": "1 ngày 12 tiếng",
+        MSSV: "21522289",
+        "Họ và tên": "Lê Thành Lộc",
+        Điểm: 9,
+        "Góp ý": "",
+      },
+    },
+    {
+      STT: "3",
+      isDeleted: false,
+      data: {
+        "Điểm danh": true,
+        "Mã nhóm": "2",
+        "Tên nhóm": "STYLLE",
+        "Bài nộp": "",
+        "Trễ hạn": "0",
+        MSSV: "21522289",
+        "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
+        Điểm: 9,
+        "Góp ý": "Bài làm tốt!",
+      },
+    },
+    {
+      STT: "4",
+      isDeleted: false,
+      data: {
+        "Điểm danh": true,
+        "Mã nhóm": "3",
+        "Tên nhóm": "MERN",
+        "Bài nộp": "LeThanhLoc_BaiTap.docx",
+        "Trễ hạn": "3 phút 12 giây",
+        MSSV: "21522289",
+        "Họ và tên": "Nguyễn Tiến Vĩ",
+        Điểm: 9,
+        "Góp ý": "",
+      },
+    },
+    {
+      STT: "5",
+      isDeleted: false,
+      data: {
+        "Điểm danh": true,
+        "Mã nhóm": "3",
+        "Tên nhóm": "MERN",
+        "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
+        "Trễ hạn": "0",
+        MSSV: "21522289",
+        "Họ và tên": "Nguyễn Thị Thanh Tuyền",
+        Điểm: 9,
+        "Góp ý": "Bài làm xuất sắc",
+      },
+    },
+    {
+      STT: "6",
+      isDeleted: false,
+      data: {
+        "Điểm danh": false,
+        "Mã nhóm": "4",
+        "Tên nhóm": "Đom đóm",
+        "Bài nộp": "LeThanhLoc_BaiTap.docx",
+        "Trễ hạn": "0",
+        MSSV: "21522289",
+        "Họ và tên": "Võ Hữu Xike",
+        Điểm: 9,
+        "Góp ý": "Cần xem lại!",
+      },
+    },
+  ];
+
   const [isGrading, setIsGrading] = useState(false);
   const [isEditTable, setIsEditTable] = useState(false);
 
@@ -223,15 +321,6 @@ const Exercises = () => {
               </ul>
             </div>
           </Dropdown>
-          {/* <p className="mt-2 text-sm font-medium">
-            
-          </p>
-          <p className="mt-2 text-sm">
-           
-          </p>
-          <p className="mt-2 text-sm">
-           
-          </p> */}
         </div>
 
         <div>
@@ -254,10 +343,18 @@ const Exercises = () => {
         </div>
       </div>
 
+      {/* //TODO: BÀI TẬP */}
       <GradingGroupTable
         isEditTable={isEditTable}
         isMultipleDelete={false}
         dataTable={mockDataGradingExercise}
+      />
+
+      {/* //TODO: BÁO CÁO */}
+      <GradingGroupTable
+        isEditTable={isEditTable}
+        isMultipleDelete={false}
+        dataTable={mockDataGradingReport}
       />
     </>
   ) : (

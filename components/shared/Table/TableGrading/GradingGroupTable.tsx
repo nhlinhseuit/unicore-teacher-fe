@@ -3,7 +3,7 @@ import React, { useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
 import { tableTheme } from "../components/DataTable";
 import RowGradingGroupTable from "./RowGradingGroupTable";
-import { GradingExerciseDataItem } from "@/types";
+import { GradingExerciseDataItem, GradingReportDataItem } from "@/types";
 import {
   AlertDialogHeader,
   AlertDialogFooter,
@@ -22,7 +22,7 @@ import { itemsPerPageRegisterTable } from "@/constants";
 interface DataTableParams {
   isEditTable: boolean;
   isMultipleDelete: boolean;
-  dataTable: GradingExerciseDataItem[];
+  dataTable: GradingExerciseDataItem[] | GradingReportDataItem[];
 }
 
 const GradingGroupTable = (params: DataTableParams) => {
@@ -44,8 +44,11 @@ const GradingGroupTable = (params: DataTableParams) => {
     );
   }, [dataTable, currentPage]);
 
-  const [filteredDataTable, setFilteredDataTable] =
-    useState<GradingExerciseDataItem[]>(currentItems);
+  const [filteredDataTable, setFilteredDataTable] = useState<
+    | GradingExerciseDataItem[]
+    | GradingReportDataItem[]
+    | (GradingExerciseDataItem | GradingReportDataItem)[]
+  >(currentItems);
 
   const applyFilter = () => {
     let filteredData;
@@ -54,6 +57,8 @@ const GradingGroupTable = (params: DataTableParams) => {
     setIsShowFooter(true);
     setFilteredDataTable(filteredData);
   };
+
+  console.log("re-render dataTable", dataTable);
 
   return (
     <div>

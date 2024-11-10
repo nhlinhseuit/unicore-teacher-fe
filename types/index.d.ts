@@ -31,10 +31,22 @@ export interface RegisterGroupData {
   "Họ và tên": string;
 }
 
-export interface GradingExerciseGroupData {
+export interface GradingExerciseData {
   // 1 là có nhóm
   // 0 là cá nhân
   "Hình thức": boolean;
+  "Mã nhóm": string;
+  "Tên nhóm": string;
+  "Bài nộp": string;
+  "Trễ hạn": string;
+  MSSV: string;
+  "Họ và tên": string;
+  Điểm: number;
+  "Góp ý": string;
+}
+
+export interface GradingReportData {
+  "Điểm danh": boolean;
   "Mã nhóm": string;
   "Tên nhóm": string;
   "Bài nộp": string;
@@ -99,7 +111,12 @@ export interface RegisterGroupDataItem {
 export interface GradingExerciseDataItem {
   STT: string;
   isDeleted: boolean;
-  data: GradingExerciseGroupData;
+  data: GradingExerciseData;
+}
+export interface GradingReportDataItem {
+  STT: string;
+  isDeleted: boolean;
+  data: GradingReportData;
 }
 
 export interface CourseDataItem {
