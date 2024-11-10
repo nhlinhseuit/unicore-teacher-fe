@@ -2,6 +2,7 @@ import { SidebarLink } from "@/types";
 
 export const itemsPerPage = 30;
 export const itemsPerPageRegisterTable = 10;
+export const itemsPerPageTopicTable = 20;
 export const MAX_FILE_VALUE = 25; // 25MB
 export const MAX_FILE_SIZE = MAX_FILE_VALUE * 1024 * 1024; // 25MB
 export const ALLOWED_FILE_TYPES = [
@@ -64,7 +65,7 @@ export const DepartmentCourseTabItems = [
   {
     value: "bigExercise",
     label: "Bài tập lớn",
-    route: "/big-exercise",
+    route: "/big-exercises",
   },
   {
     value: "scoreTranscript",

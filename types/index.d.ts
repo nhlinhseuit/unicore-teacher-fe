@@ -31,6 +31,12 @@ export interface RegisterGroupData {
   "Họ và tên": string;
 }
 
+export interface TopicData {
+  "Tên đề tài": string;
+  "Mô tả": string;
+  "GV phụ trách": string;
+}
+
 export interface GradingExerciseData {
   // 1 là có nhóm
   // 0 là cá nhân
@@ -108,6 +114,12 @@ export interface RegisterGroupDataItem {
   isDeleted: boolean;
   data: RegisterGroupData;
 }
+export interface TopicDataItem {
+  STT: string;
+  isDeleted: boolean;
+  data: TopicData;
+}
+
 export interface GradingExerciseDataItem {
   STT: string;
   isDeleted: boolean;

@@ -7,6 +7,7 @@ import { DetailFilter, FilterType } from "@/constants";
 import { Dropdown } from "flowbite-react";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import BackToPrev from "@/components/shared/BackToPrev";
+import CoursesDataTable from "@/components/shared/Table/TableUnicore/CoursesDataTable";
 
 const Courses = () => {
   const [isImport, setIsImport] = useState(false);
@@ -406,12 +407,16 @@ const Courses = () => {
           </Dropdown>
         </div>
       ) : (
-        <BackToPrev
-          text={"Quay lại danh sách lớp học"}
-          onClickPrev={() => {
-            setIsImport(false);
-          }}
-        />
+        <>
+          <BackToPrev
+            text={"Quay lại danh sách lớp học"}
+            onClickPrev={() => {
+              setIsImport(false);
+            }}
+          />
+
+          <CoursesDataTable />
+        </>
       )}
     </>
   );
