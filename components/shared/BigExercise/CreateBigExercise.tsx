@@ -663,7 +663,7 @@ const CreateBigExercise = () => {
                           />
 
                           <a
-                            href="/assets/KLTN - template import ds lớp.xlsx"
+                            href="/assets/KTLN - template import ds đề tài.xlsx"
                             download
                             className="ml-4 text-blue-500 underline text-base italic"
                           >
