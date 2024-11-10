@@ -15,7 +15,7 @@ const BackToPrev = (params: Props) => {
 
   return (
     <div
-      className="flex justify-start mt-4 mb-6 text-sm cursor-pointer"
+      className="inline-flex justify-start mt-4 mb-6 text-sm cursor-pointer"
       onClick={() => {
         if (params.linkPrev) {
           router.push(params.linkPrev);

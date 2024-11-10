@@ -697,22 +697,6 @@ const CreateReport = () => {
                           </div>
                         </BorderContainer>
                       </FormControl>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedCourses.map((item: any) => (
-                          <ClosedButton
-                            key={item}
-                            iconHeight={16}
-                            iconWidth={16}
-                            onClose={() => {
-                              setSelectedCourses((prev) =>
-                                prev.filter((course) => course !== item)
-                              );
-                            }}
-                          >
-                            <RenderCourse _id={item} name={item} />
-                          </ClosedButton>
-                        ))}
-                      </div>
                       <FormMessage className="text-red-500" />
                     </FormItem>
                   )}

@@ -1,7 +1,7 @@
 "use client";
 
-import PostItem from "@/components/PostItem/PostItem";
-import ReportPostItem from "@/components/PostItem/ReportPostItem";
+import PostItem from "@/components/shared/PostItem/PostItem";
+import ReportPostItem from "@/components/shared/PostItem/ReportPostItem";
 import BorderButton from "@/components/shared/Button/BorderButton";
 import IconButton from "@/components/shared/Button/IconButton";
 import TableSearch from "@/components/shared/Search/TableSearch";

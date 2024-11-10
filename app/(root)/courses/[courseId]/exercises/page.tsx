@@ -1,6 +1,6 @@
 "use client";
 
-import ExercisePostItem from "@/components/PostItem/ExercisePostItem";
+import ExercisePostItem from "@/components/shared/PostItem/ExercisePostItem";
 import BackToPrev from "@/components/shared/BackToPrev";
 import IconButton from "@/components/shared/Button/IconButton";
 import CheckboxComponent from "@/components/shared/CheckboxComponent";

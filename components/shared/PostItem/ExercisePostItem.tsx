@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import RenderFile from "../shared/Annoucements/RenderFile";
-import Avatar from "../courses/Avatar";
-import OtherComment from "../courses/OtherComment";
-import MyComment from "../courses/MyComment";
-import Divider from "../shared/Divider";
+import RenderFile from "../Annoucements/RenderFile";
+import Avatar from "../../courses/Avatar";
+import OtherComment from "../../courses/OtherComment";
+import MyComment from "../../courses/MyComment";
+import Divider from "../Divider";
 import { getAvatarName } from "@/lib/utils";
-import GradingInPost from "../courses/GradingInPost";
+import GradingInPost from "../../courses/GradingInPost";
 import { Dropdown } from "flowbite-react";
 
 interface Comment {
@@ -25,7 +25,7 @@ interface Props {
   setGrading: () => void;
 }
 
-const ReportPostItem = (params: Props) => {
+const ExercisePostItem = (params: Props) => {
   const mockSubmissionPost = {
     submissionNumber: 60,
     totalNumber: 62,
@@ -140,4 +140,4 @@ const ReportPostItem = (params: Props) => {
   );
 };
 
-export default ReportPostItem;
+export default ExercisePostItem;

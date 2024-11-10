@@ -20,8 +20,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         className="mb-4 flex text-center flex-wrap border-b border-gray-200 dark:border-gray-700"
       >
         {DepartmentAnnouncementsTabItems.map((item) => {
-          const isActive =
+          let isActive =
             pathName === item.route || pathName.includes(`/${item.route}`);
+          if (pathName.startsWith("/announcements") && item.route === "/") {
+            isActive = true;
+          }
 
           return (
             <Link key={item.route} href={item.route}>
