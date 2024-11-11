@@ -44,7 +44,6 @@ const BigExercises = () => {
           />
 
           <CreateBigExercise />
-
         </>
       ) : (
         <>
@@ -59,7 +58,7 @@ const BigExercises = () => {
           </div>
           <div className="flex flex-col gap-4">
             {mockBigExercisesList.map((item) => (
-              <Link key={item.id} href={`${pathName}/id`}>
+              <Link key={item.id} href={`${pathName}/${item.id}`}>
                 <BigExerciseItem
                   id={item.id}
                   name={item.name}

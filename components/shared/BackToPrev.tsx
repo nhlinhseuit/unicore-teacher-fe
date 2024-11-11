@@ -7,6 +7,7 @@ import React from "react";
 interface Props {
   text: string;
   linkPrev?: string;
+  bold?: boolean;
   onClickPrev?: () => void;
 }
 
@@ -34,7 +35,10 @@ const BackToPrev = (params: Props) => {
         height={21}
         className="cursor-pointer mr-2"
       />
-      <p>{params.text}</p>
+      {/* // ! HERE */}
+      <p className={`${params.bold ? "paragraph-semibold" : ""}`}>
+        {params.text}
+      </p>
     </div>
   );
 };

@@ -42,6 +42,8 @@ import TopicGroupTable from "./TopicGroupTable";
 import { TopicDataItem } from "@/types";
 import * as XLSX from "xlsx";
 import ErrorComponent from "../Status/ErrorComponent";
+import TableSkeleton from "../Table/components/TableSkeleton";
+import NoResult from "../Status/NoResult";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -72,6 +74,7 @@ const CreateBigExercise = () => {
   const router = useRouter();
   const pathName = usePathname();
 
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedRecheckOption, setSelectedRecheckOption] = useState(1);
   const [selectedSuggestOption, setSelectedSuggestOption] = useState(1);
   const [numberOfRecheck, setNumberOfRecheck] = useState<string>("");
@@ -92,7 +95,8 @@ const CreateBigExercise = () => {
     setNumberOfRecheck(e.target.value);
   };
 
-  const handleCoursesFileUpload = (e: any) => {
+  const handleTopicsFileUpload = (e: any) => {
+    setIsLoading(true);
     setErrorMessages([]);
     setDataTable([]);
 
@@ -147,6 +151,8 @@ const CreateBigExercise = () => {
       } else {
         setDataTable(transformedData as []);
       }
+
+      setIsLoading(false);
     };
   };
 
@@ -651,7 +657,7 @@ const CreateBigExercise = () => {
                             type="file"
                             accept=".xlsx, .xls"
                             multiple
-                            onChange={handleCoursesFileUpload}
+                            onChange={handleTopicsFileUpload}
                             style={{ display: "none" }}
                           />
 
@@ -682,7 +688,9 @@ const CreateBigExercise = () => {
               />
             </div>
 
-            {dataTable.length > 0 ? (
+            {isLoading ? (
+              <TableSkeleton />
+            ) : dataTable.length > 0 ? (
               <TopicGroupTable
                 isEditTable={false}
                 isMultipleDelete={false}

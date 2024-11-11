@@ -19,7 +19,7 @@ interface Props {
 const BigExerciseItem = (params: Props) => {
   return (
     <div className="card-wrapper rounded-[10px]">
-      <div className="bg-[#e1f0fd] rounded-[10px] relative flex-col w-full p-6">
+      <div className="rounded-[10px] relative flex-col w-full p-6">
         <div className="flex justify-start items-center gap-2">
           <p className="base-semibold">{params.name}</p>
           <p className="small-regular italic text-[#636363] line-clamp-1 ">

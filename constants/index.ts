@@ -87,21 +87,34 @@ export const DepartmentCourseTabItems = [
     label: "Cài đặt",
     route: "/setting",
   },
-  // {
-  //   value: "setting1",
-  //   label: "Cài đặt1",
-  //   route: "/setting1",
-  // },
-  // {
-  //   value: "setting2",
-  //   label: "Cài đặt2",
-  //   route: "/setting2",
-  // },
-  // {
-  //   value: "setting3",
-  //   label: "Cài đặt3",
-  //   route: "/setting3",
-  // },
+];
+export const BigExerciseTabItems = [
+  { value: "generalPost", label: "Thông báo chung", route: "/" },
+  {
+    value: "happeningEvent",
+    label: "Hoạt động đang diễn ra",
+    route: "/happening-event",
+  },
+  {
+    value: "listTopic",
+    label: "Danh sách đề tài",
+    route: "/list-topic",
+  },
+  {
+    value: "registerTopic",
+    label: "Đăng ký đề tài",
+    route: "/register-topic",
+  },
+  {
+    value: "approveTopic",
+    label: "Duyệt đề xuất đề tài",
+    route: "/approve-topic",
+  },
+  {
+    value: "files",
+    label: "Lưu trữ",
+    route: "/files",
+  },
 ];
 
 // TODO: OTHERS

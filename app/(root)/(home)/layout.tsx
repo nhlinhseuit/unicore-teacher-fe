@@ -42,7 +42,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   disabled:text-gray-400
                   disabled:dark:text-gray-500
                   rounded-t-lg
-                  ${isActive ? "border-b-[1.5px] border-gray-300" : ""}`}
+                  ${isActive ? "border-b-[1.5px] border-[#7fc9fa]" : ""}`}
                 role="tab"
               >
                 {item.label}
