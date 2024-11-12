@@ -613,17 +613,9 @@ const ListTopic = () => {
     {
       STT: "1",
       data: {
-        MSSV: "21522289",
-        SĐT: "0378060972",
-        "Họ và tên": "Nguyễn Hoàng Linh",
-      },
-    },
-    {
-      STT: "2",
-      data: {
-        MSSV: "21521087",
-        SĐT: "0843300042",
-        "Họ và tên": "Lê Thành Lộc",
+        MSSV: "",
+        SĐT: "",
+        "Họ và tên": "",
       },
     },
   ];
@@ -732,6 +724,8 @@ const ListTopic = () => {
         description: values.description,
         data: mockDataRef,
       });
+
+      setMockDataState(mockTopicRegisterGroupDataTable);
 
       // naviate to home page
       // router.push("/");
@@ -924,7 +918,6 @@ const ListTopic = () => {
                     isEditTable={false}
                     isMultipleDelete={false}
                     dataTable={mockDataState}
-                    
                     onChangeTable={(newValue) => {
                       updateMockDataRef(newValue);
                     }}
