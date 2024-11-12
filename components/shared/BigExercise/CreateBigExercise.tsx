@@ -17,10 +17,6 @@ import { Input } from "@/components/ui/input";
 import { Dropdown } from "flowbite-react";
 import IconButton from "@/components/shared/Button/IconButton";
 import PickFileImageButton from "@/components/shared/Annoucements/PickFileImageButton";
-import RenderFile from "@/components/shared/Annoucements/RenderFile";
-import ClosedButton from "@/components/shared/Annoucements/ClosedButton";
-import SubmitButton from "@/components/shared/Button/SubmitButton";
-import Image from "next/image";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
@@ -37,13 +33,15 @@ import { TimeCalendar } from "@/components/ui/custom-time-calendar";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import RadioboxComponent from "@/components/shared/RadioboxComponent";
-import BorderContainer from "@/components/shared/BorderContainer";
-import TopicGroupTable from "./TopicGroupTable";
+import TopicGroupTable from "./TableTopic/TopicDataTable";
 import { TopicDataItem } from "@/types";
 import * as XLSX from "xlsx";
 import ErrorComponent from "../Status/ErrorComponent";
 import TableSkeleton from "../Table/components/TableSkeleton";
 import NoResult from "../Status/NoResult";
+import Image from "next/image";
+import BorderContainer from "../BorderContainer";
+import SubmitButton from "../Button/SubmitButton";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -143,8 +141,6 @@ const CreateBigExercise = () => {
           },
         };
       });
-
-      console.log("transformedData", transformedData);
 
       if (errorMessages.length > 0) {
         setErrorMessages(errorMessages);

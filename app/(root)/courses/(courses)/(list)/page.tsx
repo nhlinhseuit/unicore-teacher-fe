@@ -7,7 +7,7 @@ import { DetailFilter, FilterType } from "@/constants";
 import { Dropdown } from "flowbite-react";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import BackToPrev from "@/components/shared/BackToPrev";
-import CoursesDataTable from "@/components/shared/Table/TableUnicore/CoursesDataTable";
+import CoursesDataTable from "@/components/shared/Table/TableImport/CoursesDataTable";
 
 const Courses = () => {
   const [isImport, setIsImport] = useState(false);
@@ -243,7 +243,6 @@ const Courses = () => {
                   green
                   onClick={(e) => {
                     e.stopPropagation();
-                    console.log("123123");
                   }}
                   otherClasses="mr-4"
                 />
@@ -290,7 +289,6 @@ const Courses = () => {
                   green
                   onClick={(e) => {
                     e.stopPropagation();
-                    console.log("123123");
                   }}
                   otherClasses="mr-4"
                 />
@@ -337,7 +335,6 @@ const Courses = () => {
                   green
                   onClick={(e) => {
                     e.stopPropagation();
-                    console.log("123123");
                   }}
                   otherClasses="mr-4"
                 />
@@ -384,7 +381,6 @@ const Courses = () => {
                   green
                   onClick={(e) => {
                     e.stopPropagation();
-                    console.log("123123");
                   }}
                   otherClasses="mr-4"
                 />

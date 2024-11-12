@@ -8,6 +8,7 @@ interface MiniButtonProps {
   iconColor?: string;
   onClick: (value: number) => void;
   isActive?: boolean;
+  otherClasses?: string;
 }
 
 const MiniButton = (params: MiniButtonProps) => {
@@ -40,6 +41,7 @@ const MiniButton = (params: MiniButtonProps) => {
               !params.bgColor &&
               "border-[1px] border-gray-400 font-medium text-gray-400"
             }
+            ${params.otherClasses ? params.otherClasses : ""}
           `}
     >
       <Image

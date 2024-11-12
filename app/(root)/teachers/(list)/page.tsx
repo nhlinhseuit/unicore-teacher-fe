@@ -1,5 +1,5 @@
 "use client";
-import TeachersDataTable from "@/components/shared/Table/TableUnicore/TeachersDataTable";
+import TeachersDataTable from "@/components/shared/Table/TableImport/TeachersDataTable";
 import React, { useState } from "react";
 import IconButton from "@/components/shared/Button/IconButton";
 import BackToPrev from "@/components/shared/BackToPrev";

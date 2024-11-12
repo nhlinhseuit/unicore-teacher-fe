@@ -1,10 +1,6 @@
 import { Table } from "flowbite-react";
-import React, { useEffect, useRef } from "react";
-import { useState } from "react";
+import React from "react";
 import { TopicDataItem } from "@/types";
-import IconButton from "../Button/IconButton";
-import InputComponent from "../Table/components/InputComponent";
-import MoreButtonComponent from "../Table/components/MoreButtonComponent";
 
 interface RowParams {
   dataItem: TopicDataItem;
@@ -17,7 +13,7 @@ interface handleInputChangeParams {
   isCheckbox?: boolean;
 }
 
-const RowTopicGroupTable = (params: RowParams) => {
+const RowTopicDataTable = (params: RowParams) => {
   return (
     <Table.Row
       key={params.dataItem.STT}
@@ -51,4 +47,4 @@ const RowTopicGroupTable = (params: RowParams) => {
   );
 };
 
-export default RowTopicGroupTable;
+export default RowTopicDataTable;

@@ -58,8 +58,6 @@ const GradingGroupTable = (params: DataTableParams) => {
     setFilteredDataTable(filteredData);
   };
 
-  console.log("re-render dataTable", dataTable);
-
   return (
     <div>
       {/* TABLE */}

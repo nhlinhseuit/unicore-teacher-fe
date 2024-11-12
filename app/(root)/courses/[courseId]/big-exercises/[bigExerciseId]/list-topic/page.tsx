@@ -1,6 +1,6 @@
 "use client";
 
-import TopicGroupTable from "@/components/shared/BigExercise/TopicGroupTable";
+import TopicGroupTable from "@/components/shared/BigExercise/TableTopic/TopicDataTable";
 import IconButton from "@/components/shared/Button/IconButton";
 import * as XLSX from "xlsx";
 import { TopicDataItem } from "@/types";
@@ -9,9 +9,31 @@ import NoResult from "@/components/shared/Status/NoResult";
 import TableSkeleton from "@/components/shared/Table/components/TableSkeleton";
 import ErrorComponent from "@/components/shared/Status/ErrorComponent";
 import BackToPrev from "@/components/shared/BackToPrev";
+import {
+  AlertDialog,
+  AlertDialogContent,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { toast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import TopicRegisterGroupDataTable from "@/components/shared/BigExercise/TableRegisterStudent/TopicRegisterGroupDataTable";
+import MiniButton from "@/components/shared/Button/MiniButton";
 
 const ListTopic = () => {
-  const mockDataTable = [
+  const mockTopicDataTable = [
     {
       type: "topic",
       STT: 1,
@@ -587,13 +609,41 @@ const ListTopic = () => {
     },
   ];
 
+  const mockTopicRegisterGroupDataTable = [
+    {
+      STT: "1",
+      data: {
+        MSSV: "21522289",
+        SĐT: "0378060972",
+        "Họ và tên": "Nguyễn Hoàng Linh",
+      },
+    },
+    {
+      STT: "2",
+      data: {
+        MSSV: "21521087",
+        SĐT: "0843300042",
+        "Họ và tên": "Lê Thành Lộc",
+      },
+    },
+  ];
+
   // Tạo một reference để liên kết với thẻ input file
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const handleButtonClick = () => {
     fileInputRef.current?.click();
   };
 
+  const [mockDataState, setMockDataState] = useState(
+    mockTopicRegisterGroupDataTable
+  );
+  const mockDataRef = useRef(mockDataState);
+  const updateMockDataRef = (newData: any) => {
+    mockDataRef.current = newData;
+  };
+
   const [isImport, setIsImport] = useState(false);
+  const [isCreateNew, setIsCreateNew] = useState(false);
   const [dataTable, setDataTable] = useState<TopicDataItem[]>([]);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -647,8 +697,6 @@ const ListTopic = () => {
         };
       });
 
-      console.log("transformedData", transformedData);
-
       if (errorMessages.length > 0) {
         setErrorMessages(errorMessages);
       } else {
@@ -658,6 +706,45 @@ const ListTopic = () => {
       setIsLoading(false);
     };
   };
+
+  const AnnoucementSchema = z.object({
+    title: z
+      .string()
+      .min(5, { message: "Tên đề tài phải chứa ít nhất 5 ký tự" })
+      .max(130),
+    description: z
+      .string()
+      .min(20, { message: "Nội dung đề tài phải chứa ít nhất 20 ký tự" }),
+  });
+
+  const form = useForm<z.infer<typeof AnnoucementSchema>>({
+    resolver: zodResolver(AnnoucementSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+    },
+  });
+
+  async function onSubmit(values: any) {
+    try {
+      console.log({
+        title: values.title,
+        description: values.description,
+        data: mockDataRef,
+      });
+
+      // naviate to home page
+      // router.push("/");
+
+      toast({
+        title: "Đăng đề tài mới thành công.",
+        variant: "success",
+        duration: 3000,
+      });
+    } catch {
+    } finally {
+    }
+  }
 
   return (
     <>
@@ -677,7 +764,9 @@ const ListTopic = () => {
             <IconButton
               text="Đăng đề tài mới"
               green
-              onClick={() => {}}
+              onClick={() => {
+                setIsCreateNew(true);
+              }}
               iconLeft={"/assets/icons/add.svg"}
               iconWidth={16}
               iconHeight={16}
@@ -688,7 +777,7 @@ const ListTopic = () => {
             isEditTable={false}
             isMultipleDelete={false}
             // @ts-ignore
-            dataTable={mockDataTable}
+            dataTable={mockTopicDataTable}
           />
         </>
       ) : (
@@ -766,6 +855,136 @@ const ListTopic = () => {
           )}
         </>
       )}
+
+      <AlertDialog open={isCreateNew}>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle className="text-center">
+              Đăng đề tài mới
+            </AlertDialogTitle>
+          </AlertDialogHeader>
+
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              {/* NAME ANNOUCEMENT */}
+              <div className="flex flex-col gap-6">
+                <FormField
+                  control={form.control}
+                  name="title"
+                  render={({ field }) => (
+                    <FormItem className="flex w-full flex-col">
+                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                        Tên đề tài <span className="text-red-600">*</span>
+                      </FormLabel>
+                      <FormControl className="mt-3.5 ">
+                        <Input
+                          {...field}
+                          placeholder="Nhập tên đề tài..."
+                          className="
+                                no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="description"
+                  render={({ field }) => (
+                    <FormItem className="flex w-full flex-col">
+                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                        Mô tả đề tài <span className="text-red-600">*</span>
+                      </FormLabel>
+                      <FormControl className="mt-3.5 ">
+                        <Input
+                          {...field}
+                          placeholder="Nhập mô tả đề tài..."
+                          className="
+                            no-focus
+                            paragraph-regular
+                            background-light900_dark300
+                            light-border-2
+                            text-dark300_light700
+                            min-h-[56px]
+                            border
+                            h-[200px]"
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
+
+                <>
+                  <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                    Danh sách nhóm (nếu đã có nhóm liên hệ trước)
+                  </label>
+                  <TopicRegisterGroupDataTable
+                    isEditTable={false}
+                    isMultipleDelete={false}
+                    dataTable={mockDataState}
+                    
+                    onChangeTable={(newValue) => {
+                      updateMockDataRef(newValue);
+                    }}
+                  />
+                </>
+              </div>
+
+              <div className="relative flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-4">
+                {/* mt-4 cho nên translate 7 */}
+                <div className="absolute left-[50%] -translate-y-7">
+                  <MiniButton
+                    key={1}
+                    value={2}
+                    icon={"/assets/icons/add.svg"}
+                    bgColor="bg-primary-500"
+                    onClick={(value) => {
+                      // setSelectedMiniButton(value);
+
+                      const newEntry = {
+                        STT: (mockDataRef.current.length + 1).toString(),
+                        data: {
+                          MSSV: "",
+                          SĐT: "",
+                          "Họ và tên": "",
+                        },
+                      };
+
+                      // Cập nhật mockDataRef mà không re-render `TopicRegisterGroupDataTable`
+                      updateMockDataRef([...mockDataRef.current, newEntry]);
+
+                      // Cập nhật mockDataState để re-render những phần khác trong UI
+                      setMockDataState([...mockDataRef.current]);
+                    }}
+                    otherClasses={"w-[26px] h-[26px] mr-10"}
+                  />
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsCreateNew(false);
+                  }}
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 dark:focus-visible:ring-slate-300 border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50 h-9 px-4 py-2 mt-2 sm:mt-0"
+                >
+                  Hủy
+                </button>
+                <button
+                  type="submit"
+                  onClick={() => {
+                    setIsCreateNew(false);
+                  }}
+                  className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 dark:focus-visible:ring-slate-300 bg-slate-900 text-slate-50 shadow hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 h-9 px-4 py-2"
+                >
+                  Đồng ý
+                </button>
+              </div>
+            </form>
+          </Form>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 };

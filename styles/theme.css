@@ -212,10 +212,14 @@
 
   .scroll-container::-webkit-scrollbar-track {
     background: #f1f1f1;
+    border-radius: 10px; /* Bo góc cho track của thanh cuộn */
+    margin-top: 8px; /* Tạo khoảng trống phía trên */
+    margin-bottom: 8px; /* Tạo khoảng trống phía dưới */
   }
 
   .scroll-container::-webkit-scrollbar-thumb {
     background: #2564ebb1;
+    border-radius: 10px;
     /* d9ebff */
   }
 

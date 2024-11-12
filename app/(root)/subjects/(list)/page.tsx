@@ -2,7 +2,7 @@
 
 import BackToPrev from "@/components/shared/BackToPrev";
 import IconButton from "@/components/shared/Button/IconButton";
-import SubjectsDataTable from "@/components/shared/Table/TableUnicore/SubjectsDataTable";
+import SubjectsDataTable from "@/components/shared/Table/TableImport/SubjectsDataTable";
 import React, { useState } from "react";
 
 const Subjects = () => {

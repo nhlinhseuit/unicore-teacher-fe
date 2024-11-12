@@ -174,7 +174,6 @@ const CreateAnnouncement = () => {
     })
     .refine(
       (data) => {
-        console.log("data", data);
         checkedCategory.length > 0 && checkedCategory.length <= 3;
       },
       {

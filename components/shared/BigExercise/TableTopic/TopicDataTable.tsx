@@ -1,11 +1,10 @@
 import { Table } from "flowbite-react";
 import React, { useMemo, useState } from "react";
-import RowTopicGroupTable from "./RowTopicGroupTable";
 import { TopicDataItem } from "@/types";
 import { itemsPerPageTopicTable } from "@/constants";
-import NoResult from "../Status/NoResult";
-import { tableTheme } from "../Table/components/DataTable";
-import Footer from "../Table/components/Footer";
+import { tableTheme } from "../../Table/components/DataTable";
+import Footer from "../../Table/components/Footer";
+import RowTopicDataTable from "./RowTopicDataTable";
 
 interface DataTableParams {
   isEditTable: boolean;
@@ -13,7 +12,7 @@ interface DataTableParams {
   dataTable: TopicDataItem[];
 }
 
-const TopicGroupTable = (params: DataTableParams) => {
+const TopicDataTable = (params: DataTableParams) => {
   const dataTable = useMemo(() => {
     return params.dataTable.filter((dataItem) => dataItem.isDeleted !== true);
   }, [params.dataTable]);
@@ -75,7 +74,7 @@ const TopicGroupTable = (params: DataTableParams) => {
               dataItem.isDeleted ? (
                 <></>
               ) : (
-                <RowTopicGroupTable key={dataItem.STT} dataItem={dataItem} />
+                <RowTopicDataTable key={dataItem.STT} dataItem={dataItem} />
               )
             )}
           </Table.Body>
@@ -97,4 +96,4 @@ const TopicGroupTable = (params: DataTableParams) => {
   );
 };
 
-export default TopicGroupTable;
+export default TopicDataTable;

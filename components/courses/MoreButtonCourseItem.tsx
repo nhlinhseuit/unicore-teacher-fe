@@ -40,7 +40,6 @@ const MoreButtonCourseItem = (params: MoreButtonParams) => {
             className="w-10 h-10 "
             onClick={(e) => {
               e.stopPropagation()
-              console.log('here')
             }}
           >
             <Image
