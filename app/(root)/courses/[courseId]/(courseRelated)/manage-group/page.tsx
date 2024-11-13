@@ -39,7 +39,8 @@ const CreateGroupRegister = () => {
   const [errorList, setErrorList] = useState([
     {
       id: "1",
-      content: "Bạn phải chọn ngày bắt đầu và ngày kết thúc.",
+      content:
+        "Bạn phải chọn ngày bắt đầu và ngày kết thúc. Ngày kết thúc phải sau ngày bắt đầu.",
       value: false,
     },
     {
@@ -98,7 +99,7 @@ const CreateGroupRegister = () => {
     const newErrorList = [...errorList];
     let isNotValid = false;
 
-    if (!dateStart || !dateEnd) {
+    if (!dateStart || !dateEnd || dateEnd < dateStart) {
       newErrorList[0].value = true; // Ngày bắt đầu và kết thúc không hợp lệ
       isNotValid = true;
     } else {
@@ -235,6 +236,7 @@ const CreateGroupRegister = () => {
       <ToggleTitle
         text="Lịch đăng ký nhóm"
         showStatus
+        showEditButton
         handleClick={handleClickCreateSchedule}
         value={isToggleCreateSchedule}
       />
@@ -317,7 +319,7 @@ const CreateGroupRegister = () => {
               </div>
 
               <p className="text-[0.8rem] dark:text-slate-400 body-regular mt-2.5 text-light-500">
-                {errorList[0].content}
+                Thời hạn sinh viên được phép đăng ký nhóm.
               </p>
 
               {/* //! ERROR */}
@@ -387,11 +389,13 @@ const CreateGroupRegister = () => {
         <></>
       )}
 
-      <ToggleTitle
-        text="Danh sách nhóm"
-        handleClick={handleClickViewTable}
-        value={isToggleViewTable}
-      />
+      <div className="mt-10">
+        <ToggleTitle
+          text="Danh sách nhóm"
+          handleClick={handleClickViewTable}
+          value={isToggleViewTable}
+        />
+      </div>
 
       {isToggleViewTable ? (
         <div className="px-6">

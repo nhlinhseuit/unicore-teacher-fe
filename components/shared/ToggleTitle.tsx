@@ -7,6 +7,7 @@ interface Props {
   handleClick: () => void;
   value: boolean;
   showStatus?: boolean;
+  showEditButton?: boolean;
 }
 
 const ToggleTitle = (params: Props) => {
@@ -36,6 +37,17 @@ const ToggleTitle = (params: Props) => {
           info="Sẽ diễn ra vào ngày 20/11/2024"
           smallText
           otherClasses="ml-4"
+        />
+      ) : (
+        <></>
+      )}
+      {params.showEditButton ? (
+        <Image
+          src={"/assets/icons/edit-black.svg"}
+          width={26}
+          height={26}
+          alt={"edit"}
+          className={`ml-4 -translate-y-[2px] object-contain cursor-pointer`}
         />
       ) : (
         <></>
