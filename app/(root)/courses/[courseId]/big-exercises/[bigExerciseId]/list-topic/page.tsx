@@ -717,6 +717,8 @@ const ListTopic = () => {
     },
   });
 
+  const { reset } = form;
+
   async function onSubmit(values: any) {
     try {
       console.log({
@@ -734,6 +736,12 @@ const ListTopic = () => {
         title: "Đăng đề tài mới thành công.",
         variant: "success",
         duration: 3000,
+      });
+
+      setIsCreateNew(false);
+      reset({
+        title: "",
+        description: "",
       });
     } catch {
     } finally {
@@ -891,18 +899,27 @@ const ListTopic = () => {
                         Mô tả đề tài <span className="text-red-600">*</span>
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
-                        <Input
+                        <textarea
                           {...field}
-                          placeholder="Nhập mô tả đề tài..."
+                          placeholder="Nhập mô tả..."
                           className="
-                            no-focus
-                            paragraph-regular
-                            background-light900_dark300
-                            light-border-2
-                            text-dark300_light700
-                            min-h-[56px]
-                            border
-                            h-[200px]"
+                          no-focus
+                          paragraph-regular
+                          background-light900_dark300
+                          light-border-2
+                          text-dark300_light700
+                          min-h-[200px]
+                          rounded-md
+                          border
+                          resize-none
+                          w-full
+                          px-3
+                          py-4
+                          focus:outline-none
+                          focus:ring-0
+                          active:outline-none
+                          focus:border-inherit
+                          text-sm"
                         />
                       </FormControl>
                       <FormMessage className="text-red-500" />
@@ -966,9 +983,6 @@ const ListTopic = () => {
                 </button>
                 <button
                   type="submit"
-                  onClick={() => {
-                    setIsCreateNew(false);
-                  }}
                   className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 dark:focus-visible:ring-slate-300 bg-slate-900 text-slate-50 shadow hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 h-9 px-4 py-2"
                 >
                   Đồng ý
