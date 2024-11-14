@@ -17,10 +17,10 @@ import { format } from "date-fns";
 import ToggleTitle from "@/components/shared/ToggleTitle";
 import IconButton from "@/components/shared/Button/IconButton";
 import SubmitButton from "@/components/shared/Button/SubmitButton";
-import RegisterGroupTable from "@/components/shared/Table/TableRegister/RegisterGroupTable";
 import { toast } from "@/hooks/use-toast";
 import BorderContainer from "@/components/shared/BorderContainer";
 import RadioboxComponent from "@/components/shared/RadioboxComponent";
+import RegisterTopicTable from "@/components/shared/Table/TableRegisterTopic/RegisterTopicTable";
 
 const RegisterTopic = () => {
   const router = useRouter();
@@ -79,7 +79,7 @@ const RegisterTopic = () => {
     setMaxMember(e.target.value);
   };
 
-  const mockDataStudentRegisterGroup = [
+  const mockDataStudentRegisterTopic = [
     {
       // TODO: Kh cần stt của sv ở đây
       // TODO: Hiện tại chỉ dùng làm key
@@ -88,6 +88,10 @@ const RegisterTopic = () => {
       STT: "1",
       isDeleted: false,
       data: {
+        "Tên đề tài": "Ứng dụng hẹn hò",
+        "Mô tả":
+          "Kết nối người dùng với những người có sở thích tương tự Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
+        "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
         "Mã nhóm": "1",
         "Tên nhóm": "Figma",
         MSSV: "21522289",
@@ -99,6 +103,10 @@ const RegisterTopic = () => {
       STT: "2",
       isDeleted: false,
       data: {
+        "Tên đề tài": "Ứng dụng chia sẻ hình ảnh",
+        "Mô tả":
+          "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
+        "GV phụ trách": "Huỳnh Tuấn Anh",
         "Mã nhóm": "2",
         "Tên nhóm": "STYLLE",
         MSSV: "21522289",
@@ -110,6 +118,10 @@ const RegisterTopic = () => {
       STT: "3",
       isDeleted: false,
       data: {
+        "Tên đề tài": "Ứng dụng đặt hàng và giao đồ ăn",
+        "Mô tả":
+          "Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
+        "GV phụ trách": "Nguyễn Thị Thanh Trúc",
         "Mã nhóm": "2",
         "Tên nhóm": "STYLLE",
         MSSV: "21522289",
@@ -121,6 +133,9 @@ const RegisterTopic = () => {
       STT: "4",
       isDeleted: false,
       data: {
+        "Tên đề tài": "Ứng dụng nhà thông minh",
+        "Mô tả": "Giúp người dùng xây dựng một ngôi nhà thông minh và tiện lợi",
+        "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
         "Mã nhóm": "3",
         "Tên nhóm": "MERN",
         MSSV: "21522289",
@@ -132,6 +147,10 @@ const RegisterTopic = () => {
       STT: "5",
       isDeleted: false,
       data: {
+        "Tên đề tài": "Ứng dụng học ngôn ngữ",
+        "Mô tả":
+          "Một nền tảng giúp người dùng học các ngôn ngữ mới thông qua bài tập và trò chơi",
+        "GV phụ trách": "Huỳnh Tuấn Anh",
         "Mã nhóm": "3",
         "Tên nhóm": "MERN",
         MSSV: "21522289",
@@ -143,6 +162,9 @@ const RegisterTopic = () => {
       STT: "6",
       isDeleted: false,
       data: {
+        "Tên đề tài": "Ứng dụng ghi chú",
+        "Mô tả": "Giúp người dùng ghi lại và tổ chức các ghi chú của mình",
+        "GV phụ trách": "Nguyễn Thị Thanh Trúc",
         "Mã nhóm": "4",
         "Tên nhóm": "Đom đóm",
         MSSV: "21522289",
@@ -457,14 +479,17 @@ const RegisterTopic = () => {
           handleClick={handleClickViewTable}
           value={isToggleViewTable}
         />
+        <p className="px-6 pb-6 italic text-sm text-red-500">
+          * Table cho Khoa thì có GV phụ trách, table cho GV thì kh có
+        </p>
       </div>
 
       {isToggleViewTable ? (
         <div className="px-6">
-          <RegisterGroupTable
+          <RegisterTopicTable
             isEditTable={false}
             isMultipleDelete={false}
-            dataTable={mockDataStudentRegisterGroup}
+            dataTable={mockDataStudentRegisterTopic}
           />
         </div>
       ) : (

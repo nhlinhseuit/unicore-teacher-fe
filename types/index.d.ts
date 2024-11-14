@@ -30,6 +30,16 @@ export interface RegisterGroupData {
   SĐT: string;
   "Họ và tên": string;
 }
+export interface RegisterTopicData {
+  "Tên đề tài": string;
+  "Mô tả": string;
+  "GV phụ trách": string;
+  "Mã nhóm": string;
+  "Tên nhóm": string;
+  MSSV: string;
+  SĐT: string;
+  "Họ và tên": string;
+}
 export interface TopicRegisterGroupData {
   MSSV: string;
   SĐT: string;
@@ -118,6 +128,11 @@ export interface RegisterGroupDataItem {
   STT: string;
   isDeleted: boolean;
   data: RegisterGroupData;
+}
+export interface RegisterTopicDataItem {
+  STT: string;
+  isDeleted: boolean;
+  data: RegisterTopicData;
 }
 
 export interface TopicRegisterGroupDataItem {

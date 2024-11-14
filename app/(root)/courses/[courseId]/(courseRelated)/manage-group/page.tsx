@@ -17,7 +17,7 @@ import SubmitButton from "@/components/shared/Button/SubmitButton";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
-import RegisterGroupTable from "@/components/shared/Table/TableRegister/RegisterGroupTable";
+import RegisterGroupTable from "@/components/shared/Table/TableRegisterGroup/RegisterGroupTable";
 
 // ! CẬP NHẬT
 const type: any = "create";
