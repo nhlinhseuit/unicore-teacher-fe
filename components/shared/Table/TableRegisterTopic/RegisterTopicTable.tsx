@@ -5,20 +5,31 @@ import { tableTheme } from "../components/DataTable";
 import RowRegisterTopicTable from "./RowRegisterTopicTable";
 import { RegisterGroupDataItem, RegisterTopicDataItem } from "@/types";
 import {
-  AlertDialogHeader,
-  AlertDialogFooter,
-} from "@/components/ui/alert-dialog";
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+
 import {
   AlertDialog,
   AlertDialogContent,
+  AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogCancel,
-  AlertDialogAction,
-} from "@radix-ui/react-alert-dialog";
+} from "@/components/ui/alert-dialog";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import Footer from "../components/Footer";
 import { itemsPerPageRegisterTable, RegisterTopicTableType } from "@/constants";
 import IconButton from "../../Button/IconButton";
+import RadioboxComponent from "../../RadioboxComponent";
+import BorderContainer from "../../BorderContainer";
+import { Dropdown } from "flowbite-react";
+import Image from "next/image";
 import { toast } from "@/hooks/use-toast";
 
 interface DataTableParams {
@@ -35,6 +46,8 @@ const RegisterTopicTable = (params: DataTableParams) => {
 
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
   const [isShowDialog, setIsShowDialog] = useState(-1);
+  const [selectedTeacherOption, setSelectedTeacherOption] = useState(1);
+  const [selectedTeacherGrading, setSelectedTeacherGrading] = useState(1);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [isShowFooter, setIsShowFooter] = useState(true);
@@ -50,15 +63,57 @@ const RegisterTopicTable = (params: DataTableParams) => {
   const [filteredDataTable, setFilteredDataTable] =
     useState<RegisterGroupDataItem[]>(currentItems);
 
-  const applyFilter = () => {
-    let filteredData;
+  const AnnoucementSchema = z.object({
+    title: z.string().optional(),
+    description: z.string().optional(),
+  });
 
-    filteredData = currentItems;
-    setIsShowFooter(true);
-    setFilteredDataTable(filteredData);
-  };
+  const form = useForm<z.infer<typeof AnnoucementSchema>>({
+    resolver: zodResolver(AnnoucementSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+    },
+  });
 
-  console.log("itemselected", itemsSelected);
+  async function onSubmit(values: any) {
+    try {
+      console.log({
+        title: values.title,
+        description: values.description,
+
+        // naviate to home page
+        // router.push("/");
+      });
+
+      if (isShowDialog === 1) {
+        toast({
+          title: "Duyệt đề xuất các đề tài thành công.",
+          description: `Các đề tài ${itemsSelected.join(", ")} đã dược duyệt.`,
+          variant: "success",
+          duration: 3000,
+        });
+        setItemsSelected([]);
+        // TODO: Xóa local
+      } else {
+        toast({
+          title: "Từ chối các đề tài thành công.",
+          description: `Các đề tài ${itemsSelected.join(", ")} đã bị từ chối.`,
+          variant: "success",
+          duration: 3000,
+        });
+        setItemsSelected([]);
+      }
+    } catch {
+    } finally {
+    }
+  }
+
+  const mockTeacherGradingList = [
+    { id: 1, value: "Huỳnh Hồ Thị Mộng Trinh" },
+    { id: 2, value: "Nguyễn Thị Thanh Trúc" },
+    { id: 3, value: "Đặng Việt Dũng" },
+  ];
 
   return (
     <div>
@@ -90,15 +145,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
                     });
                     return;
                   }
-                  toast({
-                    title: "Duyệt đề xuất các đề tài thành công.",
-                    description: `Các đề tài ${itemsSelected.join(
-                      ", "
-                    )} đã dược duyệt.`,
-                    variant: "success",
-                    duration: 3000,
-                  });
-                  setItemsSelected([]);
+                  setIsShowDialog(1);
                 }}
                 iconWidth={16}
                 iconHeight={16}
@@ -116,15 +163,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
                     });
                     return;
                   }
-                  toast({
-                    title: "Từ chối các đề tài thành công.",
-                    description: `Các đề tài ${itemsSelected.join(
-                      ", "
-                    )} đã bị từ chối.`,
-                    variant: "success",
-                    duration: 3000,
-                  });
-                  setItemsSelected([]);
+                  setIsShowDialog(2);
                 }}
                 iconWidth={16}
                 iconHeight={16}
@@ -275,41 +314,189 @@ const RegisterTopicTable = (params: DataTableParams) => {
       )}
 
       {/* ALERT CONFIRM */}
-      {isShowDialog !== -1 ? (
+      {itemsSelected.length > 0 && isShowDialog !== -1 ? (
         <AlertDialog open={isShowDialog !== -1}>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>Bạn có chắc chắn muốn xóa?</AlertDialogTitle>
-              <AlertDialogDescription>
-                Thao tác này không thể hoàn tác, dữ liệu của bạn sẽ bị xóa vĩnh
-                viễn và không thể khôi phục.
-              </AlertDialogDescription>
+              <AlertDialogTitle className="text-center">
+                {isShowDialog === 1 ? "Chỉ định giảng viên" : "Phản hồi"}
+              </AlertDialogTitle>
             </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                onClick={() => {
-                  setIsShowDialog(-1);
-                  setItemsSelected([]);
-                  // params.onClickGetOut && params.onClickGetOut();
-                }}
-              >
-                Hủy
-              </AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => {
-                  setItemsSelected([]);
-                  // params.onClickGetOut && params.onClickGetOut();
-                  // if (isShowDialog === 1) {
-                  //   params.onClickDelete && params.onClickDelete(itemsSelected);
-                  // } else if (isShowDialog === 2) {
-                  //   params.onClickDeleteAll && params.onClickDeleteAll();
-                  // }
-                  setIsShowDialog(-1);
-                }}
-              >
-                Đồng ý
-              </AlertDialogAction>
-            </AlertDialogFooter>
+
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)}>
+                {/* NAME ANNOUCEMENT */}
+                <div className="flex flex-col gap-6">
+                  {isShowDialog === 1 ? (
+                    <FormField
+                      control={form.control}
+                      name="title"
+                      render={({ field }) => (
+                        <FormItem className="flex w-full flex-col">
+                          <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                            Chọn giảng viên duyệt đề xuất đề tài của sinh viên{" "}
+                            <span className="text-red-600">*</span>
+                          </FormLabel>
+                          <FormControl>
+                            <BorderContainer otherClasses="mt-3.5">
+                              <div className="p-4 flex flex-col gap-10">
+                                <div className="inline-flex">
+                                  <RadioboxComponent
+                                    id={1}
+                                    handleClick={() => {
+                                      setSelectedTeacherOption(1);
+                                    }}
+                                    value={selectedTeacherOption}
+                                    text="Chỉ định giảng viên được sinh viên đề xuất"
+                                  />
+                                </div>
+                                <div className="inline-block">
+                                  <RadioboxComponent
+                                    id={2}
+                                    handleClick={() => {
+                                      setSelectedTeacherOption(2);
+                                    }}
+                                    value={selectedTeacherOption}
+                                    text="Chọn giảng viên mới"
+                                  />
+
+                                  {selectedTeacherOption === 2 ? (
+                                    <Dropdown
+                                      className=" z-30 rounded-lg"
+                                      label=""
+                                      dismissOnClick={true}
+                                      renderTrigger={() => (
+                                        <div className="mt-4">
+                                          <IconButton
+                                            text={`${
+                                              mockTeacherGradingList[
+                                                selectedTeacherGrading - 1
+                                              ].value
+                                            }`}
+                                            onClick={() => {}}
+                                            iconRight={
+                                              "/assets/icons/chevron-down.svg"
+                                            }
+                                            bgColor="bg-white"
+                                            textColor="text-black"
+                                            otherClasses="w-full shadow-none no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 border "
+                                          />
+                                        </div>
+                                      )}
+                                    >
+                                      <div className="scroll-container scroll-container-dropdown-content">
+                                        {mockTeacherGradingList.map(
+                                          (teacher, index) => (
+                                            <Dropdown.Item
+                                              key={`${teacher.id}_${index}`}
+                                              onClick={() => {
+                                                if (
+                                                  selectedTeacherGrading ===
+                                                  teacher.id
+                                                ) {
+                                                  setSelectedTeacherGrading(1);
+                                                } else {
+                                                  setSelectedTeacherGrading(
+                                                    teacher.id
+                                                  );
+                                                }
+                                              }}
+                                            >
+                                              <div className="flex justify-between w-full">
+                                                <p className="w-[80%] text-left line-clamp-1">
+                                                  {teacher.value}
+                                                </p>
+                                                {selectedTeacherGrading ===
+                                                teacher.id ? (
+                                                  <Image
+                                                    src="/assets/icons/check.svg"
+                                                    alt="search"
+                                                    width={21}
+                                                    height={21}
+                                                    className="cursor-pointer mr-2"
+                                                  />
+                                                ) : (
+                                                  <></>
+                                                )}
+                                              </div>
+                                            </Dropdown.Item>
+                                          )
+                                        )}
+                                      </div>
+                                    </Dropdown>
+                                  ) : (
+                                    <></>
+                                  )}
+                                </div>
+                              </div>
+                            </BorderContainer>
+                          </FormControl>
+                          <FormMessage className="text-red-500" />
+                        </FormItem>
+                      )}
+                    />
+                  ) : (
+                    <FormField
+                      control={form.control}
+                      name="description"
+                      render={({ field }) => (
+                        <FormItem className="flex w-full flex-col">
+                          <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                            Lí do từ chối đề tài
+                          </FormLabel>
+                          <FormDescription className="body-regular mt-2.5 text-light-500">
+                            Không bắt buộc.
+                          </FormDescription>
+                          <FormControl className="mt-3.5 ">
+                            <textarea
+                              {...field}
+                              placeholder="Nhập phản hồi đề tài..."
+                              className="
+                        no-focus
+                        paragraph-regular
+                        background-light900_dark300
+                        light-border-2
+                        text-dark300_light700
+                        min-h-[200px]
+                        rounded-md
+                        border
+                        resize-none
+                        w-full
+                        px-3
+                        py-4
+                        focus:outline-none
+                        focus:ring-0
+                        active:outline-none
+                        focus:border-inherit
+                        text-sm"
+                            />
+                          </FormControl>
+                          <FormMessage className="text-red-500" />
+                        </FormItem>
+                      )}
+                    />
+                  )}
+
+                  <div className="flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-4">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setIsShowDialog(-1);
+                      }}
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 dark:focus-visible:ring-slate-300 border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50 h-9 px-4 py-2 mt-2 sm:mt-0"
+                    >
+                      Hủy
+                    </button>
+                    <button
+                      type="submit"
+                      className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 dark:focus-visible:ring-slate-300 bg-slate-900 text-slate-50 shadow hover:bg-slate-900/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 h-9 px-4 py-2"
+                    >
+                      Đồng ý
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </Form>
           </AlertDialogContent>
         </AlertDialog>
       ) : (

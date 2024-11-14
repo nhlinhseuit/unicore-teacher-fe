@@ -87,12 +87,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         })}
       </div>
 
-      {/* TÊN LỚP HỌC */}
+      {/* TÊN BÀI TẬP LỚN */}
       <div
         className="h-[50px]
         px-2
         bg-white
         flex
+        gap-[3px]
         items-center
         absolute
         top-0
@@ -108,10 +109,10 @@ export default function Layout({ children }: { children: React.ReactNode }) {
             linkPrev={linkToBigExercises}
           />
         </div>
-        {/* <div
-          className="w-[4px] primary-gradient rounded-sm"
-          style={{ height: "calc(100% - 12px)" }}
-        ></div> */}
+        <div
+          className=" w-[4px] primary-gradient rounded-sm"
+          style={{ height: "calc(100% - 24px)" }}
+        ></div>
       </div>
 
       <section>

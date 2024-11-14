@@ -109,6 +109,8 @@ const ApproveTopic = () => {
         isMultipleDelete={false}
         dataTable={mockDataStudentRegisterTopic}
       />
+
+      
     </>
   );
 };
