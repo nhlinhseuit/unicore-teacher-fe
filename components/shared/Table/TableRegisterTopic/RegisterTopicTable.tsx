@@ -17,9 +17,12 @@ import {
   AlertDialogAction,
 } from "@radix-ui/react-alert-dialog";
 import Footer from "../components/Footer";
-import { itemsPerPageRegisterTable } from "@/constants";
+import { itemsPerPageRegisterTable, RegisterTopicTableType } from "@/constants";
+import IconButton from "../../Button/IconButton";
+import { toast } from "@/hooks/use-toast";
 
 interface DataTableParams {
+  type: RegisterTopicTableType;
   isEditTable: boolean;
   isMultipleDelete: boolean;
   dataTable: RegisterTopicDataItem[];
@@ -55,6 +58,8 @@ const RegisterTopicTable = (params: DataTableParams) => {
     setFilteredDataTable(filteredData);
   };
 
+  console.log("itemselected", itemsSelected);
+
   return (
     <div>
       {/* TABLE */}
@@ -64,123 +69,197 @@ const RegisterTopicTable = (params: DataTableParams) => {
           description="💡 Bạn hãy thử tìm kiếm 1 từ khóa khác nhé."
         />
       ) : (
-        <div
-          className="
-          scroll-container 
-          overflow-auto
-          max-w-full
-          h-fit
-          rounded-lg
-          border-[1px]
-          border-secondary-200
-          "
-        >
-          <Table hoverable theme={tableTheme}>
-            {/* HEADER */}
-            <Table.Head
-              theme={tableTheme?.head}
-              className="sticky top-0 z-10 uppercase border-b bg-gray"
-            >
-              <Table.HeadCell
-                theme={tableTheme?.head?.cell}
-                className={`border-r-[1px] uppercase`}
-              ></Table.HeadCell>
+        <>
+          {params.type === RegisterTopicTableType.approveTopic ? (
+            <div className="flex justify-end items-center mb-3 gap-2">
+              <p className="text-sm font-medium">
+                Đã chọn:
+                <span className="font-semibold">
+                  {` ${itemsSelected.length}`}
+                </span>
+              </p>
+              <IconButton
+                text="Duyệt đề tài"
+                green
+                onClick={() => {
+                  if (itemsSelected.length === 0) {
+                    toast({
+                      title: "Vui lòng chọn đề tài!",
+                      variant: "error",
+                      duration: 3000,
+                    });
+                    return;
+                  }
+                  toast({
+                    title: "Duyệt đề xuất các đề tài thành công.",
+                    description: `Các đề tài ${itemsSelected.join(
+                      ", "
+                    )} đã dược duyệt.`,
+                    variant: "success",
+                    duration: 3000,
+                  });
+                  setItemsSelected([]);
+                }}
+                iconWidth={16}
+                iconHeight={16}
+              />
 
-              <Table.HeadCell
-                theme={tableTheme?.head?.cell}
-                className={` w-10 border-r-[1px] uppercase`}
+              <IconButton
+                text="Từ chối đề tài"
+                red
+                onClick={() => {
+                  if (itemsSelected.length === 0) {
+                    toast({
+                      title: "Vui lòng chọn đề tài!",
+                      variant: "error",
+                      duration: 3000,
+                    });
+                    return;
+                  }
+                  toast({
+                    title: "Từ chối các đề tài thành công.",
+                    description: `Các đề tài ${itemsSelected.join(
+                      ", "
+                    )} đã bị từ chối.`,
+                    variant: "success",
+                    duration: 3000,
+                  });
+                  setItemsSelected([]);
+                }}
+                iconWidth={16}
+                iconHeight={16}
+              />
+            </div>
+          ) : (
+            <></>
+          )}
+
+          <div
+            className="
+            scroll-container 
+            overflow-auto
+            max-w-full
+            h-fit
+            rounded-lg
+            border-[1px]
+            border-secondary-200
+            "
+          >
+            <Table hoverable theme={tableTheme}>
+              {/* HEADER */}
+              <Table.Head
+                theme={tableTheme?.head}
+                className="sticky top-0 z-10 uppercase border-b bg-gray"
               >
-                STT
-              </Table.HeadCell>
+                <Table.HeadCell
+                  theme={tableTheme?.head?.cell}
+                  className={`border-r-[1px] uppercase`}
+                ></Table.HeadCell>
 
-              {Object.keys(filteredDataTable[0]?.data || {}).map((key) => {
-                return (
-                  <Table.HeadCell
-                    key={key}
-                    theme={tableTheme?.head?.cell}
-                    className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
-                  >
-                    {key}
-                  </Table.HeadCell>
-                );
-              })}
-            </Table.Head>
+                <Table.HeadCell
+                  theme={tableTheme?.head?.cell}
+                  className={` w-10 border-r-[1px] uppercase`}
+                >
+                  STT
+                </Table.HeadCell>
 
-            {/* BODY */}
-            <Table.Body className="text-left divide-y">
-              {filteredDataTable.map((dataItem, index) =>
-                dataItem.isDeleted ? (
-                  <></>
-                ) : (
-                  <>
-                    {/* //TODO: Main Row: Leader */}
-                    <RowRegisterTopicTable
-                      key={dataItem.STT}
-                      isMemberOfAboveGroup={
-                        index === 0
-                          ? false
-                          : filteredDataTable[index - 1].data["Mã nhóm"] ===
-                            dataItem.data["Mã nhóm"]
-                      }
-                      dataItem={dataItem}
-                      isEditTable={params.isEditTable}
-                      isMultipleDelete={params.isMultipleDelete}
-                      onClickCheckBoxSelect={(item: string) => {
-                        //   setItemsSelected((prev) => [...prev, item]);
-                      }}
-                      onChangeRow={(updatedDataItem: any) => {
-                        //   setLocalDataTable((prevTable) =>
-                        //     prevTable.map((item) =>
-                        //       item.STT === updatedDataItem.STT
-                        //         ? updatedDataItem
-                        //         : item
-                        //     )
-                        //   );
-                      }}
-                      saveSingleRow={(updatedDataItem: any) => {
-                        const updatedDataTable = dataTable.map((item, index) =>
-                          item.STT === updatedDataItem.STT
-                            ? updatedDataItem
-                            : item
-                        );
+                {Object.keys(filteredDataTable[0]?.data || {}).map((key) => {
+                  return (
+                    <Table.HeadCell
+                      key={key}
+                      theme={tableTheme?.head?.cell}
+                      className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
+                    >
+                      {key}
+                    </Table.HeadCell>
+                  );
+                })}
+              </Table.Head>
 
-                        //   if (params.onSaveEditTable) {
-                        //     params.onSaveEditTable(updatedDataTable);
-                        //   }
-                      }}
-                      onClickGetOut={() => {
-                        // params.onClickGetOut
-                      }}
-                      deleteSingleRow={() => {
-                        //  params.onClickDelete
-                      }}
-                    />
+              {/* BODY */}
+              <Table.Body className="text-left divide-y">
+                {filteredDataTable.map((dataItem, index) =>
+                  dataItem.isDeleted ? (
+                    <></>
+                  ) : (
+                    <>
+                      {/* //TODO: Main Row: Leader */}
+                      <RowRegisterTopicTable
+                        type={params.type}
+                        key={dataItem.STT}
+                        isMemberOfAboveGroup={
+                          index === 0
+                            ? false
+                            : filteredDataTable[index - 1].data["Mã nhóm"] ===
+                              dataItem.data["Mã nhóm"]
+                        }
+                        dataItem={dataItem}
+                        isEditTable={params.isEditTable}
+                        isMultipleDelete={params.isMultipleDelete}
+                        onClickCheckBoxSelect={(item: string) => {
+                          setItemsSelected((prev) => {
+                            if (prev.includes(item)) {
+                              return prev.filter((i) => i !== item);
+                            } else {
+                              return [...prev, item];
+                            }
+                          });
+                        }}
+                        onChangeRow={(updatedDataItem: any) => {
+                          //   setLocalDataTable((prevTable) =>
+                          //     prevTable.map((item) =>
+                          //       item.STT === updatedDataItem.STT
+                          //         ? updatedDataItem
+                          //         : item
+                          //     )
+                          //   );
+                        }}
+                        saveSingleRow={(updatedDataItem: any) => {
+                          const updatedDataTable = dataTable.map(
+                            (item, index) =>
+                              item.STT === updatedDataItem.STT
+                                ? updatedDataItem
+                                : item
+                          );
 
-                    {/* //TODO: MEMBER */}
-                    {/* {dataItem.data.listStudent
-                      .filter((student) => !student.isLeader)
-                      .map((student, index) => (
-                        <RowRegisterTopicTable
-                          key={`${dataItem.STT}-${index}`}
-                          dataItem={{
-                            ...dataItem,
-                            data: { ...dataItem.data, student },
-                          }}
-                          isEditTable={params.isEditTable}
-                          isMultipleDelete={params.isMultipleDelete}
-                          onClickCheckBoxSelect={() => {}}
-                          onChangeRow={() => {}}
-                          saveSingleRow={() => {}}
-                          onClickGetOut={() => {}}
-                          deleteSingleRow={() => {}}
-                        />
-                      ))} */}
-                  </>
-                )
-              )}
-            </Table.Body>
-          </Table>
-        </div>
+                          //   if (params.onSaveEditTable) {
+                          //     params.onSaveEditTable(updatedDataTable);
+                          //   }
+                        }}
+                        onClickGetOut={() => {
+                          // params.onClickGetOut
+                        }}
+                        deleteSingleRow={() => {
+                          //  params.onClickDelete
+                        }}
+                      />
+
+                      {/* //TODO: MEMBER */}
+                      {/* {dataItem.data.listStudent
+                        .filter((student) => !student.isLeader)
+                        .map((student, index) => (
+                          <RowRegisterTopicTable
+                            key={`${dataItem.STT}-${index}`}
+                            dataItem={{
+                              ...dataItem,
+                              data: { ...dataItem.data, student },
+                            }}
+                            isEditTable={params.isEditTable}
+                            isMultipleDelete={params.isMultipleDelete}
+                            onClickCheckBoxSelect={() => {}}
+                            onChangeRow={() => {}}
+                            saveSingleRow={() => {}}
+                            onClickGetOut={() => {}}
+                            deleteSingleRow={() => {}}
+                          />
+                        ))} */}
+                    </>
+                  )
+                )}
+              </Table.Body>
+            </Table>
+          </div>
+        </>
       )}
 
       {/* FOOTER */}

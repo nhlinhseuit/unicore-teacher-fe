@@ -131,7 +131,13 @@ const GradingGroupTable = (params: DataTableParams) => {
                       isEditTable={params.isEditTable}
                       isMultipleDelete={params.isMultipleDelete}
                       onClickCheckBoxSelect={(item: string) => {
-                        //   setItemsSelected((prev) => [...prev, item]);
+                        //   setItemsSelected((prev) => {
+                          //   if (prev.includes(item)) {
+                          //     return prev.filter((i) => i !== item);
+                          //   } else {
+                          //     return [...prev, item];
+                          //   }
+                          // });
                       }}
                       onChangeRow={(updatedDataItem: any) => {
                         //   setLocalDataTable((prevTable) =>

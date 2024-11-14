@@ -754,7 +754,7 @@ const ListTopic = () => {
         <>
           <div className="flex justify-end mb-3 gap-2">
             <IconButton
-              text="Import danh sách lớp mới"
+              text="Import danh sách đề tài mới"
               onClick={() => {
                 setIsImport(true);
               }}
@@ -774,6 +774,11 @@ const ListTopic = () => {
               iconHeight={16}
             />
           </div>
+
+          <p className="flex justify-end pb-6 italic text-sm text-red-500">
+            * Hiện tại kh làm chức năng chỉnh sửa ở đây, cần sửa thì import lại
+            danh sách
+          </p>
 
           <TopicGroupTable
             isEditTable={false}

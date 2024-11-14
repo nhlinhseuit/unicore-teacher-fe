@@ -21,6 +21,7 @@ import { toast } from "@/hooks/use-toast";
 import BorderContainer from "@/components/shared/BorderContainer";
 import RadioboxComponent from "@/components/shared/RadioboxComponent";
 import RegisterTopicTable from "@/components/shared/Table/TableRegisterTopic/RegisterTopicTable";
+import { RegisterTopicTableType } from "@/constants";
 
 const RegisterTopic = () => {
   const router = useRouter();
@@ -487,6 +488,7 @@ const RegisterTopic = () => {
       {isToggleViewTable ? (
         <div className="px-6">
           <RegisterTopicTable
+          type={RegisterTopicTableType.registerTopic}
             isEditTable={false}
             isMultipleDelete={false}
             dataTable={mockDataStudentRegisterTopic}

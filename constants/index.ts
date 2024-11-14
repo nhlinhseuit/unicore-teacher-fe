@@ -124,6 +124,13 @@ export const AnnouncementTypes = [
   { route: "/create-report", label: "Tạo báo cáo đồ án" },
 ];
 
+export enum RegisterTopicTableType {
+  registerTopic,
+  approveTopic,
+  // !: GỘP SAU:
+  registerGroup,
+}
+
 export enum DataTableType {
   Course = "Lớp học",
   Subject = "Môn học",

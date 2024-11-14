@@ -12,8 +12,10 @@ import {
 import IconButton from "../../Button/IconButton";
 import InputComponent from "../components/InputComponent";
 import MoreButtonComponent from "../components/MoreButtonComponent";
+import { RegisterTopicTableType } from "@/constants";
 
 interface RowParams {
+  type: RegisterTopicTableType;
   isMemberOfAboveGroup: boolean;
   dataItem: RegisterGroupDataItem;
   isEditTable?: boolean;
@@ -135,6 +137,24 @@ const RowRegisterTopicTable = React.memo(
                   setIsEdit(false);
                 }}
               />
+            ) : params.type === RegisterTopicTableType.approveTopic ? (
+              params.isMemberOfAboveGroup ? (
+                <></>
+              ) : (
+                <input
+                  id="approveTopic"
+                  type="checkbox"
+                  name="approveTopic"
+                  value={valueUniqueInput}
+                  onChange={() => {
+                    {
+                      params.onClickCheckBoxSelect &&
+                        params.onClickCheckBoxSelect(valueUniqueInput);
+                    }
+                  }}
+                  className="w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600"
+                />
+              )
             ) : (
               <MoreButtonComponent
                 handleEdit={handleEdit}
