@@ -1,7 +1,7 @@
 import { Table } from "flowbite-react";
 import React, { useRef, useState } from "react";
 import { TopicRegisterGroupDataItem } from "@/types";
-import InputComponent from "../../Table/components/InputComponent";
+import InputComponent from "../components/InputComponent";
 
 interface RowParams {
   dataItem: TopicRegisterGroupDataItem;

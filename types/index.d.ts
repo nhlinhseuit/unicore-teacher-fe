@@ -51,6 +51,11 @@ export interface TopicData {
   "Mô tả": string;
   "GV phụ trách": string;
 }
+export interface FileData {
+  "Tên file": string;
+  "Ngày sửa đổi": string;
+  "Người sửa đổi": string;
+}
 
 export interface GradingExerciseData {
   // 1 là có nhóm
@@ -143,6 +148,11 @@ export interface TopicDataItem {
   STT: string;
   isDeleted: boolean;
   data: TopicData;
+}
+export interface FileDataItem {
+  STT: string;
+  isDeleted: boolean;
+  data: FileData;
 }
 
 export interface GradingExerciseDataItem {

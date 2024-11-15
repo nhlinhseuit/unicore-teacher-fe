@@ -1,6 +1,6 @@
 import { Table } from "flowbite-react";
 import React, { useState } from "react";
-import { tableTheme } from "../../Table/components/DataTable";
+import { tableTheme } from "../components/DataTable";
 import RowTopicRegisterGroupDataTable from "./RowTopicRegisterGroupDataTable";
 import { TopicRegisterGroupDataItem } from "@/types";
 
@@ -61,7 +61,6 @@ const TopicRegisterGroupDataTable = (params: DataTableParams) => {
                 key={dataItem.STT}
                 dataItem={dataItem}
                 onChangeRow={(updatedDataItem: any) => {
-
                   localDataTable = localDataTable.map((item) =>
                     item.STT === updatedDataItem.STT ? updatedDataItem : item
                   );

@@ -33,7 +33,7 @@ import { TimeCalendar } from "@/components/ui/custom-time-calendar";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import RadioboxComponent from "@/components/shared/RadioboxComponent";
-import TopicGroupTable from "./TableTopic/TopicDataTable";
+import TopicGroupTable from "../Table/TableTopic/TopicDataTable";
 import { TopicDataItem } from "@/types";
 import * as XLSX from "xlsx";
 import ErrorComponent from "../Status/ErrorComponent";

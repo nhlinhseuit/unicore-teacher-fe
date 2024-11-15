@@ -1,6 +1,6 @@
 "use client";
 
-import TopicGroupTable from "@/components/shared/BigExercise/TableTopic/TopicDataTable";
+import TopicGroupTable from "@/components/shared/Table/TableTopic/TopicDataTable";
 import IconButton from "@/components/shared/Button/IconButton";
 import * as XLSX from "xlsx";
 import { TopicDataItem } from "@/types";
@@ -29,7 +29,7 @@ import { toast } from "@/hooks/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import TopicRegisterGroupDataTable from "@/components/shared/BigExercise/TableRegisterStudent/TopicRegisterGroupDataTable";
+import TopicRegisterGroupDataTable from "@/components/shared/Table/TableRegisterStudent/TopicRegisterGroupDataTable";
 import MiniButton from "@/components/shared/Button/MiniButton";
 
 const ListTopic = () => {

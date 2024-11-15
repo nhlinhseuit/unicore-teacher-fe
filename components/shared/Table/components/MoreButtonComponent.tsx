@@ -25,12 +25,16 @@ import React, { useState } from "react";
 
 interface MoreButtonParams {
   handleEdit: () => void;
+  actions?: any;
   onClickGetOut?: () => void;
-  onClickDelete?: () => void;
+  onClickDelete?: (id: any) => void;
 }
 
 const MoreButtonComponent = (params: MoreButtonParams) => {
   const [isShowDialog, setIsShowDialog] = useState(false);
+  const [selectedItemDelete, setSelectedItemDelete] = useState('');
+
+  const rederMoreComponentItems = params.actions ? params.actions :TableDataMoreComponentItems
 
   return (
     <>
@@ -55,7 +59,7 @@ const MoreButtonComponent = (params: MoreButtonParams) => {
           absolute right-[-3rem] mt-0 min-w-[120px] rounded border py-2 bg-white  
           dark:border-dark-400 dark:bg-dark-300"
           >
-            {TableDataMoreComponentItems.map((item) => (
+            {rederMoreComponentItems.map((item: any) => (
               <MenubarItem
                 className="
                       flex items-center gap-4 px-2.5 py-2 hover:bg-light-800
@@ -106,7 +110,7 @@ const MoreButtonComponent = (params: MoreButtonParams) => {
               <AlertDialogAction
                 onClick={() => {
                   setIsShowDialog(false);
-                  params.onClickDelete && params.onClickDelete();
+                  // params.onClickDelete && params.onClickDelete();
                 }}
               >
                 Đồng ý

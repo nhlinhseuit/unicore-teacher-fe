@@ -176,6 +176,12 @@ export const TableDataMoreComponentItems = [
   { value: "delete", label: "Xóa" },
 ];
 
+export const FileTableDataMoreComponentItems = [
+  { value: "rename", label: "Đổi tên" },
+  { value: "download", label: "Tải xuống" },
+  { value: "delete", label: "Xóa" },
+];
+
 export const CourseItemMoreComponentItems = [
   { value: "edit", label: "Chỉnh sửa" },
   { value: "hide", label: "Ẩn" },
