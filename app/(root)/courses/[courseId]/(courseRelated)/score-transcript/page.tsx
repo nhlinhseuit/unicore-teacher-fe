@@ -1,11 +1,11 @@
 "use client";
 
 import IconButton from "@/components/shared/Button/IconButton";
-import GradingGroupTable from "@/components/shared/Table/TableGrading/GradingGroupTable";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import TableSearch from "@/components/shared/Search/TableSearch";
+import ScoreTranscriptTable from "@/components/shared/Table/TableScoreTranscript/ScoreTranscriptTable";
 
 const ScoreTranscript = () => {
   const mockCoursesList = [
@@ -254,7 +254,7 @@ const ScoreTranscript = () => {
       </div>
 
       {/* //TODO: BÀI TẬP */}
-      <GradingGroupTable
+      <ScoreTranscriptTable
         isEditTable={isEditTable}
         isMultipleDelete={false}
         dataTable={mockDataGradingExercise}
