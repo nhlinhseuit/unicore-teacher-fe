@@ -110,7 +110,7 @@ const CreateExercise = () => {
   const [dateEnd, setDateEnd] = React.useState<Date>();
   const [timeEnd, setTimeEnd] = React.useState("");
 
-  const [dateLate, setDateLate] = React.useState<Date>();
+  const [dateRemindGrade, setDateLate] = React.useState<Date>();
   const [timeLate, setTimeLate] = React.useState("");
 
   const [dateClose, setDateClose] = React.useState<Date>();
@@ -166,7 +166,7 @@ const CreateExercise = () => {
       file: z.any(),
       dateSubmit: z.date().optional(),
       datePost: z.date().optional(),
-      dateLate: z.date().optional(),
+      dateRemindGrade: z.date().optional(),
       dateClose: z.date().optional(),
       multipleCourses: z.number().optional(),
       groupOption: z.any().optional(),
@@ -209,9 +209,9 @@ const CreateExercise = () => {
     //     path: ["dateSubmit"],
     //   }
     // )
-    // .refine((data) => !(dateLate === undefined || timeLate === ""), {
+    // .refine((data) => !(dateRemindGrade === undefined || timeLate === ""), {
     //   message: "Bạn phải chọn thời gian nộp trễ (ngày & giờ)",
-    //   path: ["dateLate"],
+    //   path: ["dateRemindGrade"],
     // })
     // .refine((data) => !(dateClose === undefined || timeClose === ""), {
     //   message: "Bạn phải chọn thời gian đóng (ngày & giờ)",
@@ -553,59 +553,6 @@ const CreateExercise = () => {
 
                       <FormField
                         control={form.control}
-                        name="dateLate"
-                        render={({ field }) => (
-                          <FormItem className="flex w-full flex-col">
-                            <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                              Cho phép nộp trễ
-                            </FormLabel>
-                            <FormControl className="mt-3.5">
-                              <Popover>
-                                <PopoverTrigger asChild>
-                                  <Button
-                                    variant={"outline"}
-                                    className={`w-full flex items-center text-center font-normal ${
-                                      !dateLate && "text-muted-foreground"
-                                    } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
-                                  >
-                                    <span
-                                      className={`flex-grow text-center ${
-                                        !dateLate && "text-muted-foreground"
-                                      }`}
-                                    >
-                                      {getDisplayText(dateLate, timeLate)}
-                                    </span>
-                                    <CalendarIcon className="ml-2 h-4 w-4" />
-                                  </Button>
-                                </PopoverTrigger>
-                                <PopoverContent className="w-auto p-0">
-                                  <TimeCalendar
-                                    mode="single"
-                                    selected={dateLate}
-                                    onSelect={setDateLate}
-                                    selectedTime={timeLate}
-                                    setSelectTime={(time) => {
-                                      setTimeLate(time);
-                                    }}
-                                    initialFocus
-                                    locale={vi}
-                                  />
-                                </PopoverContent>
-                              </Popover>
-                            </FormControl>
-                            <FormDescription className="body-regular mt-2.5 text-light-500">
-                              Khi bài tập tới hạn, vẫn cho phép sinh viên nộp
-                              bài nhưng sẽ bị đánh dấu là nộp bài trễ (nếu có).
-                              Chọn ngày đóng hạn nộp bài tập để không cho phép
-                              sinh viên nộp bài sau ngày xác định.
-                            </FormDescription>
-                            <FormMessage className="text-red-500" />
-                          </FormItem>
-                        )}
-                      />
-
-                      <FormField
-                        control={form.control}
                         name="dateClose"
                         render={({ field }) => (
                           <FormItem className="flex w-full flex-col">
@@ -647,8 +594,60 @@ const CreateExercise = () => {
                               </Popover>
                             </FormControl>
                             <FormDescription className="body-regular mt-2.5 text-light-500">
+                              Khi bài tập tới hạn, vẫn cho phép sinh viên nộp
+                              bài nhưng sẽ bị đánh dấu là nộp bài trễ.
                               Sinh viên sẽ không thể nộp bài tập khi quá ngày
-                              đóng bài nộp (nếu có).
+                              đóng bài nộp.
+                            </FormDescription>
+                            <FormMessage className="text-red-500" />
+                          </FormItem>
+                        )}
+                      />
+
+                      <FormField
+                        control={form.control}
+                        name="dateRemindGrade"
+                        render={({ field }) => (
+                          <FormItem className="flex w-full flex-col">
+                            <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                              Nhắc chấm bài
+                            </FormLabel>
+                            <FormControl className="mt-3.5">
+                              <Popover>
+                                <PopoverTrigger asChild>
+                                  <Button
+                                    variant={"outline"}
+                                    className={`w-full flex items-center text-center font-normal ${
+                                      !dateRemindGrade && "text-muted-foreground"
+                                    } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
+                                  >
+                                    <span
+                                      className={`flex-grow text-center ${
+                                        !dateRemindGrade && "text-muted-foreground"
+                                      }`}
+                                    >
+                                      {getDisplayText(dateRemindGrade, timeLate)}
+                                    </span>
+                                    <CalendarIcon className="ml-2 h-4 w-4" />
+                                  </Button>
+                                </PopoverTrigger>
+                                <PopoverContent className="w-auto p-0">
+                                  <TimeCalendar
+                                    mode="single"
+                                    selected={dateRemindGrade}
+                                    onSelect={setDateLate}
+                                    selectedTime={timeLate}
+                                    setSelectTime={(time) => {
+                                      setTimeLate(time);
+                                    }}
+                                    initialFocus
+                                    locale={vi}
+                                  />
+                                </PopoverContent>
+                              </Popover>
+                            </FormControl>
+                            <FormDescription className="body-regular mt-2.5 text-light-500">
+                              Hệ thống sẽ gửi thông báo để nhắc bạn chấm bài vào thời gian được chọn.
                             </FormDescription>
                             <FormMessage className="text-red-500" />
                           </FormItem>
