@@ -1,63 +1,21 @@
 "use client";
 
-import ExercisePostItem from "@/components/shared/PostItem/ExercisePostItem";
-import BackToPrev from "@/components/shared/BackToPrev";
 import IconButton from "@/components/shared/Button/IconButton";
-import CheckboxComponent from "@/components/shared/CheckboxComponent";
 import GradingGroupTable from "@/components/shared/Table/TableGrading/GradingGroupTable";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import React, { useState } from "react";
+import TableSearch from "@/components/shared/Search/TableSearch";
 
 const ScoreTranscript = () => {
-  const mockPostData = [
+  const mockCoursesList = [
+    { id: 1, value: "SE114.N22.PMCL - Nhập môn ứng dụng di động" },
+    { id: 2, value: "SE121.O11.PMCL - Đồ án 1" },
     {
-      id: "1",
-      creator: "Huỳnh Hồ Thị Mộng Trinh",
-      createdAt: "29/8/2024 7:23AM",
-      title: "Bài tập ngày 29/9/2024",
-      fileName: "exercise.docx",
-      comments: [
-        {
-          id: "1",
-          author: "Huỳnh Hồ Thị Mộng Trinh",
-          content: "Các em mau chóng đăng ký nhóm đúng hạn",
-        },
-        {
-          id: "2",
-          author: "Lê Thành Lộc",
-          content: "Nộp bài trễ được không cô?",
-        },
-      ],
+      id: 3,
+      value: "SE100.O11.PMCL - Phương pháp phát triển phần mềm hướng đối tượng",
     },
-    {
-      id: "2",
-      creator: "Huỳnh Hồ Thị Mộng Trinh",
-      createdAt: "29/8/2024 7:23AM",
-      title: "Bài tập ngày 29/9/2024",
-      fileName: "exercise.docx",
-      comments: [
-        {
-          id: "1",
-          author: "Huỳnh Hồ Thị Mộng Trinh",
-          content: "Các em mau chóng đăng ký nhóm đúng hạn",
-        },
-      ],
-    },
-    {
-      id: "3",
-      creator: "Huỳnh Hồ Thị Mộng Trinh",
-      createdAt: "29/8/2024 7:23AM",
-      title: "Bài tập ngày 29/9/2024",
-      fileName: "exercise.docx",
-      comments: [
-        {
-          id: "1",
-          author: "Huỳnh Hồ Thị Mộng Trinh",
-          content: "Các em mau chóng đăng ký nhóm đúng hạn",
-        },
-      ],
-    },
+    { id: 4, value: "SE104.N21.PMCL - Kiểm chứng phần mềm" },
   ];
 
   const mockDataGradingExercise = [
@@ -69,225 +27,240 @@ const ScoreTranscript = () => {
       STT: "1",
       isDeleted: false,
       data: {
-        "Hình thức": false,
-        "Mã nhóm": "1",
-        "Tên nhóm": "Figma",
-        "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
-        "Trễ hạn": "0",
-        MSSV: "21522289",
         "Họ và tên": "Nguyễn Hoàng Linh",
-        Điểm: 9,
-        "Góp ý": "Bài làm tốt!",
+        MSSV: "21522289",
+        "Quá trình": {
+          percent: 20,
+          score: 9,
+        },
+        "Giữa kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Cuối kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Điểm trung bình": {
+          percent: 20,
+          score: 9,
+        },
       },
     },
     {
       STT: "2",
       isDeleted: false,
       data: {
-        "Hình thức": true,
-        "Mã nhóm": "2",
-        "Tên nhóm": "STYLLE",
-        "Bài nộp": "LeThanhLoc_BaiTap.docx",
-        "Trễ hạn": "1 ngày 12 tiếng",
-        MSSV: "21522289",
         "Họ và tên": "Lê Thành Lộc",
-        Điểm: 9,
-        "Góp ý": "",
+        MSSV: "21522289",
+        "Quá trình": {
+          percent: 20,
+          score: 9,
+        },
+        "Giữa kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Cuối kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Điểm trung bình": {
+          percent: 20,
+          score: 9,
+        },
       },
     },
     {
       STT: "3",
       isDeleted: false,
       data: {
-        "Hình thức": true,
-        "Mã nhóm": "2",
-        "Tên nhóm": "STYLLE",
-        "Bài nộp": "",
-        "Trễ hạn": "0",
+        "Họ và tên": "Võ Hữu",
         MSSV: "21522289",
-        "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
-        Điểm: 9,
-        "Góp ý": "Bài làm tốt!",
+        "Quá trình": {
+          percent: 20,
+          score: 9,
+        },
+        "Giữa kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Cuối kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Điểm trung bình": {
+          percent: 20,
+          score: 9,
+        },
       },
     },
-    {
-      STT: "4",
-      isDeleted: false,
-      data: {
-        "Hình thức": true,
-        "Mã nhóm": "3",
-        "Tên nhóm": "MERN",
-        "Bài nộp": "LeThanhLoc_BaiTap.docx",
-        "Trễ hạn": "3 phút 12 giây",
-        MSSV: "21522289",
-        "Họ và tên": "Nguyễn Tiến Vĩ",
-        Điểm: 9,
-        "Góp ý": "",
-      },
-    },
-    {
-      STT: "5",
-      isDeleted: false,
-      data: {
-        "Hình thức": true,
-        "Mã nhóm": "3",
-        "Tên nhóm": "MERN",
-        "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
-        "Trễ hạn": "0",
-        MSSV: "21522289",
-        "Họ và tên": "Nguyễn Thị Thanh Tuyền",
-        Điểm: 9,
-        "Góp ý": "Bài làm xuất sắc",
-      },
-    },
-    {
-      STT: "6",
-      isDeleted: false,
-      data: {
-        "Hình thức": false,
-        "Mã nhóm": "4",
-        "Tên nhóm": "Đom đóm",
-        "Bài nộp": "LeThanhLoc_BaiTap.docx",
-        "Trễ hạn": "0",
-        MSSV: "21522289",
-        "Họ và tên": "Võ Hữu Xike",
-        Điểm: 9,
-        "Góp ý": "Cần xem lại!",
-      },
-    },
-  ];
-
-  const mockDataGradingReport = [
     {
       // TODO: Kh cần stt của sv ở đây
       // TODO: Hiện tại chỉ dùng làm key
       // * FIX: STT count ++ cho row leader
 
-      STT: "1",
-      isDeleted: false,
-      data: {
-        "Điểm danh": false,
-        "Mã nhóm": "1",
-        "Tên nhóm": "Figma",
-        "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
-        "Trễ hạn": "0",
-        MSSV: "21522289",
-        "Họ và tên": "Nguyễn Hoàng Linh",
-        Điểm: 9,
-        "Góp ý": "Bài làm tốt!",
-      },
-    },
-    {
-      STT: "2",
-      isDeleted: false,
-      data: {
-        "Điểm danh": true,
-        "Mã nhóm": "2",
-        "Tên nhóm": "STYLLE",
-        "Bài nộp": "LeThanhLoc_BaiTap.docx",
-        "Trễ hạn": "1 ngày 12 tiếng",
-        MSSV: "21522289",
-        "Họ và tên": "Lê Thành Lộc",
-        Điểm: 9,
-        "Góp ý": "",
-      },
-    },
-    {
-      STT: "3",
-      isDeleted: false,
-      data: {
-        "Điểm danh": true,
-        "Mã nhóm": "2",
-        "Tên nhóm": "STYLLE",
-        "Bài nộp": "",
-        "Trễ hạn": "0",
-        MSSV: "21522289",
-        "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
-        Điểm: 9,
-        "Góp ý": "Bài làm tốt!",
-      },
-    },
-    {
       STT: "4",
       isDeleted: false,
       data: {
-        "Điểm danh": true,
-        "Mã nhóm": "3",
-        "Tên nhóm": "MERN",
-        "Bài nộp": "LeThanhLoc_BaiTap.docx",
-        "Trễ hạn": "3 phút 12 giây",
+        "Họ và tên": "Nguyễn Hoàng Linh",
         MSSV: "21522289",
-        "Họ và tên": "Nguyễn Tiến Vĩ",
-        Điểm: 9,
-        "Góp ý": "",
+        "Quá trình": {
+          percent: 20,
+          score: 9,
+        },
+        "Giữa kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Cuối kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Điểm trung bình": {
+          percent: 20,
+          score: 9,
+        },
       },
     },
     {
       STT: "5",
       isDeleted: false,
       data: {
-        "Điểm danh": true,
-        "Mã nhóm": "3",
-        "Tên nhóm": "MERN",
-        "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
-        "Trễ hạn": "0",
+        "Họ và tên": "Lê Thành Lộc",
         MSSV: "21522289",
-        "Họ và tên": "Nguyễn Thị Thanh Tuyền",
-        Điểm: 9,
-        "Góp ý": "Bài làm xuất sắc",
+        "Quá trình": {
+          percent: 20,
+          score: 9,
+        },
+        "Giữa kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Cuối kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Điểm trung bình": {
+          percent: 20,
+          score: 9,
+        },
       },
     },
     {
       STT: "6",
       isDeleted: false,
       data: {
-        "Điểm danh": false,
-        "Mã nhóm": "4",
-        "Tên nhóm": "Đom đóm",
-        "Bài nộp": "LeThanhLoc_BaiTap.docx",
-        "Trễ hạn": "0",
+        "Họ và tên": "Võ Hữu",
         MSSV: "21522289",
-        "Họ và tên": "Võ Hữu Xike",
-        Điểm: 9,
-        "Góp ý": "Cần xem lại!",
+        "Quá trình": {
+          percent: 20,
+          score: 9,
+        },
+        "Giữa kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Cuối kỳ": {
+          percent: 20,
+          score: 9,
+        },
+        "Điểm trung bình": {
+          percent: 20,
+          score: 9,
+        },
       },
     },
   ];
 
-  const [isGrading, setIsGrading] = useState(false);
+  const [selectedCourse, setSelectedCourse] = useState(-1);
   const [isEditTable, setIsEditTable] = useState(false);
 
-  return <>
-  <div className="flex justify-between mb-6">
-    <div>
-      {isEditTable ? (
-        <IconButton
-          text="Lưu"
-          onClick={() => {
-            setIsEditTable(false);
-          }}
-        />
-      ) : (
-        <IconButton
-          text="Chấm điểm"
-          green
-          onClick={() => {
-            setIsEditTable(true);
-          }}
-        />
-      )}
-    </div>
-  </div>
+  return (
+    <>
+      <div
+        className="
+        mt-6 mb-10 flex justify-between items-center w-full gap-6 sm:flex-row sm:items-center"
+      >
+        {/* Search & Filter */}
+        <div className="flex justify-start ml-10 w-1/2 items-center gap-4">
+          <p className="inline-flex justify-start text-sm whitespace-nowrap">
+            Xem bảng điểm của lớp
+          </p>
 
-  {/* //TODO: BÀI TẬP */}
-    <GradingGroupTable
-      isEditTable={isEditTable}
-      isMultipleDelete={false}
-      dataTable={mockDataGradingExercise}
-    />
+          <Dropdown
+            className="z-30 rounded-lg"
+            label=""
+            dismissOnClick={true}
+            renderTrigger={() => (
+              <div>
+                <IconButton
+                  text={`${
+                    selectedCourse !== -1
+                      ? mockCoursesList[selectedCourse - 1].value
+                      : "Chọn lớp"
+                  }`}
+                  onClick={() => {}}
+                  iconRight={"/assets/icons/chevron-down.svg"}
+                  bgColor="bg-white"
+                  textColor="text-black"
+                  otherClasses="w-full shadow-none no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 border "
+                />
+              </div>
+            )}
+          >
+            <TableSearch
+              setSearchTerm={() => {}}
+              searchTerm={""}
+              otherClasses="p-2"
+            />
+            <div className="scroll-container scroll-container-dropdown-content">
+              {mockCoursesList.map((course: any, index) => (
+                <Dropdown.Item
+                  key={`${course}_${index}`}
+                  onClick={() => {
+                    if (selectedCourse === course.id) {
+                      setSelectedCourse(-1);
+                    } else {
+                      setSelectedCourse(course.id);
+                    }
+                  }}
+                >
+                  <div className="flex justify-between w-full gap-4">
+                    <p className="text-left line-clamp-1">{course.value}</p>
+                    {selectedCourse === course.id ? (
+                      <Image
+                        src="/assets/icons/check.svg"
+                        alt="search"
+                        width={21}
+                        height={21}
+                        className="cursor-pointer mr-2"
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </Dropdown.Item>
+              ))}
+            </div>
+          </Dropdown>
+        </div>
 
-  
-</>
+        {/* Create announcement */}
+        <div className="flex gap-2">
+          <IconButton text="Chỉnh sửa hệ số điểm" />
+          <IconButton text="Xuất file điểm" green />
+        </div>
+      </div>
+
+      {/* //TODO: BÀI TẬP */}
+      <GradingGroupTable
+        isEditTable={isEditTable}
+        isMultipleDelete={false}
+        dataTable={mockDataGradingExercise}
+      />
+    </>
+  );
 };
 
 export default ScoreTranscript;
