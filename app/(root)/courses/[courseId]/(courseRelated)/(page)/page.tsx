@@ -4,12 +4,12 @@ import PostItem from "@/components/shared/PostItem/PostItem";
 import ReportPostItem from "@/components/shared/PostItem/ReportPostItem";
 import BorderButton from "@/components/shared/Button/BorderButton";
 import IconButton from "@/components/shared/Button/IconButton";
-import TableSearch from "@/components/shared/Search/TableSearch";
 import { AnnouncementTabs, AnnouncementTypes, FilterType } from "@/constants";
 import { Dropdown } from "flowbite-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
+import TableSearch from "@/components/shared/Search/TableSearch";
 
 const page = () => {
   const pathName = usePathname();

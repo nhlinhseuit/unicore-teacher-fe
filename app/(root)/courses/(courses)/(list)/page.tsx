@@ -5,9 +5,9 @@ import IconButtonStopPropagation from "@/components/shared/Button/IconButtonStop
 import Image from "next/image";
 import { DetailFilter, FilterType } from "@/constants";
 import { Dropdown } from "flowbite-react";
-import TableSearch from "@/components/shared/Search/TableSearch";
 import BackToPrev from "@/components/shared/BackToPrev";
 import CoursesDataTable from "@/components/shared/Table/TableImport/CoursesDataTable";
+import TableSearch from "@/components/shared/Search/TableSearch";
 
 const Courses = () => {
   const [isImport, setIsImport] = useState(false);

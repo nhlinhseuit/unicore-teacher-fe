@@ -7,13 +7,12 @@ import { AnnouncementTabs, FilterType } from "@/constants";
 import { useState } from "react";
 import CategorySideBar from "@/components/shared/Sidebar/CategorySideBar";
 import MiniButton from "@/components/shared/Button/MiniButton";
-import TableSearch from "@/components/shared/Search/TableSearch";
-import { Dropdown } from "flowbite-react";
 import IconButton from "@/components/shared/Button/IconButton";
 import Link from "next/link";
 import Image from "next/image";
 import FilterAnnoucements from "@/components/shared/Annoucements/FilterAnnoucements";
 import ClosedButton from "@/components/shared/Annoucements/ClosedButton";
+import TableSearch from "@/components/shared/Search/TableSearch";
 
 const announcements = [
   {

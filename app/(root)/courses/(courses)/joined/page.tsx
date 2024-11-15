@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import { Dropdown } from "flowbite-react";
 import IconButton from "@/components/shared/Button/IconButton";
-import TableSearch from "@/components/shared/Search/TableSearch";
 import { DetailFilter, FilterType } from "@/constants";
 import Image from "next/image";
 import MoreButtonCourseItem from "@/components/courses/MoreButtonCourseItem";
@@ -22,6 +21,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useRouter } from "next/navigation";
 import CourseItemDialog from "@/components/courses/CourseItemDialog";
+import TableSearch from "@/components/shared/Search/TableSearch";
 
 const JoinedCourses = () => {
   const mockCourses = [
