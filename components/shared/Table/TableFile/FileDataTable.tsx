@@ -1,11 +1,11 @@
-import { Table } from "flowbite-react";
-import React, { useMemo, useState } from "react";
-import { FileDataItem } from "@/types";
 import { itemsPerPageTopicTable } from "@/constants";
+import { FileDataItem } from "@/types";
+import { Table } from "flowbite-react";
+import Image from "next/image";
+import { useMemo, useState } from "react";
 import { tableTheme } from "../components/DataTable";
 import Footer from "../components/Footer";
 import RowFileDataTable from "./RowFileDataTable";
-import Image from "next/image";
 
 interface DataTableParams {
   isEditTable: boolean;

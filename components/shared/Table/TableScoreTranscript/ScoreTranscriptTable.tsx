@@ -1,31 +1,37 @@
-import { Table } from "flowbite-react";
-import React, { useMemo, useState } from "react";
-import NoResult from "../../Status/NoResult";
-import { tableTheme } from "../components/DataTable";
-import RowScoreTranscriptTable from "./RowScoreTranscriptTable";
-import { GradingExerciseDataItem, GradingReportDataItem } from "@/types";
 import {
-  AlertDialogHeader,
   AlertDialogFooter,
+  AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
+import { itemsPerPageRegisterTable } from "@/constants";
+import { ScoreTranscriptDataItem } from "@/types";
 import {
   AlertDialog,
-  AlertDialogContent,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogCancel,
   AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
 } from "@radix-ui/react-alert-dialog";
+import { Table } from "flowbite-react";
+import { useMemo, useState } from "react";
+import NoResult from "../../Status/NoResult";
+import { tableTheme } from "../components/DataTable";
 import Footer from "../components/Footer";
-import { itemsPerPageRegisterTable } from "@/constants";
+import RowScoreTranscriptTable from "./RowScoreTranscriptTable";
 
 interface DataTableParams {
   isEditTable: boolean;
   isMultipleDelete: boolean;
-  dataTable: GradingExerciseDataItem[] | GradingReportDataItem[];
+  dataTable: ScoreTranscriptDataItem[];
 }
 
 const ScoreTranscriptTable = (params: DataTableParams) => {
+  const mockGradeColumnPercent = {
+    "Quá trình": 20,
+    "Giữa kỳ": 30,
+    "Cuối kỳ": 50,
+  };
+
   const dataTable = useMemo(() => {
     return params.dataTable.filter((dataItem) => dataItem.isDeleted !== true);
   }, [params.dataTable]);
@@ -44,11 +50,8 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
     );
   }, [dataTable, currentPage]);
 
-  const [filteredDataTable, setFilteredDataTable] = useState<
-    | GradingExerciseDataItem[]
-    | GradingReportDataItem[]
-    | (GradingExerciseDataItem | GradingReportDataItem)[]
-  >(currentItems);
+  const [filteredDataTable, setFilteredDataTable] =
+    useState<ScoreTranscriptDataItem[]>(currentItems);
 
   const applyFilter = () => {
     let filteredData;
@@ -96,19 +99,42 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
                 STT
               </Table.HeadCell>
 
-              {Object.keys(filteredDataTable[0]?.data || {}).map((key) => {
-                if (key === "Mã nhóm") return null;
+              {Object.keys(filteredDataTable[0]?.data || {}).map(
+                (key, value) => {
+                  // <Table.HeadCell
+                  //   key={key}
+                  //   theme={tableTheme?.head?.cell}
+                  //   className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
+                  // >
+                  //   {`${key}(${(value as ScoreComponentData).percent}%)`}
+                  // </Table.HeadCell>
 
-                return (
-                  <Table.HeadCell
-                    key={key}
-                    theme={tableTheme?.head?.cell}
-                    className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
-                  >
-                    {key}
-                  </Table.HeadCell>
-                );
-              })}
+                  if (
+                    key === "Quá trình" ||
+                    key === "Giữa kỳ" ||
+                    key === "Cuối kỳ"
+                  ) {
+                    return (
+                      <Table.HeadCell
+                        key={key}
+                        theme={tableTheme?.head?.cell}
+                        className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
+                      >
+                        {`${key} (${mockGradeColumnPercent[`${key}`]}%)`}
+                      </Table.HeadCell>
+                    );
+                  }
+                  return (
+                    <Table.HeadCell
+                      key={key}
+                      theme={tableTheme?.head?.cell}
+                      className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
+                    >
+                      {key}
+                    </Table.HeadCell>
+                  );
+                }
+              )}
             </Table.Head>
 
             {/* BODY */}
@@ -121,23 +147,17 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
                     {/* //TODO: Main Row: Leader */}
                     <RowScoreTranscriptTable
                       key={dataItem.STT}
-                      isMemberOfAboveGroup={
-                        index === 0
-                          ? false
-                          : filteredDataTable[index - 1].data["Mã nhóm"] ===
-                            dataItem.data["Mã nhóm"]
-                      }
                       dataItem={dataItem}
                       isEditTable={params.isEditTable}
                       isMultipleDelete={params.isMultipleDelete}
                       onClickCheckBoxSelect={(item: string) => {
                         //   setItemsSelected((prev) => {
-                          //   if (prev.includes(item)) {
-                          //     return prev.filter((i) => i !== item);
-                          //   } else {
-                          //     return [...prev, item];
-                          //   }
-                          // });
+                        //   if (prev.includes(item)) {
+                        //     return prev.filter((i) => i !== item);
+                        //   } else {
+                        //     return [...prev, item];
+                        //   }
+                        // });
                       }}
                       onChangeRow={(updatedDataItem: any) => {
                         //   setLocalDataTable((prevTable) =>

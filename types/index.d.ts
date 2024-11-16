@@ -83,6 +83,15 @@ export interface GradingReportData {
   "Góp ý": string;
 }
 
+export interface ScoreTranscriptData {
+  MSSV: string;
+  "Họ và tên": string;
+  "Quá trình": number;
+  "Giữa kỳ": number;
+  "Cuối kỳ": number;
+  "Điểm trung bình": number;
+}
+
 export interface SubjectData {
   "Khoa QL": string;
   "Mã MH": string;
@@ -164,6 +173,11 @@ export interface GradingReportDataItem {
   STT: string;
   isDeleted: boolean;
   data: GradingReportData;
+}
+export interface ScoreTranscriptDataItem {
+  STT: string;
+  isDeleted: boolean;
+  data: ScoreTranscriptData;
 }
 
 export interface CourseDataItem {

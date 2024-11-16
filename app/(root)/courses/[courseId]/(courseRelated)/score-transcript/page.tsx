@@ -1,11 +1,11 @@
 "use client";
 
 import IconButton from "@/components/shared/Button/IconButton";
-import { Dropdown } from "flowbite-react";
-import Image from "next/image";
-import React, { useState } from "react";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import ScoreTranscriptTable from "@/components/shared/Table/TableScoreTranscript/ScoreTranscriptTable";
+import { Dropdown } from "flowbite-react";
+import Image from "next/image";
+import { useState } from "react";
 
 const ScoreTranscript = () => {
   const mockCoursesList = [
@@ -18,6 +18,8 @@ const ScoreTranscript = () => {
     { id: 4, value: "SE104.N21.PMCL - Kiểm chứng phần mềm" },
   ];
 
+
+
   const mockDataGradingExercise = [
     {
       // TODO: Kh cần stt của sv ở đây
@@ -29,22 +31,10 @@ const ScoreTranscript = () => {
       data: {
         "Họ và tên": "Nguyễn Hoàng Linh",
         MSSV: "21522289",
-        "Quá trình": {
-          percent: 20,
-          score: 9,
-        },
-        "Giữa kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Cuối kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Điểm trung bình": {
-          percent: 20,
-          score: 9,
-        },
+        "Quá trình": 9,
+        "Giữa kỳ": 8,
+        "Cuối kỳ": 10,
+        "Điểm trung bình": 8,
       },
     },
     {
@@ -53,22 +43,10 @@ const ScoreTranscript = () => {
       data: {
         "Họ và tên": "Lê Thành Lộc",
         MSSV: "21522289",
-        "Quá trình": {
-          percent: 20,
-          score: 9,
-        },
-        "Giữa kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Cuối kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Điểm trung bình": {
-          percent: 20,
-          score: 9,
-        },
+        "Quá trình": 9,
+        "Giữa kỳ": 8,
+        "Cuối kỳ": 10,
+        "Điểm trung bình": 8,
       },
     },
     {
@@ -77,22 +55,10 @@ const ScoreTranscript = () => {
       data: {
         "Họ và tên": "Võ Hữu",
         MSSV: "21522289",
-        "Quá trình": {
-          percent: 20,
-          score: 9,
-        },
-        "Giữa kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Cuối kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Điểm trung bình": {
-          percent: 20,
-          score: 9,
-        },
+        "Quá trình": 9,
+        "Giữa kỳ": 8,
+        "Cuối kỳ": 10,
+        "Điểm trung bình": 8,
       },
     },
     {
@@ -105,22 +71,10 @@ const ScoreTranscript = () => {
       data: {
         "Họ và tên": "Nguyễn Hoàng Linh",
         MSSV: "21522289",
-        "Quá trình": {
-          percent: 20,
-          score: 9,
-        },
-        "Giữa kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Cuối kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Điểm trung bình": {
-          percent: 20,
-          score: 9,
-        },
+        "Quá trình": 9,
+        "Giữa kỳ": 8,
+        "Cuối kỳ": 10,
+        "Điểm trung bình": 8,
       },
     },
     {
@@ -129,22 +83,10 @@ const ScoreTranscript = () => {
       data: {
         "Họ và tên": "Lê Thành Lộc",
         MSSV: "21522289",
-        "Quá trình": {
-          percent: 20,
-          score: 9,
-        },
-        "Giữa kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Cuối kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Điểm trung bình": {
-          percent: 20,
-          score: 9,
-        },
+        "Quá trình": 9,
+        "Giữa kỳ": 8,
+        "Cuối kỳ": 10,
+        "Điểm trung bình": 8,
       },
     },
     {
@@ -153,22 +95,10 @@ const ScoreTranscript = () => {
       data: {
         "Họ và tên": "Võ Hữu",
         MSSV: "21522289",
-        "Quá trình": {
-          percent: 20,
-          score: 9,
-        },
-        "Giữa kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Cuối kỳ": {
-          percent: 20,
-          score: 9,
-        },
-        "Điểm trung bình": {
-          percent: 20,
-          score: 9,
-        },
+        "Quá trình": 9,
+        "Giữa kỳ": 8,
+        "Cuối kỳ": 10,
+        "Điểm trung bình": 8,
       },
     },
   ];
