@@ -30,7 +30,11 @@ import {
 } from "@/components/ui/popover";
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
-import { mockCoursesList, mockGradeColumnList, mockTeacherGradingList } from "@/mocks";
+import {
+  mockCoursesList,
+  mockGradeColumnList,
+  mockTeacherGradingList,
+} from "@/mocks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { format } from "date-fns";
@@ -48,18 +52,9 @@ const type: any = "create";
 
 // TODO: Search debouce tìm kiếm lớp nếu cần
 
-
-
 interface DateTimeState {
   date: Date | undefined;
   time: string;
-}
-
-interface DateTimeFields {
-  start: DateTimeState;
-  end: DateTimeState;
-  late: DateTimeState;
-  close: DateTimeState;
 }
 
 const CreateExercise = () => {
@@ -92,8 +87,8 @@ const CreateExercise = () => {
   const [dateEnd, setDateEnd] = React.useState<Date>();
   const [timeEnd, setTimeEnd] = React.useState("");
 
-  const [dateRemindGrade, setDateLate] = React.useState<Date>();
-  const [timeLate, setTimeLate] = React.useState("");
+  const [dateRemindGrade, setDateRemindGrade] = React.useState<Date>();
+  const [timeRemindGrade, setTimeRemindGrade] = React.useState("");
 
   const [dateClose, setDateClose] = React.useState<Date>();
   const [timeClose, setTimeClose] = React.useState("");
@@ -191,10 +186,6 @@ const CreateExercise = () => {
     //     path: ["dateSubmit"],
     //   }
     // )
-    // .refine((data) => !(dateRemindGrade === undefined || timeLate === ""), {
-    //   message: "Bạn phải chọn thời gian nộp trễ (ngày & giờ)",
-    //   path: ["dateRemindGrade"],
-    // })
     // .refine((data) => !(dateClose === undefined || timeClose === ""), {
     //   message: "Bạn phải chọn thời gian đóng (ngày & giờ)",
     //   path: ["dateClose"],
@@ -577,9 +568,9 @@ const CreateExercise = () => {
                             </FormControl>
                             <FormDescription className="body-regular mt-2.5 text-light-500">
                               Khi bài tập tới hạn, vẫn cho phép sinh viên nộp
-                              bài nhưng sẽ bị đánh dấu là nộp bài trễ.
-                              Sinh viên sẽ không thể nộp bài tập khi quá ngày
-                              đóng bài nộp.
+                              bài nhưng sẽ bị đánh dấu là nộp bài trễ. Sinh viên
+                              sẽ không thể nộp bài tập khi quá ngày đóng bài
+                              nộp.
                             </FormDescription>
                             <FormMessage className="text-red-500" />
                           </FormItem>
@@ -600,15 +591,20 @@ const CreateExercise = () => {
                                   <Button
                                     variant={"outline"}
                                     className={`w-full flex items-center text-center font-normal ${
-                                      !dateRemindGrade && "text-muted-foreground"
+                                      !dateRemindGrade &&
+                                      "text-muted-foreground"
                                     } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
                                   >
                                     <span
                                       className={`flex-grow text-center ${
-                                        !dateRemindGrade && "text-muted-foreground"
+                                        !dateRemindGrade &&
+                                        "text-muted-foreground"
                                       }`}
                                     >
-                                      {getDisplayText(dateRemindGrade, timeLate)}
+                                      {getDisplayText(
+                                        dateRemindGrade,
+                                        timeRemindGrade
+                                      )}
                                     </span>
                                     <CalendarIcon className="ml-2 h-4 w-4" />
                                   </Button>
@@ -617,10 +613,10 @@ const CreateExercise = () => {
                                   <TimeCalendar
                                     mode="single"
                                     selected={dateRemindGrade}
-                                    onSelect={setDateLate}
-                                    selectedTime={timeLate}
+                                    onSelect={setDateRemindGrade}
+                                    selectedTime={timeRemindGrade}
                                     setSelectTime={(time) => {
-                                      setTimeLate(time);
+                                      setTimeRemindGrade(time);
                                     }}
                                     initialFocus
                                     locale={vi}
@@ -629,7 +625,8 @@ const CreateExercise = () => {
                               </Popover>
                             </FormControl>
                             <FormDescription className="body-regular mt-2.5 text-light-500">
-                              Hệ thống sẽ gửi thông báo để nhắc bạn chấm bài vào thời gian được chọn.
+                              Hệ thống sẽ gửi thông báo để nhắc bạn chấm bài vào
+                              thời gian được chọn.
                             </FormDescription>
                             <FormMessage className="text-red-500" />
                           </FormItem>
