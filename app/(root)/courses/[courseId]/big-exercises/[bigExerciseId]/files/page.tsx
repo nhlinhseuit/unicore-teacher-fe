@@ -2,58 +2,9 @@
 
 import IconButton from "@/components/shared/Button/IconButton";
 import FileDataTable from "@/components/shared/Table/TableFile/FileDataTable";
-import React from "react";
+import { mockFileDataTable } from "@/mocks";
 
 const Files = () => {
-  const mockFileDataTable = [
-    {
-      STT: 1,
-      isDeleted: false,
-      data: {
-        "Tên file": "Nộp bài tập 27/9/2024.docx",
-        "Ngày sửa đổi": "27 tháng 9 năm 2024",
-        "Người sửa đổi": "Huỳnh Hồ Thị Mộng Trinh",
-      },
-    },
-
-    {
-      STT: 2,
-      isDeleted: false,
-      data: {
-        "Tên file": "Nộp bài tập 27/9/2024.xlsx",
-        "Ngày sửa đổi": "27 tháng 9 năm 2024",
-        "Người sửa đổi": "Lê Thành Lộc",
-      },
-    },
-    {
-      STT: 3,
-      isDeleted: false,
-      data: {
-        "Tên file": "Nộp bài tập 27/9/2024.pdf",
-        "Ngày sửa đổi": "27 tháng 9 năm 2024",
-        "Người sửa đổi": "Nguyễn Hoàng Linh",
-      },
-    },
-    {
-      STT: 4,
-      isDeleted: false,
-      data: {
-        "Tên file": "Nộp bài tập 27/9/2024.pptx",
-        "Ngày sửa đổi": "27 tháng 9 năm 2024",
-        "Người sửa đổi": "Lê Thành Lộc",
-      },
-    },
-    {
-      STT: 5,
-      isDeleted: false,
-      data: {
-        "Tên file": "Nộp bài tập 27/9/2024.zip",
-        "Ngày sửa đổi": "27 tháng 9 năm 2024",
-        "Người sửa đổi": "Nguyễn Hoàng Linh",
-      },
-    },
-  ];
-
   return (
     <>
       <>

@@ -1,13 +1,13 @@
-import React from "react";
-import Image from "next/image";
-import RenderFile from "../Annoucements/RenderFile";
-import Avatar from "../../courses/Avatar";
-import OtherComment from "../../courses/OtherComment";
-import MyComment from "../../courses/MyComment";
-import Divider from "../Divider";
 import { getAvatarName } from "@/lib/utils";
-import GradingInPost from "../../courses/GradingInPost";
+import { mockSubmissionPost } from "@/mocks";
 import { Dropdown } from "flowbite-react";
+import Image from "next/image";
+import Avatar from "../../courses/Avatar";
+import GradingInPost from "../../courses/GradingInPost";
+import MyComment from "../../courses/MyComment";
+import OtherComment from "../../courses/OtherComment";
+import RenderFile from "../Annoucements/RenderFile";
+import Divider from "../Divider";
 
 interface Comment {
   id: string;
@@ -26,13 +26,6 @@ interface Props {
 }
 
 const ExercisePostItem = (params: Props) => {
-  const mockSubmissionPost = {
-    submissionNumber: 60,
-    totalNumber: 62,
-    lateTime: "2 ngày 12 tiếng",
-    columnGrade: "Quá trình",
-  };
-
   return (
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex-col w-full p-6">

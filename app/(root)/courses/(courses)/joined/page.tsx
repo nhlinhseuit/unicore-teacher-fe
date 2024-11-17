@@ -1,74 +1,29 @@
 "use client";
-import React, { useState } from "react";
-import { Dropdown } from "flowbite-react";
+import CourseItem from "@/components/courses/CourseItem";
+import MoreButtonCourseItem from "@/components/courses/MoreButtonCourseItem";
 import IconButton from "@/components/shared/Button/IconButton";
 import { DetailFilter, FilterType } from "@/constants";
+import { Dropdown } from "flowbite-react";
 import Image from "next/image";
-import MoreButtonCourseItem from "@/components/courses/MoreButtonCourseItem";
 import Link from "next/link";
-import CourseItem from "@/components/courses/CourseItem";
+import { useState } from "react";
 
+import CourseItemDialog from "@/components/courses/CourseItemDialog";
+import TableSearch from "@/components/shared/Search/TableSearch";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogTitle
 } from "@/components/ui/alert-dialog";
+import { mockCourses } from "@/mocks";
 import { useRouter } from "next/navigation";
-import CourseItemDialog from "@/components/courses/CourseItemDialog";
-import TableSearch from "@/components/shared/Search/TableSearch";
 
 const JoinedCourses = () => {
-  const mockCourses = [
-    {
-      id: "SE114.N21.PMCL",
-      name: "Nhập môn ứng dụng di động",
-      semester: "HK1/2024",
-      teachers: "Trịnh Văn A, Nguyễn Văn H, +1",
-      subCourses: [
-        {
-          id: "SE114.N21.PMCL.1",
-          teacher: "Trịnh Văn A",
-        },
-        {
-          id: "SE114.N21.PMCL.2",
-          teacher: "Nguyễn Văn H",
-        },
-        {
-          id: "SE114.N21.PMCL.3",
-          teacher: "Nguyễn Hoàng Linh",
-        },
-      ],
-    },
-    {
-      id: "SE100.N23.PMCL",
-      name: "Phương pháp phát triển phần mềm hướng đối tượng",
-      semester: "HK2/2024",
-      teachers: "Nguyễn Hoàng Linh, Nguyễn Văn H",
-      subCourses: [
-        {
-          id: "SE114.N23.PMCL.1",
-          teacher: "Trịnh Văn A",
-        },
-        {
-          id: "SE114.N23.PMCL.2",
-          teacher: "Trịnh Văn A",
-        },
-      ],
-    },
-    {
-      id: "SE502.N21",
-      name: "Đồ án 1",
-      semester: "HK1/2024",
-      teachers: "Nguyễn Hoàng Linh, Lê Thành Lộc",
-      subCourses: [],
-    },
-  ];
+
 
   const [currentCourseId, setCurrentCourseId] = useState("");
 

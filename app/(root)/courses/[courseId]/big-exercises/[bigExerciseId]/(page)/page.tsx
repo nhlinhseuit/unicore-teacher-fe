@@ -1,15 +1,16 @@
 "use client";
 
-import PostItem from "@/components/shared/PostItem/PostItem";
-import ReportPostItem from "@/components/shared/PostItem/ReportPostItem";
 import BorderButton from "@/components/shared/Button/BorderButton";
 import IconButton from "@/components/shared/Button/IconButton";
+import PostItem from "@/components/shared/PostItem/PostItem";
+import ReportPostItem from "@/components/shared/PostItem/ReportPostItem";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import { AnnouncementTabs, AnnouncementTypes, FilterType } from "@/constants";
+import { mockPostDataWithReport } from "@/mocks";
 import { Dropdown } from "flowbite-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 
 const BigExercise = () => {
   const pathName = usePathname();
@@ -19,59 +20,6 @@ const BigExercise = () => {
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(
     AnnouncementTabs[0].value
   );
-
-  const mockPostData = [
-    {
-      id: "1",
-      isReportPost: true,
-      creator: "Huỳnh Hồ Thị Mộng Trinh",
-      createdAt: "29/8/2024 7:23AM",
-      title: "Báo cáo ngày 29/9/2024",
-      fileName: "Requirements.docx",
-      comments: [
-        {
-          id: "1",
-          author: "Huỳnh Hồ Thị Mộng Trinh",
-          content: "Các em mau chóng đăng ký nhóm đúng hạn",
-        },
-        {
-          id: "2",
-          author: "Lê Thành Lộc",
-          content: "Nộp bài trễ được không cô?",
-        },
-      ],
-    },
-    {
-      id: "2",
-      isReportPost: false,
-      creator: "Huỳnh Hồ Thị Mộng Trinh",
-      createdAt: "29/8/2024 7:23AM",
-      title: "Bài tập ngày 29/9/2024",
-      fileName: "exercise.docx",
-      comments: [
-        {
-          id: "1",
-          author: "Huỳnh Hồ Thị Mộng Trinh",
-          content: "Các em mau chóng đăng ký nhóm đúng hạn",
-        },
-      ],
-    },
-    {
-      id: "3",
-      isReportPost: false,
-      creator: "Huỳnh Hồ Thị Mộng Trinh",
-      createdAt: "29/8/2024 7:23AM",
-      title: "Bài tập ngày 29/9/2024",
-      fileName: "exercise.docx",
-      comments: [
-        {
-          id: "1",
-          author: "Huỳnh Hồ Thị Mộng Trinh",
-          content: "Các em mau chóng đăng ký nhóm đúng hạn",
-        },
-      ],
-    },
-  ];
 
   return (
     <div>
@@ -232,7 +180,7 @@ const BigExercise = () => {
 
       {/* PostList */}
       <div className="mt-6 flex flex-col gap-4">
-        {mockPostData.map((item, index) => {
+        {mockPostDataWithReport.map((item, index) => {
           if (item.isReportPost)
             return (
               <ReportPostItem

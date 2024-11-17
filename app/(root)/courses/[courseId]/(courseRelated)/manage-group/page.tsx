@@ -1,23 +1,24 @@
 "use client";
-import { useState } from "react";
+import IconButton from "@/components/shared/Button/IconButton";
+import SubmitButton from "@/components/shared/Button/SubmitButton";
+import CheckboxComponent from "@/components/shared/CheckboxComponent";
+import RegisterGroupTable from "@/components/shared/Table/TableRegisterGroup/RegisterGroupTable";
+import ToggleTitle from "@/components/shared/ToggleTitle";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
+import { useToast } from "@/hooks/use-toast";
+import { mockDataStudentRegisterGroup } from "@/mocks";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
-import ToggleTitle from "@/components/shared/ToggleTitle";
-import CheckboxComponent from "@/components/shared/CheckboxComponent";
-import IconButton from "@/components/shared/Button/IconButton";
-import SubmitButton from "@/components/shared/Button/SubmitButton";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
+import { Calendar as CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import RegisterGroupTable from "@/components/shared/Table/TableRegisterGroup/RegisterGroupTable";
+import { useState } from "react";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -155,81 +156,6 @@ const CreateGroupRegister = () => {
   const handleChangeMaxMember = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMaxMember(e.target.value);
   };
-
-  // ! Từ data của group đăng ký, biến đổi nó thành data dạng này để render
-  // ! mỗi student 1 row
-  const mockDataStudentRegisterGroup = [
-    {
-      // TODO: Kh cần stt của sv ở đây
-      // TODO: Hiện tại chỉ dùng làm key
-      // * FIX: STT count ++ cho row leader
-
-      STT: "1",
-      isDeleted: false,
-      data: {
-        "Mã nhóm": "1",
-        "Tên nhóm": "Figma",
-        MSSV: "21522289",
-        SĐT: "0378060972",
-        "Họ và tên": "Nguyễn Hoàng Linh",
-      },
-    },
-    {
-      STT: "2",
-      isDeleted: false,
-      data: {
-        "Mã nhóm": "2",
-        "Tên nhóm": "STYLLE",
-        MSSV: "21522289",
-        SĐT: "0378060972",
-        "Họ và tên": "Lê Thành Lộc",
-      },
-    },
-    {
-      STT: "3",
-      isDeleted: false,
-      data: {
-        "Mã nhóm": "2",
-        "Tên nhóm": "STYLLE",
-        MSSV: "21522289",
-        SĐT: "0378060972",
-        "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
-      },
-    },
-    {
-      STT: "4",
-      isDeleted: false,
-      data: {
-        "Mã nhóm": "3",
-        "Tên nhóm": "MERN",
-        MSSV: "21522289",
-        SĐT: "0378060972",
-        "Họ và tên": "Nguyễn Tiến Vĩ",
-      },
-    },
-    {
-      STT: "5",
-      isDeleted: false,
-      data: {
-        "Mã nhóm": "3",
-        "Tên nhóm": "MERN",
-        MSSV: "21522289",
-        SĐT: "0378060972",
-        "Họ và tên": "Nguyễn Thị Thanh Tuyền",
-      },
-    },
-    {
-      STT: "6",
-      isDeleted: false,
-      data: {
-        "Mã nhóm": "4",
-        "Tên nhóm": "Đom đóm",
-        MSSV: "21522289",
-        SĐT: "0378060972",
-        "Họ và tên": "Võ Hữu Xike",
-      },
-    },
-  ];
 
   return (
     <div>

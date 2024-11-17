@@ -1,6 +1,15 @@
 "use client";
-import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import RenderCourse from "@/components/courses/RenderCourse";
+import ClosedButton from "@/components/shared/Annoucements/ClosedButton";
+import PickFileImageButton from "@/components/shared/Annoucements/PickFileImageButton";
+import RenderFile from "@/components/shared/Annoucements/RenderFile";
+import BackToPrev from "@/components/shared/BackToPrev";
+import IconButton from "@/components/shared/Button/IconButton";
+import SubmitButton from "@/components/shared/Button/SubmitButton";
+import RadioboxComponent from "@/components/shared/RadioboxComponent";
+import TableSearch from "@/components/shared/Search/TableSearch";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -10,47 +19,31 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useRouter, usePathname } from "next/navigation";
-import React from "react";
-import { Editor } from "@tinymce/tinymce-react";
 import { Input } from "@/components/ui/input";
-import { Dropdown } from "flowbite-react";
-import IconButton from "@/components/shared/Button/IconButton";
-import PickFileImageButton from "@/components/shared/Annoucements/PickFileImageButton";
-import RenderFile from "@/components/shared/Annoucements/RenderFile";
-import ClosedButton from "@/components/shared/Annoucements/ClosedButton";
-import SubmitButton from "@/components/shared/Button/SubmitButton";
-import Image from "next/image";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
-import { useToast } from "@/hooks/use-toast";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
+import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
+import { useToast } from "@/hooks/use-toast";
+import { mockCoursesList } from "@/mocks";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Editor } from "@tinymce/tinymce-react";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
-import RenderCourse from "@/components/courses/RenderCourse";
-import RadioboxComponent from "@/components/shared/RadioboxComponent";
-import BackToPrev from "@/components/shared/BackToPrev";
-import TableSearch from "@/components/shared/Search/TableSearch";
+import { Dropdown } from "flowbite-react";
+import { Calendar as CalendarIcon } from "lucide-react";
+import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 
 // ! CẬP NHẬT
 const type: any = "create";
 
 // TODO: Search debouce tìm kiếm lớp nếu cần
-
-const mockCoursesList = [
-  { id: 1, value: "SE114.N21.PMCL.1" },
-  { id: 2, value: "SE114.N21.PMCL.2" },
-  { id: 3, value: "SE100.N23.PMCL.1" },
-  { id: 4, value: "SE100.N23.PMCL.2" },
-];
 
 const CreateAnnouncement = () => {
   const editorRef = useRef(null);

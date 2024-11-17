@@ -1,6 +1,9 @@
 "use client";
-import { useRef, useState } from "react";
-import { useForm } from "react-hook-form";
+import PickFileImageButton from "@/components/shared/Annoucements/PickFileImageButton";
+import IconButton from "@/components/shared/Button/IconButton";
+import RadioboxComponent from "@/components/shared/RadioboxComponent";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Form,
   FormControl,
@@ -10,49 +13,37 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { useRouter, usePathname } from "next/navigation";
-import React from "react";
-import { Editor } from "@tinymce/tinymce-react";
 import { Input } from "@/components/ui/input";
-import { Dropdown } from "flowbite-react";
-import IconButton from "@/components/shared/Button/IconButton";
-import PickFileImageButton from "@/components/shared/Annoucements/PickFileImageButton";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
-import { useToast } from "@/hooks/use-toast";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { Calendar as CalendarIcon } from "lucide-react";
-import { Calendar } from "@/components/ui/calendar";
-import { TimeCalendar } from "@/components/ui/custom-time-calendar";
+import { useToast } from "@/hooks/use-toast";
+import { mockGradeColumnList } from "@/mocks";
+import { TopicDataItem } from "@/types";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Editor } from "@tinymce/tinymce-react";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
-import RadioboxComponent from "@/components/shared/RadioboxComponent";
-import TopicGroupTable from "../Table/TableTopic/TopicDataTable";
-import { TopicDataItem } from "@/types";
-import * as XLSX from "xlsx";
-import ErrorComponent from "../Status/ErrorComponent";
-import TableSkeleton from "../Table/components/TableSkeleton";
-import NoResult from "../Status/NoResult";
+import { Dropdown } from "flowbite-react";
+import { Calendar as CalendarIcon } from "lucide-react";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
+import React, { useRef, useState } from "react";
+import { useForm } from "react-hook-form";
+import * as XLSX from "xlsx";
+import { z } from "zod";
 import BorderContainer from "../BorderContainer";
 import SubmitButton from "../Button/SubmitButton";
+import ErrorComponent from "../Status/ErrorComponent";
+import TableSkeleton from "../Table/components/TableSkeleton";
+import TopicGroupTable from "../Table/TableTopic/TopicDataTable";
 
 // ! CẬP NHẬT
 const type: any = "create";
 
 // TODO: Search debouce tìm kiếm lớp nếu cần
-
-const mockGradeColumnList = [
-  { id: 1, value: "Quá trình - 20%" },
-  { id: 2, value: "Giữa kỳ - 30%" },
-  { id: 3, value: "Cuối kỳ - 50%" },
-];
 
 interface DateTimeState {
   date: Date | undefined;
@@ -262,67 +253,6 @@ const CreateBigExercise = () => {
     const newPath = pathName.substring(0, pathName.lastIndexOf("/"));
     router.push(newPath);
   };
-
-  const mockTopicData = [
-    {
-      STT: "1",
-      isDeleted: false,
-      data: {
-        "Tên đề tài": "Ứng dụng chia sẻ hình ảnh",
-        "Mô tả": "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
-        "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
-      },
-    },
-    {
-      STT: "2",
-      isDeleted: false,
-      data: {
-        "Tên đề tài": "Ứng dụng đặt hàng và giao đồ ăn",
-        "Mô tả":
-          "Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
-        "GV phụ trách": "Huỳnh Tuấn Anh",
-      },
-    },
-    {
-      STT: "3",
-      isDeleted: false,
-      data: {
-        "Tên đề tài": "Ứng dụng nhà thông minh",
-        "Mô tả":
-          "Giúp người dùng xây dựng một ngôi nhà thông minh và tiện lợi.",
-        "GV phụ trách": "Nguyễn Thị Thanh Trúc",
-      },
-    },
-    {
-      STT: "4",
-      isDeleted: false,
-      data: {
-        "Tên đề tài": "Ứng dụng chia sẻ hình ảnh",
-        "Mô tả": "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
-        "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
-      },
-    },
-    {
-      STT: "5",
-      isDeleted: false,
-      data: {
-        "Tên đề tài": "Ứng dụng đặt hàng và giao đồ ăn",
-        "Mô tả":
-          "Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
-        "GV phụ trách": "Huỳnh Tuấn Anh",
-      },
-    },
-    {
-      STT: "6",
-      isDeleted: false,
-      data: {
-        "Tên đề tài": "Ứng dụng nhà thông minh",
-        "Mô tả":
-          "Giúp người dùng xây dựng một ngôi nhà thông minh và tiện lợi.",
-        "GV phụ trách": "Nguyễn Thị Thanh Trúc",
-      },
-    },
-  ];
 
   return (
     <div>

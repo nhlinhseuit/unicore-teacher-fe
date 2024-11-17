@@ -1,9 +1,3 @@
-import { Table } from "flowbite-react";
-import React, { useMemo, useState } from "react";
-import NoResult from "../../Status/NoResult";
-import { tableTheme } from "../components/DataTable";
-import RowRegisterTopicTable from "./RowRegisterTopicTable";
-import { RegisterGroupDataItem, RegisterTopicDataItem } from "@/types";
 import {
   Form,
   FormControl,
@@ -13,6 +7,12 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { RegisterGroupDataItem, RegisterTopicDataItem } from "@/types";
+import { Table } from "flowbite-react";
+import { useMemo, useState } from "react";
+import NoResult from "../../Status/NoResult";
+import { tableTheme } from "../components/DataTable";
+import RowRegisterTopicTable from "./RowRegisterTopicTable";
 
 import {
   AlertDialog,
@@ -20,17 +20,18 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import Footer from "../components/Footer";
 import { itemsPerPageRegisterTable, RegisterTopicTableType } from "@/constants";
-import IconButton from "../../Button/IconButton";
-import RadioboxComponent from "../../RadioboxComponent";
-import BorderContainer from "../../BorderContainer";
+import { toast } from "@/hooks/use-toast";
+import { mockTeacherGradingList } from "@/mocks";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
-import { toast } from "@/hooks/use-toast";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import BorderContainer from "../../BorderContainer";
+import IconButton from "../../Button/IconButton";
+import RadioboxComponent from "../../RadioboxComponent";
+import Footer from "../components/Footer";
 
 interface DataTableParams {
   type: RegisterTopicTableType;
@@ -108,12 +109,6 @@ const RegisterTopicTable = (params: DataTableParams) => {
     } finally {
     }
   }
-
-  const mockTeacherGradingList = [
-    { id: 1, value: "Huỳnh Hồ Thị Mộng Trinh" },
-    { id: 2, value: "Nguyễn Thị Thanh Trúc" },
-    { id: 3, value: "Đặng Việt Dũng" },
-  ];
 
   return (
     <div>

@@ -3,106 +3,15 @@
 import IconButton from "@/components/shared/Button/IconButton";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import ScoreTranscriptTable from "@/components/shared/Table/TableScoreTranscript/ScoreTranscriptTable";
+import {
+  mockCoursesListScoreTranscript,
+  mockDataScoreTranscript,
+} from "@/mocks";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useState } from "react";
 
 const ScoreTranscript = () => {
-  const mockCoursesList = [
-    { id: 1, value: "SE114.N22.PMCL - Nhập môn ứng dụng di động" },
-    { id: 2, value: "SE121.O11.PMCL - Đồ án 1" },
-    {
-      id: 3,
-      value: "SE100.O11.PMCL - Phương pháp phát triển phần mềm hướng đối tượng",
-    },
-    { id: 4, value: "SE104.N21.PMCL - Kiểm chứng phần mềm" },
-  ];
-
-
-
-  const mockDataGradingExercise = [
-    {
-      // TODO: Kh cần stt của sv ở đây
-      // TODO: Hiện tại chỉ dùng làm key
-      // * FIX: STT count ++ cho row leader
-
-      STT: "1",
-      isDeleted: false,
-      data: {
-        "Họ và tên": "Nguyễn Hoàng Linh",
-        MSSV: "21522289",
-        "Quá trình": 9,
-        "Giữa kỳ": 8,
-        "Cuối kỳ": 10,
-        "Điểm trung bình": 8,
-      },
-    },
-    {
-      STT: "2",
-      isDeleted: false,
-      data: {
-        "Họ và tên": "Lê Thành Lộc",
-        MSSV: "21522289",
-        "Quá trình": 9,
-        "Giữa kỳ": 8,
-        "Cuối kỳ": 10,
-        "Điểm trung bình": 8,
-      },
-    },
-    {
-      STT: "3",
-      isDeleted: false,
-      data: {
-        "Họ và tên": "Võ Hữu",
-        MSSV: "21522289",
-        "Quá trình": 9,
-        "Giữa kỳ": 8,
-        "Cuối kỳ": 10,
-        "Điểm trung bình": 8,
-      },
-    },
-    {
-      // TODO: Kh cần stt của sv ở đây
-      // TODO: Hiện tại chỉ dùng làm key
-      // * FIX: STT count ++ cho row leader
-
-      STT: "4",
-      isDeleted: false,
-      data: {
-        "Họ và tên": "Nguyễn Hoàng Linh",
-        MSSV: "21522289",
-        "Quá trình": 9,
-        "Giữa kỳ": 8,
-        "Cuối kỳ": 10,
-        "Điểm trung bình": 8,
-      },
-    },
-    {
-      STT: "5",
-      isDeleted: false,
-      data: {
-        "Họ và tên": "Lê Thành Lộc",
-        MSSV: "21522289",
-        "Quá trình": 9,
-        "Giữa kỳ": 8,
-        "Cuối kỳ": 10,
-        "Điểm trung bình": 8,
-      },
-    },
-    {
-      STT: "6",
-      isDeleted: false,
-      data: {
-        "Họ và tên": "Võ Hữu",
-        MSSV: "21522289",
-        "Quá trình": 9,
-        "Giữa kỳ": 8,
-        "Cuối kỳ": 10,
-        "Điểm trung bình": 8,
-      },
-    },
-  ];
-
   const [selectedCourse, setSelectedCourse] = useState(-1);
   const [isEditTable, setIsEditTable] = useState(false);
 
@@ -127,7 +36,7 @@ const ScoreTranscript = () => {
                 <IconButton
                   text={`${
                     selectedCourse !== -1
-                      ? mockCoursesList[selectedCourse - 1].value
+                      ? mockCoursesListScoreTranscript[selectedCourse - 1].value
                       : "Chọn lớp"
                   }`}
                   onClick={() => {}}
@@ -145,7 +54,7 @@ const ScoreTranscript = () => {
               otherClasses="p-2"
             />
             <div className="scroll-container scroll-container-dropdown-content">
-              {mockCoursesList.map((course: any, index) => (
+              {mockCoursesListScoreTranscript.map((course: any, index) => (
                 <Dropdown.Item
                   key={`${course}_${index}`}
                   onClick={() => {
@@ -187,7 +96,7 @@ const ScoreTranscript = () => {
       <ScoreTranscriptTable
         isEditTable={isEditTable}
         isMultipleDelete={false}
-        dataTable={mockDataGradingExercise}
+        dataTable={mockDataScoreTranscript}
       />
     </>
   );

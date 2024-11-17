@@ -3,6 +3,7 @@ import {
   AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
 import { itemsPerPageRegisterTable } from "@/constants";
+import { mockGradeColumnPercent } from "@/mocks";
 import { ScoreTranscriptDataItem } from "@/types";
 import {
   AlertDialog,
@@ -26,12 +27,6 @@ interface DataTableParams {
 }
 
 const ScoreTranscriptTable = (params: DataTableParams) => {
-  const mockGradeColumnPercent = {
-    "Quá trình": 20,
-    "Giữa kỳ": 30,
-    "Cuối kỳ": 50,
-  };
-
   const dataTable = useMemo(() => {
     return params.dataTable.filter((dataItem) => dataItem.isDeleted !== true);
   }, [params.dataTable]);
