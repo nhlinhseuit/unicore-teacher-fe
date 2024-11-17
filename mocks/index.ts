@@ -388,8 +388,8 @@ export const mockCoursesListScoreTranscript = [
 export const mockDataScoreTranscript = [
   {
     //
-    // TODO: Kh// cần stt của sv ở đây
-    // TODO: //Hiện tại chỉ dùng làm key
+    // TODO: Kh cần stt của sv ở đây
+    // TODO: Hiện tại chỉ dùng làm key
     // * FIX:// STT count ++ cho row leader
 
     STT: "1",

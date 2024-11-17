@@ -1,21 +1,5 @@
 "use client";
 
-import { CustomFlowbiteTheme, Dropdown, Table } from "flowbite-react";
-import Row from "./Row";
-import {
-  CourseDataItem,
-  StudentDataItem,
-  SubjectDataItem,
-  TeacherDataItem,
-} from "@/types";
-import IconButton from "../../Button/IconButton";
-import { useState, useEffect, useMemo } from "react";
-import {
-  DataTableType,
-  DetailFilter,
-  FilterType,
-  itemsPerPage,
-} from "@/constants";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -26,13 +10,29 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import NoResult from "../../Status/NoResult";
-import TableSearch from "../../Search/TableSearch";
-import Image from "next/image";
-import useSetDebounceSearchTerm from "@/hooks/table/useSetDebounceSearchTerm";
-import useDetailFilter from "@/hooks/table/useDetailFilter";
+import {
+  DataTableType,
+  DetailFilter,
+  FilterType,
+  itemsPerPage,
+} from "@/constants";
 import useDebounceSearchDataTable from "@/hooks/table/useDebounceSearchDataTable";
+import useDetailFilter from "@/hooks/table/useDetailFilter";
+import useSetDebounceSearchTerm from "@/hooks/table/useSetDebounceSearchTerm";
+import {
+  CourseDataItem,
+  StudentDataItem,
+  SubjectDataItem,
+  TeacherDataItem,
+} from "@/types";
+import { CustomFlowbiteTheme, Dropdown, Table } from "flowbite-react";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
+import IconButton from "../../Button/IconButton";
+import TableSearch from "../../Search/TableSearch";
+import NoResult from "../../Status/NoResult";
 import Footer from "./Footer";
+import Row from "./Row";
 
 // TODO: filteredData là để render giao diện (search, filter old new, detail filter)
 // TODO: localData là để handle save (khi edit từ search, filter old new, detail filter, pagination)
@@ -920,6 +920,7 @@ const DataTable = (params: DataTableParams) => {
                   }
                   setIsShowDialog(-1);
                 }}
+                className="bg-primary-500 hover:bg-primary-500/90"
               >
                 Đồng ý
               </AlertDialogAction>

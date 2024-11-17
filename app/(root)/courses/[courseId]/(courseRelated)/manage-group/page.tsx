@@ -46,7 +46,7 @@ const CreateGroupRegister = () => {
     },
     {
       id: "2",
-      content: "Số lượng thành viên nhóm tối thiểu và tối đa.",
+      content: "Phải nhập số lượng thành viên nhóm tối thiểu và tối đa.",
       value: false,
     },
     { id: "3", content: "Số lượng thành viên phải là chữ số.", value: false },

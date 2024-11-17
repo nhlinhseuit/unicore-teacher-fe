@@ -8,8 +8,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogTitle
 } from "@/components/ui/alert-dialog";
 
 import {
@@ -21,7 +20,7 @@ import {
 } from "@/components/ui/menubar";
 import { CourseItemMoreComponentItems } from "@/constants";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface MoreButtonParams {
   handleEdit: () => void;
@@ -104,6 +103,7 @@ const MoreButtonCourseItem = (params: MoreButtonParams) => {
                   setIsShowDialog(false);
                   params.onClickDelete && params.onClickDelete();
                 }}
+                className="bg-primary-500 hover:bg-primary-500/90"
               >
                 Đồng ý
               </AlertDialogAction>

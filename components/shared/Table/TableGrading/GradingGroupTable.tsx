@@ -1,23 +1,23 @@
-import { Table } from "flowbite-react";
-import React, { useMemo, useState } from "react";
-import NoResult from "../../Status/NoResult";
-import { tableTheme } from "../components/DataTable";
-import RowGradingGroupTable from "./RowGradingGroupTable";
+import {
+  AlertDialogFooter,
+  AlertDialogHeader,
+} from "@/components/ui/alert-dialog";
+import { itemsPerPageRegisterTable } from "@/constants";
 import { GradingExerciseDataItem, GradingReportDataItem } from "@/types";
 import {
-  AlertDialogHeader,
-  AlertDialogFooter,
-} from "@/components/ui/alert-dialog";
-import {
   AlertDialog,
-  AlertDialogContent,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogCancel,
   AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
 } from "@radix-ui/react-alert-dialog";
+import { Table } from "flowbite-react";
+import { useMemo, useState } from "react";
+import NoResult from "../../Status/NoResult";
+import { tableTheme } from "../components/DataTable";
 import Footer from "../components/Footer";
-import { itemsPerPageRegisterTable } from "@/constants";
+import RowGradingGroupTable from "./RowGradingGroupTable";
 
 interface DataTableParams {
   isEditTable: boolean;
@@ -238,6 +238,7 @@ const GradingGroupTable = (params: DataTableParams) => {
                   // }
                   setIsShowDialog(-1);
                 }}
+                className="bg-primary-500 hover:bg-primary-500/90"
               >
                 Đồng ý
               </AlertDialogAction>

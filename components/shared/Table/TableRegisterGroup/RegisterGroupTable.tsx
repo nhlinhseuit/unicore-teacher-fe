@@ -1,23 +1,23 @@
-import { Table } from "flowbite-react";
-import React, { useMemo, useState } from "react";
-import NoResult from "../../Status/NoResult";
-import { tableTheme } from "../components/DataTable";
-import RowRegisterGroupTable from "./RowRegisterGroupTable";
-import { CourseDataItem, RegisterGroupDataItem } from "@/types";
 import {
-  AlertDialogHeader,
   AlertDialogFooter,
+  AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
+import { itemsPerPageRegisterTable } from "@/constants";
+import { RegisterGroupDataItem } from "@/types";
 import {
   AlertDialog,
-  AlertDialogContent,
-  AlertDialogTitle,
-  AlertDialogDescription,
-  AlertDialogCancel,
   AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogTitle,
 } from "@radix-ui/react-alert-dialog";
+import { Table } from "flowbite-react";
+import { useMemo, useState } from "react";
+import NoResult from "../../Status/NoResult";
+import { tableTheme } from "../components/DataTable";
 import Footer from "../components/Footer";
-import { itemsPerPageRegisterTable } from "@/constants";
+import RowRegisterGroupTable from "./RowRegisterGroupTable";
 
 interface DataTableParams {
   isEditTable: boolean;
@@ -233,6 +233,7 @@ const RegisterGroupTable = (params: DataTableParams) => {
                   // }
                   setIsShowDialog(-1);
                 }}
+                className="bg-primary-500 hover:bg-primary-500/90"
               >
                 Đồng ý
               </AlertDialogAction>

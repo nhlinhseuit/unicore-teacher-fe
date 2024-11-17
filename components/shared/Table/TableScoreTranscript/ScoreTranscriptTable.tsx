@@ -3,8 +3,7 @@ import {
   AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
 import { itemsPerPageRegisterTable } from "@/constants";
-import { mockGradeColumnPercent } from "@/mocks";
-import { ScoreTranscriptDataItem } from "@/types";
+import { GradeColumnPercentDataItem, ScoreTranscriptDataItem } from "@/types";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -24,6 +23,7 @@ interface DataTableParams {
   isEditTable: boolean;
   isMultipleDelete: boolean;
   dataTable: ScoreTranscriptDataItem[];
+  dataGradeColumnPercent: GradeColumnPercentDataItem;
 }
 
 const ScoreTranscriptTable = (params: DataTableParams) => {
@@ -96,14 +96,6 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
 
               {Object.keys(filteredDataTable[0]?.data || {}).map(
                 (key, value) => {
-                  // <Table.HeadCell
-                  //   key={key}
-                  //   theme={tableTheme?.head?.cell}
-                  //   className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
-                  // >
-                  //   {`${key}(${(value as ScoreComponentData).percent}%)`}
-                  // </Table.HeadCell>
-
                   if (
                     key === "Quá trình" ||
                     key === "Giữa kỳ" ||
@@ -115,7 +107,7 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
                         theme={tableTheme?.head?.cell}
                         className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
                       >
-                        {`${key} (${mockGradeColumnPercent[`${key}`]}%)`}
+                        {`${key} (${params.dataGradeColumnPercent[`${key}`]}%)`}
                       </Table.HeadCell>
                     );
                   }
@@ -253,6 +245,7 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
                   // }
                   setIsShowDialog(-1);
                 }}
+                className="bg-primary-500 hover:bg-primary-500/90"
               >
                 Đồng ý
               </AlertDialogAction>

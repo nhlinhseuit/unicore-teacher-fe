@@ -8,8 +8,7 @@ import {
   AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
+  AlertDialogTitle
 } from "@/components/ui/alert-dialog";
 
 import {
@@ -21,7 +20,7 @@ import {
 } from "@/components/ui/menubar";
 import { TableDataMoreComponentItems } from "@/constants";
 import Image from "next/image";
-import React, { useState } from "react";
+import { useState } from "react";
 
 interface MoreButtonParams {
   handleEdit: () => void;
@@ -32,9 +31,11 @@ interface MoreButtonParams {
 
 const MoreButtonComponent = (params: MoreButtonParams) => {
   const [isShowDialog, setIsShowDialog] = useState(false);
-  const [selectedItemDelete, setSelectedItemDelete] = useState('');
+  const [selectedItemDelete, setSelectedItemDelete] = useState("");
 
-  const rederMoreComponentItems = params.actions ? params.actions :TableDataMoreComponentItems
+  const rederMoreComponentItems = params.actions
+    ? params.actions
+    : TableDataMoreComponentItems;
 
   return (
     <>
@@ -112,6 +113,7 @@ const MoreButtonComponent = (params: MoreButtonParams) => {
                   setIsShowDialog(false);
                   // params.onClickDelete && params.onClickDelete();
                 }}
+                className="bg-primary-500 hover:bg-primary-500/90"
               >
                 Đồng ý
               </AlertDialogAction>

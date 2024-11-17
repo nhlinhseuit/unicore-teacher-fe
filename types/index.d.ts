@@ -179,6 +179,11 @@ export interface ScoreTranscriptDataItem {
   isDeleted: boolean;
   data: ScoreTranscriptData;
 }
+export interface GradeColumnPercentDataItem {
+  "Quá trình": number;
+  "Giữa kỳ": number;
+  "Cuối kỳ": number;
+}
 
 export interface CourseDataItem {
   type: string;
