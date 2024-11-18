@@ -5,7 +5,7 @@ import { DepartmentCoursesTabItems, sidebarDepartmentLinks } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React from "react";
+import React, { Fragment } from "react";
 
 const LeftSideBar = () => {
   const pathName = usePathname();
@@ -98,13 +98,8 @@ const LeftSideBar = () => {
             if (item.route === "/courses" && getCourseId()) {
               isActive = true;
 
-              console.log(
-                "leftsidebar key in if ",
-                `${item.id}_${index}_${item.route}`
-              );
-
               return (
-                <div key={`${item.id}_${index}_${item.route}`}>
+                <Fragment key={`${index}_${item.route}`}>
                   <Link
                     href={item.route}
                     className={`${
@@ -136,17 +131,12 @@ const LeftSideBar = () => {
                       {getCourseId()}
                     </p>
                   </div>
-                </div>
+                </Fragment>
               );
             } else {
-              console.log(
-                "leftsidebar key in else ",
-                `${item.id}_${index}_${item.route}`
-              );
-
               return (
                 <Link
-                  key={`${item.id}_${index}_${item.route}`}
+                  key={item.route}
                   href={item.route}
                   className={`${
                     isActive
