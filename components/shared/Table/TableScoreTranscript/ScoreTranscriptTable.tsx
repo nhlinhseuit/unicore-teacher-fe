@@ -96,7 +96,7 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
               </Table.HeadCell>
 
               {Object.keys(filteredDataTable[0]?.data || {}).map(
-                (key, value) => {
+                (key, index) => {
                   if (
                     key === "Quá trình" ||
                     key === "Giữa kỳ" ||
@@ -104,7 +104,7 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
                   ) {
                     return (
                       <Table.HeadCell
-                        key={key}
+                        key={`${key}_${index}`}
                         theme={tableTheme?.head?.cell}
                         className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
                       >
@@ -114,7 +114,7 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
                   }
                   return (
                     <Table.HeadCell
-                      key={key}
+                      key={`${key}_${index}`}
                       theme={tableTheme?.head?.cell}
                       className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
                     >
@@ -128,54 +128,49 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
             {/* BODY */}
             <Table.Body className="text-left divide-y">
               {filteredDataTable.map((dataItem, index) =>
-                dataItem.isDeleted ? (
-                  <></>
-                ) : (
-                  <>
-                    {/* //TODO: Main Row: Leader */}
-                    <RowScoreTranscriptTable
-                      key={dataItem.STT}
-                      dataItem={dataItem}
-                      isEditTable={params.isEditTable}
-                      isMultipleDelete={params.isMultipleDelete}
-                      onClickCheckBoxSelect={(item: string) => {
-                        //   setItemsSelected((prev) => {
-                        //   if (prev.includes(item)) {
-                        //     return prev.filter((i) => i !== item);
-                        //   } else {
-                        //     return [...prev, item];
-                        //   }
-                        // });
-                      }}
-                      onChangeRow={(updatedDataItem: any) => {
-                        //   setLocalDataTable((prevTable) =>
-                        //     prevTable.map((item) =>
-                        //       item.STT === updatedDataItem.STT
-                        //         ? updatedDataItem
-                        //         : item
-                        //     )
-                        //   );
-                      }}
-                      saveSingleRow={(updatedDataItem: any) => {
-                        const updatedDataTable = dataTable.map((item, index) =>
-                          item.STT === updatedDataItem.STT
-                            ? updatedDataItem
-                            : item
-                        );
+                dataItem.isDeleted ? null : (
+                  <RowScoreTranscriptTable
+                    key={dataItem.STT}
+                    dataItem={dataItem}
+                    isEditTable={params.isEditTable}
+                    isMultipleDelete={params.isMultipleDelete}
+                    onClickCheckBoxSelect={(item: string) => {
+                      //   setItemsSelected((prev) => {
+                      //   if (prev.includes(item)) {
+                      //     return prev.filter((i) => i !== item);
+                      //   } else {
+                      //     return [...prev, item];
+                      //   }
+                      // });
+                    }}
+                    onChangeRow={(updatedDataItem: any) => {
+                      //   setLocalDataTable((prevTable) =>
+                      //     prevTable.map((item) =>
+                      //       item.STT === updatedDataItem.STT
+                      //         ? updatedDataItem
+                      //         : item
+                      //     )
+                      //   );
+                    }}
+                    saveSingleRow={(updatedDataItem: any) => {
+                      const updatedDataTable = dataTable.map((item, index) =>
+                        item.STT === updatedDataItem.STT
+                          ? updatedDataItem
+                          : item
+                      );
 
-                        //   if (params.onSaveEditTable) {
-                        //     params.onSaveEditTable(updatedDataTable);
-                        //   }
-                      }}
-                      onClickGetOut={() => {
-                        // params.onClickGetOut
-                      }}
-                      deleteSingleRow={() => {
-                        //  params.onClickDelete
-                      }}
-                      viewDetailGradeColumn={params.viewDetailGradeColumn}
-                    />
-                  </>
+                      //   if (params.onSaveEditTable) {
+                      //     params.onSaveEditTable(updatedDataTable);
+                      //   }
+                    }}
+                    onClickGetOut={() => {
+                      // params.onClickGetOut
+                    }}
+                    deleteSingleRow={() => {
+                      //  params.onClickDelete
+                    }}
+                    viewDetailGradeColumn={params.viewDetailGradeColumn}
+                  />
                 )
               )}
             </Table.Body>

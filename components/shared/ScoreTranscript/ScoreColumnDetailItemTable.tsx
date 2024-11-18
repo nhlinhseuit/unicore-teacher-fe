@@ -56,11 +56,11 @@ const ScoreColumnDetailItemTable = (params: DataTableParams) => {
             theme={tableTheme?.head}
             className="sticky top-0 z-10 uppercase border-b bg-gray"
           >
-            {Object.keys(params.dataTable).map((key) => {
+            {Object.keys(params.dataTable).map((key, index) => {
               if (key === "Tỉ lệ điểm")
                 return (
                   <Table.HeadCell
-                    key={key}
+                    key={`${key}_${index}`}
                     theme={tableTheme?.head?.cell}
                     className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
                   >

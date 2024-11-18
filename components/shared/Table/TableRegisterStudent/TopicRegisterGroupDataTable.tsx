@@ -41,10 +41,10 @@ const TopicRegisterGroupDataTable = (params: DataTableParams) => {
               STT
             </Table.HeadCell>
 
-            {Object.keys(params.dataTable[0].data || {}).map((key) => {
+            {Object.keys(params.dataTable[0].data || {}).map((key, index) => {
               return (
                 <Table.HeadCell
-                  key={key}
+                key={`${key}_${index}`}
                   theme={tableTheme?.head?.cell}
                   className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
                 >

@@ -191,31 +191,37 @@ export const CourseItemMoreComponentItems = [
 // TODO: SIDEBAR
 export const sidebarDepartmentLinks: SidebarLink[] = [
   {
+    id: "1",
     imgURL: "/assets/icons/home.svg",
     route: "/",
     label: "Trang chủ",
   },
   {
+    id: "2",
     imgURL: "/assets/icons/users.svg",
     route: "/teachers",
     label: "Giảng viên",
   },
   {
+    id: "3",
     imgURL: "/assets/icons/star.svg",
     route: "/students",
     label: "Sinh viên",
   },
   {
+    id: "4",
     imgURL: "/assets/icons/suitcase.svg",
     route: "/subjects",
     label: "Môn học",
   },
   {
+    id: "5",
     imgURL: "/assets/icons/tag.svg",
     route: "/courses",
     label: "Lớp học",
   },
   {
+    id: "6",
     imgURL: "/assets/icons/user.svg",
     route: "/setting",
     label: "Cài đặt",
@@ -224,31 +230,37 @@ export const sidebarDepartmentLinks: SidebarLink[] = [
 
 export const sidebarTeacherLinks: SidebarLink[] = [
   {
+    id: "1",
     imgURL: "/assets/icons/home.svg",
     route: "/",
     label: "Trang chủ",
   },
   {
+    id: "2",
     imgURL: "/assets/icons/users.svg",
     route: "/courses",
     label: "Lớp học",
   },
   {
+    id: "3",
     imgURL: "/assets/icons/star.svg",
     route: "/timetable",
     label: "Lịch biểu",
   },
   {
+    id: "4",
     imgURL: "/assets/icons/suitcase.svg",
     route: "/messages",
     label: "Tin nhắn",
   },
   {
+    id: "5",
     imgURL: "/assets/icons/user.svg",
     route: "/bookmarks",
     label: "Dấu trang",
   },
   {
+    id: "6",
     imgURL: "/assets/icons/user.svg",
     route: "/setting",
     label: "Cài đặt",
@@ -257,31 +269,37 @@ export const sidebarTeacherLinks: SidebarLink[] = [
 
 export const sidebarStudentLinks: SidebarLink[] = [
   {
+    id: "1",
     imgURL: "/assets/icons/home.svg",
     route: "/",
     label: "Trang chủ",
   },
   {
+    id: "2",
     imgURL: "/assets/icons/users.svg",
     route: "/courses",
     label: "Lớp học",
   },
   {
+    id: "3",
     imgURL: "/assets/icons/star.svg",
     route: "/timetable",
     label: "Thời khóa biểu",
   },
   {
+    id: "4",
     imgURL: "/assets/icons/suitcase.svg",
     route: "/messages",
     label: "Tin nhắn",
   },
   {
+    id: "5",
     imgURL: "/assets/icons/user.svg",
     route: "/bookmarks",
     label: "Dấu trang",
   },
   {
+    id: "6",
     imgURL: "/assets/icons/user.svg",
     route: "/setting",
     label: "Cài đặt",

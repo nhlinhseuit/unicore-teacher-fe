@@ -98,10 +98,14 @@ const LeftSideBar = () => {
             if (item.route === "/courses" && getCourseId()) {
               isActive = true;
 
+              console.log(
+                "leftsidebar key in if ",
+                `${item.id}_${index}_${item.route}`
+              );
+
               return (
-                <>
+                <div key={`${item.id}_${index}_${item.route}`}>
                   <Link
-                    key={`${index}_${item.route}`}
                     href={item.route}
                     className={`${
                       isActive
@@ -132,12 +136,17 @@ const LeftSideBar = () => {
                       {getCourseId()}
                     </p>
                   </div>
-                </>
+                </div>
               );
             } else {
+              console.log(
+                "leftsidebar key in else ",
+                `${item.id}_${index}_${item.route}`
+              );
+
               return (
                 <Link
-                  key={item.route}
+                  key={`${item.id}_${index}_${item.route}`}
                   href={item.route}
                   className={`${
                     isActive

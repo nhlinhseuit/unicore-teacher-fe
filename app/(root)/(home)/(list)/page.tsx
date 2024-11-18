@@ -43,7 +43,7 @@ const announcements = [
     tags: [
       { _id: "1", name: "Thông báo học vụ" },
       { _id: "2", name: "Khoa học - công nghệ" },
-      { _id: "2", name: "Khoa học" },
+      { _id: "3", name: "Khoa học" },
     ],
     files: [
       { _id: "1", name: "thong_bao_dinh_kem.docx" },

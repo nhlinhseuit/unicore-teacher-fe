@@ -1,6 +1,7 @@
 import { BADGE_CRITERIA } from "@/constants";
 
 export interface SidebarLink {
+  id: string;
   imgURL: string;
   route: string;
   label: string;
