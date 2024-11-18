@@ -33,34 +33,25 @@ const NavigateButton = (params: NavigateButtonProps) => {
     >
       {params.back ? (
         <Image
-          src={"/assets/icons/chevron-left-table.svg"}
-          width={20}
-          height={20}
+          src={"/assets/icons/chevron-right-white.svg"}
+          width={6}
+          height={6}
           alt="back"
-          className="invert"
         />
       ) : null}
 
-      <div>
-        <p
-          className={` text-white max-w-[300px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap flex-grow pl-2 pr-2 text-center `}
-        >
-          {params.step}
-        </p>
-        <p
-          className={`text-white max-w-[300px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap flex-grow pl-2 pr-2 text-center `}
-        >
-          {params.text}
-        </p>
-      </div>
+      <p
+        className={` text-white max-w-[300px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap flex-grow pl-2 pr-2 text-center `}
+      >
+        {params.step}
+      </p>
 
       {params.next ? (
         <Image
-          src={"/assets/icons/chevron-right-table.svg"}
-          width={20}
-          height={20}
+          src={"/assets/icons/chevron-left-white.svg"}
+          width={6}
+          height={6}
           alt="next"
-          className="invert"
         />
       ) : null}
     </Button>

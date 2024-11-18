@@ -109,7 +109,7 @@ const CreateReport = () => {
               <div className="flex-center mt-12">
                 <NavigateButton
                   back
-                  step="Bước 1"
+                  step="Về bước 1"
                   text="Thêm lịch báo cáo đồ án"
                   onClick={goToPrevStep}
                 />
