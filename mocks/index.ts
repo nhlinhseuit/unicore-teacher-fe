@@ -395,6 +395,7 @@ export const mockDataScoreTranscript = [
     STT: "1",
     isDeleted: false,
     data: {
+      Nhóm: "STYLLE",
       "Họ và tên": "Nguyễn Hoàng Linh",
       MSSV: "21522289",
       "Quá trình": 9,
@@ -407,6 +408,7 @@ export const mockDataScoreTranscript = [
     STT: "2",
     isDeleted: false,
     data: {
+      Nhóm: "STYLLE",
       "Họ và tên": "Lê Thành Lộc",
       MSSV: "21522289",
       "Quá trình": 9,
@@ -419,6 +421,7 @@ export const mockDataScoreTranscript = [
     STT: "3",
     isDeleted: false,
     data: {
+      Nhóm: "Mern",
       "Họ và tên": "Võ Hữu",
       MSSV: "21522289",
       "Quá trình": 9,
@@ -428,14 +431,10 @@ export const mockDataScoreTranscript = [
     },
   },
   {
-    //
-    // TODO: Kh// cần stt của sv ở đây
-    // TODO: //Hiện tại chỉ dùng làm key
-    // * FIX:// STT count ++ cho row leader
-
     STT: "4",
     isDeleted: false,
     data: {
+      Nhóm: "STYLLE",
       "Họ và tên": "Nguyễn Hoàng Linh",
       MSSV: "21522289",
       "Quá trình": 9,
@@ -448,6 +447,7 @@ export const mockDataScoreTranscript = [
     STT: "5",
     isDeleted: false,
     data: {
+      Nhóm: "STYLLE",
       "Họ và tên": "Lê Thành Lộc",
       MSSV: "21522289",
       "Quá trình": 9,
@@ -460,6 +460,7 @@ export const mockDataScoreTranscript = [
     STT: "6",
     isDeleted: false,
     data: {
+      Nhóm: "Mern",
       "Họ và tên": "Võ Hữu",
       MSSV: "21522289",
       "Quá trình": 9,
@@ -1375,3 +1376,49 @@ export const mockGradeColumnPercent = {
   "Giữa kỳ": 30,
   "Cuối kỳ": 50,
 };
+
+//
+// TODO: Big Exercise Id Page
+//
+
+export const mockPostDataGradingDetail = [
+  {
+    id: "1",
+    creator: "Huỳnh Hồ Thị Mộng Trinh",
+    createdAt: "29/8/2024 7:23AM",
+    title: "Bài tập ngày 29/9/2024",
+    fileName: "exercise.docx",
+    scoreDetail: {
+      "Bài nộp": "NHL_Bài 1.docx",
+      Điểm: 9,
+      "Góp ý": "Bài làm sai sót nhiều",
+      "Tỉ lệ điểm": 33,
+    },
+  },
+  {
+    id: "2",
+    creator: "Huỳnh Hồ Thị Mộng Trinh",
+    createdAt: "29/8/2024 7:23AM",
+    title: "Bài tập ngày 29/9/2024",
+    fileName: "exercise.docx",
+    scoreDetail: {
+      "Bài nộp": "NHL_Bài 1.docx",
+      Điểm: 8,
+      "Góp ý": "Bài làm tốt",
+      "Tỉ lệ điểm": 33,
+    },
+  },
+  {
+    id: "3",
+    creator: "Huỳnh Hồ Thị Mộng Trinh",
+    createdAt: "29/8/2024 7:23AM",
+    title: "Bài tập ngày 29/9/2024",
+    fileName: "exercise.docx",
+    scoreDetail: {
+      "Bài nộp": "NHL_Bài 1.docx",
+      Điểm: 10,
+      "Góp ý": "",
+      "Tỉ lệ điểm": 34,
+    },
+  },
+];

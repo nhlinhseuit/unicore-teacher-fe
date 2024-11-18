@@ -24,6 +24,7 @@ interface DataTableParams {
   isMultipleDelete: boolean;
   dataTable: ScoreTranscriptDataItem[];
   dataGradeColumnPercent: GradeColumnPercentDataItem;
+  viewDetailGradeColumn: () => void;
 }
 
 const ScoreTranscriptTable = (params: DataTableParams) => {
@@ -172,27 +173,8 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
                       deleteSingleRow={() => {
                         //  params.onClickDelete
                       }}
+                      viewDetailGradeColumn={params.viewDetailGradeColumn}
                     />
-
-                    {/* //TODO: MEMBER */}
-                    {/* {dataItem.data.listStudent
-                      .filter((student) => !student.isLeader)
-                      .map((student, index) => (
-                        <RowScoreTranscriptTable
-                          key={`${dataItem.STT}-${index}`}
-                          dataItem={{
-                            ...dataItem,
-                            data: { ...dataItem.data, student },
-                          }}
-                          isEditTable={params.isEditTable}
-                          isMultipleDelete={params.isMultipleDelete}
-                          onClickCheckBoxSelect={() => {}}
-                          onChangeRow={() => {}}
-                          saveSingleRow={() => {}}
-                          onClickGetOut={() => {}}
-                          deleteSingleRow={() => {}}
-                        />
-                      ))} */}
                   </>
                 )
               )}

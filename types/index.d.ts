@@ -85,6 +85,7 @@ export interface GradingReportData {
 
 export interface ScoreTranscriptData {
   MSSV: string;
+  Nhóm: string;
   "Họ và tên": string;
   "Quá trình": number;
   "Giữa kỳ": number;
@@ -169,6 +170,22 @@ export interface GradingExerciseDataItem {
   isDeleted: boolean;
   data: GradingExerciseData;
 }
+
+export interface PostDataGradingDetailItem {
+  id: string;
+  creator: string;
+  createdAt: string;
+  title: string;
+  fileName: string;
+  scoreDetail: DataGradingDetailItem;
+}
+export interface DataGradingDetailItem {
+  "Bài nộp": string;
+  Điểm: number;
+  "Góp ý": string;
+  "Tỉ lệ điểm": number;
+}
+
 export interface GradingReportDataItem {
   STT: string;
   isDeleted: boolean;

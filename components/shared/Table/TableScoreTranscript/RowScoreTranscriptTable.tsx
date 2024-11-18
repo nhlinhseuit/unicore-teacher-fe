@@ -15,6 +15,7 @@ interface RowParams {
   deleteSingleRow?: (itemsSelected: string[]) => void;
   onClickCheckBoxSelect?: (item: string) => void;
   onChangeRow?: (item: any) => void;
+  viewDetailGradeColumn: () => void;
 }
 interface handleInputChangeParams {
   key: ScoreTranscriptData;
@@ -28,11 +29,6 @@ const RowGradingGroupTable = React.memo(
   (params: RowParams) => {
     const [isEdit, setIsEdit] = useState(false);
     const [editDataItem, setEditDataItem] = useState(params.dataItem);
-
-    const [isChecked, setIsChecked] = useState(
-      //@ts-ignore
-      params.dataItem.data["Điểm danh"] as boolean
-    );
 
     const refInput = useRef({});
 
@@ -92,35 +88,30 @@ const RowGradingGroupTable = React.memo(
       value: any,
       isEdit: boolean
     ) => {
-      if (
-        (key === "Điểm" || key === "Góp ý") &&
-        (isEdit || params.isEditTable)
-      ) {
-        return (
-          <InputComponent
-            key={`${keyId}_input_${key}_${value}`}
-            value={value as string | number}
-            placeholder={value as string | number}
-            //@ts-ignore
-            onChange={(newValue) =>
+      if (key === "Quá trình" || key === "Giữa kỳ" || key === "Cuối kỳ") {
+        if (isEdit || params.isEditTable) {
+          return (
+            <InputComponent
+              key={`${keyId}_input_${key}_${value}`}
+              value={value as string | number}
+              placeholder={value as string | number}
               //@ts-ignore
-              handleInputChange({ key: key, newValue: newValue })
-            }
-          />
-        );
-      } else if (key === "Hình thức") {
-        return value ? "Nhóm" : "Cá nhân";
-      } else if (key === "Trễ hạn" && value === "0") {
-        return "Không";
-      } else if (key === "Điểm danh") {
-        return (
-          <input
-            type="checkbox"
-            checked={isChecked}
-            onChange={() => setIsChecked((prev) => !prev)} // Cập nhật state khi có thay đổi
-            className="w-4 h-4 cursor-pointer"
-          />
-        );
+              onChange={(newValue) =>
+                //@ts-ignore
+                handleInputChange({ key: key, newValue: newValue })
+              }
+            />
+          );
+        } else {
+          return (
+            <span
+              className="cursor-pointer underline"
+              onClick={params.viewDetailGradeColumn}
+            >
+              {value}
+            </span>
+          );
+        }
       } else {
         return value;
       }
@@ -202,6 +193,8 @@ const RowGradingGroupTable = React.memo(
               }}
               className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left 
                 ${typeof value === "number" ? "text-center" : ""}
+                
+                }
             `}
             >
               {renderTableCellValue(keyId, key, value, isEdit)}
