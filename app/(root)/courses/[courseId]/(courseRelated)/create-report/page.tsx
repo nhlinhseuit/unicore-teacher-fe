@@ -7,6 +7,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
 import ReportInfo from "./ReportInfo";
 import NavigateButton from "@/components/shared/Button/NavigateButton";
+import ReportSchedule from "./ReportSchedule";
 
 const CreateReport = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -37,6 +38,7 @@ const CreateReport = () => {
         <BackToPrev
           text={"Quay lại danh sách thông báo"}
           onClickPrev={handleClick}
+          otherClasses={"mt-6"}
         />
 
         <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center">
@@ -90,9 +92,8 @@ const CreateReport = () => {
         <>
           {currentStep === 1 && (
             <div>
-              <h2 className="text-lg font-semibold">Nội dung Bước 2</h2>
-              <p>Đây là nội dung của bước 2.</p>
-
+              <ReportSchedule/>
+              
               <div className="flex-center mt-12">
                 <NavigateButton
                   next

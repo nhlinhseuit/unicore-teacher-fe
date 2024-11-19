@@ -9,6 +9,7 @@ interface Props {
   linkPrev?: string;
   bold?: boolean;
   onClickPrev?: () => void;
+  otherClasses?: string;
 }
 
 const BackToPrev = (params: Props) => {
@@ -16,7 +17,7 @@ const BackToPrev = (params: Props) => {
 
   return (
     <div
-      className="inline-flex justify-start mt-4 mb-6 text-sm cursor-pointer"
+      className={`inline-flex justify-start mt-4 mb-6 text-sm cursor-pointer ${params.otherClasses}`}
       onClick={() => {
         if (params.linkPrev) {
           router.push(params.linkPrev);

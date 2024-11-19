@@ -1,5 +1,15 @@
 import { BADGE_CRITERIA } from "@/constants";
 
+// TODO: PAGE INTERFACE
+
+interface ReportDataOption {
+  dateSchedule: Date | undefined;
+  timeSchedule: string;
+  value: number;
+}
+
+// TODO: DATA INTERFACE
+
 export interface SidebarLink {
   id: string;
   imgURL: string;
