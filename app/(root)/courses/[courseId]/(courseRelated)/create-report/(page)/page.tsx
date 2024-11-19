@@ -1,23 +1,22 @@
 "use client";
 
 import BackToPrev from "@/components/shared/BackToPrev";
-import IconButton from "@/components/shared/Button/IconButton";
+import NavigateButton from "@/components/shared/Button/NavigateButton";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import ReportInfo from "./ReportInfo";
-import NavigateButton from "@/components/shared/Button/NavigateButton";
-import ReportSchedule from "./ReportSchedule";
+import ReportInfo from "../ReportInfo";
+import ReportSchedule from "../ReportSchedule";
 import {
-  sReportOptions,
-  sDateStart,
-  sTimeStart,
+  sCompletedReportSchedule,
   sDateEnd,
-  sTimeEnd,
+  sDateStart,
+  sReportOptions,
   sSelectedSettingOption,
   sSubmitReportSchedule,
-  sCompletedReportSchedule,
-} from "./(store)/createReportStore";
+  sTimeEnd,
+  sTimeStart,
+} from "../(store)/createReportStore";
 
 const CreateReport = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -31,22 +30,8 @@ const CreateReport = () => {
   ];
 
   const goToNextStep = () => {
-    var ReportOptions = sReportOptions.value;
-    var DateStart = sDateStart.value;
-    var TimeStart = sTimeStart.value;
-    var DateEnd = sDateEnd.value;
-    var TimeEnd = sTimeEnd.value;
-    var SelectedSettingOption = sSelectedSettingOption.value;
-
-    console.log("sSubmitReportSchedule .set(true)");
+    // xong thông tin của report schedule
     sSubmitReportSchedule.set(true);
-
-    console.log("ReportOptions", ReportOptions);
-    console.log("DateStart", DateStart);
-    console.log("TimeStart", TimeStart);
-    console.log("DateEnd", DateEnd);
-    console.log("TimeEnd", TimeEnd);
-    console.log("SelectedSettingOption", SelectedSettingOption);
 
     // check valid của component con
     if (sCompletedReportSchedule.value == false) {
@@ -57,7 +42,7 @@ const CreateReport = () => {
     }
 
     if (currentStep < steps.length) setCurrentStep(currentStep + 1);
-    sSubmitReportSchedule.set(true);
+    sSubmitReportSchedule.set(false);
   };
   const goToPrevStep = () => {
     if (currentStep > 0) setCurrentStep(currentStep - 1);
@@ -66,6 +51,15 @@ const CreateReport = () => {
   const handleClick = () => {
     const newPath = pathName.substring(0, pathName.lastIndexOf("/"));
     router.push(newPath);
+
+    sReportOptions.reset();
+    sDateStart.reset();
+    sTimeStart.reset();
+    sDateEnd.reset();
+    sTimeEnd.reset();
+    sSelectedSettingOption.reset();
+    sSubmitReportSchedule.reset();
+    sCompletedReportSchedule.reset();
   };
 
   return (

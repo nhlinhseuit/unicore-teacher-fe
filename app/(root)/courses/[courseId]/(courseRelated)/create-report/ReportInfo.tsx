@@ -45,6 +45,16 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import {
+  sCompletedReportSchedule,
+  sDateEnd,
+  sDateStart,
+  sReportOptions,
+  sSelectedSettingOption,
+  sSubmitReportSchedule,
+  sTimeEnd,
+  sTimeStart,
+} from "./(store)/createReportStore";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -239,6 +249,7 @@ const ReportInfo = () => {
       // naviate to home page
       router.push("/");
 
+      // ?? LẤY DATA TỪ STEP TRƯỚC + DATA STEP NÀY
       toast({
         title: "Tạo thông báo thành công.",
         description: `Thông báo đã được gửi đến lớp ${
@@ -249,6 +260,15 @@ const ReportInfo = () => {
         variant: "success",
         duration: 3000,
       });
+
+      sReportOptions.reset();
+      sDateStart.reset();
+      sTimeStart.reset();
+      sDateEnd.reset();
+      sTimeEnd.reset();
+      sSelectedSettingOption.reset();
+      sSubmitReportSchedule.reset();
+      sCompletedReportSchedule.reset();
     } catch {
     } finally {
       setIsSubmitting(false);
