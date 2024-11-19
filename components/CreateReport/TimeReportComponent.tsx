@@ -12,6 +12,11 @@ import { vi } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
 import React, { useState } from "react";
 import CustomNumberInput from "./CustomNumberInput";
+import {
+  sCompletedReportSchedule,
+  sReportOptions,
+  sSubmitReportSchedule,
+} from "@/app/(root)/courses/[courseId]/(courseRelated)/create-report/(store)/createReportStore";
 
 interface Props {
   id: number;
@@ -42,6 +47,29 @@ const TimeReportComponent = ({
       : "Chọn ngày & giờ";
   };
 
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+
+  sSubmitReportSchedule.watch((newValue) => {
+    console.log(" update tại Time report component ", newValue);
+    console.log("thuc hien check valid");
+
+    console.log(`timereport id=${id}  dateSchedule`, dateSchedule);
+    console.log(`timereport id=${id}   timeSchedule`, timeSchedule);
+
+    const reportOptions = sReportOptions.value;
+
+    if (
+      !reportOptions[id - 1].dateSchedule ||
+      reportOptions[id - 1].timeSchedule === ""
+    ) {
+      setErrorMessage("Phải chọn ngày và thời gian tại đây");
+      sCompletedReportSchedule.set(false);
+    } else {
+      setErrorMessage(undefined);
+      sCompletedReportSchedule.set(true);
+    }
+  }, []);
+
   // const [dateSchedule, setDateSchedule] = React.useState<Date>();
   // const [timeSchedule, setTimeSchedule] = React.useState("");
 
@@ -51,6 +79,10 @@ const TimeReportComponent = ({
   // const handleDecrement = () => {
   //   if (value > 1) setValue(value - 1); // Giảm giá trị nhưng không nhỏ hơn 1
   // };
+
+  console.log(`re-render id=${id}  dateSchedule`, dateSchedule);
+  console.log(`re-render id=${id}  timeSchedule`, timeSchedule);
+  console.log(`re-render id=${id}  errorMessage`, errorMessage);
 
   return (
     <>
@@ -94,6 +126,12 @@ const TimeReportComponent = ({
           onDecrement={onValueDecrement}
         />
       </div>
+
+      {errorMessage ? (
+        <p className="mt-3.5 text-[0.8rem] font-medium dark:text-red-900 text-red-500">
+          {errorMessage}
+        </p>
+      ) : null}
     </>
   );
 };

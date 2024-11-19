@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import BackToPrev from "../BackToPrev";
 import IconButton from "../Button/IconButton";
 import PostScoreColumnDetailItem from "./PostScoreColumnDetailItem";
-import { sErrorList } from "./scoreDetailStore";
+import { sErrorList } from "./(store)/scoreDetailStore";
 
 interface Props {
   onClickPrev: () => void;

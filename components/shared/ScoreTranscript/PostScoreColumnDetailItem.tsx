@@ -6,7 +6,7 @@ import RenderFile from "../Annoucements/RenderFile";
 import IconButton from "../Button/IconButton";
 import Divider from "../Divider";
 import ScoreColumnDetailItemTable from "./ScoreColumnDetailItemTable";
-import { sErrorList } from "./scoreDetailStore";
+import { sErrorList } from "./(store)/scoreDetailStore";
 
 interface Props {
   postScoreDetail: PostDataGradingDetailItem;

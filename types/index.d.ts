@@ -3,6 +3,7 @@ import { BADGE_CRITERIA } from "@/constants";
 // TODO: PAGE INTERFACE
 
 interface ReportDataOption {
+  id: number;
   dateSchedule: Date | undefined;
   timeSchedule: string;
   value: number;

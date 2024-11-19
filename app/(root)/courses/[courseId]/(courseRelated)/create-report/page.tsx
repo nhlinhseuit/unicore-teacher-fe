@@ -8,6 +8,16 @@ import { useState } from "react";
 import ReportInfo from "./ReportInfo";
 import NavigateButton from "@/components/shared/Button/NavigateButton";
 import ReportSchedule from "./ReportSchedule";
+import {
+  sReportOptions,
+  sDateStart,
+  sTimeStart,
+  sDateEnd,
+  sTimeEnd,
+  sSelectedSettingOption,
+  sSubmitReportSchedule,
+  sCompletedReportSchedule,
+} from "./(store)/createReportStore";
 
 const CreateReport = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -21,7 +31,33 @@ const CreateReport = () => {
   ];
 
   const goToNextStep = () => {
+    var ReportOptions = sReportOptions.value;
+    var DateStart = sDateStart.value;
+    var TimeStart = sTimeStart.value;
+    var DateEnd = sDateEnd.value;
+    var TimeEnd = sTimeEnd.value;
+    var SelectedSettingOption = sSelectedSettingOption.value;
+
+    console.log("sSubmitReportSchedule .set(true)");
+    sSubmitReportSchedule.set(true);
+
+    console.log("ReportOptions", ReportOptions);
+    console.log("DateStart", DateStart);
+    console.log("TimeStart", TimeStart);
+    console.log("DateEnd", DateEnd);
+    console.log("TimeEnd", TimeEnd);
+    console.log("SelectedSettingOption", SelectedSettingOption);
+
+    // check valid của component con
+    if (sCompletedReportSchedule.value == false) {
+      console.log("sCompletedReportSchedule.value == false");
+      // ? set lại để component con watch lại
+      sSubmitReportSchedule.set(false);
+      return;
+    }
+
     if (currentStep < steps.length) setCurrentStep(currentStep + 1);
+    sSubmitReportSchedule.set(true);
   };
   const goToPrevStep = () => {
     if (currentStep > 0) setCurrentStep(currentStep - 1);
@@ -92,8 +128,8 @@ const CreateReport = () => {
         <>
           {currentStep === 1 && (
             <div>
-              <ReportSchedule/>
-              
+              <ReportSchedule />
+
               <div className="flex-center mt-12">
                 <NavigateButton
                   next
