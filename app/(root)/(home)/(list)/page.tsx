@@ -13,70 +13,9 @@ import Image from "next/image";
 import FilterAnnoucements from "@/components/shared/Annoucements/FilterAnnoucements";
 import ClosedButton from "@/components/shared/Annoucements/ClosedButton";
 import TableSearch from "@/components/shared/Search/TableSearch";
+import { mockAnnouncementLists } from "@/mocks";
 
-const announcements = [
-  {
-    _id: "1",
-    title: "Đăng ký đề tài đồ án 1 và đồ án 2 học kỳ 1 năm học 2024 - 2025",
-    description:
-      "Khoa Công nghệ Phần mềm thông báo các sinh viên đăng ký học phần thực tập doanh nghiệp học kỳ 1 năm học 2024 - 2025 lớp SE501.P11 và SE501.P11.PMCL cập nhật thông tin thực tập doanh nghiệp vào các file sau...",
-    tags: [
-      { _id: "1", name: "Thông báo học vụ" },
-      { _id: "2", name: "Khoa học - công nghệ" },
-    ],
-    files: [
-      { _id: "1", name: "thong_bao_dinh_kem.docx" },
-      { _id: "2", name: "thong_bao_dinh_kem.docx" },
-    ],
-    author: {
-      _id: "2",
-      name: "Trần Hạnh Xuân",
-      picture: "jane-smith.jpg",
-    },
-    createdAt: "T2, 22/07/2024 - 09:45",
-  },
-  {
-    _id: "2",
-    title: "Đăng ký đề tài đồ án 1 và đồ án 2 học kỳ 1 năm học 2024 - 2025",
-    description:
-      "Khoa Công nghệ Phần mềm thông báo các sinh viên đăng ký học phần thực tập doanh nghiệp học kỳ 1 năm học 2024 - 2025 lớp SE501.P11 và SE501.P11.PMCL cập nhật thông tin thực tập doanh nghiệp vào các file sau...",
-    tags: [
-      { _id: "1", name: "Thông báo học vụ" },
-      { _id: "2", name: "Khoa học - công nghệ" },
-      { _id: "3", name: "Khoa học" },
-    ],
-    files: [
-      { _id: "1", name: "thong_bao_dinh_kem.docx" },
-      { _id: "2", name: "thong_bao_dinh_kem.docx" },
-    ],
-    author: {
-      _id: "2",
-      name: "Trần Hạnh Xuân",
-      picture: "jane-smith.jpg",
-    },
-    createdAt: "T2, 22/07/2024 - 09:45",
-  },
-  {
-    _id: "3",
-    title: "Đăng ký đề tài đồ án 1 và đồ án 2 học kỳ 1 năm học 2024 - 2025",
-    description:
-      "Khoa Công nghệ Phần mềm thông báo các sinh viên đăng ký học phần thực tập doanh nghiệp học kỳ 1 năm học 2024 - 2025 lớp SE501.P11 và SE501.P11.PMCL cập nhật thông tin thực tập doanh nghiệp vào các file sau...",
-    tags: [
-      { _id: "1", name: "Thông báo học vụ" },
-      { _id: "2", name: "Khoa học - công nghệ" },
-    ],
-    files: [
-      { _id: "1", name: "thong_bao_dinh_kem.docx" },
-      { _id: "2", name: "thong_bao_dinh_kem.docx" },
-    ],
-    author: {
-      _id: "2",
-      name: "Trần Hạnh Xuân",
-      picture: "jane-smith.jpg",
-    },
-    createdAt: "T2, 22/07/2024 - 09:45",
-  },
-];
+
 
 const Home = () => {
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(
@@ -293,8 +232,8 @@ const Home = () => {
       {/* LIST ANNOUNCEMENTS */}
       <div className="flex">
         <div className="w-[80%] max-lg:w-full mt-6 flex flex-col gap-4">
-          {announcements.length > 0 ? (
-            announcements.map((question) => (
+          {mockAnnouncementLists.length > 0 ? (
+            mockAnnouncementLists.map((question) => (
               <Announcement
                 key={question._id}
                 _id={question._id}

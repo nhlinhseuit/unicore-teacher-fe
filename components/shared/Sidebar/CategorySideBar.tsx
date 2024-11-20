@@ -1,17 +1,7 @@
+import { mockCategoryList } from "@/mocks";
 import Image from "next/image";
 import React from "react";
 
-const categoryList = [
-  { id: 1, value: "Thông báo - tin tức" },
-  { id: 2, value: "Khoa học - Công nghệ" },
-  { id: 3, value: "Sự kiện nổi bật" },
-  { id: 4, value: "Thông báo - tin tức" },
-  { id: 5, value: "Khoa học - Công nghệ" },
-  { id: 6, value: "Sự kiện nổi bật" },
-  { id: 7, value: "Thông báo - tin tức" },
-  { id: 8, value: "Khoa học - Công nghệ" },
-  { id: 9, value: "Sự kiện nổi bật" },
-];
 
 const CategorySideBar = () => {
   return (
@@ -33,7 +23,7 @@ const CategorySideBar = () => {
           <div className="flex flex-col gap-4">
             <p className="text-center base-semibold line-clamp-1">Danh mục</p>
 
-            {categoryList.map((item) => (
+            {mockCategoryList.map((item) => (
               <div key={item.id} className="flex gap-4">
                 <input
                   type="checkbox"
