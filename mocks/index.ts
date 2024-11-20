@@ -1547,7 +1547,6 @@ export const mockGradeColumnPercent = {
 //
 // TODO: Big Exercise Id Page
 //
-
 export const mockPostDataGradingDetail = [
   {
     id: "1",
@@ -1588,4 +1587,12 @@ export const mockPostDataGradingDetail = [
       "Tỉ lệ điểm": 34,
     },
   },
+];
+
+//
+// TODO: Steps create report
+//
+export const mockStepsCreateReport = [
+  { id: 1, title: "Bước 1", desc: "Thêm lịch báo cáo" },
+  { id: 2, title: "Bước 2", desc: "Thông tin báo cáo đồ án" },
 ];

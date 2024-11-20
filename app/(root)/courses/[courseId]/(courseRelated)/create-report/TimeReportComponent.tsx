@@ -1,5 +1,11 @@
 "use client";
 
+import {
+  sCompletedReportSchedule,
+  sReportOptions,
+  sSubmitReportSchedule,
+} from "@/app/(root)/courses/[courseId]/(courseRelated)/create-report/(store)/createReportStore";
+import MiniButton from "@/components/shared/Button/MiniButton";
 import { Button } from "@/components/ui/button";
 import { TimeCalendar } from "@/components/ui/custom-time-calendar";
 import {
@@ -10,13 +16,8 @@ import {
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
-import React, { useState } from "react";
+import { useState } from "react";
 import CustomNumberInput from "./CustomNumberInput";
-import {
-  sCompletedReportSchedule,
-  sReportOptions,
-  sSubmitReportSchedule,
-} from "@/app/(root)/courses/[courseId]/(courseRelated)/create-report/(store)/createReportStore";
 
 interface Props {
   id: number;
@@ -47,7 +48,9 @@ const TimeReportComponent = ({
       : "Chọn ngày & giờ";
   };
 
-  const [errorMessage, setErrorMessage] = useState<string | undefined>(undefined);
+  const [errorMessage, setErrorMessage] = useState<string | undefined>(
+    undefined
+  );
 
   sSubmitReportSchedule.watch((newValue) => {
     console.log(" update tại Time report component ", newValue);
@@ -86,9 +89,22 @@ const TimeReportComponent = ({
 
   return (
     <>
-      <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-medium leading-[20.8px]">
-        Lựa chọn {id}
-      </label>
+      <div className="flex items-center gap-4">
+        <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[12px] font-semibold leading-[20.8px]">
+          Lựa chọn {id}
+        </label>
+
+        <div className="flex-center">
+          <MiniButton
+            key={1}
+            value={1}
+            icon={"/assets/icons/minus-white.svg"}
+            bgColor="bg-[#F02021]"
+            onClick={onRemove}
+            otherClasses={"w-[18px] h-[18px]"}
+          />
+        </div>
+      </div>
 
       <div className="mt-3 flex gap-4">
         <Popover>

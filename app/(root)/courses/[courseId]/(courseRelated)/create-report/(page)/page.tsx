@@ -2,11 +2,10 @@
 
 import BackToPrev from "@/components/shared/BackToPrev";
 import NavigateButton from "@/components/shared/Button/NavigateButton";
+import { mockStepsCreateReport } from "@/mocks";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useState } from "react";
-import ReportInfo from "../ReportInfo";
-import ReportSchedule from "../ReportSchedule";
 import {
   sCompletedReportSchedule,
   sDateEnd,
@@ -17,6 +16,8 @@ import {
   sTimeEnd,
   sTimeStart,
 } from "../(store)/createReportStore";
+import ReportInfo from "../ReportInfo";
+import ReportSchedule from "../ReportSchedule";
 
 const CreateReport = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -24,10 +25,6 @@ const CreateReport = () => {
   const router = useRouter();
   const pathName = usePathname();
 
-  const steps = [
-    { id: 1, title: "Bước 1", desc: "Thêm lịch báo cáo" },
-    { id: 2, title: "Bước 2", desc: "Thông tin báo cáo đồ án" },
-  ];
 
   const goToNextStep = () => {
     // xong thông tin của report schedule
@@ -41,7 +38,7 @@ const CreateReport = () => {
       return;
     }
 
-    if (currentStep < steps.length) setCurrentStep(currentStep + 1);
+    if (currentStep < mockStepsCreateReport.length) setCurrentStep(currentStep + 1);
     sSubmitReportSchedule.set(false);
   };
   const goToPrevStep = () => {
@@ -72,7 +69,7 @@ const CreateReport = () => {
         />
 
         <div className="absolute left-1/2 transform -translate-x-1/2 flex items-center">
-          {steps.map((step, index) => (
+          {mockStepsCreateReport.map((step, index) => (
             <div key={step.id} className="flex items-center">
               {/* Icon Step và Title */}
               <div
@@ -104,7 +101,7 @@ const CreateReport = () => {
               </div>
 
               {/* Divider */}
-              {index < steps.length - 1 && (
+              {index < mockStepsCreateReport.length - 1 && (
                 <div
                   className={`h-[3px] ${
                     currentStep > step.id ? "bg-blue-500" : "bg-gray-200"

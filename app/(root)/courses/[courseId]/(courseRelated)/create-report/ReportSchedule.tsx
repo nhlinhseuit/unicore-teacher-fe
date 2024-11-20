@@ -46,7 +46,6 @@ const ReportSchedule = () => {
       : "Chọn ngày & giờ";
   };
 
-
   // ! BIẾN CHO CÁC TRƯỜNG DATA SETTING
   // const [dateStart, setDateStart] = React.useState<Date>();
   // const [timeStart, setTimeStart] = React.useState("");
@@ -166,7 +165,7 @@ const ReportSchedule = () => {
                       icon={"/assets/icons/add.svg"}
                       bgColor="bg-primary-500"
                       onClick={handleAddReport}
-                      otherClasses={"w-[26px] h-[26px] mr-10"}
+                      otherClasses={"w-[25px] h-[25px]"}
                     />
                   </div>
 
