@@ -95,14 +95,16 @@ const TimeReportComponent = ({
         </label>
 
         <div className="flex-center">
-          <MiniButton
-            key={1}
-            value={1}
-            icon={"/assets/icons/minus-white.svg"}
-            bgColor="bg-[#F02021]"
-            onClick={onRemove}
-            otherClasses={"w-[18px] h-[18px]"}
-          />
+          {sReportOptions.value.length !== 1 ? (
+            <MiniButton
+              key={1}
+              value={1}
+              icon={"/assets/icons/minus-white.svg"}
+              bgColor="bg-[#F02021]"
+              onClick={onRemove}
+              otherClasses={"!w-[18px] !h-[18px]"}
+            />
+          ) : null}
         </div>
       </div>
 

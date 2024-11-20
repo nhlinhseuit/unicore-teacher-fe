@@ -181,7 +181,7 @@ const BigExercise = () => {
       {/* PostList */}
       <div className="mt-6 flex flex-col gap-4">
         {mockPostDataWithReport.map((item, index) => {
-          if (item.isReportPost)
+          if (item.typePost === 'report')
             return (
               <ReportPostItem
                 key={item.id}

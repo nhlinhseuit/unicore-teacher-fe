@@ -7,6 +7,7 @@ import GradingInPost from "../../courses/GradingInPost";
 import MyComment from "../../courses/MyComment";
 import OtherComment from "../../courses/OtherComment";
 import RenderFile from "../Annoucements/RenderFile";
+import StatusButton from "../Button/StatusButton";
 import Divider from "../Divider";
 
 interface Comment {
@@ -35,6 +36,12 @@ const ExercisePostItem = (params: Props) => {
           <p className="small-regular italic text-[#636363] line-clamp-1 ">
             - {params.createdAt}
           </p>
+          <StatusButton
+            green
+            text="BÀI TẬP"
+            smallText
+            otherClasses="ml-4 rounded-md"
+          />
           <Image
             src={"/assets/icons/edit-black.svg"}
             width={26}

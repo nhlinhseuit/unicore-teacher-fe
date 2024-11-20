@@ -466,7 +466,7 @@ export const mockCourses = [
 export const mockPostDataCourseIdPage = [
   {
     id: "1",
-    isReportPost: true,
+    typePost: "report",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",
     title: "Báo cáo ngày 29/9/2024",
@@ -486,7 +486,7 @@ export const mockPostDataCourseIdPage = [
   },
   {
     id: "2",
-    isReportPost: false,
+    typePost: "exercise",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",
     title: "Bài tập ngày 29/9/2024",
@@ -501,7 +501,7 @@ export const mockPostDataCourseIdPage = [
   },
   {
     id: "3",
-    isReportPost: false,
+    typePost: "exercise",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",
     title: "Bài tập ngày 29/9/2024",
@@ -797,7 +797,7 @@ export const mockBigExercisesList = [
 export const mockPostDataWithReport = [
   {
     id: "1",
-    isReportPost: true,
+    typePost: "report",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",
     title: "Báo cáo ngày 29/9/2024",
@@ -817,7 +817,7 @@ export const mockPostDataWithReport = [
   },
   {
     id: "2",
-    isReportPost: false,
+    typePost: "exercise",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",
     title: "Bài tập ngày 29/9/2024",
@@ -832,7 +832,7 @@ export const mockPostDataWithReport = [
   },
   {
     id: "3",
-    isReportPost: false,
+    typePost: "exercise",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",
     title: "Bài tập ngày 29/9/2024",

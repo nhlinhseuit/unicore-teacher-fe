@@ -25,7 +25,6 @@ const CreateReport = () => {
   const router = useRouter();
   const pathName = usePathname();
 
-
   const goToNextStep = () => {
     // xong thông tin của report schedule
     sSubmitReportSchedule.set(true);
@@ -38,7 +37,8 @@ const CreateReport = () => {
       return;
     }
 
-    if (currentStep < mockStepsCreateReport.length) setCurrentStep(currentStep + 1);
+    if (currentStep < mockStepsCreateReport.length)
+      setCurrentStep(currentStep + 1);
     sSubmitReportSchedule.set(false);
   };
   const goToPrevStep = () => {
@@ -72,32 +72,36 @@ const CreateReport = () => {
           {mockStepsCreateReport.map((step, index) => (
             <div key={step.id} className="flex items-center">
               {/* Icon Step và Title */}
-              <div
-                className={`w-8 h-8 ml-4 flex items-center justify-center rounded-full ${
-                  currentStep > step.id
-                    ? "bg-blue-500 text-blue-500" // Màu nền và màu chữ cho bước hoàn thành
-                    : currentStep === step.id
-                    ? "bg-blue-500 text-white" // Màu nền cho bước hiện tại
-                    : "bg-gray-200 text-gray-500" // Màu nền cho bước chưa hoàn thành
-                }`}
-              >
-                {currentStep > step.id ? (
-                  <Image
-                    src="/assets/icons/check-white.svg"
-                    alt="check icon"
-                    width={14}
-                    height={14}
-                    className="cursor-pointer"
-                  />
-                ) : (
-                  <span className="text-sm font-semibold">{step.id}</span>
-                )}
-              </div>
+              <div className="mx-2 flex flex-col items-center gap-2">
+                <div
+                  className={`w-8 aspect-square flex-shrink-0 flex items-center justify-center rounded-full ${
+                    currentStep > step.id
+                      ? "bg-blue-500 text-blue-500" // Màu nền và màu chữ cho bước hoàn thành
+                      : currentStep === step.id
+                      ? "bg-blue-500 text-white" // Màu nền cho bước hiện tại
+                      : "bg-gray-200 text-gray-500" // Màu nền cho bước chưa hoàn thành
+                  }`}
+                >
+                  {currentStep > step.id ? (
+                    <Image
+                      src="/assets/icons/check-white.svg"
+                      alt="check icon"
+                      width={14}
+                      height={14}
+                      className="cursor-pointer"
+                    />
+                  ) : (
+                    <span className="text-[12px] font-semibold ">
+                      {step.id}
+                    </span>
+                  )}
+                </div>
 
-              {/* Tiêu đề và mô tả bên cạnh */}
-              <div className="ml-4 flex flex-col pr-4">
-                <span className="text-sm font-medium">{step.desc}</span>
-                {/* <span className="text-xs text-gray-500">{step.desc}</span> */}
+                {/* Tiêu đề và mô tả bên cạnh */}
+                <div className="flex flex-col whitespace-nowrap">
+                  <span className="text-[12px] font-medium">{step.desc}</span>
+                  {/* <span className="text-xs text-gray-500">{step.desc}</span> */}
+                </div>
               </div>
 
               {/* Divider */}

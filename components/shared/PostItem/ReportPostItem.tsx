@@ -1,12 +1,12 @@
 import { getAvatarName } from "@/lib/utils";
 import { mockSubmissionPost } from "@/mocks";
-import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import Avatar from "../../courses/Avatar";
 import GradingInPost from "../../courses/GradingInPost";
 import MyComment from "../../courses/MyComment";
 import OtherComment from "../../courses/OtherComment";
 import RenderFile from "../Annoucements/RenderFile";
+import StatusButton from "../Button/StatusButton";
 import Divider from "../Divider";
 
 interface Comment {
@@ -35,6 +35,29 @@ const ReportPostItem = (params: Props) => {
           <p className="small-regular italic text-[#636363] line-clamp-1 ">
             - {params.createdAt}
           </p>
+          <StatusButton
+            orange
+            text="BÁO CÁO"
+            smallText
+            otherClasses="ml-4 rounded-md"
+            infoComponent={
+              <ul className="text-white text-[12px] text-left">
+                <li role="menuitem">
+                  <span>
+                    Thời hạn nộp bài: 12h SA 8/11/2024 - 11h30 SA 15/11/2024
+                  </span>
+                </li>
+                <li role="menuitem">
+                  <span>
+                    Thời hạn nộp trễ: 12h SA 8/11/2024 - 11h30 SA 15/11/2024
+                  </span>
+                </li>
+                <li role="menuitem">
+                  <span>Thời hạn đóng bài nộp: 12h SA 16/11/2024</span>
+                </li>
+              </ul>
+            }
+          />
           <Image
             src={"/assets/icons/edit-black.svg"}
             width={26}
@@ -46,58 +69,6 @@ const ReportPostItem = (params: Props) => {
 
         <div className=" mt-3 ml-2 flex gap-4 items-center">
           <p className="base-regular">{params.title}</p>
-          <Dropdown
-            className="z-30 rounded-lg"
-            label=""
-            renderTrigger={() => (
-              <Image
-                src={"/assets/icons/info.svg"}
-                width={18}
-                height={18}
-                alt={"edit"}
-                className={`object-contain cursor-pointer`}
-              />
-            )}
-          >
-            <Dropdown.Header>
-              <span className="block text-sm font-medium text-center truncate">
-                Thông tin
-              </span>
-            </Dropdown.Header>
-            <div className="scroll-container scroll-container-dropdown-content">
-              <ul>
-                <li role="menuitem">
-                  <button
-                    type="button"
-                    className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
-                  >
-                    <span className="font-semibold">Thời hạn nộp bài:</span>
-                    <span> 12h SA 8/11/2024 - 11h30 SA 15/11/2024</span>
-                  </button>
-                </li>
-                <li role="menuitem">
-                  <button
-                    type="button"
-                    className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
-                  >
-                    <span className="font-semibold">Thời hạn nộp trễ:</span>
-                    <span>12h SA 8/11/2024 - 11h30 SA 15/11/2024</span>
-                  </button>
-                </li>
-                <li role="menuitem">
-                  <button
-                    type="button"
-                    className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
-                  >
-                    <span className="font-semibold">
-                      Thời hạn đóng bài nộp:
-                    </span>
-                    <span>12h SA 16/11/2024</span>
-                  </button>
-                </li>
-              </ul>
-            </div>
-          </Dropdown>
         </div>
 
         <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-2 px-2"} />

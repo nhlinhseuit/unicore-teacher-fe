@@ -18,7 +18,7 @@ const MiniButton = (params: MiniButtonProps) => {
         params.onClick(params.value);
       }}
       className={`
-             h-[40px]     
+            h-[40px]     
             w-[40px]    
             aspect-square
             rounded-full

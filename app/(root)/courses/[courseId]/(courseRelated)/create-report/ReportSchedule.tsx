@@ -109,7 +109,7 @@ const ReportSchedule = () => {
         <div className="flex px-6 gap-12">
           {/* //TODO: SECTION 1 */}
 
-          <div className="flex w-[50%] flex-col gap-10">
+          <div className="flex w-[55%] flex-col gap-10">
             {/* Đăng ký thứ tự báo cáo */}
             <div>
               <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
@@ -165,7 +165,7 @@ const ReportSchedule = () => {
                       icon={"/assets/icons/add.svg"}
                       bgColor="bg-primary-500"
                       onClick={handleAddReport}
-                      otherClasses={"w-[25px] h-[25px]"}
+                      otherClasses={"!w-[25px] !h-[25px]"}
                     />
                   </div>
 
@@ -182,11 +182,11 @@ const ReportSchedule = () => {
 
           {/* //TODO: SECTION 2 */}
 
-          <div className="flex w-[50%] flex-col gap-10">
+          <div className="flex w-[45%] flex-col gap-10">
             {/* Thời hạn */}
             <div>
               <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                Đăng ký thứ tự báo cáo
+                Thời gian mở đăng ký báo cáo
               </label>
               <div className="mt-3.5 flex gap-2 items-center">
                 <div className="w-[48%]">
@@ -260,10 +260,6 @@ const ReportSchedule = () => {
                   </Popover>
                 </div>
               </div>
-              <p className="text-[0.8rem] dark:text-slate-400 body-regular mt-2.5 text-light-500">
-                Tạo các lựa chọn thời gian báo cáo và số lượng câu trả lời cho
-                mỗi lựa chọn.
-              </p>
             </div>
 
             {/* Cài đặt đăng ký lịch báo cáo */}
@@ -311,10 +307,6 @@ const ReportSchedule = () => {
                   </div>
                 </div>
               </BorderContainer>
-              <p className="text-[0.8rem] dark:text-slate-400 body-regular mt-2.5 text-light-500">
-                Tạo các lựa chọn thời gian báo cáo và số lượng câu trả lời cho
-                mỗi lựa chọn.
-              </p>
             </div>
           </div>
         </div>

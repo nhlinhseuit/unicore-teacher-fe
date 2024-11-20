@@ -32,10 +32,10 @@ const page = () => {
           <TableSearch
             setSearchTerm={() => {}}
             searchTerm={""}
-            otherClasses="pr-2 w-[75%]"
+            otherClasses="pr-2 w-[70%]"
           />
           <Dropdown
-            className="z-30 rounded-lg w-[25%]"
+            className="z-30 rounded-lg w-[30%]"
             label=""
             dismissOnClick={false}
             renderTrigger={() => (
@@ -181,7 +181,7 @@ const page = () => {
       {/* PostList */}
       <div className="mt-6 flex flex-col gap-4">
         {mockPostDataCourseIdPage.map((item, index) => {
-          if (item.isReportPost)
+          if (item.typePost === "report")
             return (
               <ReportPostItem
                 key={item.id}

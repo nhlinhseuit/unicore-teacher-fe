@@ -6,6 +6,7 @@ import OtherComment from "../../courses/OtherComment";
 import MyComment from "../../courses/MyComment";
 import Divider from "../Divider";
 import { getAvatarName } from "@/lib/utils";
+import StatusButton from "../Button/StatusButton";
 
 interface Comment {
   id: string;
@@ -32,6 +33,12 @@ const PostItem = (params: Props) => {
           <p className="small-regular italic text-[#636363] line-clamp-1 ">
             - {params.createdAt}
           </p>
+          <StatusButton
+            temp
+            text="THÔNG BÁO"
+            smallText
+            otherClasses="ml-4 rounded-md"
+          />
           <Image
             src={"/assets/icons/edit-black.svg"}
             width={26}

@@ -34,7 +34,7 @@ const ToggleTitle = (params: Props) => {
         <StatusButton
           gray
           text="Chưa diễn ra"
-          info="Sẽ diễn ra vào ngày 20/11/2024"
+          infoComponent="Sẽ diễn ra vào ngày 20/11/2024"
           smallText
           otherClasses="ml-4"
         />

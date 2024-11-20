@@ -1,17 +1,18 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import Image from "next/image";
 import { Dropdown, Tooltip } from "flowbite-react";
 import {} from "flowbite-react";
 
 interface StatusButtonProps {
   text: string;
-  info?: string;
+  infoComponent?: ReactNode;
   smallText?: boolean;
   temp?: boolean;
   red?: boolean;
   yellow?: boolean;
   green?: boolean;
   gray?: boolean;
+  orange?: boolean;
 
   onClick?: () => void;
   iconLeft?: string;
@@ -39,6 +40,7 @@ const StatusButton = (params: StatusButtonProps) => {
         ${params.textColor ? `${params.textColor}` : "text-white"} 
 
         ${params.temp ? `bg-[#17A1FA]` : ""} 
+        ${params.orange ? `bg-[#f7921b]` : ""} 
         ${params.yellow ? `bg-[#FFC107]` : ""} 
         ${params.red ? `bg-[#F02021]` : ""} 
         ${params.green ? `bg-[#27CD95]` : ""} 
@@ -49,7 +51,7 @@ const StatusButton = (params: StatusButtonProps) => {
         font-medium
         rounded-lg
         text-sm
-        px-4
+        px-3
         py-1
         dark:bg-primary-600
         dark:hover:bg-primary-700
@@ -62,7 +64,7 @@ const StatusButton = (params: StatusButtonProps) => {
         `}
     >
       <span
-        title="diễn ra 20/12"
+        title="text"
         className={`flex-grow pl-2 pr-2 text-center ${
           params.smallText ? "text-[12px]" : ""
         }`}
@@ -70,9 +72,9 @@ const StatusButton = (params: StatusButtonProps) => {
         {params.text}
       </span>
 
-      {params.info && (
+      {params.infoComponent && (
         <Tooltip
-          content={params.info}
+          content={params.infoComponent}
           style="dark"
           arrow={true}
           className="bg-[#1e1e1e] text-white text-[12px] py-1"
