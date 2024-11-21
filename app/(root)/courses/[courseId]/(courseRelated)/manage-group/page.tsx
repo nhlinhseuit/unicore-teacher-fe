@@ -25,7 +25,7 @@ const type: any = "create";
 
 // TODO: Search debouce tìm kiếm lớp nếu cần
 
-const CreateGroupRegister = () => {
+const ManageGroup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
 
@@ -323,6 +323,10 @@ const CreateGroupRegister = () => {
         />
       </div>
 
+      <p className="flex justify-end pb-6 italic text-sm text-red-500">
+            * Nhóm trưởng điền tên đầu tiên
+          </p>
+
       {isToggleViewTable ? (
         <div className="px-6">
           <RegisterGroupTable
@@ -344,4 +348,4 @@ const CreateGroupRegister = () => {
   );
 };
 
-export default CreateGroupRegister;
+export default ManageGroup;

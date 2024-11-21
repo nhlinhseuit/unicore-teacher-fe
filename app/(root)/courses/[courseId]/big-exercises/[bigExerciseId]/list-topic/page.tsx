@@ -346,13 +346,19 @@ const ListTopic = () => {
                 />
 
                 <>
-                  <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                    Danh sách nhóm (nếu đã có nhóm liên hệ trước)
-                  </label>
+                  <div>
+                    <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                      Danh sách nhóm (nếu đã có nhóm liên hệ trước)
+                    </label>
+                    <p className="mb-4  text-[0.8rem] dark:text-slate-400 mt-2.5 body-regular text-light-500">
+                      Nhóm trưởng điền tên đầu tiên.
+                    </p>
+                  </div>
+
                   <TopicRegisterGroupDataTable
                     isEditTable={false}
                     isMultipleDelete={false}
-                    dataTable={mockDataState}
+                    dataTable={mockDataRef.current}
                     onChangeTable={(newValue) => {
                       updateMockDataRef(newValue);
                     }}
