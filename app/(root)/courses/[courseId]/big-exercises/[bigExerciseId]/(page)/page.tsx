@@ -2,6 +2,7 @@
 
 import BorderButton from "@/components/shared/Button/BorderButton";
 import IconButton from "@/components/shared/Button/IconButton";
+import ExercisePostItem from "@/components/shared/PostItem/ExercisePostItem";
 import PostItem from "@/components/shared/PostItem/PostItem";
 import ReportPostItem from "@/components/shared/PostItem/ReportPostItem";
 import TableSearch from "@/components/shared/Search/TableSearch";
@@ -20,6 +21,54 @@ const BigExercise = () => {
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(
     AnnouncementTabs[0].value
   );
+
+  const getRenderPostItem = (item: any): JSX.Element => {
+    switch (item.typePost) {
+      case "report":
+        return (
+          <ReportPostItem
+            key={item.id}
+            id={item.id}
+            creator={item.creator}
+            createdAt={item.createdAt}
+            title={item.title}
+            fileName={item.fileName}
+            comments={item.comments}
+            setGrading={() => {
+              // setIsGrading(true);
+            }}
+          />
+        );
+      case "exercise":
+        return (
+          <ExercisePostItem
+            key={item.id}
+            id={item.id}
+            creator={item.creator}
+            createdAt={item.createdAt}
+            title={item.title}
+            fileName={item.fileName}
+            comments={item.comments}
+            setGrading={() => {
+              // setIsGrading(true);
+            }}
+          />
+        );
+      case "announcement":
+      default:
+        return (
+          <PostItem
+            key={item.id}
+            id={item.id}
+            creator={item.creator}
+            createdAt={item.createdAt}
+            title={item.title}
+            fileName={item.fileName}
+            comments={item.comments}
+          />
+        );
+    }
+  };
 
   return (
     <div>
@@ -181,33 +230,7 @@ const BigExercise = () => {
       {/* PostList */}
       <div className="mt-6 flex flex-col gap-4">
         {mockPostDataWithReport.map((item, index) => {
-          if (item.typePost === 'report')
-            return (
-              <ReportPostItem
-                key={item.id}
-                id={item.id}
-                creator={item.creator}
-                createdAt={item.createdAt}
-                title={item.title}
-                fileName={item.fileName}
-                comments={item.comments}
-                setGrading={() => {
-                  // setIsGrading(true);
-                }}
-              />
-            );
-          else
-            return (
-              <PostItem
-                key={item.id}
-                id={item.id}
-                creator={item.creator}
-                createdAt={item.createdAt}
-                title={item.title}
-                fileName={item.fileName}
-                comments={item.comments}
-              />
-            );
+          return getRenderPostItem(item);
         })}
       </div>
     </div>
