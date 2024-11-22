@@ -222,6 +222,12 @@ export const sidebarDepartmentLinks: SidebarLink[] = [
   },
   {
     id: "6",
+    imgURL: "/assets/icons/tag.svg",
+    route: "/score-transcript",
+    label: "Lớp học",
+  },
+  {
+    id: "7",
     imgURL: "/assets/icons/user.svg",
     route: "/setting",
     label: "Cài đặt",
