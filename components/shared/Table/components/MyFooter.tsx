@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-interface FooterProps {
+interface MyFooterProps {
   currentPage: number;
   itemsPerPage: number;
   totalItems: number;
   onPageChange: (page: number) => void;
 }
 
-const Footer: React.FC<FooterProps> = ({
+const MyFooter: React.FC<MyFooterProps> = ({
   currentPage,
   itemsPerPage,
   totalItems,
@@ -166,4 +166,4 @@ const Footer: React.FC<FooterProps> = ({
   );
 };
 
-export default Footer;
+export default MyFooter;

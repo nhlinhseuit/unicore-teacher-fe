@@ -16,7 +16,7 @@ import { Table } from "flowbite-react";
 import { useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
 import { tableTheme } from "../components/DataTable";
-import Footer from "../components/Footer";
+import MyFooter from "../components/MyFooter";
 import RowScoreTranscriptTable from "./RowScoreTranscriptTable";
 
 interface DataTableParams {
@@ -182,7 +182,7 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
       {!isShowFooter || params.isEditTable || params.isMultipleDelete ? (
         <></>
       ) : (
-        <Footer
+        <MyFooter
           currentPage={currentPage}
           itemsPerPage={itemsPerPageRegisterTable}
           totalItems={totalItems}

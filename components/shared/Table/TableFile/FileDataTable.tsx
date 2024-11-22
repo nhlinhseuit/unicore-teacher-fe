@@ -4,7 +4,7 @@ import { Table } from "flowbite-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { tableTheme } from "../components/DataTable";
-import Footer from "../components/Footer";
+import MyFooter from "../components/MyFooter";
 import RowFileDataTable from "./RowFileDataTable";
 
 interface DataTableParams {
@@ -78,7 +78,7 @@ const TopicDataTable = (params: DataTableParams) => {
             {Object.keys(currentItems[0]?.data || {}).map((key, index) => {
               return (
                 <Table.HeadCell
-                key={`${key}_${index}`}
+                  key={`${key}_${index}`}
                   theme={tableTheme?.head?.cell}
                   className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
                 >
@@ -111,7 +111,7 @@ const TopicDataTable = (params: DataTableParams) => {
       {!isShowFooter || params.isEditTable || params.isMultipleDelete ? (
         <></>
       ) : (
-        <Footer
+        <MyFooter
           currentPage={currentPage}
           itemsPerPage={itemsPerPageTopicTable}
           totalItems={totalItems}

@@ -16,7 +16,7 @@ import { Table } from "flowbite-react";
 import { useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
 import { tableTheme } from "../components/DataTable";
-import Footer from "../components/Footer";
+import MyFooter from "../components/MyFooter";
 import RowGradingGroupTable from "./RowGradingGroupTable";
 
 interface DataTableParams {
@@ -132,12 +132,12 @@ const GradingGroupTable = (params: DataTableParams) => {
                       isMultipleDelete={params.isMultipleDelete}
                       onClickCheckBoxSelect={(item: string) => {
                         //   setItemsSelected((prev) => {
-                          //   if (prev.includes(item)) {
-                          //     return prev.filter((i) => i !== item);
-                          //   } else {
-                          //     return [...prev, item];
-                          //   }
-                          // });
+                        //   if (prev.includes(item)) {
+                        //     return prev.filter((i) => i !== item);
+                        //   } else {
+                        //     return [...prev, item];
+                        //   }
+                        // });
                       }}
                       onChangeRow={(updatedDataItem: any) => {
                         //   setLocalDataTable((prevTable) =>
@@ -198,7 +198,7 @@ const GradingGroupTable = (params: DataTableParams) => {
       {!isShowFooter || params.isEditTable || params.isMultipleDelete ? (
         <></>
       ) : (
-        <Footer
+        <MyFooter
           currentPage={currentPage}
           itemsPerPage={itemsPerPageRegisterTable}
           totalItems={totalItems}

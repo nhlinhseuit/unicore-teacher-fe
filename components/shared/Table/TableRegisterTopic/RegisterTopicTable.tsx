@@ -31,7 +31,7 @@ import { z } from "zod";
 import BorderContainer from "../../BorderContainer";
 import IconButton from "../../Button/IconButton";
 import RadioboxComponent from "../../RadioboxComponent";
-import Footer from "../components/Footer";
+import MyFooter from "../components/MyFooter";
 
 interface DataTableParams {
   type: RegisterTopicTableType;
@@ -300,7 +300,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
       {!isShowFooter || params.isEditTable || params.isMultipleDelete ? (
         <></>
       ) : (
-        <Footer
+        <MyFooter
           currentPage={currentPage}
           itemsPerPage={itemsPerPageRegisterTable}
           totalItems={totalItems}

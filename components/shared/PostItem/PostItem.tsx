@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import RenderFile from "../Annoucements/RenderFile";
-import Avatar from "../../courses/Avatar";
+import MyAvatar from "../../courses/MyAvatar";
 import OtherComment from "../../courses/OtherComment";
 import MyComment from "../../courses/MyComment";
 import Divider from "../Divider";
@@ -28,7 +28,7 @@ const PostItem = (params: Props) => {
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex-col w-full p-6">
         <div className="flex justify-start items-center gap-2">
-          <Avatar text="MT" />
+          <MyAvatar text="MT" />
           <p className="body-regular">{params.creator}</p>
           <p className="small-regular italic text-[#636363] line-clamp-1 ">
             - {params.createdAt}

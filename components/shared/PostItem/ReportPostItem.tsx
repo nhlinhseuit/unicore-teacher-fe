@@ -1,7 +1,7 @@
 import { getAvatarName } from "@/lib/utils";
 import { mockSubmissionPost } from "@/mocks";
 import Image from "next/image";
-import Avatar from "../../courses/Avatar";
+import MyAvatar from "../../courses/MyAvatar";
 import GradingInPost from "../../courses/GradingInPost";
 import MyComment from "../../courses/MyComment";
 import OtherComment from "../../courses/OtherComment";
@@ -30,7 +30,7 @@ const ReportPostItem = (params: Props) => {
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex-col w-full p-6">
         <div className="flex justify-start items-center gap-2">
-          <Avatar text="MT" />
+          <MyAvatar text="MT" />
           <p className="body-regular">{params.creator}</p>
           <p className="small-regular italic text-[#636363] line-clamp-1 ">
             - {params.createdAt}

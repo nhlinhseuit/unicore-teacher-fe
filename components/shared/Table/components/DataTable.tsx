@@ -31,7 +31,7 @@ import { useEffect, useMemo, useState } from "react";
 import IconButton from "../../Button/IconButton";
 import TableSearch from "../../Search/TableSearch";
 import NoResult from "../../Status/NoResult";
-import Footer from "./Footer";
+import MyFooter from "./MyFooter";
 import Row from "./Row";
 
 // TODO: filteredData là để render giao diện (search, filter old new, detail filter)
@@ -881,7 +881,7 @@ const DataTable = (params: DataTableParams) => {
       params.isMultipleDelete ? (
         <></>
       ) : (
-        <Footer
+        <MyFooter
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           totalItems={totalItems}
