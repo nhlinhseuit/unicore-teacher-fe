@@ -99,9 +99,13 @@
     @apply border-light-700 dark:border-dark-400 !important;
   }
 
+  /* //TODO 30PX */
+
   .h1-bold {
     @apply text-[30px] font-bold leading-[42px] tracking-tighter;
   }
+
+  /* //TODO 24PX */
 
   .h2-bold {
     @apply text-[24px] font-bold leading-[31.2px];
@@ -111,12 +115,34 @@
     @apply text-[24px] font-semibold leading-[31.2px];
   }
 
+  /* //TODO 20PX */
+
   .h3-bold {
     @apply text-[20px] font-bold leading-[26px];
   }
 
   .h3-semibold {
     @apply text-[20px] font-semibold leading-[24.8px];
+  }
+
+  /* //TODO 16PX */
+
+  .paragraph-regular {
+    @apply text-[16px] font-normal leading-[22.4px];
+  }
+
+  .paragraph-medium {
+    @apply text-[16px] font-medium leading-[22.4px];
+  }
+
+  .paragraph-semibold {
+    @apply text-[16px] font-semibold leading-[20.8px];
+  }
+
+  /* //TODO 15PX */
+
+  .base-regular {
+    @apply text-[15px] font-normal leading-[25.2px];
   }
 
   .base-medium {
@@ -131,17 +157,25 @@
     @apply text-[15px] font-bold leading-[140%];
   }
 
-  .paragraph-regular {
-    @apply text-[16px] font-normal leading-[22.4px];
+  /* //TODO 14PX */
+
+  .normal-regular {
+    @apply text-[14px] font-normal leading-[25.2px];
   }
 
-  .paragraph-medium {
-    @apply text-[16px] font-medium leading-[22.4px];
+  .normal-medium {
+    @apply text-[14px] font-medium leading-[25.2px];
   }
 
-  .paragraph-semibold {
-    @apply text-[16px] font-semibold leading-[20.8px];
+  .normal-semibold {
+    @apply text-[14px] font-semibold leading-[25.2px];
   }
+
+  .normal-bold {
+    @apply text-[14px] font-bold leading-[140%];
+  }
+
+  /* //TODO 13PX */
 
   .body-regular {
     @apply text-[13px] font-normal leading-[19.6px];
@@ -159,6 +193,8 @@
     @apply text-[13px] font-bold leading-[18.2px];
   }
 
+  /* //TODO 12PX */
+
   .small-regular {
     @apply text-[12px] font-normal leading-[15.6px];
   }
@@ -170,6 +206,8 @@
   .small-semibold {
     @apply text-[12px] font-semibold leading-[15.6px];
   }
+
+  /* //TODO 10PX */
 
   .subtle-medium {
     @apply text-[10px] font-medium leading-[13px] !important;

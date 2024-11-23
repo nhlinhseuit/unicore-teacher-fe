@@ -37,7 +37,7 @@ const PostItem = (params: Props) => {
             temp
             text="THÔNG BÁO"
             smallText
-            otherClasses="ml-4 rounded-md"
+            otherClasses="rounded-md"
           />
           <Image
             src={"/assets/icons/edit-black.svg"}
