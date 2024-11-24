@@ -26,18 +26,18 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   };
 
   const handleThemeChange = () => {
-    if (typeof window !== "undefined") {
-      const theme = getValue("theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    // if (typeof window !== "undefined") {
+    //   const theme = getValue("theme");
+    //   const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-      if (theme === "dark" || (!theme && prefersDark)) {
-        setMode("dark");
-        document.documentElement.classList.add("dark");
-      } else {
-        setMode("light");
-        document.documentElement.classList.remove("dark");
-      }
-    }
+    //   if (theme === "dark" || (!theme && prefersDark)) {
+    //     setMode("dark");
+    //     document.documentElement.classList.add("dark");
+    //   } else {
+    //     setMode("light");
+    //     document.documentElement.classList.remove("dark");
+    //   }
+    // }
   };
 
   useEffect(() => {
