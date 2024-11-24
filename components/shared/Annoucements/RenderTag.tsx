@@ -17,7 +17,7 @@ const RenderTag = ({ _id, name, totalQuestions, showCount }: Props) => {
         uppercase
       borde-2 border-gray-200
       shadow-sm
-      text-[11px] 
+      text-[10px] 
       font-semibold 
       leading-[12px]
       text-[#1F86E8] 

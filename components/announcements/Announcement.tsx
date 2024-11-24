@@ -63,7 +63,7 @@ const Announcement = ({
         <div className="w-[80%] flex items-start justify-between sm:flex-row ml-2 mr-8">
           <div>
             <Link href={`/announcements/${_id}`}>
-              <p className="base-semibold text-[#1F86E8] line-clamp-1 underline flex-1">
+              <p className="normal-semibold text-[#1F86E8] line-clamp-1 underline flex-1">
                 {title}
               </p>
             </Link>

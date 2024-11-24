@@ -16,7 +16,7 @@ const RenderFile = (params: Props) => {
       cursor-pointer
       border-gray-200
       shadow-sm
-      text-[11px] font-light leading-[12px] 
+      text-[10px] font-light leading-[12px] 
       italic 
       text-[#636363]
       rounded-2xl px-2 py-2 

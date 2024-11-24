@@ -25,6 +25,19 @@ export const AnnouncementTabs = [
   { value: "hidedAnnouncement", label: "Thông báo đã ẩn" },
 ];
 
+export const ReviewTabs = [
+  { value: "completedReviews", label: "Đã phúc khảo" },
+  { value: "waitingReviews", label: "Phúc khảo chờ duyệt" },
+  { value: "approvedReviews", label: "Phúc khảo đã duyệt" },
+];
+
+export const BookmarksTabs = [
+  { value: "generalPost", label: "Chung" },
+  { value: "announcements", label: "Thông báo" },
+  { value: "exercises", label: "Bài tập" },
+  { value: "bigExercises", label: "Bài tập lớn" },
+];
+
 // TODO: NAVBAR TAB
 export const TeacherAnnouncementsTabItems = [
   { value: "listAnnouncements", label: "Danh sách thông báo", route: "/" },
@@ -199,35 +212,42 @@ export const sidebarTeacherLinks: SidebarLink[] = [
   {
     id: "2",
     imgURL: "/assets/icons/users.svg",
-    route: "/teachers",
-    label: "Giảng viên",
-  },
-  {
-    id: "3",
-    imgURL: "/assets/icons/star.svg",
     route: "/students",
     label: "Sinh viên",
   },
   {
-    id: "4",
-    imgURL: "/assets/icons/suitcase.svg",
-    route: "/subjects",
-    label: "Môn học",
-  },
-  {
-    id: "5",
+    id: "3",
     imgURL: "/assets/icons/tag.svg",
     route: "/courses",
     label: "Lớp học",
   },
   {
-    id: "6",
+    id: "4",
     imgURL: "/assets/icons/star.svg",
     route: "/score-transcript",
     label: "Bảng điểm",
   },
+  
+  {
+    id: "5",
+    imgURL: "/assets/icons/star.svg",
+    route: "/timetable",
+    label: "Lịch biểu",
+  },
+  {
+    id: "6",
+    imgURL: "/assets/icons/suitcase.svg",
+    route: "/messages",
+    label: "Tin nhắn",
+  },
   {
     id: "7",
+    imgURL: "/assets/icons/user.svg",
+    route: "/bookmarks",
+    label: "Dấu trang",
+  },
+  {
+    id: "8",
     imgURL: "/assets/icons/user.svg",
     route: "/setting",
     label: "Cài đặt",

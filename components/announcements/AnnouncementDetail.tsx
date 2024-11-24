@@ -159,7 +159,7 @@ const AnnouncementDetail = ({
         {/* CONTENT */}
         <div className="w-[80%] flex items-start justify-between sm:flex-row ml-2 mr-8">
           <div className="w-full">
-            <p className="base-semibold text-[#1F86E8] underline flex-1">
+            <p className="normal-semibold text-[#1F86E8] underline flex-1">
               {title}
             </p>
             <span className="block mt-2 small-regular italic text-[#636363] ">

@@ -118,7 +118,7 @@ const LeftSideBar = () => {
                       className={`${isActive ? "" : "invert-colors"}`}
                     />
                     <p
-                      className={`${isActive ? "base-bold" : "base-medium"} 
+                      className={`${isActive ? "normal-bold" : "normal-medium"} 
                       max-lg:hidden
                   `}
                     >
@@ -154,7 +154,7 @@ const LeftSideBar = () => {
                     className={`${isActive ? "" : "invert-colors"}`}
                   />
                   <p
-                    className={`${isActive ? "base-bold" : "base-medium"} 
+                    className={`${isActive ? "normal-bold" : "normal-medium"} 
                 max-lg:hidden
             `}
                   >
