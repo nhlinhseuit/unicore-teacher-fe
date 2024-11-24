@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-
 import { useTheme } from "@/context/ThemeProvider";
 import {
   Menubar,
@@ -15,6 +14,18 @@ import { themes } from "@/constants";
 
 const Theme = () => {
   const { mode, setMode } = useTheme();
+
+  const setValue = (key: string, value: string) => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem(key, value);
+    }
+  };
+
+  const removeValue = (key: string) => {
+    if (typeof window !== "undefined") {
+      localStorage.removeItem(key);
+    }
+  };
 
   return (
     <Menubar className="relative border-none bg-transparent shadow-none">
@@ -46,24 +57,21 @@ const Theme = () => {
         </MenubarTrigger>
 
         <MenubarContent
-          className="
-        absolute right-[-3rem] mt-3 min-w-[120px] rounded border py-2 bg-white 
+          className="absolute right-[-3rem] mt-3 min-w-[120px] rounded border py-2 bg-white 
         dark:border-dark-400 dark:bg-dark-300"
         >
           {themes.map((item) => (
             <MenubarItem
               key={item.value}
-              className="
-                    flex items-center gap-4 px-2.5 py-2 hover:bg-light-800
-                    dark:focus:bg-dark-400"
+              className="flex items-center gap-4 px-2.5 py-2 hover:bg-light-800 dark:focus:bg-dark-400"
               onClick={() => {
-                // setMode(item.value)
+                setMode(item.value);
 
-                // if(item.value !== 'system') {
-                //     localStorage.theme = item.value
-                // } else {
-                //     localStorage.removeItem('theme')
-                // }
+                if (item.value !== "system") {
+                  setValue("theme", item.value);
+                } else {
+                  removeValue("theme");
+                }
               }}
             >
               <Image
