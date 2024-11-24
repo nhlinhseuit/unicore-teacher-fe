@@ -1603,7 +1603,7 @@ export const mockStepsCreateReport = [
 export const mockDataImportStudentList = [
   {
     type: "student",
-    STT: 1,
+    STT: "1",
     isDeleted: false,
     data: {
       MSSV: "21520062",
@@ -1620,7 +1620,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 2,
+    STT: "2",
     isDeleted: false,
     data: {
       MSSV: "21520112",
@@ -1637,7 +1637,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 3,
+    STT: "3",
     isDeleted: false,
     data: {
       MSSV: "21520144",
@@ -1654,7 +1654,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 4,
+    STT: "4",
     isDeleted: false,
     data: {
       MSSV: "21520166",
@@ -1671,7 +1671,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 5,
+    STT: "5",
     isDeleted: false,
     data: {
       MSSV: "21520230",
@@ -1688,7 +1688,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 6,
+    STT: "6",
     isDeleted: false,
     data: {
       MSSV: "21520249",
@@ -1705,7 +1705,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 7,
+    STT: "7",
     isDeleted: false,
     data: {
       MSSV: "21520276",
@@ -1722,7 +1722,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 8,
+    STT: "8",
     isDeleted: false,
     data: {
       MSSV: "21520316",
@@ -1739,7 +1739,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 9,
+    STT: "9",
     isDeleted: false,
     data: {
       MSSV: "21520321",
@@ -1756,7 +1756,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 10,
+    STT: "10",
     isDeleted: false,
     data: {
       MSSV: "21520327",
@@ -1773,7 +1773,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 11,
+    STT: "11",
     isDeleted: false,
     data: {
       MSSV: "21520340",
@@ -1790,7 +1790,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 12,
+    STT: "12",
     isDeleted: false,
     data: {
       MSSV: "21520387",
@@ -1807,7 +1807,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 13,
+    STT: "13",
     isDeleted: false,
     data: {
       MSSV: "21520392",
@@ -1824,7 +1824,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 14,
+    STT: "14",
     isDeleted: false,
     data: {
       MSSV: "21520405",
@@ -1841,7 +1841,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 15,
+    STT: "15",
     isDeleted: false,
     data: {
       MSSV: "21520455",
@@ -1858,7 +1858,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 16,
+    STT: "16",
     isDeleted: false,
     data: {
       MSSV: "21520465",
@@ -1875,7 +1875,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 17,
+    STT: "17",
     isDeleted: false,
     data: {
       MSSV: "21520478",
@@ -1892,7 +1892,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 18,
+    STT: "18",
     isDeleted: false,
     data: {
       MSSV: "21520519",
@@ -1909,7 +1909,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 19,
+    STT: "19",
     isDeleted: false,
     data: {
       MSSV: "21520536",
@@ -1926,7 +1926,7 @@ export const mockDataImportStudentList = [
   },
   {
     type: "student",
-    STT: 20,
+    STT: "20",
     isDeleted: false,
     data: {
       MSSV: "21520607",

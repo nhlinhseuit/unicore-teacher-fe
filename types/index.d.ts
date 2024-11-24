@@ -229,7 +229,7 @@ export interface SubjectDataItem {
 }
 export interface StudentDataItem {
   type: string;
-  STT: string | number;
+  STT: string;
   isDeleted: boolean;
   data: StudentData;
 }
