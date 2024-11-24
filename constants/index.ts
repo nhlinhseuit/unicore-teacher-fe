@@ -50,12 +50,6 @@ export const TeacherAnnouncementsTabItems = [
 
 export const TeacherCoursesTabItems = [
   { value: "listCourses", label: "Danh sách lớp học", route: "/courses" },
-  {
-    value: "joinedCourses",
-    label: "Lớp học đã tham gia",
-    route: "/courses/joined",
-  },
-  { value: "createCourse", label: "Tạo lớp học", route: "/courses/create" },
 ];
 
 export const TeacherSubjectsTabItems = [
@@ -211,43 +205,37 @@ export const sidebarTeacherLinks: SidebarLink[] = [
   },
   {
     id: "2",
-    imgURL: "/assets/icons/users.svg",
-    route: "/students",
-    label: "Sinh viên",
-  },
-  {
-    id: "3",
     imgURL: "/assets/icons/tag.svg",
     route: "/courses",
     label: "Lớp học",
   },
   {
-    id: "4",
+    id: "3",
     imgURL: "/assets/icons/star.svg",
     route: "/score-transcript",
     label: "Bảng điểm",
   },
-  
+
   {
-    id: "5",
+    id: "4",
     imgURL: "/assets/icons/star.svg",
     route: "/timetable",
     label: "Lịch biểu",
   },
   {
-    id: "6",
+    id: "5",
     imgURL: "/assets/icons/suitcase.svg",
     route: "/messages",
     label: "Tin nhắn",
   },
   {
-    id: "7",
+    id: "6",
     imgURL: "/assets/icons/user.svg",
     route: "/bookmarks",
     label: "Dấu trang",
   },
   {
-    id: "8",
+    id: "7",
     imgURL: "/assets/icons/user.svg",
     route: "/setting",
     label: "Cài đặt",
