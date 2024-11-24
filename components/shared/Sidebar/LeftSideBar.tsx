@@ -1,17 +1,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { DepartmentCoursesTabItems, sidebarDepartmentLinks } from "@/constants";
+import { TeacherCoursesTabItems, sidebarTeacherLinks } from "@/constants";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { Fragment } from "react";
+import { Fragment } from "react";
 
 const LeftSideBar = () => {
   const pathName = usePathname();
 
   const isOriginalRoute = () => {
-    return DepartmentCoursesTabItems.find((item) => {
+    return TeacherCoursesTabItems.find((item) => {
       if (item.route === "/courses") {
         return undefined;
       } else {
@@ -79,7 +79,7 @@ const LeftSideBar = () => {
 
       <div className="flex flex-col h-full gap-4 px-6 mt-6 ">
         {/* ITEM */}
-        {sidebarDepartmentLinks.map((item, index) => {
+        {sidebarTeacherLinks.map((item, index) => {
           let isActive;
           // TODO: handle cho tab HOME
           if (

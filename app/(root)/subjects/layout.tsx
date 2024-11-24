@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { DepartmentSubjectsTabItems } from "@/constants";
+import { TeacherSubjectsTabItems } from "@/constants";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathName = usePathname();
@@ -19,7 +19,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         role="tablist"
         className="mb-4 flex text-center flex-wrap border-b border-gray-200 dark:border-gray-700"
       >
-        {DepartmentSubjectsTabItems.map((item) => {
+        {TeacherSubjectsTabItems.map((item) => {
           const isActive =
             pathName === item.route || pathName.includes(`/${item.route}`);
 

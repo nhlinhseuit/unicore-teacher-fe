@@ -14,7 +14,7 @@ import Image from "next/image";
 import Link from "next/link";
 // import { SignedOut } from "@clerk/nextjs";
 import { Button } from "@/components/ui/button";
-import { sidebarDepartmentLinks } from "@/constants";
+import { sidebarTeacherLinks } from "@/constants";
 import { usePathname } from "next/navigation";
 
 const NavContent = () => {
@@ -25,7 +25,7 @@ const NavContent = () => {
       className="
     flex h-full flex-col gap-6 pt-16"
     >
-      {sidebarDepartmentLinks.map((item) => {
+      {sidebarTeacherLinks.map((item) => {
         const isActive =
           (pathName.includes(item.route) && item.route.length > 1) ||
           pathName === item.route;

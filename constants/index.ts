@@ -26,7 +26,7 @@ export const AnnouncementTabs = [
 ];
 
 // TODO: NAVBAR TAB
-export const DepartmentAnnouncementsTabItems = [
+export const TeacherAnnouncementsTabItems = [
   { value: "listAnnouncements", label: "Danh sách thông báo", route: "/" },
   {
     value: "createAnnouncement",
@@ -35,7 +35,7 @@ export const DepartmentAnnouncementsTabItems = [
   },
 ];
 
-export const DepartmentCoursesTabItems = [
+export const TeacherCoursesTabItems = [
   { value: "listCourses", label: "Danh sách lớp học", route: "/courses" },
   {
     value: "joinedCourses",
@@ -45,12 +45,12 @@ export const DepartmentCoursesTabItems = [
   { value: "createCourse", label: "Tạo lớp học", route: "/courses/create" },
 ];
 
-export const DepartmentSubjectsTabItems = [
+export const TeacherSubjectsTabItems = [
   { value: "listSubjects", label: "Danh sách môn học", route: "/subjects" },
   { value: "subjectTypes", label: "Loại môn học", route: "/subjects/types" },
 ];
 
-export const DepartmentCourseTabItems = [
+export const TeacherCourseTabItems = [
   { value: "generalPost", label: "Thông báo chung", route: "/" },
   {
     value: "exercises",
@@ -189,7 +189,7 @@ export const CourseItemMoreComponentItems = [
 ];
 
 // TODO: SIDEBAR
-export const sidebarDepartmentLinks: SidebarLink[] = [
+export const sidebarTeacherLinks: SidebarLink[] = [
   {
     id: "1",
     imgURL: "/assets/icons/home.svg",
@@ -222,90 +222,12 @@ export const sidebarDepartmentLinks: SidebarLink[] = [
   },
   {
     id: "6",
-    imgURL: "/assets/icons/tag.svg",
+    imgURL: "/assets/icons/star.svg",
     route: "/score-transcript",
-    label: "Lớp học",
+    label: "Bảng điểm",
   },
   {
     id: "7",
-    imgURL: "/assets/icons/user.svg",
-    route: "/setting",
-    label: "Cài đặt",
-  },
-];
-
-export const sidebarTeacherLinks: SidebarLink[] = [
-  {
-    id: "1",
-    imgURL: "/assets/icons/home.svg",
-    route: "/",
-    label: "Trang chủ",
-  },
-  {
-    id: "2",
-    imgURL: "/assets/icons/users.svg",
-    route: "/courses",
-    label: "Lớp học",
-  },
-  {
-    id: "3",
-    imgURL: "/assets/icons/star.svg",
-    route: "/timetable",
-    label: "Lịch biểu",
-  },
-  {
-    id: "4",
-    imgURL: "/assets/icons/suitcase.svg",
-    route: "/messages",
-    label: "Tin nhắn",
-  },
-  {
-    id: "5",
-    imgURL: "/assets/icons/user.svg",
-    route: "/bookmarks",
-    label: "Dấu trang",
-  },
-  {
-    id: "6",
-    imgURL: "/assets/icons/user.svg",
-    route: "/setting",
-    label: "Cài đặt",
-  },
-];
-
-export const sidebarStudentLinks: SidebarLink[] = [
-  {
-    id: "1",
-    imgURL: "/assets/icons/home.svg",
-    route: "/",
-    label: "Trang chủ",
-  },
-  {
-    id: "2",
-    imgURL: "/assets/icons/users.svg",
-    route: "/courses",
-    label: "Lớp học",
-  },
-  {
-    id: "3",
-    imgURL: "/assets/icons/star.svg",
-    route: "/timetable",
-    label: "Thời khóa biểu",
-  },
-  {
-    id: "4",
-    imgURL: "/assets/icons/suitcase.svg",
-    route: "/messages",
-    label: "Tin nhắn",
-  },
-  {
-    id: "5",
-    imgURL: "/assets/icons/user.svg",
-    route: "/bookmarks",
-    label: "Dấu trang",
-  },
-  {
-    id: "6",
     imgURL: "/assets/icons/user.svg",
     route: "/setting",
     label: "Cài đặt",
