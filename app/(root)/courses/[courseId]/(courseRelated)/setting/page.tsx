@@ -15,6 +15,7 @@ const Setting = () => {
   );
 
   const { toast } = useToast();
+  const { toast2 } = useToast();
 
   return (
     <div>
