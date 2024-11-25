@@ -29,10 +29,10 @@ interface RowParams {
 }
 interface handleInputChangeParams {
   key:
-  | keyof CourseData
-  | keyof SubjectData
-  | keyof StudentData
-  | keyof TeacherData;
+    | keyof CourseData
+    | keyof SubjectData
+    | keyof StudentData
+    | keyof TeacherData;
   newValue: any;
   isMultipleInput?: boolean;
   currentIndex?: number;
@@ -72,12 +72,12 @@ const RowRegisterTopicTable = React.memo(
           ...editDataItem.data,
           [key]: isMultipleInput
             ? //@ts-ignore
-            (editDataItem.data[key] as string)
-              .split(/\r\n|\n/)
-              .map((line, index) =>
-                index === currentIndex ? newValue : line
-              )
-              .join("\r\n")
+              (editDataItem.data[key] as string)
+                .split(/\r\n|\n/)
+                .map((line, index) =>
+                  index === currentIndex ? newValue : line
+                )
+                .join("\r\n")
             : newValue,
         },
       };
@@ -98,11 +98,12 @@ const RowRegisterTopicTable = React.memo(
     return (
       <Table.Row
         key={params.dataItem.STT}
-        onClick={() => { }}
-        className={`bg-background-secondary  text-left ${isEdit || params.isEditTable
+        onClick={() => {}}
+        className={`bg-background-secondary  text-left ${
+          isEdit || params.isEditTable
             ? "hover:bg-white cursor-default"
             : "hover:bg-light-800 cursor-default"
-          } duration-100`}
+        } duration-100`}
       >
         {/* checkbox */}
         <Table.Cell className="w-10 border-r-[1px] z-100 ">
@@ -167,12 +168,12 @@ const RowRegisterTopicTable = React.memo(
           </div>
         </Table.Cell>
 
-        {/* STT - Là STT của nhóm */}
+        {/* STT */}
         {params.isMemberOfAboveGroup ? (
           <Table.Cell className="w-10 border-r-[1px]  text-left"></Table.Cell>
         ) : (
           <Table.Cell className="w-10 border-r-[1px]  text-left">
-            <span>{params.dataItem.data["Mã nhóm"]}</span>
+            <span>{params.dataItem.STT}</span>
           </Table.Cell>
         )}
 
@@ -182,13 +183,11 @@ const RowRegisterTopicTable = React.memo(
 
           if (
             params.isMemberOfAboveGroup &&
-            (key === "Tên nhóm")
+            (key === "Mã nhóm" || key === "Tên nhóm")
           )
             return (
               <Table.Cell className="w-10 border-r-[1px]  text-left"></Table.Cell>
             );
-
-          if (key === "Mã nhóm") return null;
 
           return (
             <Table.Cell
@@ -201,10 +200,11 @@ const RowRegisterTopicTable = React.memo(
       px-4 py-4 text-center text-secondary-900`,
               }}
               // !: NOTE: Giới hạn ô mô tả không quá dài bằng !w-[800px] line-clamp-6
-              className={`border-r-[1px] px-2 py-4 normal-case text-left  min-h-[64px] ${key === "Mô tả"
+              className={`border-r-[1px] px-2 py-4 normal-case text-left  min-h-[64px] ${
+                key === "Mô tả"
                   ? "!w-[800px] line-clamp-6 flex items-center"
                   : "whitespace-nowrap"
-                }`}
+              }`}
             >
               {isEdit || params.isEditTable ? (
                 <InputComponent
