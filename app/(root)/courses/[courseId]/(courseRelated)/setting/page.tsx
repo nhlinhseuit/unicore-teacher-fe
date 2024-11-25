@@ -18,7 +18,7 @@ const Setting = () => {
 
   return (
     <div>
-      <p className="mt-4 paragraph-semibold">Danh sách sinh viên lớp</p>
+      <p className="ml-4 mt-12 paragraph-semibold">Danh sách sinh viên lớp</p>
       <DataTable
         type={DataTableType.Student}
         dataTable={dataTable}

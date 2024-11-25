@@ -195,14 +195,12 @@ const RegisterTopic = () => {
                     <PopoverTrigger asChild>
                       <Button
                         variant={"outline"}
-                        className={`w-full flex items-center text-center font-normal ${
-                          !dateStart && "text-muted-foreground"
-                        } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
+                        className={`w-full flex items-center text-center font-normal ${!dateStart && "text-muted-foreground"
+                          } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
                       >
                         <span
-                          className={`flex-grow text-center ${
-                            !dateStart && "text-muted-foreground"
-                          }`}
+                          className={`flex-grow text-center ${!dateStart && "text-muted-foreground"
+                            }`}
                         >
                           {dateStart
                             ? format(dateStart, "dd/MM/yyyy")
@@ -228,14 +226,12 @@ const RegisterTopic = () => {
                     <PopoverTrigger asChild>
                       <Button
                         variant={"outline"}
-                        className={`w-full flex items-center text-center font-normal ${
-                          !dateEnd && "text-muted-foreground"
-                        } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
+                        className={`w-full flex items-center text-center font-normal ${!dateEnd && "text-muted-foreground"
+                          } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
                       >
                         <span
-                          className={`flex-grow text-center ${
-                            !dateEnd && "text-muted-foreground"
-                          }`}
+                          className={`flex-grow text-center ${!dateEnd && "text-muted-foreground"
+                            }`}
                         >
                           {dateEnd
                             ? format(dateEnd, "dd/MM/yyyy")
@@ -407,7 +403,7 @@ const RegisterTopic = () => {
       <div className="flex mt-12 gap-2">
         <SubmitButton text="Đăng" otherClasses="w-fit" onClick={handleSubmit} />
         <IconButton text="Tạm lưu" temp otherClasses="w-fit" />
-        <IconButton text="Hủy" red otherClasses="w-fit" onClick={() => {}} />
+        <IconButton text="Hủy" red otherClasses="w-fit" onClick={() => { }} />
       </div>
     </>
   );
