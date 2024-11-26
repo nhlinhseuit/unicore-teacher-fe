@@ -5,6 +5,7 @@ interface InputParams {
   placeholder: string | number;
   value: string | number;
   onChange: (newValue: string | number) => void;
+  otherClassess?: string;
 }
 
 const InputComponent = (params: InputParams) => {
@@ -32,11 +33,12 @@ const InputComponent = (params: InputParams) => {
         placeholder="Trống"
         value={inputValue}
         onChange={handleInputChange}
-        style={{ width: 200 }}
-        className="
-          paragraph-regular no-focus placeholder  
+        className={`
+          paragraph-regular no-focus placeholder
           background-light800_darkgradient
-          shadow-none outline-none border-none truncate"
+          shadow-none outline-none border-none truncate
+          w-[200px] 
+          ${params.otherClassess || ""}`}
       />
     </div>
   );

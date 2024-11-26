@@ -1461,8 +1461,8 @@ export const mockDataStudentRegisterTopic = [
     data: {
       "Tên đề tài": "Ứng dụng đặt hàng và giao đồ ăn",
       "Mô tả":
-        "Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
-      "GV phụ trách": "Nguyễn Thị Thanh Trúc",
+        "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
+      "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
       "Tên nhóm": "STYLLE",
       MSSV: "21522289",
@@ -1489,9 +1489,8 @@ export const mockDataStudentRegisterTopic = [
     isDeleted: false,
     data: {
       "Tên đề tài": "Ứng dụng học ngôn ngữ",
-      "Mô tả":
-        "Một nền tảng giúp người dùng học các ngôn ngữ mới thông qua bài tập và trò chơi",
-      "GV phụ trách": "Huỳnh Tuấn Anh",
+      "Mô tả": "Giúp người dùng xây dựng một ngôi nhà thông minh và tiện lợi",
+      "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "3",
       "Tên nhóm": "MERN",
       MSSV: "21522289",
