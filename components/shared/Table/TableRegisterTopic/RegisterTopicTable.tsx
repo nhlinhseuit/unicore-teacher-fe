@@ -198,6 +198,8 @@ const RegisterTopicTable = (params: DataTableParams) => {
                 </Table.HeadCell>
 
                 {Object.keys(filteredDataTable[0]?.data || {}).map((key) => {
+                  if (key === "Mã nhóm") return null;
+                  
                   return (
                     <Table.HeadCell
                       key={key}

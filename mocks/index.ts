@@ -1416,16 +1416,6 @@ export const mockTopicDataTable = [
   },
 ];
 
-export const mockTopicRegisterGroupDataTable = [
-  {
-    STT: "1",
-    data: {
-      MSSV: "",
-      SĐT: "",
-      "Họ và tên": "",
-    },
-  },
-];
 
 //
 // TODO: BigExerciseId Register topic

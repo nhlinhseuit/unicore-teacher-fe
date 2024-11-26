@@ -8,7 +8,7 @@ import TableSkeleton from "@/components/shared/Table/components/TableSkeleton";
 import TopicGroupTable from "@/components/shared/Table/TableTopic/TopicDataTable";
 import {
   AlertDialog,
-  AlertDialogContent,
+AlertDialogContent,
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
@@ -23,7 +23,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/hooks/use-toast";
-import { mockTopicDataTable, mockDbStudent } from "@/mocks";
+import { mockDbStudent, mockTopicDataTable } from "@/mocks";
 import { TopicDataItem } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
@@ -32,14 +32,13 @@ import * as XLSX from "xlsx";
 import { z } from "zod";
 
 import BorderContainer from "@/components/shared/BorderContainer";
-import { usePathname } from "next/navigation";
+import StudentItem from "@/components/shared/StudentItem";
 import {
   maxStudentPerGroup,
-  minStudentPerGroup,
-  RegisterTopicTableType,
+  minStudentPerGroup
 } from "@/constants";
 import Student from "@/types/entity/Student";
-import StudentItem from "@/components/shared/StudentItem";
+import { usePathname } from "next/navigation";
 
 const ListTopic = () => {
   // Update biến: Danh sách thành viên nhóm
