@@ -785,6 +785,34 @@ export const mockDataStudentRegisterGroup = [
 ];
 
 //
+// TODO: Midterm exam
+//
+export const mockMidtermExam = [
+  {
+    id: "1",
+    name: "Thi tập trung giữa kỳ",
+    creator: "Huỳnh Hồ Thị Mộng Trinh",
+    createdAt: "29/8/2024 7:23AM",
+    happeningEvent: "Đăng ký nhóm và đề tài báo cáo",
+    deadline: "10/09/2024 - 00:00AM",
+  },
+];
+
+//
+// TODO: Final exam
+//
+export const mockFinalExam = [
+  {
+    id: "1",
+    name: "Thi tập trung cuối kỳ",
+    creator: "Huỳnh Hồ Thị Mộng Trinh",
+    createdAt: "29/8/2024 7:23AM",
+    happeningEvent: "Đăng ký nhóm và đề tài báo cáo",
+    deadline: "10/09/2024 - 00:00AM",
+  },
+];
+
+//
 // TODO: Big Exercise List
 //
 export const mockBigExercisesList = [
