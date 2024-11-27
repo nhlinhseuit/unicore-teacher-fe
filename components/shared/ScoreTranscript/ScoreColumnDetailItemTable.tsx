@@ -31,6 +31,7 @@ const ScoreColumnDetailItemTable = (params: DataTableParams) => {
           value={value}
           placeholder={value}
           onChange={(newValue) => handleInputChange(key, newValue)}
+          otherClassess="w-full"
         />
       );
     }

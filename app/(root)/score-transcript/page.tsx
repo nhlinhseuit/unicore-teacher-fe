@@ -5,153 +5,134 @@ import ScoreColumnDetailPage from "@/components/shared/ScoreTranscript/ScoreColu
 import TableSearch from "@/components/shared/Search/TableSearch";
 import ScoreTranscriptTable from "@/components/shared/Table/TableScoreTranscript/ScoreTranscriptTable";
 import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { toast } from "@/hooks/use-toast";
-import {
   mockCoursesListScoreTranscript,
   mockDataScoreTranscript,
   mockGradeColumnPercent,
 } from "@/mocks";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 const ScoreTranscript = () => {
   const [selectedCourse, setSelectedCourse] = useState(-1);
   const [isEditTable, setIsEditTable] = useState(false);
-  const [isEditGradeColumn, setIsEditGradeColumn] = useState(false);
+  // const [isEditGradeColumn, setIsEditGradeColumn] = useState(false);
   const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
 
-  const [scoreProgress, setScoreProgress] = useState<string>(
-    mockGradeColumnPercent["Quá trình"].toString()
-  );
-  const handleChangeNumberOfScoreProgress = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setScoreProgress(e.target.value);
-  };
+  // const [scoreProgress, setScoreProgress] = useState<string>(
+  //   mockGradeColumnPercent["Quá trình"].toString()
+  // );
+  // const handleChangeNumberOfScoreProgress = (
+  //   e: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   setScoreProgress(e.target.value);
+  // };
 
-  const [scoreMidterm, setScoreMidterm] = useState<string>(
-    mockGradeColumnPercent["Giữa kỳ"].toString()
-  );
-  const handleChangeNumberOfScoreMidterm = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setScoreMidterm(e.target.value);
-  };
+  // const [scoreMidterm, setScoreMidterm] = useState<string>(
+  //   mockGradeColumnPercent["Giữa kỳ"].toString()
+  // );
+  // const handleChangeNumberOfScoreMidterm = (
+  //   e: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   setScoreMidterm(e.target.value);
+  // };
 
-  const [scoreFinal, setScoreFinal] = useState<string>(
-    mockGradeColumnPercent["Cuối kỳ"].toString()
-  );
-  const handleChangeNumberOfScoreFinal = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setScoreFinal(e.target.value);
-  };
+  // const [scoreFinal, setScoreFinal] = useState<string>(
+  //   mockGradeColumnPercent["Cuối kỳ"].toString()
+  // );
+  // const handleChangeNumberOfScoreFinal = (
+  //   e: React.ChangeEvent<HTMLInputElement>
+  // ) => {
+  //   setScoreFinal(e.target.value);
+  // };
 
-  const AnnoucementSchema = z
-    .object({
-      progress: z.number().optional(),
-      midterm: z.number().optional(),
-      final: z.number().optional(),
-    })
-    .refine((data) => !isNaN(parseInt(scoreProgress)), {
-      message: "Hệ số điểm phải là chữ số",
-      path: ["progress"],
-    })
-    .refine(
-      (data) => parseInt(scoreProgress) >= 0 && parseInt(scoreProgress) <= 100,
-      {
-        message: "Hệ số điểm phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 100",
-        path: ["progress"],
-      }
-    )
-    //
-    .refine((data) => !isNaN(parseInt(scoreMidterm)), {
-      message: "Hệ số điểm phải là chữ số",
-      path: ["midterm"],
-    })
-    .refine(
-      (data) => parseInt(scoreMidterm) >= 0 && parseInt(scoreMidterm) <= 100,
-      {
-        message: "Hệ số điểm phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 100",
-        path: ["midterm"],
-      }
-    )
-    //
-    .refine((data) => !isNaN(parseInt(scoreFinal)), {
-      message: "Hệ số điểm phải là chữ số",
-      path: ["final"],
-    })
-    .refine(
-      (data) => parseInt(scoreFinal) >= 0 && parseInt(scoreFinal) <= 100,
-      {
-        message: "Hệ số điểm phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 100",
-        path: ["final"],
-      }
-    )
-    //
-    .refine(
-      (data) =>
-        parseInt(scoreProgress) +
-          parseInt(scoreMidterm) +
-          parseInt(scoreFinal) ===
-        100,
-      {
-        message: "Tổng phần trăm các hệ số phải là 100%",
-        path: ["final"],
-      }
-    );
+  // const AnnoucementSchema = z
+  //   .object({
+  //     progress: z.number().optional(),
+  //     midterm: z.number().optional(),
+  //     final: z.number().optional(),
+  //   })
+  //   .refine((data) => !isNaN(parseInt(scoreProgress)), {
+  //     message: "Hệ số điểm phải là chữ số",
+  //     path: ["progress"],
+  //   })
+  //   .refine(
+  //     (data) => parseInt(scoreProgress) >= 0 && parseInt(scoreProgress) <= 100,
+  //     {
+  //       message: "Hệ số điểm phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 100",
+  //       path: ["progress"],
+  //     }
+  //   )
+  //   //
+  //   .refine((data) => !isNaN(parseInt(scoreMidterm)), {
+  //     message: "Hệ số điểm phải là chữ số",
+  //     path: ["midterm"],
+  //   })
+  //   .refine(
+  //     (data) => parseInt(scoreMidterm) >= 0 && parseInt(scoreMidterm) <= 100,
+  //     {
+  //       message: "Hệ số điểm phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 100",
+  //       path: ["midterm"],
+  //     }
+  //   )
+  //   //
+  //   .refine((data) => !isNaN(parseInt(scoreFinal)), {
+  //     message: "Hệ số điểm phải là chữ số",
+  //     path: ["final"],
+  //   })
+  //   .refine(
+  //     (data) => parseInt(scoreFinal) >= 0 && parseInt(scoreFinal) <= 100,
+  //     {
+  //       message: "Hệ số điểm phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 100",
+  //       path: ["final"],
+  //     }
+  //   )
+  //   //
+  //   .refine(
+  //     (data) =>
+  //       parseInt(scoreProgress) +
+  //         parseInt(scoreMidterm) +
+  //         parseInt(scoreFinal) ===
+  //       100,
+  //     {
+  //       message: "Tổng phần trăm các hệ số phải là 100%",
+  //       path: ["final"],
+  //     }
+  //   );
 
-  const form = useForm<z.infer<typeof AnnoucementSchema>>({
-    resolver: zodResolver(AnnoucementSchema),
-    defaultValues: {
-      progress: mockGradeColumnPercent["Quá trình"],
-      midterm: mockGradeColumnPercent["Giữa kỳ"],
-      final: mockGradeColumnPercent["Cuối kỳ"],
-    },
-  });
+  // const form = useForm<z.infer<typeof AnnoucementSchema>>({
+  //   resolver: zodResolver(AnnoucementSchema),
+  //   defaultValues: {
+  //     progress: mockGradeColumnPercent["Quá trình"],
+  //     midterm: mockGradeColumnPercent["Giữa kỳ"],
+  //     final: mockGradeColumnPercent["Cuối kỳ"],
+  //   },
+  // });
 
-  const { reset } = form;
+  // const { reset } = form;
 
-  async function onSubmit(values: any) {
-    try {
-      console.log({
-        progress: values.progress,
-        midterm: values.midterm,
-        final: values.final,
-      });
+  // async function onSubmit(values: any) {
+  //   try {
+  //     console.log({
+  //       progress: values.progress,
+  //       midterm: values.midterm,
+  //       final: values.final,
+  //     });
 
-      // naviate to home page
-      // router.push("/");
+  //     // naviate to home page
+  //     // router.push("/");
 
-      toast({
-        title: "Đăng đề tài mới thành công.",
-        variant: "success",
-        duration: 3000,
-      });
+  //     toast({
+  //       title: "Đăng đề tài mới thành công.",
+  //       variant: "success",
+  //       duration: 3000,
+  //     });
 
-      setIsEditGradeColumn(false);
-    } catch {
-    } finally {
-    }
-  }
+  //     setIsEditGradeColumn(false);
+  //   } catch {
+  //   } finally {
+  //   }
+  // }
 
   return (
     <>
@@ -234,12 +215,12 @@ const ScoreTranscript = () => {
 
             {/* Create announcement */}
             <div className="flex gap-2">
-              <IconButton
+              {/* <IconButton
                 text="Chỉnh sửa hệ số điểm"
                 onClick={() => {
                   setIsEditGradeColumn(true);
                 }}
-              />
+              /> */}
               <IconButton text="Xuất file điểm" green />
             </div>
           </div>
@@ -259,7 +240,7 @@ const ScoreTranscript = () => {
       )}
 
       {/* EDIT GRADE COLUMN */}
-      <AlertDialog open={isEditGradeColumn}>
+      {/* <AlertDialog open={isEditGradeColumn}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-center">
@@ -269,7 +250,6 @@ const ScoreTranscript = () => {
 
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
-              {/* NAME ANNOUCEMENT */}
               <div className="flex flex-col gap-6">
                 <FormField
                   control={form.control}
@@ -364,7 +344,7 @@ const ScoreTranscript = () => {
             </form>
           </Form>
         </AlertDialogContent>
-      </AlertDialog>
+      </AlertDialog> */}
     </>
   );
 };

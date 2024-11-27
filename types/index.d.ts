@@ -239,3 +239,16 @@ export interface TeacherDataItem {
   isDeleted: boolean;
   data: TeacherData;
 }
+
+export interface OfficerPermissionData {
+  activityTracking: boolean,
+  createExercise: boolean,
+  createAnnouncement: boolean,
+  createBigExercise: boolean,
+}
+
+export interface OfficerPermissionDataItem {
+  name: string;
+  email: string;
+  permissions: OfficerPermissionData
+}

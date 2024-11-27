@@ -1,6 +1,32 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+// TODO: Chuyển đổi các giá trị biến sang Label
+
+export enum Permission {
+  ActivityTracking = "activityTracking",
+  CreateExercise = "createExercise",
+  CreateAnnouncement = "createAnnouncement",
+  CreateBigExercise = "createBigExercise",
+}
+
+export const getPermissionLabel = (key: string): string => {
+  switch (key) {
+    case Permission.ActivityTracking:
+      return "Theo dõi hoạt động";
+    case Permission.CreateExercise:
+      return "Tạo bài tập";
+    case Permission.CreateAnnouncement:
+      return "Tạo thông báo";
+    case Permission.CreateBigExercise:
+      return "Tạo bài tập lớn";
+    default:
+      return "Quyền không xác định";
+  }
+};
+
+//
+
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
