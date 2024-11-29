@@ -32,8 +32,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           whitespace-nowrap
           overflow-x-auto
           flex-nowrap
+          mt-2 items-center gap-2 border-b border-gray
           pr-[230px]
-           mt-2 items-center gap-2
           "
       >
         {TeacherCourseTabItems.map((item) => {

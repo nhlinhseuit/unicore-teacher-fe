@@ -45,15 +45,18 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           whitespace-nowrap
           overflow-x-auto
           flex-nowrap
+          mt-2 border-b border-gray
           pl-[200px]
-          mt-2
           "
       >
         {BigExerciseTabItems.map((item) => {
           let isActive = false;
 
           if (item.route === "/") {
-            if (`${linkToBigExercises}/big-exercises/${bigExerciseId}` === pathName)
+            if (
+              `${linkToBigExercises}/big-exercises/${bigExerciseId}` ===
+              pathName
+            )
               isActive = true;
           } else {
             isActive = pathName.includes(item.route);

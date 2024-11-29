@@ -18,7 +18,19 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <div
         aria-label="Tabs with underline"
         role="tablist"
-        className="mb-4 flex text-center flex-wrap mt-2 items-center gap-2 "
+        className="relative
+          scroll-container-noscroll
+          h-[54px]
+          mb-4
+          flex
+          gap-2
+          items-center
+          text-center
+          whitespace-nowrap
+          overflow-x-auto
+          flex-nowrap
+          mt-2 border-b border-gray
+          "
       >
         {TeacherAnnouncementsTabItems.map((item) => {
           let isActive =
@@ -29,7 +41,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
           return (
             <Link key={item.route} href={item.route}>
-             <NavbarButton isActive={isActive} label={item.label} />
+              <NavbarButton isActive={isActive} label={item.label} />
             </Link>
           );
         })}

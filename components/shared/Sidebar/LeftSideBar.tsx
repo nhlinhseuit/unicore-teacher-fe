@@ -34,6 +34,26 @@ const LeftSideBar = () => {
     }
   };
 
+  let getCoursesStyle = (isActive: boolean) => {
+    return `${
+      isActive
+        ? "primary-gradient rounded-lg text-light-900"
+        : "text-dark300_light900"
+    }  flex items-center justify-start gap-4
+                    max-lg:w-[52px]
+                    bg-transparent px-4 py-3`;
+  };
+
+  let getStyle = (isActive: boolean) => {
+    return `${
+      isActive
+        ? "primary-gradient text-light-900"
+        : "text-dark300_light900 hover:bg-[#ECF2FFFF] hover:!text-[#5D87FFFF]"
+    }  flex items-center justify-start gap-4
+    group rounded-lg max-lg:w-[52px]
+    bg-transparent px-4 py-3`;
+  };
+
   return (
     <section
       className="
@@ -100,16 +120,7 @@ const LeftSideBar = () => {
 
               return (
                 <Fragment key={`${index}_${item.route}`}>
-                  <Link
-                    href={item.route}
-                    className={`${
-                      isActive
-                        ? "primary-gradient rounded-lg text-light-900"
-                        : "text-dark300_light900"
-                    }  flex items-center justify-start gap-4
-                    max-lg:w-[52px]
-                    bg-transparent px-4 py-3`}
-                  >
+                  <Link href={item.route} className={getCoursesStyle(isActive)}>
                     <Image
                       src={item.imgURL}
                       alt={item.label}
@@ -138,20 +149,16 @@ const LeftSideBar = () => {
                 <Link
                   key={item.route}
                   href={item.route}
-                  className={`${
-                    isActive
-                      ? "primary-gradient rounded-lg text-light-900"
-                      : "text-dark300_light900"
-                  }  flex items-center justify-start gap-4
-                  max-lg:w-[52px]
-                  bg-transparent px-4 py-2`}
+                  className={getStyle(isActive)}
                 >
                   <Image
                     src={item.imgURL}
                     alt={item.label}
                     width={20}
                     height={20}
-                    className={`${isActive ? "" : "invert-colors"}`}
+                    className={`${
+                      isActive ? "" : "invert-colors"
+                    } group-hover:fill-[#5D87FF]`}
                   />
                   <p
                     className={`${isActive ? "normal-bold" : "normal-medium"} 

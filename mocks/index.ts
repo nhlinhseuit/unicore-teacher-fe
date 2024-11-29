@@ -150,6 +150,18 @@ export const mockAnnouncementDetailLists = [
 ];
 
 //
+//// TODO: NotiTypeList
+//
+export const mockNotiTypeList = [
+  { id: 1, value: "Phúc khảo" },
+  { id: 2, value: "Bài tập" },
+  { id: 3, value: "Báo cáo đồ án" },
+  { id: 4, value: "Điểm bài làm" },
+  { id: 5, value: "Duyệt đề tài" },
+  { id: 6, value: "Tin nhắn" },
+];
+
+//
 //// TODO: Exercises
 //
 export const mockCategoryList = [
