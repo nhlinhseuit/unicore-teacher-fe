@@ -41,8 +41,8 @@ const LeftSideBar = () => {
     flex-col
     justify-between
     background-light900_dark200
-    min-w-[200px]
-    max-w-[200px]
+    min-w-[250px]
+    max-w-[250px]
     max-lg:min-w-fit
 
     max-h-screen
@@ -108,7 +108,7 @@ const LeftSideBar = () => {
                         : "text-dark300_light900"
                     }  flex items-center justify-start gap-4
                     max-lg:w-[52px]
-                    bg-transparent px-4 py-2`}
+                    bg-transparent px-4 py-3`}
                   >
                     <Image
                       src={item.imgURL}

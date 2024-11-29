@@ -37,9 +37,9 @@ const ReportPostItem = (params: Props) => {
           </p>
           <StatusButton
             orange
-            text="BÁO CÁO"
+            text="Báo cáo"
             smallText
-            otherClasses="rounded-md"
+            otherClasses="rounded-md ml-4"
             infoComponent={
               <ul className="text-white text-[12px] text-left">
                 <li role="menuitem">

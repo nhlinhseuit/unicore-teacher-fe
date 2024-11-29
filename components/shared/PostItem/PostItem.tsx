@@ -35,9 +35,9 @@ const PostItem = (params: Props) => {
           </p>
           <StatusButton
             temp
-            text="THÔNG BÁO"
+            text="Thông báo"
             smallText
-            otherClasses="rounded-md"
+            otherClasses="rounded-md ml-4"
           />
           <Image
             src={"/assets/icons/edit-black.svg"}

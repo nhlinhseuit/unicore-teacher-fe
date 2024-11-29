@@ -27,7 +27,7 @@ interface StatusButtonProps {
 }
 
 const StatusButton = (params: StatusButtonProps) => {
-  return (
+return (
     <div
       onClick={params.onClick ? params.onClick : undefined}
       className={`
@@ -49,10 +49,10 @@ const StatusButton = (params: StatusButtonProps) => {
         focus:ring-1
         focus:ring-gray-200
         font-medium
-        rounded-lg
+        rounded-3xl
         text-sm
-        px-3
-        py-1
+        px-[2px]
+        py-[2px]
         dark:bg-primary-600
         dark:hover:bg-primary-700
         focus:outline-none
@@ -65,9 +65,9 @@ const StatusButton = (params: StatusButtonProps) => {
     >
       <span
         title="text"
-        className={`flex-grow pl-2 pr-2 text-center ${
-          params.smallText ? "text-[12px]" : ""
-        }`}
+        className={`flex-grow pl-2 text-center ${
+          params.smallText ? "text-[13px]" : ""
+        } ${!params.infoComponent ? "pr-2" : ""}`}
       >
         {params.text}
       </span>
@@ -77,7 +77,7 @@ const StatusButton = (params: StatusButtonProps) => {
           content={params.infoComponent}
           style="dark"
           arrow={true}
-          className="bg-[#1e1e1e] text-white text-[12px] py-1"
+          className="bg-[#1e1e1e] text-white text-[13px] py-1"
         >
           <Image
             src={
@@ -88,7 +88,7 @@ const StatusButton = (params: StatusButtonProps) => {
             alt="info"
             width={18}
             height={18}
-            className="ml-2 cursor-pointer"
+            className="ml-1 mr-1 cursor-pointer"
           />
         </Tooltip>
       )}

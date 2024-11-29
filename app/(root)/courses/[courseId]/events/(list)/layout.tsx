@@ -6,6 +6,7 @@ import { useParams, usePathname } from "next/navigation";
 import { TeacherCourseTabItems } from "@/constants";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
+import NavbarButton from "@/components/shared/NavbarButton";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathName = usePathname();
@@ -31,10 +32,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           whitespace-nowrap
           overflow-x-auto
           flex-nowrap
-          border-b
-          border-gray-200
-          dark:border-gray-700
           pr-[230px]
+           mt-2 items-center gap-2
           "
       >
         {TeacherCourseTabItems.map((item) => {
@@ -54,15 +53,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               key={`/courses/${courseId}${item.route}`}
               href={`/courses/${courseId}${item.route}`}
             >
-              <button
-                type="button"
-                className={`flex items-center justify-center p-4 text-sm font-medium first:ml-0 disabled:cursor-not-allowed disabled:text-gray-400 disabled:dark:text-gray-500 rounded-t-lg ${
-                  isActive ? "border-b-[1.5px]  border-[#7fc9fa]" : ""
-                }`}
-                role="tab"
-              >
-                {item.label}
-              </button>
+              <NavbarButton isActive={isActive} label={item.label} />
             </Link>
           );
         })}
