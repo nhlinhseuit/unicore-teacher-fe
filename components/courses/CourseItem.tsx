@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import MoreButtonCourseItem from "./MoreButtonCourseItem";
 
 interface Props {
@@ -6,13 +6,16 @@ interface Props {
   name: string;
   semester: string;
   teachers: string;
+  color: string;
 }
 
 const CourseItem = (params: Props) => {
+
   return (
     <div
       className="w-[250px] h-[140px] rounded-lg cursor-pointer
-              border-[1.5px] border-primary-500 text-black p-4 flex flex-col justify-between"
+              shadow-md text-black p-4 flex flex-col justify-between"
+              style={{ backgroundColor: params.color}}
     >
       <div>
         <h4 className="body-bold">{params.id}</h4>

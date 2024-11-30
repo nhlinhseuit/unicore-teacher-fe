@@ -29,6 +29,12 @@ const JoinedCourses = () => {
 
   const router = useRouter();
 
+  const colors = [
+    "#fef5e5", "#e8f7ff", "#ecf2ff", "#e6fffa", "#fdede8",
+    "#f1f4f9", "#fff5e6", "#e1f7d5", "#dce5ff", "#fffae6",
+    "#f0f8ff", "#e0ffff", "#e7f5e8", "#f7e4f9", "#f6f8e9"
+  ];
+
   const getCourseData = (idCourse: string) => {
     return mockCourses.find((item) => item.id === idCourse);
   };
@@ -157,7 +163,7 @@ const JoinedCourses = () => {
           })}
       </div>
 
-      <div className="flex gap-2">
+      <div className="flex gap-4 flex-wrap">
         {mockCourses.map((item, index) => (
           <div
             key={item.id}
@@ -176,6 +182,7 @@ const JoinedCourses = () => {
               name={item.name}
               semester={item.semester}
               teachers={item.teachers}
+              color={colors[index % colors.length]}
             />
             <div className="absolute right-0 top-0">
               <MoreButtonCourseItem handleEdit={() => {}} />
