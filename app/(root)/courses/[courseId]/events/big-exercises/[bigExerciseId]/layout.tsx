@@ -35,7 +35,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         aria-label="Tabs with underline"
         role="tablist"
         className="relative
-          scroll-container-noscroll
+          custom-scrollbar-navbar
           h-[54px]
           mb-4
           flex

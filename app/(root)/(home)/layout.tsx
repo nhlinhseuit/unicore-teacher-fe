@@ -19,13 +19,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         aria-label="Tabs with underline"
         role="tablist"
         className="relative
-          scroll-container-noscroll
+          custom-scrollbar-navbar
           h-[54px]
           mb-4
           flex
           gap-2
           items-center
-          text-center
+        text-center
           whitespace-nowrap
           overflow-x-auto
           flex-nowrap

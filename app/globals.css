@@ -83,6 +83,8 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
+/* //TODO: NORMAL */
+
 .custom-scrollbar::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -100,6 +102,31 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+/* //TODO: NAVBAR */
+
+.custom-scrollbar-navbar::-webkit-scrollbar {
+  width: 1.5px;
+  height: 1.5px;
+  border-radius: 2px;
+  padding-right: 230px;
+}
+
+.custom-scrollbar-navbar::-webkit-scrollbar-track {
+  background: #ffffff;
+  padding-right: 230px;
+}
+
+.custom-scrollbar-navbar::-webkit-scrollbar-thumb {
+  background: #5d87ffd9;
+  border-radius: 50px;
+  padding-right: 230px;
+}
+
+.custom-scrollbar-navbar::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  padding-right: 230px;
 }
 
 /* Markdown Start */
