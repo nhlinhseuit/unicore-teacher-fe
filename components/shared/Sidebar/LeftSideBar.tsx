@@ -56,20 +56,20 @@ const LeftSideBar = () => {
 
   return (
     <section
-  className="
-    flex flex-col
-    background-light900_dark200
-    min-w-[250px]
-    max-w-[250px]
-    max-lg:min-w-fit
-    max-h-screen
-    z-50
-    max-sm:hidden
-    pt-4
-    border-r
-    shadow-light-300
-    dark:shadow-none
-  "
+    className="
+      flex flex-col
+      background-light900_dark200
+      min-w-[250px]
+      max-w-[250px]
+      max-lg:min-w-fit
+      max-h-screen
+      z-50
+      max-sm:hidden
+      pt-4
+      border-r
+      shadow-light-300
+      dark:shadow-none
+    "
 >
   {/* LOGO */}
   <div className="px-6 mb-2 ml-2 flex-shrink-0">

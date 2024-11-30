@@ -54,6 +54,10 @@ export const TeacherCoursesTabItems = [
   { value: "listCourses", label: "Danh sách lớp học", route: "/courses" },
 ];
 
+export const TeacherSettingTabItems = [
+  { value: "settingNoti", label: "Tin tức - thông báo", route: "/setting" },
+];
+
 export const TeacherSubjectsTabItems = [
   { value: "listSubjects", label: "Danh sách môn học", route: "/subjects" },
   { value: "subjectTypes", label: "Loại môn học", route: "/subjects/types" },

@@ -1,7 +1,7 @@
 "use client";
 
 import NavbarButton from "@/components/shared/NavbarButton";
-import { StudentSettingTabItems } from "@/constants";
+import { TeacherSettingTabItems } from "@/constants";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
@@ -32,7 +32,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           mt-2 border-b border-gray
           "
       >
-        {StudentSettingTabItems.map((item) => {
+        {TeacherSettingTabItems.map((item) => {
           const isActive =
             pathName === item.route || pathName.includes(`/${item.route}`);
 
