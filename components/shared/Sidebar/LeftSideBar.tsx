@@ -64,19 +64,17 @@ const LeftSideBar = () => {
     min-w-[250px]
     max-w-[250px]
     max-lg:min-w-fit
-
     max-h-screen
     z-50
     max-sm:hidden
-    overflow-y-auto
-    left-
-    top-0
     border-r
-    pt-4
     shadow-light-300
     dark:shadow-none
-    custom-scrollbar
     
+    custom-scrollbar
+    pt-4
+    top-0
+    overflow-y-auto
     "
     >
       {/* LOGO */}
