@@ -92,7 +92,7 @@ const LeftSideBar = () => {
       flex flex-col
       gap-4
       px-6
-      mt-6
+      mt-2
       overflow-y-auto
       flex-grow
       custom-scrollbar

@@ -1595,7 +1595,7 @@ export const mockPostDataGradingDetail = [
     id: "1",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",
-    title: "Bài tập ngày 29/9/2024",
+    title: "Bài tập 1",
     fileName: "exercise.docx",
     scoreDetail: {
       "Bài nộp": "NHL_Bài 1.docx",
@@ -1608,7 +1608,7 @@ export const mockPostDataGradingDetail = [
     id: "2",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",
-    title: "Bài tập ngày 29/9/2024",
+    title: "Bài tập 2",
     fileName: "exercise.docx",
     scoreDetail: {
       "Bài nộp": "NHL_Bài 1.docx",
@@ -1621,7 +1621,7 @@ export const mockPostDataGradingDetail = [
     id: "3",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",
-    title: "Bài tập ngày 29/9/2024",
+    title: "Bài tập 3",
     fileName: "exercise.docx",
     scoreDetail: {
       "Bài nộp": "NHL_Bài 1.docx",
