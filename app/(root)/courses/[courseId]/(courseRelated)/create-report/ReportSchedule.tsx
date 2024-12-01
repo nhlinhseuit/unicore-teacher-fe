@@ -82,7 +82,6 @@ const ReportSchedule = () => {
       },
     ]);
 
-    console.log("handleAddReport", reportOptions);
   };
 
   const handleUpdateReport = (
@@ -94,7 +93,6 @@ const ReportSchedule = () => {
     );
     sReportOptions.set(newReports);
 
-    console.log("handleUpdateReport", reportOptions);
   };
 
   const handleRemoveReport = (index: number) => {
@@ -216,7 +214,6 @@ const ReportSchedule = () => {
                         selectedTime={timeStart}
                         setSelectTime={(time) => {
                           sTimeStart.set(time);
-                          console.log("setSelectTime", timeStart);
                         }}
                         initialFocus
                         locale={vi}

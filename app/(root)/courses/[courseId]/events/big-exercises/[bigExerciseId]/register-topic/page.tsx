@@ -98,7 +98,6 @@ const RegisterTopic = () => {
     }
 
     if (isUseExistedGroup === 2) {
-      console.log("here");
       if (minMember == "" || maxMember == "") {
         newErrorList[1].value = true; // Số lượng thành viên không hợp lệ
         isNotValid = true;
@@ -125,7 +124,6 @@ const RegisterTopic = () => {
         newErrorList[2].value = false;
       }
     }
-    console.log("newErrorList", newErrorList);
 
     setErrorList(newErrorList); // Cập nhật trạng thái errorList
 

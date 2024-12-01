@@ -29,7 +29,6 @@ const RowTopicDataTable = (params: RowParams) => {
   };
 
   const getFileIcon = (nameFile: string) => {
-    console.log("nameFile", nameFile);
     if (nameFile === undefined) return;
 
     const extension = nameFile.split(".").pop()?.toLowerCase();

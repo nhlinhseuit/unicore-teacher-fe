@@ -31,7 +31,6 @@ const CreateReport = () => {
 
     // check valid của component con
     if (sCompletedReportSchedule.value == false) {
-      console.log("sCompletedReportSchedule.value == false");
       // ? set lại để component con watch lại
       sSubmitReportSchedule.set(false);
       return;

@@ -4,6 +4,7 @@ import ClosedButton from "@/components/shared/Annoucements/ClosedButton";
 import PickFileImageButton from "@/components/shared/Annoucements/PickFileImageButton";
 import RenderFile from "@/components/shared/Annoucements/RenderFile";
 import BackToPrev from "@/components/shared/BackToPrev";
+import BorderContainer from "@/components/shared/BorderContainer";
 import IconButton from "@/components/shared/Button/IconButton";
 import SubmitButton from "@/components/shared/Button/SubmitButton";
 import RadioboxComponent from "@/components/shared/RadioboxComponent";
@@ -57,6 +58,10 @@ const CreateAnnouncement = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
 
+  const [selectedCheckAttendance, setSelectedCheckAttendance] = useState(1);
+  const [dateCloseCheckAttendance, setDateCloseCheckAttendance] =
+    React.useState<Date>();
+
   const handleChooseFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
     if (files) {
@@ -97,7 +102,19 @@ const CreateAnnouncement = () => {
       file: z.any(),
       multipleCourses: z.number().optional(),
       date: z.date().optional(),
+      dateCloseCheckAttendance: z.date().optional(),
     })
+    .refine(
+      (data) =>
+        selectedCheckAttendance === 2
+          ? !(dateCloseCheckAttendance === undefined)
+          : true,
+
+      {
+        message: "Bạn phải chọn thời gian đóng form điểm danh",
+        path: ["dateCloseCheckAttendance"],
+      }
+    )
     .refine(
       (data) =>
         selectedFiles.every(
@@ -320,6 +337,107 @@ const CreateAnnouncement = () => {
               {/* //TODO: SECTION 2 */}
 
               <div className="flex w-[30%] flex-col gap-10">
+                {/* TẠO FORM ĐIỂM DANH */}
+                <FormField
+                  control={form.control}
+                  name="multipleCourses"
+                  render={({ field }) => (
+                    <FormItem className="flex w-full flex-col">
+                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                        Tạo form điểm danh
+                      </FormLabel>
+                      <FormControl>
+                        <BorderContainer otherClasses="mt-3.5">
+                          <div className="p-4 flex flex-col gap-10">
+                            <div className="inline-flex">
+                              <RadioboxComponent
+                                id={1}
+                                handleClick={() => {
+                                  setSelectedCheckAttendance(1);
+                                }}
+                                value={selectedCheckAttendance}
+                                text="Không"
+                              />
+                            </div>
+                            <div className="inline-flex">
+                              <RadioboxComponent
+                                id={2}
+                                handleClick={() => {
+                                  setSelectedCheckAttendance(2);
+                                }}
+                                value={selectedCheckAttendance}
+                                text="Có"
+                              />
+                            </div>
+
+                            {/* CheckAttendance */}
+                            {selectedCheckAttendance === 2 ? (
+                              <FormField
+                                control={form.control}
+                                name="dateCloseCheckAttendance"
+                                render={({ field }) => (
+                                  <FormItem className="flex w-full flex-col">
+                                    <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                                      Chọn ngày đóng form
+                                    </FormLabel>
+                                    <FormControl className="mt-3.5">
+                                      <Popover>
+                                        <PopoverTrigger asChild>
+                                          <Button
+                                            variant={"outline"}
+                                            className={` flex items-center text-center font-normal ${
+                                              !dateCloseCheckAttendance &&
+                                              "text-muted-foreground"
+                                            } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
+                                          >
+                                            <span
+                                              className={`flex-grow text-center ${
+                                                !dateCloseCheckAttendance &&
+                                                "text-muted-foreground"
+                                              }`}
+                                            >
+                                              {dateCloseCheckAttendance
+                                                ? format(
+                                                    dateCloseCheckAttendance,
+                                                    "dd/MM/yyyy"
+                                                  )
+                                                : "Chọn ngày"}
+                                            </span>
+                                            <CalendarIcon className="ml-2 h-4 w-4" />
+                                          </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0">
+                                          <Calendar
+                                            mode="single"
+                                            selected={dateCloseCheckAttendance}
+                                            onSelect={
+                                              setDateCloseCheckAttendance
+                                            }
+                                            initialFocus
+                                            locale={vi}
+                                          />
+                                        </PopoverContent>
+                                      </Popover>
+                                    </FormControl>
+                                    <FormDescription className="body-regular mt-2.5 text-light-500">
+                                      Form điểm danh sẽ khóa vào ngày này mà bạn
+                                      chọn.
+                                    </FormDescription>
+                                    <FormMessage className="text-red-500" />
+                                  </FormItem>
+                                )}
+                              />
+                            ) : (
+                              <></>
+                            )}
+                          </div>
+                        </BorderContainer>
+                      </FormControl>
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
+
                 {/* ĐĂNG NHIỀU LỚP */}
                 <FormField
                   control={form.control}

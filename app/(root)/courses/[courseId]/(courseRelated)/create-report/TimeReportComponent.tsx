@@ -83,10 +83,6 @@ const TimeReportComponent = ({
   //   if (value > 1) setValue(value - 1); // Giảm giá trị nhưng không nhỏ hơn 1
   // };
 
-  console.log(`re-render id=${id}  dateSchedule`, dateSchedule);
-  console.log(`re-render id=${id}  timeSchedule`, timeSchedule);
-  console.log(`re-render id=${id}  errorMessage`, errorMessage);
-
   return (
     <>
       <div className="flex items-center gap-4">

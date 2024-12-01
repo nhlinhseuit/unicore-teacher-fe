@@ -82,6 +82,8 @@ const ReportInfo = () => {
   // !
 
   const [datePost, setDatePost] = React.useState<Date>();
+  const [dateCloseCheckAttendance, setDateCloseCheckAttendance] =
+    React.useState<Date>();
 
   const [dateStart, setDateStart] = React.useState<Date>();
   const [timeStart, setTimeStart] = React.useState("");
@@ -145,6 +147,7 @@ const ReportInfo = () => {
       file: z.any(),
       dateSubmit: z.date().optional(),
       datePost: z.date().optional(),
+      dateCloseCheckAttendance: z.date().optional(),
       dateRemindGrade: z.date().optional(),
       dateClose: z.date().optional(),
       multipleCourses: z.number().optional(),
@@ -164,6 +167,17 @@ const ReportInfo = () => {
       {
         message: `File không hợp lệ hoặc vượt quá ${MAX_FILE_VALUE}MB.`,
         path: ["file"],
+      }
+    )
+    .refine(
+      (data) =>
+        selectedCheckAttendance === 2
+          ? !(dateCloseCheckAttendance === undefined)
+          : true,
+
+      {
+        message: "Bạn phải chọn thời gian đóng form điểm danh",
+        path: ["dateCloseCheckAttendance"],
       }
     )
     .refine(
@@ -666,7 +680,7 @@ const ReportInfo = () => {
                                   setSelectedCheckAttendance(1);
                                 }}
                                 value={selectedCheckAttendance}
-                                text="Có"
+                                text="Không"
                               />
                             </div>
                             <div className="inline-flex">
@@ -676,9 +690,70 @@ const ReportInfo = () => {
                                   setSelectedCheckAttendance(2);
                                 }}
                                 value={selectedCheckAttendance}
-                                text="Không"
+                                text="Có"
                               />
                             </div>
+
+                            {/* CheckAttendance */}
+                            {selectedCheckAttendance === 2 ? (
+                              <FormField
+                                control={form.control}
+                                name="dateCloseCheckAttendance"
+                                render={({ field }) => (
+                                  <FormItem className="flex w-full flex-col">
+                                    <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                                      Chọn ngày đóng form
+                                    </FormLabel>
+                                    <FormControl className="mt-3.5">
+                                      <Popover>
+                                        <PopoverTrigger asChild>
+                                          <Button
+                                            variant={"outline"}
+                                            className={` flex items-center text-center font-normal ${
+                                              !dateCloseCheckAttendance &&
+                                              "text-muted-foreground"
+                                            } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
+                                          >
+                                            <span
+                                              className={`flex-grow text-center ${
+                                                !dateCloseCheckAttendance &&
+                                                "text-muted-foreground"
+                                              }`}
+                                            >
+                                              {dateCloseCheckAttendance
+                                                ? format(
+                                                    dateCloseCheckAttendance,
+                                                    "dd/MM/yyyy"
+                                                  )
+                                                : "Chọn ngày"}
+                                            </span>
+                                            <CalendarIcon className="ml-2 h-4 w-4" />
+                                          </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-auto p-0">
+                                          <Calendar
+                                            mode="single"
+                                            selected={dateCloseCheckAttendance}
+                                            onSelect={
+                                              setDateCloseCheckAttendance
+                                            }
+                                            initialFocus
+                                            locale={vi}
+                                          />
+                                        </PopoverContent>
+                                      </Popover>
+                                    </FormControl>
+                                    <FormDescription className="body-regular mt-2.5 text-light-500">
+                                      Form điểm danh sẽ khóa vào ngày này mà bạn
+                                      chọn.
+                                    </FormDescription>
+                                    <FormMessage className="text-red-500" />
+                                  </FormItem>
+                                )}
+                              />
+                            ) : (
+                              <></>
+                            )}
                           </div>
                         </BorderContainer>
                       </FormControl>

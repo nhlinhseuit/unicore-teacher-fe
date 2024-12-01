@@ -232,7 +232,6 @@ const ScoreTranscript = () => {
             dataTable={mockDataScoreTranscript}
             dataGradeColumnPercent={mockGradeColumnPercent}
             viewDetailGradeColumn={() => {
-              console.log("123123");
               setIsViewDetailGradeColumn(true);
             }}
           />

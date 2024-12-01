@@ -1,10 +1,5 @@
 "use client";
 
-import {
-  sCompletedReportSchedule,
-  sReportOptions,
-  sSubmitReportSchedule,
-} from "@/app/(root)/courses/[courseId]/(courseRelated)/create-report/(store)/createReportStore";
 import MiniButton from "@/components/shared/Button/MiniButton";
 import { Button } from "@/components/ui/button";
 import { TimeCalendar } from "@/components/ui/custom-time-calendar";
@@ -18,6 +13,11 @@ import { vi } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import CustomNumberInput from "./CustomNumberInput";
+import {
+  sSubmitReportSchedule,
+  sReportOptions,
+  sCompletedReportSchedule,
+} from "./(store)/createReportStore";
 
 interface Props {
   id: number;
@@ -82,10 +82,6 @@ const TimeReportComponent = ({
   // const handleDecrement = () => {
   //   if (value > 1) setValue(value - 1); // Giảm giá trị nhưng không nhỏ hơn 1
   // };
-
-  console.log(`re-render id=${id}  dateSchedule`, dateSchedule);
-  console.log(`re-render id=${id}  timeSchedule`, timeSchedule);
-  console.log(`re-render id=${id}  errorMessage`, errorMessage);
 
   return (
     <>
