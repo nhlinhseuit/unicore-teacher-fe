@@ -34,7 +34,7 @@ const IconButton = (params: IconButtonProps) => {
         gap-1
         items-center
         justify-center
-        ${params.border && "border border-gray-200"}
+        ${params.border && "border light-border-2"}
         ${params.isFilter && "border-[#2563EB]"} 
         ${params.textColor ? `${params.textColor}` : "text-white"} 
         ${params.bgColor ? `${params.bgColor}` : "bg-primary-500"} 
@@ -60,7 +60,7 @@ const IconButton = (params: IconButtonProps) => {
         dark:focus:ring-primary-800
         h-auto
         text-center
-        
+        shadow-none
         ${params.otherClasses}
         `}
     >

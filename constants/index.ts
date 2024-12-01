@@ -162,7 +162,6 @@ export enum DetailFilter {
   Semester,
   Year,
   Subject,
-  Teacher,
 }
 
 export const FilterTable = [
@@ -221,7 +220,6 @@ export const sidebarTeacherLinks: SidebarLink[] = [
     route: "/score-transcript",
     label: "Bảng điểm",
   },
-
   {
     id: "4",
     imgURL: "/assets/icons/timetable.svg",
@@ -231,7 +229,7 @@ export const sidebarTeacherLinks: SidebarLink[] = [
   {
     id: "5",
     imgURL: "/assets/icons/messageIc.svg",
-    route: "/messages",   
+    route: "/messages",
     label: "Tin nhắn",
   },
   {

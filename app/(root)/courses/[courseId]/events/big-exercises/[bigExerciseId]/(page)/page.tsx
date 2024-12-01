@@ -100,7 +100,6 @@ const BigExercise = () => {
                   bgColor="bg-white"
                   textColor="text-black"
                   border
-                  isFilter={typeFilter === FilterType.DetailFilter}
                 />
               </div>
             )}

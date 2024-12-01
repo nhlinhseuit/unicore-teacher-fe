@@ -56,7 +56,6 @@ const Home = () => {
                   bgColor="bg-white"
                   textColor="text-black"
                   border
-                  isFilter={typeFilter === FilterType.DetailFilter}
                 />
               </div>
             )}

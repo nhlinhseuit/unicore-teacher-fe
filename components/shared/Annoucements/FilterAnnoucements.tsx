@@ -22,7 +22,6 @@ const FilterAnnoucements = (typeFilter: any) => {
             bgColor="bg-white"
             textColor="text-black"
             border
-            isFilter={typeFilter === FilterType.DetailFilter}
           />
         </div>
       )}
