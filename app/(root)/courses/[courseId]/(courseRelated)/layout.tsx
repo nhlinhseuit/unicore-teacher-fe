@@ -17,8 +17,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <main
       className="
-  background-light850_dark100 
-  relative"
+      max-h-screen
+      background-light850_dark100 
+      relative"
     >
       <div
         aria-label="Tabs with underline"
@@ -125,7 +126,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
 
-      <section>
+      <section
+        className="
+       overflow-auto max-h-screen flex flex-1 flex-col px-6 pb-6 max-md:pb-14 sm:px-8"
+      >
         <div className="w-full">{children}</div>
       </section>
     </main>

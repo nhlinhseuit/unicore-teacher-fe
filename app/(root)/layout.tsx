@@ -9,9 +9,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   return (
     <main
-      className="
-  background-light850_dark100 
-  relative"
+      className=" 
+      max-h-screen
+      min-h-screen
+      background-light850_dark100 
+      relative"
     >
       {/* NAVBAR */}
       {/* <Navbar /> */}
