@@ -32,7 +32,6 @@ import { useToast } from "@/hooks/use-toast";
 import {
   mockCoursesList,
   mockGradeColumnList,
-  mockTeacherGradingList,
 } from "@/mocks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
@@ -99,7 +98,6 @@ const ReportInfo = () => {
 
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [selectedGradeColumn, setSelectedGradeColumn] = useState<number>(-1);
-  const [selectedTeacherGrading, setSelectedTeacherGrading] = useState(1);
 
   const handleChangeNumberOfRecheck = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -154,7 +152,6 @@ const ReportInfo = () => {
       groupOption: z.any().optional(),
       submitOption: z.any().optional(),
       gradeColumn: z.any().optional(),
-      teacherGrading: z.any().optional(),
       date: z.date().optional(),
       maxRecheck: z.number().optional(),
     })
@@ -1050,77 +1047,6 @@ const ReportInfo = () => {
                   )}
                 />
 
-                {/* NGƯỜI CHẤM */}
-                <FormField
-                  control={form.control}
-                  name="teacherGrading"
-                  render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
-                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Người chấm <span className="text-red-600">*</span>
-                      </FormLabel>
-                      <FormControl className="mt-3.5 ">
-                        <Dropdown
-                          className="z-30 rounded-lg"
-                          label=""
-                          dismissOnClick={true}
-                          renderTrigger={() => (
-                            <div>
-                              <IconButton
-                                text={`${
-                                  mockTeacherGradingList[
-                                    selectedTeacherGrading - 1
-                                  ].value
-                                }`}
-                                onClick={() => {}}
-                                iconRight={"/assets/icons/chevron-down.svg"}
-                                bgColor="bg-white"
-                                textColor="text-black"
-                                border
-                              />
-                            </div>
-                          )}
-                        >
-                          <div className="scroll-container scroll-container-dropdown-content">
-                            {mockTeacherGradingList.map((teacher, index) => (
-                              <Dropdown.Item
-                                key={`${teacher.id}_${index}`}
-                                onClick={() => {
-                                  if (selectedTeacherGrading === teacher.id) {
-                                    setSelectedTeacherGrading(1);
-                                  } else {
-                                    setSelectedTeacherGrading(teacher.id);
-                                  }
-                                }}
-                              >
-                                <div className="flex justify-between w-full">
-                                  <p className="w-[80%] text-left line-clamp-1">
-                                    {teacher.value}
-                                  </p>
-                                  {selectedTeacherGrading === teacher.id ? (
-                                    <Image
-                                      src="/assets/icons/check.svg"
-                                      alt="search"
-                                      width={21}
-                                      height={21}
-                                      className="cursor-pointer mr-2"
-                                    />
-                                  ) : (
-                                    <></>
-                                  )}
-                                </div>
-                              </Dropdown.Item>
-                            ))}
-                          </div>
-                        </Dropdown>
-                      </FormControl>
-                      <FormDescription className="body-regular mt-2.5 text-light-500">
-                        Giảng viên sẽ chấm điểm cho báo cáo.
-                      </FormDescription>
-                      <FormMessage className="text-red-500" />
-                    </FormItem>
-                  )}
-                />
 
                 {/* PHÚC KHẢO*/}
                 <div>
