@@ -4,6 +4,7 @@ import IconButton from "@/components/shared/Button/IconButton";
 import RegisterTopicTable from "@/components/shared/Table/TableRegisterTopic/RegisterTopicTable";
 import { RegisterTopicTableType } from "@/constants";
 import {
+  mockApproveTopicOptions,
   mockDataAllAppproveTopic,
   mockDataAppprovedTopic,
   mockDataNotAppproveTopic,
@@ -11,9 +12,7 @@ import {
 } from "@/mocks";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
-import { mockApproveTopicOptions } from "@/mocks";
 
-import TableSearch from "@/components/shared/Search/TableSearch";
 import { useState } from "react";
 
 const ApproveTopic = () => {
@@ -52,7 +51,7 @@ const ApproveTopic = () => {
                   selectedApproveTopicOption !== -1
                     ? mockApproveTopicOptions[selectedApproveTopicOption - 1]
                         .value
-                    : "Chọn lớp"
+                    : "Chọn bộ lọc"
                 }`}
                 onClick={() => {}}
                 iconRight={"/assets/icons/chevron-down.svg"}
@@ -63,11 +62,6 @@ const ApproveTopic = () => {
             </div>
           )}
         >
-          <TableSearch
-            setSearchTerm={() => {}}
-            searchTerm={""}
-            otherClasses="p-2"
-          />
           <div className="scroll-container scroll-container-dropdown-content">
             {mockApproveTopicOptions.map((course: any, index) => (
               <Dropdown.Item
