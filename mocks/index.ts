@@ -251,7 +251,6 @@ export const mockDataGradingExercise = [
     data: {
       "Hình thức": false,
       "Mã nhóm": "1",
-      "Tên nhóm": "Figma",
       "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
       "Trễ hạn": "0",
       MSSV: "21522289",
@@ -266,7 +265,6 @@ export const mockDataGradingExercise = [
     data: {
       "Hình thức": true,
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       "Bài nộp": "LeThanhLoc_BaiTap.docx",
       "Trễ hạn": "1 ngày 12 tiếng",
       MSSV: "21522289",
@@ -281,7 +279,6 @@ export const mockDataGradingExercise = [
     data: {
       "Hình thức": true,
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       "Bài nộp": "",
       "Trễ hạn": "0",
       MSSV: "21522289",
@@ -296,7 +293,6 @@ export const mockDataGradingExercise = [
     data: {
       "Hình thức": true,
       "Mã nhóm": "3",
-      "Tên nhóm": "MERN",
       "Bài nộp": "LeThanhLoc_BaiTap.docx",
       "Trễ hạn": "3 phút 12 giây",
       MSSV: "21522289",
@@ -311,7 +307,6 @@ export const mockDataGradingExercise = [
     data: {
       "Hình thức": true,
       "Mã nhóm": "3",
-      "Tên nhóm": "MERN",
       "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
       "Trễ hạn": "0",
       MSSV: "21522289",
@@ -326,7 +321,6 @@ export const mockDataGradingExercise = [
     data: {
       "Hình thức": false,
       "Mã nhóm": "4",
-      "Tên nhóm": "Đom đóm",
       "Bài nộp": "LeThanhLoc_BaiTap.docx",
       "Trễ hạn": "0",
       MSSV: "21522289",
@@ -348,7 +342,6 @@ export const mockDataGradingReport = [
     data: {
       "Điểm danh": false,
       "Mã nhóm": "1",
-      "Tên nhóm": "Figma",
       "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
       "Trễ hạn": "0",
       MSSV: "21522289",
@@ -363,7 +356,6 @@ export const mockDataGradingReport = [
     data: {
       "Điểm danh": true,
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       "Bài nộp": "LeThanhLoc_BaiTap.docx",
       "Trễ hạn": "1 ngày 12 tiếng",
       MSSV: "21522289",
@@ -378,7 +370,6 @@ export const mockDataGradingReport = [
     data: {
       "Điểm danh": true,
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       "Bài nộp": "",
       "Trễ hạn": "0",
       MSSV: "21522289",
@@ -393,7 +384,6 @@ export const mockDataGradingReport = [
     data: {
       "Điểm danh": true,
       "Mã nhóm": "3",
-      "Tên nhóm": "MERN",
       "Bài nộp": "LeThanhLoc_BaiTap.docx",
       "Trễ hạn": "3 phút 12 giây",
       MSSV: "21522289",
@@ -408,7 +398,6 @@ export const mockDataGradingReport = [
     data: {
       "Điểm danh": true,
       "Mã nhóm": "3",
-      "Tên nhóm": "MERN",
       "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
       "Trễ hạn": "0",
       MSSV: "21522289",
@@ -423,7 +412,6 @@ export const mockDataGradingReport = [
     data: {
       "Điểm danh": false,
       "Mã nhóm": "4",
-      "Tên nhóm": "Đom đóm",
       "Bài nộp": "LeThanhLoc_BaiTap.docx",
       "Trễ hạn": "0",
       MSSV: "21522289",
@@ -831,7 +819,6 @@ export const mockDataStudentRegisterGroup = [
     isDeleted: false,
     data: {
       "Mã nhóm": "1",
-      "Tên nhóm": "Figma",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
@@ -842,7 +829,6 @@ export const mockDataStudentRegisterGroup = [
     isDeleted: false,
     data: {
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Lê Thành Lộc",
@@ -853,7 +839,6 @@ export const mockDataStudentRegisterGroup = [
     isDeleted: false,
     data: {
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
@@ -864,7 +849,6 @@ export const mockDataStudentRegisterGroup = [
     isDeleted: false,
     data: {
       "Mã nhóm": "3",
-      "Tên nhóm": "MERN",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Tiến Vĩ",
@@ -875,7 +859,6 @@ export const mockDataStudentRegisterGroup = [
     isDeleted: false,
     data: {
       "Mã nhóm": "3",
-      "Tên nhóm": "MERN",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Thị Thanh Tuyền",
@@ -886,7 +869,6 @@ export const mockDataStudentRegisterGroup = [
     isDeleted: false,
     data: {
       "Mã nhóm": "4",
-      "Tên nhóm": "Đom đóm",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Võ Hữu Xike",
@@ -921,7 +903,6 @@ export const mockFinalExam = [
     deadline: "10/09/2024 - 00:00AM",
   },
 ];
-
 
 //
 // TODO: Centralized exam
@@ -1609,7 +1590,6 @@ export const mockDataStudentRegisterTopic = [
         "Kết nối người dùng với những người có sở thích tương tự Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "1",
-      "Tên nhóm": "Figma",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
@@ -1624,7 +1604,6 @@ export const mockDataStudentRegisterTopic = [
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Lê Thành Lộc",
@@ -1639,7 +1618,6 @@ export const mockDataStudentRegisterTopic = [
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
@@ -1653,7 +1631,6 @@ export const mockDataStudentRegisterTopic = [
       "Mô tả": "Giúp người dùng xây dựng một ngôi nhà thông minh và tiện lợi",
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "3",
-      "Tên nhóm": "MERN",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Tiến Vĩ",
@@ -1667,7 +1644,6 @@ export const mockDataStudentRegisterTopic = [
       "Mô tả": "Giúp người dùng xây dựng một ngôi nhà thông minh và tiện lợi",
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "3",
-      "Tên nhóm": "MERN",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Thị Thanh Tuyền",
@@ -1681,7 +1657,6 @@ export const mockDataStudentRegisterTopic = [
       "Mô tả": "Giúp người dùng ghi lại và tổ chức các ghi chú của mình",
       "GV phụ trách": "Nguyễn Thị Thanh Trúc",
       "Mã nhóm": "4",
-      "Tên nhóm": "Đom đóm",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Võ Hữu Xike",
@@ -1703,7 +1678,6 @@ export const mockDataAllAppproveTopic = [
         "Kết nối người dùng với những người có sở thích tương tự Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "1",
-      "Tên nhóm": "Figma",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
@@ -1719,7 +1693,6 @@ export const mockDataAllAppproveTopic = [
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Lê Thành Lộc",
@@ -1735,7 +1708,6 @@ export const mockDataAllAppproveTopic = [
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
@@ -1750,7 +1722,6 @@ export const mockDataAllAppproveTopic = [
       "Mô tả": "Giúp người dùng xây dựng một ngôi nhà thông minh và tiện lợi",
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "3",
-      "Tên nhóm": "MERN",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Tiến Vĩ",
@@ -1765,7 +1736,6 @@ export const mockDataAllAppproveTopic = [
       "Mô tả": "Giúp người dùng xây dựng một ngôi nhà thông minh và tiện lợi",
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "3",
-      "Tên nhóm": "MERN",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Thị Thanh Tuyền",
@@ -1780,7 +1750,6 @@ export const mockDataAllAppproveTopic = [
       "Mô tả": "Giúp người dùng ghi lại và tổ chức các ghi chú của mình",
       "GV phụ trách": "Nguyễn Thị Thanh Trúc",
       "Mã nhóm": "4",
-      "Tên nhóm": "Đom đóm",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Võ Hữu Xike",
@@ -1798,7 +1767,6 @@ export const mockDataAppprovedTopic = [
         "Kết nối người dùng với những người có sở thích tương tự Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "1",
-      "Tên nhóm": "Figma",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
@@ -1816,7 +1784,6 @@ export const mockDataNotAppproveTopic = [
         "Kết nối người dùng với những người có sở thích tương tự Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "1",
-      "Tên nhóm": "Figma",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
@@ -1832,7 +1799,6 @@ export const mockDataNotAppproveTopic = [
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Lê Thành Lộc",
@@ -1848,7 +1814,6 @@ export const mockDataNotAppproveTopic = [
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
@@ -1868,7 +1833,6 @@ export const mockDataProcessingAppproveTopic = [
         "Kết nối người dùng với những người có sở thích tương tự Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "1",
-      "Tên nhóm": "Figma",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
@@ -1885,7 +1849,6 @@ export const mockDataProcessingAppproveTopic = [
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Lê Thành Lộc",
@@ -1902,7 +1865,6 @@ export const mockDataProcessingAppproveTopic = [
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
-      "Tên nhóm": "STYLLE",
       MSSV: "21522289",
       SĐT: "0378060972",
       "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",

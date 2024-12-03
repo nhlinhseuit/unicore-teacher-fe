@@ -1,18 +1,16 @@
-import { Table } from "flowbite-react";
-import React, { useEffect, useRef } from "react";
-import { useState } from "react";
+import { RegisterTopicTableType } from "@/constants";
 import {
   CourseData,
-  SubjectData,
-  StudentData,
-  TeacherData,
-  TeacherDataItem,
   RegisterGroupDataItem,
+  StudentData,
+  SubjectData,
+  TeacherData,
 } from "@/types";
+import { Table } from "flowbite-react";
+import React, { useEffect, useRef, useState } from "react";
 import IconButton from "../../Button/IconButton";
 import InputComponent from "../components/InputComponent";
 import MoreButtonComponent from "../components/MoreButtonComponent";
-import { RegisterTopicTableType } from "@/constants";
 
 interface RowParams {
   type: RegisterTopicTableType;
@@ -93,7 +91,7 @@ const RowRegisterTopicTable = React.memo(
       params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
     };
 
-    var valueUniqueInput = params.dataItem.data["Tên nhóm"];
+    var valueUniqueInput = params.dataItem.data["Mã nhóm"];
 
     return (
       <Table.Row
@@ -179,14 +177,11 @@ const RowRegisterTopicTable = React.memo(
 
         {/* Các giá trị khác */}
         {Object.entries(params.dataItem.data).map(([key, value]) => {
-          let keyId = params.dataItem.data["Tên nhóm"];
+          let keyId = params.dataItem.data["Mã nhóm"];
 
           if (
             params.isMemberOfAboveGroup &&
-            (key === "Tên nhóm" ||
-              key === "Tên đề tài" ||
-              key === "Mô tả" ||
-              key === "GV phụ trách")
+            (key === "Tên đề tài" || key === "Mô tả" || key === "GV phụ trách")
           )
             return (
               <Table.Cell className="w-10 border-r-[1px]  text-left"></Table.Cell>

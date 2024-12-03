@@ -1,14 +1,13 @@
-import { Table } from "flowbite-react";
-import React, { useEffect, useRef } from "react";
-import { useState } from "react";
 import {
   CourseData,
-  SubjectData,
-  StudentData,
-  TeacherData,
   GradingExerciseDataItem,
   GradingReportDataItem,
+  StudentData,
+  SubjectData,
+  TeacherData,
 } from "@/types";
+import { Table } from "flowbite-react";
+import React, { useEffect, useRef, useState } from "react";
 import IconButton from "../../Button/IconButton";
 import InputComponent from "../components/InputComponent";
 import MoreButtonComponent from "../components/MoreButtonComponent";
@@ -96,7 +95,7 @@ const RowGradingGroupTable = React.memo(
       params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
     };
 
-    var valueUniqueInput = params.dataItem.data["Tên nhóm"];
+    var valueUniqueInput = params.dataItem.data["Mã nhóm"];
 
     const renderTableCellValue = (
       keyId: string,
@@ -203,7 +202,7 @@ const RowGradingGroupTable = React.memo(
 
         {/* Các giá trị khác */}
         {Object.entries(params.dataItem.data).map(([key, value]) => {
-          let keyId = params.dataItem.data["Tên nhóm"];
+          let keyId = params.dataItem.data["Mã nhóm"];
 
           if (key === "Mã nhóm") return null;
           return (
