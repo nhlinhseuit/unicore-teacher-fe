@@ -124,6 +124,11 @@ export const BigExerciseTabItems = [
     route: "/approve-topic",
   },
   {
+    value: "reviews",
+    label: "Phúc khảo",
+    route: "/reviews",
+  },
+  {
     value: "files",
     label: "Lưu trữ",
     route: "/files",
@@ -247,6 +252,12 @@ export const sidebarTeacherLinks: SidebarLink[] = [
   },
   {
     id: "7",
+    imgURL: "/assets/icons/subjects.svg",
+    route: "/reviews",
+    label: "Phúc khảo",
+  },
+  {
+    id: "8",
     imgURL: "/assets/icons/setting.svg",
     route: "/setting",
     label: "Cài đặt",

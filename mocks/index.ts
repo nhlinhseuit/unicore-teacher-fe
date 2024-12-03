@@ -442,7 +442,7 @@ export const mockDataReviewGrading = [
     STT: "1",
     isDeleted: false,
     data: {
-      "Giảng viên phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
       "Bài tập": "Bài tập ngày 29/8/2024",
       "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
       Điểm: [6],
@@ -454,7 +454,7 @@ export const mockDataReviewGrading = [
     STT: "2",
     isDeleted: false,
     data: {
-      "Giảng viên phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
       "Bài tập": "Bài tập ngày 29/8/2024",
       "Bài nộp": "LeThanhLoc_BaiTap.docx",
       Điểm: [6],
@@ -466,7 +466,7 @@ export const mockDataReviewGrading = [
     STT: "3",
     isDeleted: false,
     data: {
-      "Giảng viên phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
       "Bài tập": "Bài tập ngày 29/8/2024",
       "Bài nộp": "",
       Điểm: [6],
@@ -478,7 +478,7 @@ export const mockDataReviewGrading = [
     STT: "4",
     isDeleted: false,
     data: {
-      "Giảng viên phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
       "Bài tập": "Bài tập ngày 29/8/2024",
       "Bài nộp": "LeThanhLoc_BaiTap.docx",
       Điểm: [6, 7],
@@ -490,7 +490,7 @@ export const mockDataReviewGrading = [
     STT: "5",
     isDeleted: false,
     data: {
-      "Giảng viên phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
       "Bài tập": "Bài tập ngày 29/8/2024",
       "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
       Điểm: [6, 8, 9],
@@ -502,7 +502,7 @@ export const mockDataReviewGrading = [
     STT: "6",
     isDeleted: false,
     data: {
-      "Giảng viên phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
       "Bài tập": "Bài tập ngày 29/8/2024",
       "Bài nộp": "LeThanhLoc_BaiTap.docx",
       Điểm: [6, 8],

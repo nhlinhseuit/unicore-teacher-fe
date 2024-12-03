@@ -95,7 +95,7 @@ export interface GradingExerciseData {
   "Góp ý": string;
 }
 export interface GradingReviewData {
-  "Giảng viên phụ trách": string;
+  Lớp: string?;
   "Bài tập": string;
   "Bài nộp": string;
   Điểm: number[];

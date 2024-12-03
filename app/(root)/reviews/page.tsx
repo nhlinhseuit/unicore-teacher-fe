@@ -104,7 +104,7 @@ const Review = () => {
 
   return (
     <>
-      <div className="mb-6 flex justify-start ml-10 w-1/2 items-center gap-4">
+      <div className="mt-6 mb-6 flex justify-start ml-10 w-1/2 items-center gap-4">
         <p className="inline-flex justify-start text-sm whitespace-nowrap">
           Bộ lọc
         </p>
