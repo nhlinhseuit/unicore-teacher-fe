@@ -18,8 +18,6 @@ const ScoreTranscript = () => {
   const [isEditTable, setIsEditTable] = useState(false);
   const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
 
- 
-
   return (
     <>
       {isViewDetailGradeColumn ? (
@@ -51,23 +49,24 @@ const ScoreTranscript = () => {
                 renderTrigger={() => (
                   <div>
                     <IconButton
-                      text={`${selectedCourse !== -1
+                      text={`${
+                        selectedCourse !== -1
                           ? mockSubCoursesOfCourseScoreTranscript[
-                            selectedCourse - 1
-                          ].value
+                              selectedCourse - 1
+                            ].value
                           : "Chọn lớp"
-                        }`}
-                      onClick={() => { }}
+                      }`}
+                      onClick={() => {}}
                       iconRight={"/assets/icons/chevron-down.svg"}
                       bgColor="bg-white"
                       textColor="text-black"
-                      otherClasses="w-full shadow-none no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 border "
+                      border
                     />
                   </div>
                 )}
               >
                 <TableSearch
-                  setSearchTerm={() => { }}
+                  setSearchTerm={() => {}}
                   searchTerm={""}
                   otherClasses="p-2"
                 />
@@ -131,7 +130,6 @@ const ScoreTranscript = () => {
           />
         </>
       )}
-
     </>
   );
 };

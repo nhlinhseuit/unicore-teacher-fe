@@ -784,7 +784,7 @@ const ReportInfo = () => {
                                 iconRight={"/assets/icons/chevron-down.svg"}
                                 bgColor="bg-white"
                                 textColor="text-black"
-                                otherClasses="w-full shadow-none no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 border "
+                                border
                               />
                             </div>
                           )}
@@ -1004,7 +1004,7 @@ const ReportInfo = () => {
                                 iconRight={"/assets/icons/chevron-down.svg"}
                                 bgColor="bg-white"
                                 textColor="text-black"
-                                otherClasses="w-full shadow-none no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 border "
+                                border
                               />
                             </div>
                           )}
@@ -1076,7 +1076,7 @@ const ReportInfo = () => {
                                 iconRight={"/assets/icons/chevron-down.svg"}
                                 bgColor="bg-white"
                                 textColor="text-black"
-                                otherClasses="w-full shadow-none no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 border "
+                                border
                               />
                             </div>
                           )}
