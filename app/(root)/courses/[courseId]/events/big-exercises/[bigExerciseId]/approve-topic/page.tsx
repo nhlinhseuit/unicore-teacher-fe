@@ -35,8 +35,6 @@ const ApproveTopic = () => {
     }
   };
 
-  console.log("rereneder table, getDataTable()", getDataTable().length);
-
   return (
     <>
       <div className="mb-6 flex justify-start ml-10 w-1/2 items-center gap-4">

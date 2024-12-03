@@ -1,5 +1,5 @@
 import { Form } from "@/components/ui/form";
-import { RegisterGroupDataItem, RegisterTopicDataItem } from "@/types";
+import { ApproveTopicDataItem, RegisterGroupDataItem, RegisterTopicDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import { useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
@@ -19,7 +19,7 @@ interface DataTableParams {
   type: RegisterTopicTableType;
   isEditTable: boolean;
   isMultipleDelete: boolean;
-  dataTable: RegisterTopicDataItem[];
+  dataTable: RegisterTopicDataItem[] | ApproveTopicDataItem[];
 }
 
 const RegisterTopicTable = (params: DataTableParams) => {

@@ -43,7 +43,6 @@ export interface RegisterGroupData {
   "Họ và tên": string;
 }
 export interface RegisterTopicData {
-  "Trạng thái": string?;
   "Tên đề tài": string;
   "Mô tả": string;
   "GV phụ trách": string;
@@ -53,9 +52,9 @@ export interface RegisterTopicData {
   SĐT: string;
   "Họ và tên": string;
 }
-export interface ProcessingApproveTopicData {
+export interface ApproveTopicData {
   "Trạng thái": string;
-  "Chỉnh sửa lần cuối"
+  "Chỉnh sửa lần cuối": string?;
   "Tên đề tài": string;
   "Mô tả": string;
   "GV phụ trách": string;
@@ -178,11 +177,15 @@ export interface RegisterGroupDataItem {
   data: RegisterGroupData;
 }
 
-//TODO: Dùng chung cho đăng ký đề tài và duyệt đề xuất đề tài
 export interface RegisterTopicDataItem {
   STT: string;
   isDeleted: boolean;
-  data: RegisterTopicData | ProcessingApproveTopicData;
+  data: RegisterTopicData;
+}
+export interface ApproveTopicDataItem {
+  STT: string;
+  isDeleted: boolean;
+  data: ApproveTopicData;
 }
 
 export interface TopicRegisterGroupDataItem {
