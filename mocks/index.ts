@@ -820,8 +820,8 @@ export const mockDataStudentRegisterGroup = [
     data: {
       "Mã nhóm": "1",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
+      SĐT: "0378060972",
     },
   },
   {
@@ -830,8 +830,8 @@ export const mockDataStudentRegisterGroup = [
     data: {
       "Mã nhóm": "2",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Lê Thành Lộc",
+      SĐT: "0378060972",
     },
   },
   {
@@ -840,8 +840,8 @@ export const mockDataStudentRegisterGroup = [
     data: {
       "Mã nhóm": "2",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
+      SĐT: "0378060972",
     },
   },
   {
@@ -850,8 +850,8 @@ export const mockDataStudentRegisterGroup = [
     data: {
       "Mã nhóm": "3",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Tiến Vĩ",
+      SĐT: "0378060972",
     },
   },
   {
@@ -860,8 +860,8 @@ export const mockDataStudentRegisterGroup = [
     data: {
       "Mã nhóm": "3",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Thị Thanh Tuyền",
+      SĐT: "0378060972",
     },
   },
   {
@@ -870,8 +870,8 @@ export const mockDataStudentRegisterGroup = [
     data: {
       "Mã nhóm": "4",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Võ Hữu Xike",
+      SĐT: "0378060972",
     },
   },
 ];
@@ -1591,8 +1591,8 @@ export const mockDataStudentRegisterTopic = [
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "1",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1605,8 +1605,8 @@ export const mockDataStudentRegisterTopic = [
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Lê Thành Lộc",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1619,8 +1619,8 @@ export const mockDataStudentRegisterTopic = [
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1632,8 +1632,8 @@ export const mockDataStudentRegisterTopic = [
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "3",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Tiến Vĩ",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1645,8 +1645,8 @@ export const mockDataStudentRegisterTopic = [
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "3",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Thị Thanh Tuyền",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1658,8 +1658,8 @@ export const mockDataStudentRegisterTopic = [
       "GV phụ trách": "Nguyễn Thị Thanh Trúc",
       "Mã nhóm": "4",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Võ Hữu Xike",
+      SĐT: "0378060972",
     },
   },
 ];
@@ -1679,8 +1679,8 @@ export const mockDataAllAppproveTopic = [
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "1",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1694,8 +1694,8 @@ export const mockDataAllAppproveTopic = [
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Lê Thành Lộc",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1709,8 +1709,8 @@ export const mockDataAllAppproveTopic = [
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1723,8 +1723,8 @@ export const mockDataAllAppproveTopic = [
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "3",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Tiến Vĩ",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1737,8 +1737,8 @@ export const mockDataAllAppproveTopic = [
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "3",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Thị Thanh Tuyền",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1751,8 +1751,8 @@ export const mockDataAllAppproveTopic = [
       "GV phụ trách": "Nguyễn Thị Thanh Trúc",
       "Mã nhóm": "4",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Võ Hữu Xike",
+      SĐT: "0378060972",
     },
   },
 ];
@@ -1768,8 +1768,8 @@ export const mockDataAppprovedTopic = [
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "1",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
+      SĐT: "0378060972",
     },
   },
 ];
@@ -1785,8 +1785,8 @@ export const mockDataNotAppproveTopic = [
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "1",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1800,8 +1800,8 @@ export const mockDataNotAppproveTopic = [
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Lê Thành Lộc",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1815,8 +1815,8 @@ export const mockDataNotAppproveTopic = [
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
+      SĐT: "0378060972",
     },
   },
 ];
@@ -1834,8 +1834,8 @@ export const mockDataProcessingAppproveTopic = [
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
       "Mã nhóm": "1",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Nguyễn Hoàng Linh",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1850,8 +1850,8 @@ export const mockDataProcessingAppproveTopic = [
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Lê Thành Lộc",
+      SĐT: "0378060972",
     },
   },
   {
@@ -1866,8 +1866,8 @@ export const mockDataProcessingAppproveTopic = [
       "GV phụ trách": "Huỳnh Tuấn Anh",
       "Mã nhóm": "2",
       MSSV: "21522289",
-      SĐT: "0378060972",
       "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
+      SĐT: "0378060972",
     },
   },
 ];
