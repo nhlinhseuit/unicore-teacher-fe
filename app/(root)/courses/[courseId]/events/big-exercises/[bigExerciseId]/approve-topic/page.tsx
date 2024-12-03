@@ -18,7 +18,7 @@ import { useState } from "react";
 
 const ApproveTopic = () => {
   const [selectedApproveTopicOption, setSelectedApproveTopicOption] =
-    useState(1);
+    useState(3);
 
   const getDataTable = () => {
     switch (selectedApproveTopicOption) {

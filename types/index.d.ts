@@ -43,6 +43,7 @@ export interface RegisterGroupData {
   "Họ và tên": string;
 }
 export interface RegisterTopicData {
+  "Trạng thái": string?;
   "Tên đề tài": string;
   "Mô tả": string;
   "GV phụ trách": string;
@@ -53,6 +54,7 @@ export interface RegisterTopicData {
   "Họ và tên": string;
 }
 export interface ProcessingApproveTopicData {
+  "Trạng thái": string;
   "Chỉnh sửa lần cuối"
   "Tên đề tài": string;
   "Mô tả": string;

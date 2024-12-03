@@ -1671,13 +1671,10 @@ export const mockDataStudentRegisterTopic = [
 //
 export const mockDataAllAppproveTopic = [
   {
-    // TODO: Kh cần stt của sv ở đây
-    // TODO: Hiện tại chỉ dùng làm key
-    // * FIX: STT count ++ cho row leader
-
     STT: "1",
     isDeleted: false,
     data: {
+      "Trạng thái": "Đang xử lý",
       "Tên đề tài": "Ứng dụng hẹn hò",
       "Mô tả":
         "Kết nối người dùng với những người có sở thích tương tự Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
@@ -1693,6 +1690,7 @@ export const mockDataAllAppproveTopic = [
     STT: "2",
     isDeleted: false,
     data: {
+      "Trạng thái": "Đã duyệt",
       "Tên đề tài": "Ứng dụng chia sẻ hình ảnh",
       "Mô tả":
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
@@ -1708,6 +1706,7 @@ export const mockDataAllAppproveTopic = [
     STT: "3",
     isDeleted: false,
     data: {
+      "Trạng thái": "Chưa duyệt",
       "Tên đề tài": "Ứng dụng đặt hàng và giao đồ ăn",
       "Mô tả":
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
@@ -1723,6 +1722,7 @@ export const mockDataAllAppproveTopic = [
     STT: "4",
     isDeleted: false,
     data: {
+      "Trạng thái": "Đang xử lý",
       "Tên đề tài": "Ứng dụng nhà thông minh",
       "Mô tả": "Giúp người dùng xây dựng một ngôi nhà thông minh và tiện lợi",
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
@@ -1737,6 +1737,7 @@ export const mockDataAllAppproveTopic = [
     STT: "5",
     isDeleted: false,
     data: {
+      "Trạng thái": "Đã duyệt",
       "Tên đề tài": "Ứng dụng học ngôn ngữ",
       "Mô tả": "Giúp người dùng xây dựng một ngôi nhà thông minh và tiện lợi",
       "GV phụ trách": "Huỳnh Hồ Thị Mộng Trinh",
@@ -1751,6 +1752,7 @@ export const mockDataAllAppproveTopic = [
     STT: "6",
     isDeleted: false,
     data: {
+      "Trạng thái": "Chưa duyệt",
       "Tên đề tài": "Ứng dụng ghi chú",
       "Mô tả": "Giúp người dùng ghi lại và tổ chức các ghi chú của mình",
       "GV phụ trách": "Nguyễn Thị Thanh Trúc",
@@ -1764,13 +1766,10 @@ export const mockDataAllAppproveTopic = [
 ];
 export const mockDataAppprovedTopic = [
   {
-    // TODO: Kh cần stt của sv ở đây
-    // TODO: Hiện tại chỉ dùng làm key
-    // * FIX: STT count ++ cho row leader
-
     STT: "1",
     isDeleted: false,
     data: {
+      "Trạng thái": "Đã duyệt",
       "Tên đề tài": "Ứng dụng hẹn hò",
       "Mô tả":
         "Kết nối người dùng với những người có sở thích tương tự Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
@@ -1785,13 +1784,10 @@ export const mockDataAppprovedTopic = [
 ];
 export const mockDataNotAppproveTopic = [
   {
-    // TODO: Kh cần stt của sv ở đây
-    // TODO: Hiện tại chỉ dùng làm key
-    // * FIX: STT count ++ cho row leader
-
     STT: "1",
     isDeleted: false,
     data: {
+      "Trạng thái": "Chưa duyệt",
       "Tên đề tài": "Ứng dụng hẹn hò",
       "Mô tả":
         "Kết nối người dùng với những người có sở thích tương tự Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Một ứng dụng áp dụng phiếu giảm giá tự động để đảm bảo cung cấp phiếu giảm giá và giảm giá cho khách hàng",
@@ -1807,6 +1803,7 @@ export const mockDataNotAppproveTopic = [
     STT: "2",
     isDeleted: false,
     data: {
+      "Trạng thái": "Chưa duyệt",
       "Tên đề tài": "Ứng dụng chia sẻ hình ảnh",
       "Mô tả":
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
@@ -1822,6 +1819,7 @@ export const mockDataNotAppproveTopic = [
     STT: "3",
     isDeleted: false,
     data: {
+      "Trạng thái": "Chưa duyệt",
       "Tên đề tài": "Ứng dụng đặt hàng và giao đồ ăn",
       "Mô tả":
         "Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh Nơi người dùng có thể đăng tải và chia sẻ hình ảnh",
@@ -1837,13 +1835,10 @@ export const mockDataNotAppproveTopic = [
 
 export const mockDataProcessingAppproveTopic = [
   {
-    // TODO: Kh cần stt của sv ở đây
-    // TODO: Hiện tại chỉ dùng làm key
-    // * FIX: STT count ++ cho row leader
-
     STT: "1",
     isDeleted: false,
     data: {
+      "Trạng thái": "Đang xử lý",
       "Chỉnh sửa lần cuối": "9:30, Thứ 4 29/12/2024",
       "Tên đề tài": "Ứng dụng hẹn hò",
       "Mô tả":
@@ -1860,6 +1855,7 @@ export const mockDataProcessingAppproveTopic = [
     STT: "2",
     isDeleted: false,
     data: {
+      "Trạng thái": "Đang xử lý",
       "Chỉnh sửa lần cuối": "9:30, Thứ 4 29/12/2024",
       "Tên đề tài": "Ứng dụng chia sẻ hình ảnh",
       "Mô tả":
@@ -1876,6 +1872,7 @@ export const mockDataProcessingAppproveTopic = [
     STT: "3",
     isDeleted: false,
     data: {
+      "Trạng thái": "Đang xử lý",
       "Chỉnh sửa lần cuối": "9:30, Thứ 4 29/12/2024",
       "Tên đề tài": "Ứng dụng đặt hàng và giao đồ ăn",
       "Mô tả":
