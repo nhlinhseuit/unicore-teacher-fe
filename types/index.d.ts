@@ -52,6 +52,17 @@ export interface RegisterTopicData {
   SĐT: string;
   "Họ và tên": string;
 }
+export interface ProcessingApproveTopicData {
+  "Chỉnh sửa lần cuối"
+  "Tên đề tài": string;
+  "Mô tả": string;
+  "GV phụ trách": string;
+  "Mã nhóm": string;
+  "Tên nhóm": string;
+  MSSV: string;
+  SĐT: string;
+  "Họ và tên": string;
+}
 export interface TopicRegisterGroupData {
   MSSV: string;
   SĐT: string;
@@ -164,10 +175,12 @@ export interface RegisterGroupDataItem {
   isDeleted: boolean;
   data: RegisterGroupData;
 }
+
+//TODO: Dùng chung cho đăng ký đề tài và duyệt đề xuất đề tài
 export interface RegisterTopicDataItem {
   STT: string;
   isDeleted: boolean;
-  data: RegisterTopicData;
+  data: RegisterTopicData | ProcessingApproveTopicData;
 }
 
 export interface TopicRegisterGroupDataItem {

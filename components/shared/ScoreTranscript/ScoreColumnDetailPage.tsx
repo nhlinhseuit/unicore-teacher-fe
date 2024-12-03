@@ -155,7 +155,7 @@ const ScoreColumnDetailPage = (params: Props) => {
     <>
       <BackToPrev text="Quay lại Bảng điểm" onClickPrev={params.onClickPrev} />
 
-      <div className="flex justify-between mb-6">
+      {/* <div className="flex justify-between mb-6">
         <div className="ml-4 flex gap-4 items-center">
           <p className="paragraph-semibold">
             Chi tiết cột điểm Quá trình - Sinh viên Nguyễn Hoàng Linh - MSSV
@@ -228,7 +228,7 @@ const ScoreColumnDetailPage = (params: Props) => {
             }}
           />
         ))}
-      </div>
+      </div> */}
 
       {/* EDIT GRADE COLUMN */}
       <AlertDialog open={isEditGradeColumn}>
