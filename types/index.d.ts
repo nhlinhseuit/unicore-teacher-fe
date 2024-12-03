@@ -82,6 +82,14 @@ export interface GradingExerciseData {
   Điểm: number;
   "Góp ý": string;
 }
+export interface GradingReviewData {
+  "Giảng viên phụ trách": string;
+  "Bài tập": string;
+  "Bài nộp": string;
+  Điểm: number[];
+  MSSV: string;
+  "Họ và tên": string;
+}
 
 export interface GradingReportData {
   "Điểm danh": boolean;
@@ -182,6 +190,11 @@ export interface GradingExerciseDataItem {
   isDeleted: boolean;
   data: GradingExerciseData;
 }
+export interface GradingReviewDataItem {
+  STT: string;
+  isDeleted: boolean;
+  data: GradingReviewData;
+}
 
 export interface PostDataGradingDetailItem {
   id: string;
@@ -191,11 +204,24 @@ export interface PostDataGradingDetailItem {
   fileName: string;
   scoreDetail: DataGradingDetailItem;
 }
+export interface PostDataGradingReviewItem {
+  id: string;
+  creator: string;
+  createdAt: string;
+  title: string;
+  fileName: string;
+  scoreDetail: DataGradingReviewItem;
+}
 export interface DataGradingDetailItem {
   "Bài nộp": string;
   Điểm: number;
   "Góp ý": string;
   "Tỉ lệ điểm": number;
+}
+export interface DataGradingReviewItem {
+  "Bài nộp": string;
+  Điểm: number;
+  "Góp ý": string;
 }
 
 export interface GradingReportDataItem {
@@ -241,14 +267,14 @@ export interface TeacherDataItem {
 }
 
 export interface OfficerPermissionData {
-  activityTracking: boolean,
-  createExercise: boolean,
-  createAnnouncement: boolean,
-  createBigExercise: boolean,
+  activityTracking: boolean;
+  createExercise: boolean;
+  createAnnouncement: boolean;
+  createBigExercise: boolean;
 }
 
 export interface OfficerPermissionDataItem {
   name: string;
   email: string;
-  permissions: OfficerPermissionData
+  permissions: OfficerPermissionData;
 }

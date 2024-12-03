@@ -91,6 +91,11 @@ export const TeacherCourseTabItems = [
     route: "/time-table",
   },
   {
+    value: "reviews",
+    label: "Phúc khảo",
+    route: "/reviews",
+  },
+  {
     value: "files",
     label: "Lưu trữ",
     route: "/files",
