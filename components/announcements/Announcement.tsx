@@ -1,9 +1,7 @@
-import Link from "next/link";
-import React from "react";
-import RenderTag from "../shared/Annoucements/RenderTag";
-import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 import Image from "next/image";
+import Link from "next/link";
 import RenderFile from "../shared/Annoucements/RenderFile";
+import RenderTag from "../shared/Annoucements/RenderTag";
 
 interface Props {
   _id: string;
@@ -37,17 +35,6 @@ const Announcement = ({
   return (
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex w-full gap-4 p-4">
-        {/* EDIT */}
-        <div className="absolute top-4 right-2">
-          <Image
-            src={"/assets/icons/edit-black.svg"}
-            width={26}
-            height={26}
-            alt={"edit"}
-            className={`object-contain cursor-pointer`}
-          />
-        </div>
-
         {/* IMAGE */}
         <div className="w-[20%]">
           <Image

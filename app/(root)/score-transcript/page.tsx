@@ -1,17 +1,13 @@
 "use client";
 
 import IconButton from "@/components/shared/Button/IconButton";
-import DetailFilterComponent from "@/components/shared/DetailFilterComponent";
+import DetailFilterComponentScore from "@/components/shared/DetailFilterComponentScore";
 import ScoreColumnDetailPage from "@/components/shared/ScoreTranscript/ScoreColumnDetailPage";
-import TableSearch from "@/components/shared/Search/TableSearch";
 import ScoreTranscriptTable from "@/components/shared/Table/TableScoreTranscript/ScoreTranscriptTable";
 import {
-  mockCoursesListScoreTranscript,
   mockDataScoreTranscript,
-  mockGradeColumnPercent,
+  mockGradeColumnPercent
 } from "@/mocks";
-import { Dropdown } from "flowbite-react";
-import Image from "next/image";
 import { useState } from "react";
 
 const ScoreTranscript = () => {
@@ -154,7 +150,7 @@ const ScoreTranscript = () => {
                 Xem bảng điểm lớp:
               </p>
 
-              <DetailFilterComponent />
+              <DetailFilterComponentScore />
             </div>
           </div>
 

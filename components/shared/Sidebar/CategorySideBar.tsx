@@ -2,22 +2,10 @@ import { mockCategoryList } from "@/mocks";
 import Image from "next/image";
 import React from "react";
 
-
 const CategorySideBar = () => {
   return (
     <div className="w-full card-wrapper rounded-[10px]">
       <div className="relative flex w-full gap-4 p-4">
-        {/* EDIT */}
-        <div className="absolute z-10 top-4 right-2">
-          <Image
-            src={"/assets/icons/edit-black.svg"}
-            width={26}
-            height={26}
-            alt={"edit"}
-            className={`object-contain cursor-pointer`}
-          />
-        </div>
-
         {/* CONTENT */}
         <div className="w-full ml-2 mr-2 sm:flex-row">
           <div className="flex flex-col gap-4">

@@ -43,11 +43,6 @@ export const BookmarksTabs = [
 // TODO: NAVBAR TAB
 export const TeacherAnnouncementsTabItems = [
   { value: "listAnnouncements", label: "Danh sách thông báo", route: "/" },
-  {
-    value: "createAnnouncement",
-    label: "Tạo thông báo",
-    route: "/create-announcement",
-  },
 ];
 
 export const TeacherCoursesTabItems = [
@@ -167,6 +162,13 @@ export enum DetailFilter {
   Semester,
   Year,
   Subject,
+}
+
+export enum DetailFilterScore {
+  Semester,
+  Year,
+  Subject,
+  Course,
 }
 
 export const FilterTable = [
