@@ -20,7 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
-import { mockBigExerciseGradeColumn, mockDbLeftRatio } from "@/mocks";
+  import { mockBigExerciseGradeColumn, mockDbLeftRatio } from "@/mocks";
 import { TopicDataItem } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
@@ -520,8 +520,7 @@ const CreateBigExercise = () => {
                       </FormDescription>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
                         Nếu không đặt hệ số, hệ thống sẽ tự động phân bổ điểm
-                        đều giữa các thành phần trong cùng cột điểm, tối thiểu
-                        10%.
+                        đều giữa các thành phần trong cùng cột điểm.
                       </FormDescription>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
                         Bạn có thể chỉnh sửa chi tiết hệ số của cột điểm tại cài
