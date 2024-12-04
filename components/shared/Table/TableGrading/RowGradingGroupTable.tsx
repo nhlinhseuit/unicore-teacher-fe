@@ -26,10 +26,10 @@ interface RowParams {
 }
 interface handleInputChangeParams {
   key:
-  | keyof CourseData
-  | keyof SubjectData
-  | keyof StudentData
-  | keyof TeacherData;
+    | keyof CourseData
+    | keyof SubjectData
+    | keyof StudentData
+    | keyof TeacherData;
   newValue: any;
   isMultipleInput?: boolean;
   currentIndex?: number;
@@ -74,12 +74,12 @@ const RowGradingGroupTable = React.memo(
           ...editDataItem.data,
           [key]: isMultipleInput
             ? //@ts-ignore
-            (editDataItem.data[key] as string)
-              .split(/\r\n|\n/)
-              .map((line, index) =>
-                index === currentIndex ? newValue : line
-              )
-              .join("\r\n")
+              (editDataItem.data[key] as string)
+                .split(/\r\n|\n/)
+                .map((line, index) =>
+                  index === currentIndex ? newValue : line
+                )
+                .join("\r\n")
             : newValue,
         },
       };
@@ -107,6 +107,20 @@ const RowGradingGroupTable = React.memo(
         (key === "Điểm" || key === "Góp ý") &&
         (isEdit || params.isEditTable)
       ) {
+        if (key === "Góp ý")
+          return (
+            <InputComponent
+              key={`${keyId}_input_${key}_${value}`}
+              value={value as string | number}
+              placeholder={value as string | number}
+              //@ts-ignore
+              onChange={(newValue) =>
+                //@ts-ignore
+                handleInputChange({ key: key, newValue: newValue })
+              }
+              isDescription
+            />
+          );
         return (
           <InputComponent
             key={`${keyId}_input_${key}_${value}`}
@@ -140,11 +154,12 @@ const RowGradingGroupTable = React.memo(
     return (
       <Table.Row
         key={params.dataItem.STT}
-        onClick={() => { }}
-        className={`bg-background-secondary  text-left ${isEdit || params.isEditTable
-          ? "hover:bg-white cursor-default"
-          : "hover:bg-light-800 cursor-default"
-          } duration-100`}
+        onClick={() => {}}
+        className={`bg-background-secondary  text-left ${
+          isEdit || params.isEditTable
+            ? "hover:bg-white cursor-default"
+            : "hover:bg-light-800 cursor-default"
+        } duration-100`}
       >
         {/* checkbox */}
         <Table.Cell className="w-10 border-r-[1px] z-100 ">

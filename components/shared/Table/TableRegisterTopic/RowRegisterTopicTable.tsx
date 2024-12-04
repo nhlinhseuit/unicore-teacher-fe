@@ -163,6 +163,7 @@ const RowRegisterTopicTable = React.memo(
               }
               //! NOTE: Đặt w-full cho ô input Mô tả
               isDescription={key === "Mô tả"}
+              isInTable
             />
           ) : (
             value

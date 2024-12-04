@@ -33,6 +33,7 @@ const ScoreColumnDetailItemTable = (params: DataTableParams) => {
           onChange={(newValue) => handleInputChange(key, newValue)}
           isDescription={key === "Góp ý" ? true : false}
           otherClassess="w-full"
+          isInTable
         />
       );
     }

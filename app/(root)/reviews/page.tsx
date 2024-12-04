@@ -35,6 +35,7 @@ import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import InputComponent from "@/components/shared/Table/components/InputComponent";
 
 const Review = () => {
   const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
@@ -267,14 +268,13 @@ const Review = () => {
                             Góp ý
                           </FormLabel>
                           <FormControl className="mt-3.5 ">
-                            <Input
+                            <InputComponent
                               value={feedback}
-                              onChange={(e) => {
-                                setFeedback(e.target.value);
-                              }}
                               placeholder="Nhập góp ý..."
-                              className="
-                                  no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
+                              onChange={() => (newValue: string) => {
+                                setFeedback(newValue);
+                              }}
+                              isDescription
                             />
                           </FormControl>
                           <FormMessage className="text-red-500" />
@@ -329,23 +329,23 @@ const Review = () => {
                               }}
                               placeholder="Nhập phản hồi..."
                               className="
-                        no-focus
-                        paragraph-regular
-                        background-light900_dark300
-                        light-border-2
-                        text-dark300_light700
-                        min-h-[200px]
-                        rounded-md
-                        border
-                        resize-none
-                        w-full
-                        px-3
-                        py-4
-                        focus:outline-none
-                        focus:ring-0
-                        active:outline-none
-                        focus:border-inherit
-                        text-sm"
+                                no-focus
+                                paragraph-regular
+                                background-light900_dark300
+                                light-border-2
+                                text-dark300_light700
+                                min-h-[200px]
+                                rounded-md
+                                border
+                                resize-none
+                                w-full
+                                px-3
+                                py-4
+                                focus:outline-none
+                                focus:ring-0
+                                active:outline-none
+                                focus:border-inherit
+                                text-sm"
                             />
                           </FormControl>
                           <FormMessage className="text-red-500" />
