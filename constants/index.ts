@@ -1,5 +1,24 @@
 import { SidebarLink } from "@/types";
 
+
+export const listCourseColors = [
+  "#fef5e5",
+  "#e8f7ff",
+  "#ecf2ff",
+  "#e6fffa",
+  "#fdede8",
+  "#f1f4f9",
+  "#fff5e6",
+  "#e1f7d5",
+  "#dce5ff",
+  "#fffae6",
+  "#f0f8ff",
+  "#e0ffff",
+  "#e7f5e8",
+  "#f7e4f9",
+  "#f6f8e9",
+];
+
 export const itemsPerPage = 30;
 export const maxStudentPerGroup = 2;
 export const minStudentPerGroup = 1;

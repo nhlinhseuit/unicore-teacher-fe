@@ -12,27 +12,27 @@ interface Props {
 const GradingInPost = (params: Props) => {
   return (
     <>
-      <p className="paragraph-semibold underline ">BÀI NỘP</p>
-      <div className="flex flex-col gap-2 mt-4 bg-gray-400 p-4 rounded-lg shadow-full">
-        <p className="body-semibold text-white">
+      <p className="paragraph-medium underline ">BÀI NỘP</p>
+      <div className="flex flex-col gap-2 mt-4 bg-[#ecf2ff] p-4 rounded-lg border-light-500">
+        <p className="body-medium text-black">
           Điểm danh:{" "}
-          <span className="ml-2 body-semibold text-red-500">
+          <span className="ml-2 body-medium text-red-500">
             {params.submissionNumber}{" "}
           </span>
           <span>/ {params.totalNumber} sĩ số lớp</span>
         </p>
-        <p className="body-semibold text-white">
+        <p className="body-medium text-black">
           Số lượng bài nộp:{" "}
-          <span className="ml-2 body-semibold text-red-500">
+          <span className="ml-2 body-medium text-red-500">
             {params.submissionNumber}{" "}
           </span>
           <span>/ {params.totalNumber} sĩ số lớp</span>
         </p>
-        <p className="body-semibold text-white">
+        <p className="body-medium text-black">
           Deadline: Quá hạn
           <span className=" text-red-500"> {params.lateTime}</span>
         </p>
-        <p className="body-semibold text-white">
+        <p className="body-medium text-black">
           Cột điểm: <span>{params.columnGrade}</span>
         </p>
 
