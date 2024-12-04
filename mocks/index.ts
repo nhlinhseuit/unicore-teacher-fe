@@ -1,3 +1,7 @@
+//// TODO: Left Ratio
+//
+export const mockDbLeftRatio = 70;
+
 //// TODO: Annoucements List
 //
 export const mockAnnouncementLists = [
@@ -613,6 +617,14 @@ export const mockCoursesList = [
   { id: 2, value: "SE114.N21.PMCL.2" },
   { id: 3, value: "SE100.N23.PMCL.1" },
   { id: 4, value: "SE100.N23.PMCL.2" },
+];
+
+//
+// TODO: Create big exercise
+//
+export const mockBigExerciseGradeColumn = [
+  { id: 1, value: "Quá trình" },
+  { id: 3, value: "Cuối kỳ" },
 ];
 
 //

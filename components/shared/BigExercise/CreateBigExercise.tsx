@@ -20,7 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
-import { mockGradeColumnList } from "@/mocks";
+import { mockBigExerciseGradeColumn, mockDbLeftRatio } from "@/mocks";
 import { TopicDataItem } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
@@ -37,8 +37,8 @@ import { z } from "zod";
 import BorderContainer from "../BorderContainer";
 import SubmitButton from "../Button/SubmitButton";
 import ErrorComponent from "../Status/ErrorComponent";
-import TableSkeleton from "../Table/components/TableSkeleton";
 import TopicGroupTable from "../Table/TableTopic/TopicDataTable";
+import TableSkeleton from "../Table/components/TableSkeleton";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -67,6 +67,7 @@ const CreateBigExercise = () => {
   const [selectedRecheckOption, setSelectedRecheckOption] = useState(1);
   const [selectedSuggestOption, setSelectedSuggestOption] = useState(1);
   const [numberOfRecheck, setNumberOfRecheck] = useState<string>("");
+  const [ratio, setRatio] = useState<string>("");
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
   const [selectedSubmitOption, setSelectedSubmitOption] = useState<number[]>([
     1,
@@ -82,6 +83,9 @@ const CreateBigExercise = () => {
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setNumberOfRecheck(e.target.value);
+  };
+  const handleChangeRatio = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRatio(e.target.value);
   };
 
   const handleTopicsFileUpload = (e: any) => {
@@ -171,6 +175,7 @@ const CreateBigExercise = () => {
       gradeColumn: z.any().optional(),
       date: z.date().optional(),
       maxRecheck: z.number().optional(),
+      ratio: z.number().optional(),
     })
     .refine((data) => !(dateStart === undefined), {
       message: "Bạn phải chọn ngày bắt đầu",
@@ -197,7 +202,20 @@ const CreateBigExercise = () => {
         message: "Số phải lớn hơn 0",
         path: ["maxRecheck"],
       }
-    );
+    )
+    .refine((data) => ratio !== "" && !isNaN(parseInt(ratio)), {
+      message: "Hệ số phải là chữ số và không được để trống",
+      path: ["ratio"],
+    })
+    .refine((data) => parseInt(ratio) > 0, {
+      message: "Hệ số phải lớn hơn 0",
+      path: ["ratio"],
+    })
+    .refine((data) => parseInt(ratio) < mockDbLeftRatio, {
+      message: `Hệ số phải nhỏ hơn hệ số còn lại của cột điểm (${mockDbLeftRatio}%)`,
+      path: ["ratio"],
+    });
+  //! CÒN THÊM
   // 1. Define your form.
   const form = useForm<z.infer<typeof AnnoucementSchema>>({
     resolver: zodResolver(AnnoucementSchema),
@@ -415,6 +433,9 @@ const CreateBigExercise = () => {
                       <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
                         Cột điểm <span className="text-red-600">*</span>
                       </FormLabel>
+                      <FormDescription className="body-regular mt-2.5 text-light-500">
+                        Bài tập lớn được tạo sẽ là thành phần của cột điểm này.
+                      </FormDescription>
                       <FormControl className="mt-3.5 ">
                         <Dropdown
                           className="z-30 rounded-lg"
@@ -426,7 +447,7 @@ const CreateBigExercise = () => {
                                 text={`${
                                   selectedGradeColumn === -1
                                     ? "Chọn cột điểm"
-                                    : mockGradeColumnList[
+                                    : mockBigExerciseGradeColumn[
                                         selectedGradeColumn - 1
                                       ].value
                                 }`}
@@ -435,46 +456,87 @@ const CreateBigExercise = () => {
                                 bgColor="bg-white"
                                 textColor="text-black"
                                 border
+                                otherClasses="w-full"
                               />
                             </div>
                           )}
                         >
                           <div className="scroll-container scroll-container-dropdown-content">
-                            {mockGradeColumnList.map((gradeColumn, index) => (
-                              <Dropdown.Item
-                                key={`${gradeColumn.id}_${index}`}
-                                onClick={() => {
-                                  if (selectedGradeColumn === gradeColumn.id) {
-                                    setSelectedGradeColumn(-1);
-                                  } else {
-                                    setSelectedGradeColumn(gradeColumn.id);
-                                  }
-                                }}
-                              >
-                                <div className="flex justify-between w-full">
-                                  <p className="w-[80%] text-left line-clamp-1">
-                                    {gradeColumn.value}
-                                  </p>
-                                  {selectedGradeColumn === gradeColumn.id ? (
-                                    <Image
-                                      src="/assets/icons/check.svg"
-                                      alt="search"
-                                      width={21}
-                                      height={21}
-                                      className="cursor-pointer mr-2"
-                                    />
-                                  ) : (
-                                    <></>
-                                  )}
-                                </div>
-                              </Dropdown.Item>
-                            ))}
+                            {mockBigExerciseGradeColumn.map(
+                              (gradeColumn, index) => (
+                                <Dropdown.Item
+                                  key={`${gradeColumn.id}_${index}`}
+                                  onClick={() => {
+                                    if (
+                                      selectedGradeColumn === gradeColumn.id
+                                    ) {
+                                      setSelectedGradeColumn(-1);
+                                    } else {
+                                      setSelectedGradeColumn(gradeColumn.id);
+                                    }
+                                  }}
+                                >
+                                  <div className="flex justify-between w-full">
+                                    <p className="w-[80%] text-left line-clamp-1">
+                                      {gradeColumn.value}
+                                    </p>
+                                    {selectedGradeColumn === gradeColumn.id ? (
+                                      <Image
+                                        src="/assets/icons/check.svg"
+                                        alt="search"
+                                        width={21}
+                                        height={21}
+                                        className="cursor-pointer mr-2"
+                                      />
+                                    ) : (
+                                      <></>
+                                    )}
+                                  </div>
+                                </Dropdown.Item>
+                              )
+                            )}
                           </div>
                         </Dropdown>
                       </FormControl>
+
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
+
+                {/* HỆ SỐ ĐIỂM */}
+                <FormField
+                  control={form.control}
+                  name="ratio"
+                  render={({ field }) => (
+                    <FormItem className="flex w-full flex-col">
+                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                        Hệ số điểm <span className="text-red-600">*</span>
+                      </FormLabel>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
-                        Bài tập được sẽ được tính là 1 bài trong cột điểm này.
+                        Hệ số còn lại trong cột điểm **Quá trình để
+                        phân bổ là {mockDbLeftRatio}% (**Bài tập
+                        đã chiếm {100 - mockDbLeftRatio}%).
                       </FormDescription>
+                      <FormDescription className="body-regular mt-2.5 text-light-500">
+                        Nếu không đặt hệ số, hệ thống sẽ tự động phân bổ điểm
+                        đều giữa các thành phần trong cùng cột điểm, tối thiểu
+                        10%.
+                      </FormDescription>
+                      <FormDescription className="body-regular mt-2.5 text-light-500">
+                        Bạn có thể chỉnh sửa chi tiết hệ số của cột điểm tại cài
+                        đặt lớp học.
+                      </FormDescription>
+                      <FormControl className="mt-3.5 ">
+                        <Input
+                          value={ratio}
+                          onChange={handleChangeRatio}
+                          name="ratio"
+                          placeholder="Nhập hệ số..."
+                          className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[46px] border"
+                        />
+                      </FormControl>
+
                       <FormMessage className="text-red-500" />
                     </FormItem>
                   )}
