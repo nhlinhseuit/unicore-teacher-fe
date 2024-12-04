@@ -133,6 +133,11 @@ export const BigExerciseTabItems = [
     label: "Lưu trữ",
     route: "/files",
   },
+  {
+    value: "setting",
+    label: "Cài đặt",
+    route: "/setting",
+  },
 ];
 
 // TODO: OTHERS

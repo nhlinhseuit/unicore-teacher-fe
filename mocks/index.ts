@@ -629,6 +629,52 @@ export const mockCourseGradeColumn = [
 ];
 
 //
+// TODO: Setting Grade Column Detail
+//
+export const mockSettingGradeColumnDetail = [
+  {
+    gradeColumn: "Quá trình",
+    data: [
+      {
+        title: "Báo cáo tiến độ",
+        ratio: "30",
+      },
+      {
+        title: "Thuyết trình Seminar",
+        ratio: "70",
+      },
+    ],
+  },
+  {
+    gradeColumn: "Cuối kỳ",
+    data: [
+      {
+        title: "Bài tập nghiên cứu quan trọng",
+        ratio: "30",
+      },
+      {
+        title: "Đồ án cuối kỳ - Bài tập lớn",
+        ratio: "70",
+      },
+    ],
+  },
+]
+
+//
+// TODO: Setting Grade Column Detail
+//
+export const mockSettingGradeColumnDetailBigExercise = [
+  {
+    title: "Báo cáo tiến độ",
+    ratio: "30",
+  },
+  {
+    title: "Thuyết trình Seminar",
+    ratio: "70",
+  },
+]
+
+//
 // TODO: Create big exercise
 //
 export const mockBigExerciseGradeColumn = [

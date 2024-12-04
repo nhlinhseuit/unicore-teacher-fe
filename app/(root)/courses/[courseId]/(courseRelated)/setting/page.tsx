@@ -5,12 +5,14 @@ import CheckboxComponent from "@/components/shared/CheckboxComponent";
 import OfficerPermission from "@/components/shared/OfficerPermission";
 import DataTable from "@/components/shared/Table/components/DataTable";
 import ToggleTitle from "@/components/shared/ToggleTitle";
+import { Input } from "@/components/ui/input";
 import { DataTableType } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
 import {
   mockDataImportStudentList,
   mockDataImportTeacherList,
   mockDataOfficerPermissions,
+  mockSettingGradeColumnDetail,
 } from "@/mocks";
 import { StudentDataItem, TeacherDataItem } from "@/types";
 import { useState } from "react";
@@ -31,8 +33,34 @@ const Setting = () => {
     useState(true);
   const { toast } = useToast();
 
+  const [mockData, setMockData] = useState(mockSettingGradeColumnDetail);
+
+  const handleInputChange = (
+    gradeColumn: string,
+    index: number,
+    newValue: string
+  ) => {
+    const updatedData = mockData.map((item) => {
+      if (item.gradeColumn === gradeColumn) {
+        const updatedInnerData = item.data.map((innerItem, innerIndex) => {
+          if (innerIndex === index) {
+            return { ...innerItem, ratio: newValue };
+          }
+          return innerItem;
+        });
+        return { ...item, data: updatedInnerData };
+      }
+      return item;
+    });
+    setMockData(updatedData);
+  };
+
+  const handleSave = () => {
+    console.log("Dữ liệu đã lưu:", mockData);
+  };
+
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-20">
       <div>
         <ToggleTitle
           text="Thông tin lớp học"
@@ -98,6 +126,56 @@ const Setting = () => {
 
             <div>
               <IconButton text="Lưu cài đặt lớp" />
+            </div>
+          </div>
+        ) : null}
+      </div>
+
+      <div>
+        <ToggleTitle
+          text="Cài đặt hệ số điểm"
+          handleClick={() => {
+            setIsToggleShowCourseSetting(!isToggleShowCourseSetting);
+          }}
+          value={isToggleShowCourseSetting}
+        />
+        {isToggleShowCourseSetting ? (
+          <div className="mx-6 pl-6 flex flex-col gap-6">
+            <div>
+              {mockData.map((column, columnIndex) => (
+                <div key={columnIndex} className="mb-6">
+                  <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-medium leading-[20.8px]">
+                    {columnIndex + 1}. {column.gradeColumn}
+                  </label>
+                  <BorderContainer otherClasses="p-6 mt-4">
+                    {column.data.map((item, index) => (
+                      <div key={index} className="flex gap-4 items-center mb-4">
+                        <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-medium leading-[20.8px]">
+                          {item.title} (%):
+                        </label>
+                        <div>
+                          <Input
+                            value={item.ratio}
+                            onChange={(e) =>
+                              handleInputChange(
+                                column.gradeColumn,
+                                index,
+                                e.target.value
+                              )
+                            }
+                            placeholder="Nhập điểm..."
+                            className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[40px] border"
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </BorderContainer>
+                </div>
+              ))}
+            </div>
+
+            <div>
+              <IconButton text="Lưu cài đặt hệ số điểm" onClick={handleSave} />
             </div>
           </div>
         ) : null}
