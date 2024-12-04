@@ -129,6 +129,26 @@ body {
   padding-right: 230px;
 }
 
+/* //TODO: DESCRIPTION */
+.custom-scrollbar-desc::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.custom-scrollbar-desc::-webkit-scrollbar-track {
+  background: #f8f9fa;
+}
+
+.custom-scrollbar-desc::-webkit-scrollbar-thumb {
+  background: #a9b0b8;
+  border-radius: 50px;
+}
+
+.custom-scrollbar-desc::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
 /* Markdown Start */
 .markdown a {
   color: #1da1f2;

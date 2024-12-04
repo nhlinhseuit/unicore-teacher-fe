@@ -123,6 +123,143 @@ const Row = React.memo(
         break;
     }
 
+    const renderTableCell = ({
+      key,
+      value,
+      keyId,
+      isEdit,
+      isChecked,
+      setIsChecked,
+      handleInputChange,
+      isHasSubCourses,
+    }: {
+      key: string;
+      value: string | number;
+      keyId: string;
+      isEdit: boolean;
+      isChecked: boolean;
+      setIsChecked: (checked: boolean) => void;
+      handleInputChange: Function;
+      isHasSubCourses: boolean | undefined;
+    }) => {
+      switch (key) {
+        case "Mã lớp":
+          return isHasSubCourses ? (
+            <div className="flex">
+              <span>{value}</span>
+              <Dropdown
+                className="z-30 rounded-lg"
+                label=""
+                renderTrigger={() => (
+                  <Image
+                    src="/assets/icons/info.svg"
+                    alt="search"
+                    width={21}
+                    height={21}
+                    className="ml-2 mr-4 cursor-pointer"
+                  />
+                )}
+              >
+                <div className="scroll-container scroll-container-dropdown-content">
+                  <ul>
+                    <li role="menuitem">
+                      <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                        Đồ án 1 - Huỳnh Hồ Thị Mộng Trinh
+                      </p>
+                    </li>
+                    <li role="menuitem">
+                      <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                        Đồ án 1 - Nguyễn Trịnh Đông
+                      </p>
+                    </li>
+                    <li role="menuitem">
+                      <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
+                        Đồ án 1 - Huỳnh Tuấn Anh
+                      </p>
+                    </li>
+                  </ul>
+                </div>
+              </Dropdown>
+            </div>
+          ) : (
+            <span>{value}</span>
+          );
+
+        case "Khoa quản lý":
+          return isEdit || params.isEditTable ? (
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={(e) => {
+                setIsChecked(e.target.checked);
+                handleInputChange({
+                  key,
+                  newValue: e.target.checked,
+                  isCheckbox: true,
+                });
+              }}
+              className="w-4 h-4 cursor-pointer"
+            />
+          ) : (
+            <input
+              type="checkbox"
+              checked={isChecked}
+              onChange={() => {}}
+              className="w-4 h-4 cursor-pointer"
+            />
+          );
+
+        case "student":
+        case "subject":
+        case "course":
+          return isEdit || params.isEditTable ? (
+            typeof value === "string" ? (
+              <div className="flex flex-col gap-1">
+                {value
+                  .split(/\r\n|\n/)
+                  .filter((line, index, array) =>
+                    array.length > 1 ? line.trim() !== "" : true
+                  )
+                  .map((line, index) => (
+                    <InputComponent
+                      key={`${keyId}_${line}_${index}`}
+                      value={line as string | number}
+                      placeholder={line as string | number}
+                      onChange={(newValue) =>
+                        handleInputChange({
+                          key,
+                          newValue,
+                          isMultipleInput: true,
+                          currentIndex: index,
+                        })
+                      }
+                    />
+                  ))}
+              </div>
+            ) : (
+              <InputComponent
+                key={`${keyId}_input_${key}_${value}`}
+                value={value as string | number}
+                placeholder={value as string | number}
+                onChange={(newValue) => handleInputChange({ key, newValue })}
+              />
+            )
+          ) : typeof value === "string" ? (
+            value.split(/\r\n|\n/).map((line, index) => (
+              <React.Fragment key={index}>
+                {line}
+                {index < value.split(/\r\n|\n/).length - 1 && <br />}
+              </React.Fragment>
+            ))
+          ) : (
+            value
+          );
+
+        default:
+          return value;
+      }
+    };
+
     return (
       <Table.Row
         key={params.dataItem.STT}
@@ -224,119 +361,16 @@ const Row = React.memo(
                 key === "Khoa quản lý" ? "text-center" : ""
               }`}
             >
-              {key === "Mã lớp" && params.isHasSubCourses ? (
-                <div className="flex">
-                  <span>{value}</span>
-                  <Dropdown
-                    className="z-30 rounded-lg"
-                    label=""
-                    renderTrigger={() => (
-                      <Image
-                        src="/assets/icons/info.svg"
-                        alt="search"
-                        width={21}
-                        height={21}
-                        className="ml-2 mr-4 cursor-pointer"
-                      />
-                    )}
-                  >
-                    <div className="scroll-container scroll-container-dropdown-content">
-                      <ul>
-                        <li role="menuitem">
-                          <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                            Đồ án 1 - Huỳnh Hồ Thị Mộng Trinh
-                          </p>
-                        </li>
-                        <li role="menuitem">
-                          <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                            Đồ án 1 - Nguyễn Trịnh Đông
-                          </p>
-                        </li>
-                        <li role="menuitem">
-                          <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                            Đồ án 1 - Huỳnh Tuấn Anh
-                          </p>
-                        </li>
-                      </ul>
-                    </div>
-                  </Dropdown>
-                </div>
-              ) : key === "Khoa quản lý" ? (
-                isEdit || params.isEditTable ? (
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={(e) => {
-                      setIsChecked(e.target.checked);
-                      handleInputChange({
-                        key: key,
-                        newValue: e.target.checked,
-                        isCheckbox: true,
-                      });
-                    }}
-                    className="w-4 h-4 cursor-pointer"
-                  />
-                ) : (
-                  <input
-                    type="checkbox"
-                    checked={isChecked}
-                    onChange={() => {}}
-                    className="w-4 h-4 cursor-pointer"
-                  />
-                )
-              ) : // TH 1 thẻ Input hoặc nhiều thẻ Input do nhiều GV và nhiều mã GV (so on...)
-              isEdit || params.isEditTable ? (
-                typeof value === "string" ? (
-                  <div className="flex flex-col gap-1">
-                    {value
-                      .split(/\r\n|\n/)
-                      .filter((line, index, array) =>
-                        array.length > 1 ? line.trim() !== "" : true
-                      )
-                      .map((line, index) => (
-                        <InputComponent
-                          key={`${keyId}_${line}_${index}`}
-                          value={line as string | number}
-                          placeholder={line as string | number}
-                          //@ts-ignore
-                          onChange={(newValue) =>
-                            //@ts-ignore
-                            handleInputChange({
-                              //@ts-ignore
-                              key: key,
-                              newValue: newValue,
-                              isMultipleInput: true,
-                              currentIndex: index,
-                            })
-                          }
-                        />
-                      ))}
-                  </div>
-                ) : (
-                  <InputComponent
-                    key={`${keyId}_input_${key}_${value}`}
-                    value={value as string | number}
-                    placeholder={value as string | number}
-                    //@ts-ignore
-                    onChange={(newValue) =>
-                      //@ts-ignore
-                      handleInputChange({ key: key, newValue: newValue })
-                    }
-                  />
-                )
-              ) : // TH 1 thẻ dòng text hoặc nhiều thẻ dòng text do nhiều GV
-              typeof value === "string" ? (
-                // Thay thế ký tự xuống dòng bằng thẻ <br />
-                value.split(/\r\n|\n/).map((line, index) => (
-                  <React.Fragment key={index}>
-                    {line}
-                    {index < value.split(/\r\n|\n/).length - 1 && <br />}{" "}
-                    {/* Thêm <br /> giữa các dòng */}
-                  </React.Fragment>
-                ))
-              ) : (
-                value
-              )}
+              {renderTableCell({
+                key,
+                value,
+                keyId,
+                isEdit,
+                isChecked,
+                setIsChecked,
+                handleInputChange,
+                isHasSubCourses: params.isHasSubCourses,
+              })}
             </Table.Cell>
           );
         })}

@@ -1,25 +1,31 @@
-import { Form } from "@/components/ui/form";
-import { ApproveTopicDataItem, RegisterGroupDataItem, RegisterTopicDataItem } from "@/types";
+import { RegisterTopicDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import { useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
 import { tableTheme } from "../components/DataTable";
 import RowRegisterTopicTable from "./RowRegisterTopicTable";
 
-import { itemsPerPageRegisterTable, RegisterTopicTableType } from "@/constants";
+import { RegisterTopicTableType, itemsPerPageRegisterTable } from "@/constants";
 import { toast } from "@/hooks/use-toast";
+import { mockTeacherGradingList } from "@/mocks";
+import { Dropdown } from "flowbite-react";
+import Image from "next/image";
+import IconButton from "../../Button/IconButton";
+import SubmitButton from "../../Button/SubmitButton";
+import TableSearch from "../../Search/TableSearch";
+import MyFooter from "../components/MyFooter";
+
+import { Form } from "@/components/ui/form";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import IconButton from "../../Button/IconButton";
-import SubmitButton from "../../Button/SubmitButton";
-import MyFooter from "../components/MyFooter";
 
 interface DataTableParams {
   type: RegisterTopicTableType;
   isEditTable: boolean;
   isMultipleDelete: boolean;
-  dataTable: RegisterTopicDataItem[] | ApproveTopicDataItem[];
+  dataTable: RegisterTopicDataItem[];
 }
 
 const RegisterTopicTable = (params: DataTableParams) => {
@@ -28,13 +34,14 @@ const RegisterTopicTable = (params: DataTableParams) => {
   }, [params.dataTable]);
 
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
+  const [selectedTeacherGrading, setSelectedTeacherGrading] = useState(1);
+
+  const [feedback, setFeedback] = useState("");
   const [isShowDialog, setIsShowDialog] = useState(-1);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [isShowFooter, setIsShowFooter] = useState(true);
   const totalItems = dataTable.length;
-
-  const [feedback, setFeedback] = useState("");
 
   const currentItems = useMemo(() => {
     return dataTable.slice(
@@ -42,6 +49,9 @@ const RegisterTopicTable = (params: DataTableParams) => {
       currentPage * itemsPerPageRegisterTable
     );
   }, [dataTable, currentPage]);
+
+  const [filteredDataTable, setFilteredDataTable] =
+    useState<RegisterTopicDataItem[]>(currentItems);
 
   const AnnoucementSchema = z.object({
     title: z.string().optional(),
@@ -58,14 +68,6 @@ const RegisterTopicTable = (params: DataTableParams) => {
 
   async function onSubmit(values: any) {
     try {
-      console.log({
-        title: values.title,
-        description: values.description,
-
-        // naviate to home page
-        // router.push("/");
-      });
-
       setIsShowDialog(-1);
 
       if (isShowDialog === 1) {
@@ -100,21 +102,86 @@ const RegisterTopicTable = (params: DataTableParams) => {
   }
 
   return (
-    <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          <div>
-            {/* TABLE */}
-            {currentItems.length > 0 && currentItems.length === 0 ? (
-              <NoResult
-                title="Không có dữ liệu!"
-                description="💡 Bạn hãy thử tìm kiếm 1 từ khóa khác nhé."
-              />
-            ) : (
-              <>
-                {params.type === RegisterTopicTableType.approveTopic ? (
-                  isShowDialog === -1 ? (
-                    <div className="flex justify-end items-center mb-3 gap-2">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)}>
+        <div>
+          {/* TABLE */}
+          {currentItems.length > 0 && filteredDataTable.length === 0 ? (
+            <NoResult
+              title="Không có dữ liệu!"
+              description="💡 Bạn hãy thử tìm kiếm 1 từ khóa khác nhé."
+            />
+          ) : (
+            <>
+              {params.type === RegisterTopicTableType.approveTopic ? (
+                isShowDialog === -1 ? (
+                  <div className="flex justify-between items-center mb-3 gap-2">
+                    <div className="flex gap-2 items-center">
+                      <p className="inline-flex justify-start text-sm whitespace-nowrap">
+                        Chọn giảng viên
+                      </p>
+                      <Dropdown
+                        className="min-w-max z-30 rounded-lg"
+                        label=""
+                        dismissOnClick={true}
+                        renderTrigger={() => (
+                          <div>
+                            <IconButton
+                              text={`${
+                                mockTeacherGradingList[
+                                  selectedTeacherGrading - 1
+                                ].value
+                              }`}
+                              onClick={() => {}}
+                              iconRight={"/assets/icons/chevron-down.svg"}
+                              bgColor="bg-white"
+                              textColor="text-black"
+                              border
+                            />
+                          </div>
+                        )}
+                      >
+                        <TableSearch
+                          setSearchTerm={() => {}}
+                          searchTerm=""
+                          otherClasses="p-2"
+                        />
+                        <div className="w-full scroll-container scroll-container-dropdown-content">
+                          {mockTeacherGradingList.map((teacher, index) => (
+                            <Dropdown.Item
+                              key={`${teacher.id}_${index}`}
+                              onClick={() => {
+                                if (selectedTeacherGrading === teacher.id) {
+                                  setSelectedTeacherGrading(1);
+                                } else {
+                                  setSelectedTeacherGrading(teacher.id);
+                                }
+                              }}
+                              className="min-w-max"
+                            >
+                              <div className="flex justify-between w-full">
+                                <p className="w-[80%] text-left line-clamp-1">
+                                  {teacher.value}
+                                </p>
+                                {selectedTeacherGrading === teacher.id ? (
+                                  <Image
+                                    src="/assets/icons/check.svg"
+                                    alt="search"
+                                    width={21}
+                                    height={21}
+                                    className="cursor-pointer mr-2"
+                                  />
+                                ) : (
+                                  <></>
+                                )}
+                              </div>
+                            </Dropdown.Item>
+                          ))}
+                        </div>
+                      </Dropdown>
+                    </div>
+
+                    <div className="flex items-center mb-3 gap-2">
                       <p className="text-sm font-medium">
                         Đã chọn:
                         <span className="font-semibold">
@@ -122,7 +189,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
                         </span>
                       </p>
                       <IconButton
-                        text="Duyệt đề tài"
+                        text="Chỉ định giảng viên"
                         green
                         onClick={() => {
                           if (itemsSelected.length === 0) {
@@ -133,30 +200,23 @@ const RegisterTopicTable = (params: DataTableParams) => {
                             });
                             return;
                           }
-                          setIsShowDialog(1);
+                          toast({
+                            title:
+                              "Chỉ định giảng viên duyệt đề tài thành công.",
+                            description: `Đề tài ${itemsSelected.join(
+                              ", "
+                            )} sẽ dược duyệt bởi ${
+                              mockTeacherGradingList[selectedTeacherGrading - 1]
+                                .value
+                            }.`,
+                            variant: "success",
+                            duration: 3000,
+                          });
+                          setItemsSelected([]);
                         }}
                         iconWidth={16}
                         iconHeight={16}
                       />
-
-                      <IconButton
-                        text="Phản hồi đề tài"
-                        blue
-                        onClick={() => {
-                          if (itemsSelected.length === 0) {
-                            toast({
-                              title: "Vui lòng chọn đề tài!",
-                              variant: "error",
-                              duration: 3000,
-                            });
-                            return;
-                          }
-                          setIsShowDialog(2);
-                        }}
-                        iconWidth={16}
-                        iconHeight={16}
-                      />
-
                       <IconButton
                         text="Từ chối đề tài"
                         red
@@ -175,25 +235,26 @@ const RegisterTopicTable = (params: DataTableParams) => {
                         iconHeight={16}
                       />
                     </div>
-                  ) : (
-                    <div className="flex justify-end items-center mb-3 gap-2">
-                      <SubmitButton text="Lưu" iconWidth={16} iconHeight={16} />
-                    </div>
-                  )
-                ) : null}
+                  </div>
+                ) : (
+                  <div className="flex justify-end items-center mb-3 gap-2">
+                    <SubmitButton text="Lưu" iconWidth={16} iconHeight={16} />
+                  </div>
+                )
+              ) : null}
 
-                {itemsSelected.length > 0 && isShowDialog !== -1 ? (
-                  <div className="mb-4">
-                    <p className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                      Phản hồi cho đề tài (nếu có)
-                    </p>
-                    <p className="body-regular mt-2.5 text-light-500">
-                      Không bắt buộc.
-                    </p>
-                    <textarea
-                      placeholder="Nhập phản hồi đề tài..."
-                      onChange={(e) => setFeedback(e.target.value)}
-                      className="
+              {itemsSelected.length > 0 && isShowDialog !== -1 ? (
+                <div className="mb-4">
+                  <p className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                    Phản hồi cho đề tài (nếu có)
+                  </p>
+                  <p className="body-regular mt-2.5 text-light-500">
+                    Không bắt buộc.
+                  </p>
+                  <textarea
+                    placeholder="Nhập phản hồi đề tài..."
+                    onChange={(e) => setFeedback(e.target.value)}
+                    className="
                     no-focus
                     paragraph-regular
                     background-light900_dark300
@@ -211,40 +272,41 @@ const RegisterTopicTable = (params: DataTableParams) => {
                     active:outline-none
                     focus:border-inherit
                     text-sm"
-                    />
-                  </div>
-                ) : null}
+                  />
+                </div>
+              ) : null}
 
-                <div
-                  className="
-              scroll-container 
-              overflow-auto
-              max-w-full
-              h-fit
-              rounded-lg
-              border-[1px]
-              border-secondary-200
-              "
-                >
-                  <Table hoverable theme={tableTheme}>
-                    {/* HEADER */}
-                    <Table.Head
-                      theme={tableTheme?.head}
-                      className="sticky top-0 z-10 uppercase border-b bg-gray"
+              <div
+                className="
+            scroll-container 
+            overflow-auto
+            max-w-full
+            h-fit
+            rounded-lg
+            border-[1px]
+            border-secondary-200
+            "
+              >
+                <Table hoverable theme={tableTheme}>
+                  {/* HEADER */}
+                  <Table.Head
+                    theme={tableTheme?.head}
+                    className="sticky top-0 z-10 uppercase border-b bg-gray"
+                  >
+                    <Table.HeadCell
+                      theme={tableTheme?.head?.cell}
+                      className={`border-r-[1px] uppercase`}
+                    ></Table.HeadCell>
+
+                    <Table.HeadCell
+                      theme={tableTheme?.head?.cell}
+                      className={` w-10 border-r-[1px] uppercase`}
                     >
-                      <Table.HeadCell
-                        theme={tableTheme?.head?.cell}
-                        className={`border-r-[1px] uppercase`}
-                      ></Table.HeadCell>
+                      STT
+                    </Table.HeadCell>
 
-                      <Table.HeadCell
-                        theme={tableTheme?.head?.cell}
-                        className={` w-10 border-r-[1px] uppercase`}
-                      >
-                        STT
-                      </Table.HeadCell>
-
-                      {Object.keys(currentItems[0]?.data || {}).map((key) => {
+                    {Object.keys(filteredDataTable[0]?.data || {}).map(
+                      (key) => {
                         if (key === "Mã nhóm") return null;
 
                         return (
@@ -256,110 +318,84 @@ const RegisterTopicTable = (params: DataTableParams) => {
                             {key}
                           </Table.HeadCell>
                         );
-                      })}
-                    </Table.Head>
+                      }
+                    )}
+                  </Table.Head>
 
-                    {/* BODY */}
-                    <Table.Body className="text-left divide-y">
-                      {currentItems.map((dataItem, index) =>
-                        dataItem.isDeleted ? (
-                          <></>
-                        ) : (
-                          <>
-                            {/* //TODO: Main Row: Leader */}
-                            <RowRegisterTopicTable
-                              type={params.type}
-                              key={dataItem.STT}
-                              isMemberOfAboveGroup={
-                                index === 0
-                                  ? false
-                                  : currentItems[index - 1].data["Mã nhóm"] ===
-                                    dataItem.data["Mã nhóm"]
-                              }
-                              dataItem={dataItem}
-                              isEditTable={params.isEditTable}
-                              isMultipleDelete={params.isMultipleDelete}
-                              onClickCheckBoxSelect={(item: string) => {
-                                setItemsSelected((prev) => {
-                                  if (prev.includes(item)) {
-                                    return prev.filter((i) => i !== item);
-                                  } else {
-                                    return [...prev, item];
-                                  }
-                                });
-                              }}
-                              onChangeRow={(updatedDataItem: any) => {
-                                //   setLocalDataTable((prevTable) =>
-                                //     prevTable.map((item) =>
-                                //       item.STT === updatedDataItem.STT
-                                //         ? updatedDataItem
-                                //         : item
-                                //     )
-                                //   );
-                              }}
-                              saveSingleRow={(updatedDataItem: any) => {
-                                const updatedDataTable = dataTable.map(
-                                  (item, index) =>
-                                    item.STT === updatedDataItem.STT
-                                      ? updatedDataItem
-                                      : item
-                                );
+                  {/* BODY */}
+                  <Table.Body className="text-left divide-y">
+                    {filteredDataTable.map((dataItem, index) =>
+                      dataItem.isDeleted ? (
+                        <></>
+                      ) : (
+                        <>
+                          {/* //TODO: Main Row: Leader */}
+                          <RowRegisterTopicTable
+                            type={params.type}
+                            key={dataItem.STT}
+                            dataItem={dataItem}
+                            isEditTable={params.isEditTable}
+                            isMultipleDelete={params.isMultipleDelete}
+                            onClickCheckBoxSelect={(item: string) => {
+                              setItemsSelected((prev) => {
+                                if (prev.includes(item)) {
+                                  return prev.filter((i) => i !== item);
+                                } else {
+                                  return [...prev, item];
+                                }
+                              });
+                            }}
+                            onChangeRow={(updatedDataItem: any) => {
+                              //   setLocalDataTable((prevTable) =>
+                              //     prevTable.map((item) =>
+                              //       item.STT === updatedDataItem.STT
+                              //         ? updatedDataItem
+                              //         : item
+                              //     )
+                              //   );
+                            }}
+                            saveSingleRow={(updatedDataItem: any) => {
+                              const updatedDataTable = dataTable.map(
+                                (item, index) =>
+                                  item.STT === updatedDataItem.STT
+                                    ? updatedDataItem
+                                    : item
+                              );
 
-                                //   if (params.onSaveEditTable) {
-                                //     params.onSaveEditTable(updatedDataTable);
-                                //   }
-                              }}
-                              onClickGetOut={() => {
-                                // params.onClickGetOut
-                              }}
-                              deleteSingleRow={() => {
-                                //  params.onClickDelete
-                              }}
-                            />
+                              //   if (params.onSaveEditTable) {
+                              //     params.onSaveEditTable(updatedDataTable);
+                              //   }
+                            }}
+                            onClickGetOut={() => {
+                              // params.onClickGetOut
+                            }}
+                            deleteSingleRow={() => {
+                              //  params.onClickDelete
+                            }}
+                          />
+                        </>
+                      )
+                    )}
+                  </Table.Body>
+                </Table>
+              </div>
+            </>
+          )}
 
-                            {/* //TODO: MEMBER */}
-                            {/* {dataItem.data.listStudent
-                          .filter((student) => !student.isLeader)
-                          .map((student, index) => (
-                            <RowRegisterTopicTable
-                              key={`${dataItem.STT}-${index}`}
-                              dataItem={{
-                                ...dataItem,
-                                data: { ...dataItem.data, student },
-                              }}
-                              isEditTable={params.isEditTable}
-                              isMultipleDelete={params.isMultipleDelete}
-                              onClickCheckBoxSelect={() => {}}
-                              onChangeRow={() => {}}
-                              saveSingleRow={() => {}}
-                              onClickGetOut={() => {}}
-                              deleteSingleRow={() => {}}
-                            />
-                          ))} */}
-                          </>
-                        )
-                      )}
-                    </Table.Body>
-                  </Table>
-                </div>
-              </>
-            )}
-
-            {/* FOOTER */}
-            {!isShowFooter || params.isEditTable || params.isMultipleDelete ? (
-              <></>
-            ) : (
-              <MyFooter
-                currentPage={currentPage}
-                itemsPerPage={itemsPerPageRegisterTable}
-                totalItems={totalItems}
-                onPageChange={(newPage) => setCurrentPage(newPage)} //HERE
-              />
-            )}
-          </div>
-        </form>
-      </Form>
-    </>
+          {/* FOOTER */}
+          {!isShowFooter || params.isEditTable || params.isMultipleDelete ? (
+            <></>
+          ) : (
+            <MyFooter
+              currentPage={currentPage}
+              itemsPerPage={itemsPerPageRegisterTable}
+              totalItems={totalItems}
+              onPageChange={(newPage) => setCurrentPage(newPage)} //HERE
+            />
+          )}
+        </div>
+      </form>
+    </Form>
   );
 };
 

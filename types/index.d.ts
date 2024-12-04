@@ -1,4 +1,3 @@
-
 // TODO: PAGE INTERFACE
 
 interface ReportDataOption {
@@ -42,18 +41,16 @@ export interface RegisterGroupData {
 export interface RegisterTopicData {
   "Tên đề tài": string;
   "Mô tả": string;
-  "GV phụ trách": string;
   "Mã nhóm": string;
-  MSSV: string;
-  SĐT: string;
-  "Họ và tên": string;
+  MSSV: string[];
+  SĐT: string[];
+  "Họ và tên": string[];
 }
 export interface ApproveTopicData {
   "Trạng thái": string;
   "Chỉnh sửa lần cuối": string?;
   "Tên đề tài": string;
   "Mô tả": string;
-  "GV phụ trách": string;
   "Mã nhóm": string;
   MSSV: string;
   SĐT: string;
@@ -68,7 +65,6 @@ export interface TopicRegisterGroupData {
 export interface TopicData {
   "Tên đề tài": string;
   "Mô tả": string;
-  "GV phụ trách": string;
 }
 export interface FileData {
   "Tên file": string;

@@ -76,7 +76,7 @@ const IconButton = (params: IconButtonProps) => {
       )}
 
       <span
-        className={`max-w-[300px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap flex-grow pl-2 pr-2 text-center ${
+        className={`max-w-[400px] flex-1 overflow-hidden text-ellipsis whitespace-nowrap flex-grow pl-2 pr-2 text-center ${
           params.smallText ? "text-[12px]" : ""
         }`}
       >
