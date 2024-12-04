@@ -885,6 +885,7 @@ const ReportInfo = () => {
                                 bgColor="bg-white"
                                 textColor="text-black"
                                 border
+                                otherClasses="w-full"
                               />
                             </div>
                           )}

@@ -3,6 +3,7 @@ import RenderCourse from "@/components/courses/RenderCourse";
 import ClosedButton from "@/components/shared/Annoucements/ClosedButton";
 import PickFileImageButton from "@/components/shared/Annoucements/PickFileImageButton";
 import RenderFile from "@/components/shared/Annoucements/RenderFile";
+import BackToPrev from "@/components/shared/BackToPrev";
 import BorderContainer from "@/components/shared/BorderContainer";
 import IconButton from "@/components/shared/Button/IconButton";
 import SubmitButton from "@/components/shared/Button/SubmitButton";
@@ -29,7 +30,10 @@ import {
 } from "@/components/ui/popover";
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
-import { mockCoursesList, mockGradeColumnList } from "@/mocks";
+import {
+  mockCoursesList,
+  mockGradeColumnList
+} from "@/mocks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { format } from "date-fns";
@@ -41,21 +45,18 @@ import { usePathname, useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import {
-  sCompletedReportSchedule,
-  sDateEnd,
-  sDateStart,
-  sReportOptions,
-  sSelectedSettingOption,
-  sSubmitReportSchedule,
-  sTimeEnd,
-  sTimeStart,
-} from "./(store)/createReportStore";
 
 // ! CẬP NHẬT
 const type: any = "create";
 
-const ReportInfo = () => {
+// TODO: Search debouce tìm kiếm lớp nếu cần
+
+interface DateTimeState {
+  date: Date | undefined;
+  time: string;
+}
+
+const CreateExercise = () => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -65,9 +66,10 @@ const ReportInfo = () => {
   const [selectedRecheckOption, setSelectedRecheckOption] = useState(1);
   const [numberOfRecheck, setNumberOfRecheck] = useState<string>("");
   const [selectedGroupOption, setSelectedGroupOption] = useState(1);
-  const [selectedCheckAttendance, setSelectedCheckAttendance] = useState(1);
-  const [selectedSubmitType, setSelectedSubmitType] = useState(1);
-  const [selectedSubmitOption, setSelectedSubmitOption] = useState([1]);
+  const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
+  const [selectedSubmitOption, setSelectedSubmitOption] = useState<number[]>([
+    1,
+  ]);
 
   const getDisplayText = (date: any, time: any) => {
     return date
@@ -77,17 +79,15 @@ const ReportInfo = () => {
   // !
 
   const [datePost, setDatePost] = React.useState<Date>();
-  const [dateCloseCheckAttendance, setDateCloseCheckAttendance] =
-    React.useState<Date>();
 
   const [dateStart, setDateStart] = React.useState<Date>();
   const [timeStart, setTimeStart] = React.useState("");
 
-  const [dateRemindGrade, setDateRemindGrade] = React.useState<Date>();
-  const [timeRemindGrade, setTimeRemindGrade] = React.useState("");
-
   const [dateEnd, setDateEnd] = React.useState<Date>();
   const [timeEnd, setTimeEnd] = React.useState("");
+
+  const [dateRemindGrade, setDateRemindGrade] = React.useState<Date>();
+  const [timeRemindGrade, setTimeRemindGrade] = React.useState("");
 
   const [dateClose, setDateClose] = React.useState<Date>();
   const [timeClose, setTimeClose] = React.useState("");
@@ -141,9 +141,9 @@ const ReportInfo = () => {
       file: z.any(),
       dateSubmit: z.date().optional(),
       datePost: z.date().optional(),
-      dateCloseCheckAttendance: z.date().optional(),
       dateRemindGrade: z.date().optional(),
       dateClose: z.date().optional(),
+      multipleCourses: z.number().optional(),
       groupOption: z.any().optional(),
       submitOption: z.any().optional(),
       gradeColumn: z.any().optional(),
@@ -159,17 +159,6 @@ const ReportInfo = () => {
       {
         message: `File không hợp lệ hoặc vượt quá ${MAX_FILE_VALUE}MB.`,
         path: ["file"],
-      }
-    )
-    .refine(
-      (data) =>
-        selectedCheckAttendance === 2
-          ? !(dateCloseCheckAttendance === undefined)
-          : true,
-
-      {
-        message: "Bạn phải chọn thời gian đóng form điểm danh",
-        path: ["dateCloseCheckAttendance"],
       }
     )
     .refine(
@@ -203,7 +192,7 @@ const ReportInfo = () => {
       path: ["submitOption"],
     })
     .refine((data) => selectedGradeColumn !== -1, {
-      message: "Bạn phải chọn cột điểm cho báo cáo",
+      message: "Bạn phải chọn cột điểm cho bài tập",
       path: ["gradeColumn"],
     })
     .refine(
@@ -255,21 +244,16 @@ const ReportInfo = () => {
       // naviate to home page
       router.push("/");
 
-      // ?? LẤY DATA TỪ STEP TRƯỚC + DATA STEP NÀY
       toast({
         title: "Tạo thông báo thành công.",
+        description: `Thông báo đã được gửi đến lớp ${
+          selectedCourses.length > 0
+            ? `và các lớp ${selectedCourses.join(", ")}`
+            : ""
+        }`,
         variant: "success",
         duration: 3000,
       });
-
-      sReportOptions.reset();
-      sDateStart.reset();
-      sTimeStart.reset();
-      sDateEnd.reset();
-      sTimeEnd.reset();
-      sSelectedSettingOption.reset();
-      sSubmitReportSchedule.reset();
-      sCompletedReportSchedule.reset();
     } catch {
     } finally {
       setIsSubmitting(false);
@@ -287,6 +271,11 @@ const ReportInfo = () => {
 
   return (
     <div>
+      <BackToPrev
+        text={"Quay lại danh sách thông báo"}
+        onClickPrev={handleClick}
+      />
+
       <div className="flex-1 mt-10">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -301,19 +290,19 @@ const ReportInfo = () => {
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Tên báo cáo <span className="text-red-600">*</span>
+                        Tên bài tập <span className="text-red-600">*</span>
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
                         <Input
                           {...field}
-                          placeholder="Nhập tên báo cáo..."
+                          placeholder="Nhập tên bài tập..."
                           className="
                             no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
                         />
                       </FormControl>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
-                        Tên báo cáo nên cụ thể, dễ hiểu để người đọc dễ dàng
-                        nhận biết nội dung chính của báo cáo.
+                        Tên bài tập nên cụ thể, dễ hiểu để người đọc dễ dàng
+                        nhận biết nội dung chính của bài tập.
                       </FormDescription>
                       <FormMessage className="text-red-500" />
                     </FormItem>
@@ -327,7 +316,7 @@ const ReportInfo = () => {
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col gap-3">
                       <FormLabel className="text-dark400_light800  text-[14px] font-semibold leading-[20.8px]">
-                        Nội dung chi tiết của báo cáo{" "}
+                        Nội dung chi tiết của bài tập{" "}
                         <span className="text-red-600">*</span>
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
@@ -648,91 +637,97 @@ const ReportInfo = () => {
               {/* //TODO: SECTION 2 */}
 
               <div className="flex w-[30%] flex-col gap-10">
-                {/* TẠO FORM ĐIỂM DANH */}
-                <div>
-                  <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                    Tạo form điểm danh
-                  </label>
-
-                  <BorderContainer otherClasses="mt-3.5">
-                    <div className="p-4 flex flex-col gap-10">
-                      <RadioboxComponent
-                        id={1}
-                        handleClick={() => {
-                          setSelectedCheckAttendance(1);
-                        }}
-                        value={selectedCheckAttendance}
-                        text="Không"
-                      />
-                      <RadioboxComponent
-                        id={2}
-                        handleClick={() => {
-                          setSelectedCheckAttendance(2);
-                        }}
-                        value={selectedCheckAttendance}
-                        text="Có"
-                      />
-
-                      {/* CheckAttendance */}
-                      {selectedCheckAttendance === 2 ? (
-                        <FormField
-                          control={form.control}
-                          name="dateCloseCheckAttendance"
-                          render={({ field }) => (
-                            <FormItem className="flex w-full flex-col">
-                              <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                                Chọn ngày đóng form
-                              </FormLabel>
-                              <FormControl className="mt-3.5">
-                                <Popover>
-                                  <PopoverTrigger asChild>
-                                    <Button
-                                      variant={"outline"}
-                                      className={` flex items-center text-center font-normal ${
-                                        !dateCloseCheckAttendance &&
-                                        "text-muted-foreground"
-                                      } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
-                                    >
-                                      <span
-                                        className={`flex-grow text-center ${
-                                          !dateCloseCheckAttendance &&
-                                          "text-muted-foreground"
-                                        }`}
-                                      >
-                                        {dateCloseCheckAttendance
-                                          ? format(
-                                              dateCloseCheckAttendance,
-                                              "dd/MM/yyyy"
-                                            )
-                                          : "Chọn ngày"}
-                                      </span>
-                                      <CalendarIcon className="ml-2 h-4 w-4" />
-                                    </Button>
-                                  </PopoverTrigger>
-                                  <PopoverContent className="w-auto p-0">
-                                    <Calendar
-                                      mode="single"
-                                      selected={dateCloseCheckAttendance}
-                                      onSelect={setDateCloseCheckAttendance}
-                                      initialFocus
-                                      locale={vi}
-                                    />
-                                  </PopoverContent>
-                                </Popover>
-                              </FormControl>
-                              <FormDescription className="body-regular mt-2.5 text-light-500">
-                                Form điểm danh sẽ khóa vào ngày này mà bạn chọn.
-                              </FormDescription>
-                              <FormMessage className="text-red-500" />
-                            </FormItem>
+                {/* ĐĂNG NHIỀU LỚP */}
+                <FormField
+                  control={form.control}
+                  name="multipleCourses"
+                  render={({ field }) => (
+                    <FormItem className="flex w-full flex-col">
+                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                        Đăng nhiều lớp
+                      </FormLabel>
+                      <FormControl className="mt-3.5 ">
+                        <Dropdown
+                          className="z-30 rounded-lg"
+                          label=""
+                          dismissOnClick={true}
+                          renderTrigger={() => (
+                            <div>
+                              <IconButton
+                                text="Chọn lớp khác"
+                                onClick={() => {}}
+                                iconRight={"/assets/icons/chevron-down.svg"}
+                                bgColor="bg-white"
+                                textColor="text-black"
+                                border
+                              />
+                            </div>
                           )}
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  </BorderContainer>
-                </div>
+                        >
+                          <TableSearch
+                            setSearchTerm={() => {}}
+                            searchTerm={""}
+                            otherClasses="p-2"
+                          />
+                          <div className="scroll-container scroll-container-dropdown-content">
+                            {mockCoursesList.map((course: any, index) => (
+                              <Dropdown.Item
+                                key={`${course}_${index}`}
+                                onClick={() => {
+                                  setSelectedCourses((prev) =>
+                                    prev.includes(course.value)
+                                      ? prev.filter(
+                                          (item) => item !== course.value
+                                        )
+                                      : [...prev, course.value]
+                                  );
+                                }}
+                              >
+                                <div className="flex justify-between w-full">
+                                  <p className="w-[80%] text-left line-clamp-1">
+                                    {course.value}
+                                  </p>
+                                  {selectedCourses.includes(course.value) ? (
+                                    <Image
+                                      src="/assets/icons/check.svg"
+                                      alt="search"
+                                      width={21}
+                                      height={21}
+                                      className="cursor-pointer mr-2"
+                                    />
+                                  ) : (
+                                    <></>
+                                  )}
+                                </div>
+                              </Dropdown.Item>
+                            ))}
+                          </div>
+                        </Dropdown>
+                      </FormControl>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedCourses.map((item: any) => (
+                          <ClosedButton
+                            key={item}
+                            iconHeight={16}
+                            iconWidth={16}
+                            onClose={() => {
+                              setSelectedCourses((prev) =>
+                                prev.filter((course) => course !== item)
+                              );
+                            }}
+                          >
+                            <RenderCourse _id={item} name={item} />
+                          </ClosedButton>
+                        ))}
+                      </div>
+                      <FormDescription className="body-regular mt-2.5 text-light-500">
+                        Thông báo này sẽ được đăng trong các lớp bạn chọn ngoài
+                        lớp hiện tại.
+                      </FormDescription>
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
 
                 {/* GROUP OPTION */}
                 <FormField
@@ -787,67 +782,41 @@ const ReportInfo = () => {
                         <BorderContainer otherClasses="mt-3.5">
                           <div className="p-4 flex flex-col gap-10">
                             <div className="inline-flex">
-                              <RadioboxComponent
-                                id={1}
+                              <CheckboxComponent
                                 handleClick={() => {
-                                  setSelectedSubmitType(1);
+                                  if (!selectedSubmitOption.includes(1)) {
+                                    setSelectedSubmitOption((prev) => [
+                                      ...prev,
+                                      1,
+                                    ]);
+                                  } else {
+                                    setSelectedSubmitOption((prev) =>
+                                      prev.filter((item) => item !== 1)
+                                    );
+                                  }
                                 }}
-                                value={selectedSubmitType}
-                                text="Không có bài nộp"
+                                value={selectedSubmitOption.includes(1)}
+                                text="Nộp file"
                               />
                             </div>
                             <div className="inline-flex">
-                              <RadioboxComponent
-                                id={2}
+                              <CheckboxComponent
                                 handleClick={() => {
-                                  setSelectedSubmitType(2);
+                                  if (!selectedSubmitOption.includes(2)) {
+                                    setSelectedSubmitOption((prev) => [
+                                      ...prev,
+                                      2,
+                                    ]);
+                                  } else {
+                                    setSelectedSubmitOption((prev) =>
+                                      prev.filter((item) => item !== 2)
+                                    );
+                                  }
                                 }}
-                                value={selectedSubmitType}
-                                text="Nộp bài"
+                                value={selectedSubmitOption.includes(2)}
+                                text="Điền link drive"
                               />
                             </div>
-                            {selectedSubmitType == 2 ? (
-                              <div className="ml-4 flex justify-between ">
-                                <div className="inline-flex">
-                                  <CheckboxComponent
-                                    handleClick={() => {
-                                      if (!selectedSubmitOption.includes(1)) {
-                                        setSelectedSubmitOption((prev) => [
-                                          ...prev,
-                                          1,
-                                        ]);
-                                      } else {
-                                        setSelectedSubmitOption((prev) =>
-                                          prev.filter((item) => item !== 1)
-                                        );
-                                      }
-                                    }}
-                                    value={selectedSubmitOption.includes(1)}
-                                    text="Nộp file"
-                                  />
-                                </div>
-                                <div className="inline-flex">
-                                  <CheckboxComponent
-                                    handleClick={() => {
-                                      if (!selectedSubmitOption.includes(2)) {
-                                        setSelectedSubmitOption((prev) => [
-                                          ...prev,
-                                          2,
-                                        ]);
-                                      } else {
-                                        setSelectedSubmitOption((prev) =>
-                                          prev.filter((item) => item !== 2)
-                                        );
-                                      }
-                                    }}
-                                    value={selectedSubmitOption.includes(2)}
-                                    text="Điền link drive"
-                                  />
-                                </div>
-                              </div>
-                            ) : (
-                              <></>
-                            )}
                           </div>
                         </BorderContainer>
                       </FormControl>
@@ -885,7 +854,6 @@ const ReportInfo = () => {
                                 bgColor="bg-white"
                                 textColor="text-black"
                                 border
-                                otherClasses="w-full"
                               />
                             </div>
                           )}
@@ -924,12 +892,13 @@ const ReportInfo = () => {
                         </Dropdown>
                       </FormControl>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
-                        báo cáo được sẽ được tính là 1 bài trong cột điểm này.
+                        Bài tập được sẽ được tính là 1 bài trong cột điểm này.
                       </FormDescription>
                       <FormMessage className="text-red-500" />
                     </FormItem>
                   )}
                 />
+
 
                 {/* PHÚC KHẢO*/}
                 <div>
@@ -1069,7 +1038,7 @@ const ReportInfo = () => {
               </div>
             </div>
 
-            <div className="flex px-6 mt-12 gap-2">
+            <div className="flex mt-12 gap-2">
               <SubmitButton text="Đăng" otherClasses="w-fit" />
               <IconButton text="Tạm lưu" temp otherClasses="w-fit" />
               <IconButton
@@ -1086,4 +1055,4 @@ const ReportInfo = () => {
   );
 };
 
-export default ReportInfo;
+export default CreateExercise;

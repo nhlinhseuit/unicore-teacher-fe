@@ -1,13 +1,13 @@
+import MyAvatar from "@/components/courses/MyAvatar";
 import { getAvatarName } from "@/lib/utils";
 import { mockSubmissionPost } from "@/mocks";
 import Image from "next/image";
-import MyAvatar from "../../courses/MyAvatar";
-import GradingInPost from "../../courses/GradingInPost";
-import MyComment from "../../courses/MyComment";
-import OtherComment from "../../courses/OtherComment";
-import RenderFile from "../Annoucements/RenderFile";
-import StatusButton from "../Button/StatusButton";
-import Divider from "../Divider";
+import StatusButton from "../../Button/StatusButton";
+import RenderFile from "../../Annoucements/RenderFile";
+import Divider from "../../Divider";
+import GradingInPost from "@/components/courses/GradingInPost";
+import OtherComment from "@/components/courses/OtherComment";
+import MyComment from "@/components/courses/MyComment";
 
 interface Comment {
   id: string;

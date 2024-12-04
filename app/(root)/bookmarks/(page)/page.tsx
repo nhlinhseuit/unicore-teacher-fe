@@ -1,9 +1,9 @@
 "use client";
 
 import BorderButton from "@/components/shared/Button/BorderButton";
-import ExercisePostItem from "@/components/shared/PostItem/ExercisePostItem";
-import PostItem from "@/components/shared/PostItem/PostItem";
-import ReportPostItem from "@/components/shared/PostItem/ReportPostItem";
+import ExercisePostItem from "@/components/shared/PostItem/Item/ExercisePostItem";
+import PostItem from "@/components/shared/PostItem/Item/PostItem";
+import ReportPostItem from "@/components/shared/PostItem/Item/ReportPostItem";
 import ShowOriginPostContainer from "@/components/shared/ShowOriginPostContainer";
 import { BookmarksTabs } from "@/constants";
 import { mockPostDataCourseIdPage } from "@/mocks";

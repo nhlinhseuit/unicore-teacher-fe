@@ -2,7 +2,7 @@
 
 import BackToPrev from "@/components/shared/BackToPrev";
 import IconButton from "@/components/shared/Button/IconButton";
-import ExercisePostItem from "@/components/shared/PostItem/ExercisePostItem";
+import ExercisePostItem from "@/components/shared/PostItem/Item/ExercisePostItem";
 import GradingGroupTable from "@/components/shared/Table/TableGrading/GradingGroupTable";
 import {
   mockDataGradingExercise,

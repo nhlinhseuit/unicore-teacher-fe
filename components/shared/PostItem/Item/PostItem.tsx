@@ -1,12 +1,12 @@
 import React from "react";
 import Image from "next/image";
-import RenderFile from "../Annoucements/RenderFile";
-import MyAvatar from "../../courses/MyAvatar";
-import OtherComment from "../../courses/OtherComment";
-import MyComment from "../../courses/MyComment";
-import Divider from "../Divider";
 import { getAvatarName } from "@/lib/utils";
-import StatusButton from "../Button/StatusButton";
+import MyAvatar from "@/components/courses/MyAvatar";
+import StatusButton from "../../Button/StatusButton";
+import RenderFile from "../../Annoucements/RenderFile";
+import Divider from "../../Divider";
+import OtherComment from "@/components/courses/OtherComment";
+import MyComment from "@/components/courses/MyComment";
 
 interface Comment {
   id: string;

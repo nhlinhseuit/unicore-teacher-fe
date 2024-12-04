@@ -2,9 +2,9 @@
 
 import BorderButton from "@/components/shared/Button/BorderButton";
 import IconButton from "@/components/shared/Button/IconButton";
-import ExercisePostItem from "@/components/shared/PostItem/ExercisePostItem";
-import PostItem from "@/components/shared/PostItem/PostItem";
-import ReportPostItem from "@/components/shared/PostItem/ReportPostItem";
+import ExercisePostItem from "@/components/shared/PostItem/Item/ExercisePostItem";
+import PostItem from "@/components/shared/PostItem/Item/PostItem";
+import ReportPostItem from "@/components/shared/PostItem/Item/ReportPostItem";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import { AnnouncementTabs, AnnouncementTypes, FilterType } from "@/constants";
 import { mockPostDataWithReport } from "@/mocks";
