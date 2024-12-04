@@ -65,7 +65,6 @@ const ReportInfo = () => {
   const [selectedRecheckOption, setSelectedRecheckOption] = useState(1);
   const [numberOfRecheck, setNumberOfRecheck] = useState<string>("");
   const [selectedGroupOption, setSelectedGroupOption] = useState(1);
-  const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
   const [selectedCheckAttendance, setSelectedCheckAttendance] = useState(1);
   const [selectedSubmitType, setSelectedSubmitType] = useState(1);
   const [selectedSubmitOption, setSelectedSubmitOption] = useState([1]);
@@ -145,7 +144,6 @@ const ReportInfo = () => {
       dateCloseCheckAttendance: z.date().optional(),
       dateRemindGrade: z.date().optional(),
       dateClose: z.date().optional(),
-      multipleCourses: z.number().optional(),
       groupOption: z.any().optional(),
       submitOption: z.any().optional(),
       gradeColumn: z.any().optional(),
@@ -260,11 +258,6 @@ const ReportInfo = () => {
       // ?? LẤY DATA TỪ STEP TRƯỚC + DATA STEP NÀY
       toast({
         title: "Tạo thông báo thành công.",
-        description: `Thông báo đã được gửi đến lớp ${
-          selectedCourses.length > 0
-            ? `và các lớp ${selectedCourses.join(", ")}`
-            : ""
-        }`,
         variant: "success",
         duration: 3000,
       });
@@ -656,197 +649,90 @@ const ReportInfo = () => {
 
               <div className="flex w-[30%] flex-col gap-10">
                 {/* TẠO FORM ĐIỂM DANH */}
-                <FormField
-                  control={form.control}
-                  name="multipleCourses"
-                  render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
-                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Tạo form điểm danh
-                      </FormLabel>
-                      <FormControl>
-                        <BorderContainer otherClasses="mt-3.5">
-                          <div className="p-4 flex flex-col gap-10">
-                            <div className="inline-flex">
-                              <RadioboxComponent
-                                id={1}
-                                handleClick={() => {
-                                  setSelectedCheckAttendance(1);
-                                }}
-                                value={selectedCheckAttendance}
-                                text="Không"
-                              />
-                            </div>
-                            <div className="inline-flex">
-                              <RadioboxComponent
-                                id={2}
-                                handleClick={() => {
-                                  setSelectedCheckAttendance(2);
-                                }}
-                                value={selectedCheckAttendance}
-                                text="Có"
-                              />
-                            </div>
+                <div>
+                  <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                    Tạo form điểm danh
+                  </label>
 
-                            {/* CheckAttendance */}
-                            {selectedCheckAttendance === 2 ? (
-                              <FormField
-                                control={form.control}
-                                name="dateCloseCheckAttendance"
-                                render={({ field }) => (
-                                  <FormItem className="flex w-full flex-col">
-                                    <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                                      Chọn ngày đóng form
-                                    </FormLabel>
-                                    <FormControl className="mt-3.5">
-                                      <Popover>
-                                        <PopoverTrigger asChild>
-                                          <Button
-                                            variant={"outline"}
-                                            className={` flex items-center text-center font-normal ${
-                                              !dateCloseCheckAttendance &&
-                                              "text-muted-foreground"
-                                            } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
-                                          >
-                                            <span
-                                              className={`flex-grow text-center ${
-                                                !dateCloseCheckAttendance &&
-                                                "text-muted-foreground"
-                                              }`}
-                                            >
-                                              {dateCloseCheckAttendance
-                                                ? format(
-                                                    dateCloseCheckAttendance,
-                                                    "dd/MM/yyyy"
-                                                  )
-                                                : "Chọn ngày"}
-                                            </span>
-                                            <CalendarIcon className="ml-2 h-4 w-4" />
-                                          </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-auto p-0">
-                                          <Calendar
-                                            mode="single"
-                                            selected={dateCloseCheckAttendance}
-                                            onSelect={
-                                              setDateCloseCheckAttendance
-                                            }
-                                            initialFocus
-                                            locale={vi}
-                                          />
-                                        </PopoverContent>
-                                      </Popover>
-                                    </FormControl>
-                                    <FormDescription className="body-regular mt-2.5 text-light-500">
-                                      Form điểm danh sẽ khóa vào ngày này mà bạn
-                                      chọn.
-                                    </FormDescription>
-                                    <FormMessage className="text-red-500" />
-                                  </FormItem>
-                                )}
-                              />
-                            ) : (
-                              <></>
-                            )}
-                          </div>
-                        </BorderContainer>
-                      </FormControl>
-                      <FormMessage className="text-red-500" />
-                    </FormItem>
-                  )}
-                />
+                  <BorderContainer otherClasses="mt-3.5">
+                    <div className="p-4 flex flex-col gap-10">
+                      <RadioboxComponent
+                        id={1}
+                        handleClick={() => {
+                          setSelectedCheckAttendance(1);
+                        }}
+                        value={selectedCheckAttendance}
+                        text="Không"
+                      />
+                      <RadioboxComponent
+                        id={2}
+                        handleClick={() => {
+                          setSelectedCheckAttendance(2);
+                        }}
+                        value={selectedCheckAttendance}
+                        text="Có"
+                      />
 
-                {/* ĐĂNG NHIỀU LỚP */}
-                <FormField
-                  control={form.control}
-                  name="multipleCourses"
-                  render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
-                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Đăng nhiều lớp
-                      </FormLabel>
-                      <FormControl className="mt-3.5 ">
-                        <Dropdown
-                          className="z-30 rounded-lg"
-                          label=""
-                          dismissOnClick={true}
-                          renderTrigger={() => (
-                            <div>
-                              <IconButton
-                                text="Chọn lớp khác"
-                                onClick={() => {}}
-                                iconRight={"/assets/icons/chevron-down.svg"}
-                                bgColor="bg-white"
-                                textColor="text-black"
-                                border
-                              />
-                            </div>
-                          )}
-                        >
-                          <TableSearch
-                            setSearchTerm={() => {}}
-                            searchTerm={""}
-                            otherClasses="p-2"
-                          />
-                          <div className="scroll-container scroll-container-dropdown-content">
-                            {mockCoursesList.map((course: any, index) => (
-                              <Dropdown.Item
-                                key={`${course}_${index}`}
-                                onClick={() => {
-                                  setSelectedCourses((prev) =>
-                                    prev.includes(course.value)
-                                      ? prev.filter(
-                                          (item) => item !== course.value
-                                        )
-                                      : [...prev, course.value]
-                                  );
-                                }}
-                              >
-                                <div className="flex justify-between w-full">
-                                  <p className="w-[80%] text-left line-clamp-1">
-                                    {course.value}
-                                  </p>
-                                  {selectedCourses.includes(course.value) ? (
-                                    <Image
-                                      src="/assets/icons/check.svg"
-                                      alt="search"
-                                      width={21}
-                                      height={21}
-                                      className="cursor-pointer mr-2"
+                      {/* CheckAttendance */}
+                      {selectedCheckAttendance === 2 ? (
+                        <FormField
+                          control={form.control}
+                          name="dateCloseCheckAttendance"
+                          render={({ field }) => (
+                            <FormItem className="flex w-full flex-col">
+                              <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                                Chọn ngày đóng form
+                              </FormLabel>
+                              <FormControl className="mt-3.5">
+                                <Popover>
+                                  <PopoverTrigger asChild>
+                                    <Button
+                                      variant={"outline"}
+                                      className={` flex items-center text-center font-normal ${
+                                        !dateCloseCheckAttendance &&
+                                        "text-muted-foreground"
+                                      } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
+                                    >
+                                      <span
+                                        className={`flex-grow text-center ${
+                                          !dateCloseCheckAttendance &&
+                                          "text-muted-foreground"
+                                        }`}
+                                      >
+                                        {dateCloseCheckAttendance
+                                          ? format(
+                                              dateCloseCheckAttendance,
+                                              "dd/MM/yyyy"
+                                            )
+                                          : "Chọn ngày"}
+                                      </span>
+                                      <CalendarIcon className="ml-2 h-4 w-4" />
+                                    </Button>
+                                  </PopoverTrigger>
+                                  <PopoverContent className="w-auto p-0">
+                                    <Calendar
+                                      mode="single"
+                                      selected={dateCloseCheckAttendance}
+                                      onSelect={setDateCloseCheckAttendance}
+                                      initialFocus
+                                      locale={vi}
                                     />
-                                  ) : (
-                                    <></>
-                                  )}
-                                </div>
-                              </Dropdown.Item>
-                            ))}
-                          </div>
-                        </Dropdown>
-                      </FormControl>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedCourses.map((item: any) => (
-                          <ClosedButton
-                            key={item}
-                            iconHeight={16}
-                            iconWidth={16}
-                            onClose={() => {
-                              setSelectedCourses((prev) =>
-                                prev.filter((course) => course !== item)
-                              );
-                            }}
-                          >
-                            <RenderCourse _id={item} name={item} />
-                          </ClosedButton>
-                        ))}
-                      </div>
-                      <FormDescription className="body-regular mt-2.5 text-light-500">
-                        Thông báo này sẽ được đăng trong các lớp bạn chọn ngoài
-                        lớp hiện tại.
-                      </FormDescription>
-                      <FormMessage className="text-red-500" />
-                    </FormItem>
-                  )}
-                />
+                                  </PopoverContent>
+                                </Popover>
+                              </FormControl>
+                              <FormDescription className="body-regular mt-2.5 text-light-500">
+                                Form điểm danh sẽ khóa vào ngày này mà bạn chọn.
+                              </FormDescription>
+                              <FormMessage className="text-red-500" />
+                            </FormItem>
+                          )}
+                        />
+                      ) : (
+                        <></>
+                      )}
+                    </div>
+                  </BorderContainer>
+                </div>
 
                 {/* GROUP OPTION */}
                 <FormField
