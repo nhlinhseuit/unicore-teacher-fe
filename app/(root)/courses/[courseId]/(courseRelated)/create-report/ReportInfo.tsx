@@ -29,7 +29,12 @@ import {
 } from "@/components/ui/popover";
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
-import { mockCoursesList, mockGradeColumnList } from "@/mocks";
+import {
+  mockCourseGradeColumn,
+  mockCoursesList,
+  mockDbLeftRatio,
+  mockGradeColumnList,
+} from "@/mocks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { format } from "date-fns";
@@ -95,10 +100,16 @@ const ReportInfo = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [selectedGradeColumn, setSelectedGradeColumn] = useState<number>(-1);
 
+  const [ratio, setRatio] = useState<string>("");
+
   const handleChangeNumberOfRecheck = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     setNumberOfRecheck(e.target.value);
+  };
+
+  const handleChangeRatio = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setRatio(e.target.value);
   };
 
   const handleChooseFile = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -146,9 +157,10 @@ const ReportInfo = () => {
       dateClose: z.date().optional(),
       groupOption: z.any().optional(),
       submitOption: z.any().optional(),
-      gradeColumn: z.any().optional(),
       date: z.date().optional(),
       maxRecheck: z.number().optional(),
+      gradeColumn: z.any().optional(),
+      ratio: z.number().optional(),
     })
     .refine(
       (data) =>
@@ -205,6 +217,18 @@ const ReportInfo = () => {
     .refine((data) => selectedGradeColumn !== -1, {
       message: "Bạn phải chọn cột điểm cho báo cáo",
       path: ["gradeColumn"],
+    })
+    .refine((data) => ratio !== "" && !isNaN(parseInt(ratio)), {
+      message: "Hệ số phải là chữ số và không được để trống",
+      path: ["ratio"],
+    })
+    .refine((data) => parseInt(ratio) > 0, {
+      message: "Hệ số phải lớn hơn 0",
+      path: ["ratio"],
+    })
+    .refine((data) => parseInt(ratio) < mockDbLeftRatio, {
+      message: `Hệ số phải nhỏ hơn hệ số còn lại của cột điểm (${mockDbLeftRatio}%)`,
+      path: ["ratio"],
     })
     .refine(
       (data) =>
@@ -648,6 +672,118 @@ const ReportInfo = () => {
               {/* //TODO: SECTION 2 */}
 
               <div className="flex w-[30%] flex-col gap-10">
+                {/* CỘT ĐIỂM */}
+                <FormField
+                  control={form.control}
+                  name="gradeColumn"
+                  render={({ field }) => (
+                    <FormItem className="flex w-full flex-col">
+                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                        Cột điểm <span className="text-red-600">*</span>
+                      </FormLabel>
+                      <FormDescription className="body-regular mt-2.5 text-light-500">
+                        Bài tập lớn được tạo sẽ là thành phần của cột điểm này.
+                      </FormDescription>
+                      <FormControl className="mt-3.5 ">
+                        <Dropdown
+                          className="z-30 rounded-lg"
+                          label=""
+                          dismissOnClick={true}
+                          renderTrigger={() => (
+                            <div>
+                              <IconButton
+                                text={`${
+                                  selectedGradeColumn === -1
+                                    ? "Chọn cột điểm"
+                                    : mockCourseGradeColumn[
+                                        selectedGradeColumn - 1
+                                      ].value
+                                }`}
+                                onClick={() => {}}
+                                iconRight={"/assets/icons/chevron-down.svg"}
+                                bgColor="bg-white"
+                                textColor="text-black"
+                                border
+                                otherClasses="w-full"
+                              />
+                            </div>
+                          )}
+                        >
+                          <div className="scroll-container scroll-container-dropdown-content">
+                            {mockCourseGradeColumn.map((gradeColumn, index) => (
+                              <Dropdown.Item
+                                key={`${gradeColumn.id}_${index}`}
+                                onClick={() => {
+                                  if (selectedGradeColumn === gradeColumn.id) {
+                                    setSelectedGradeColumn(-1);
+                                  } else {
+                                    setSelectedGradeColumn(gradeColumn.id);
+                                  }
+                                }}
+                              >
+                                <div className="flex justify-between w-full">
+                                  <p className="w-[80%] text-left line-clamp-1">
+                                    {gradeColumn.value}
+                                  </p>
+                                  {selectedGradeColumn === gradeColumn.id ? (
+                                    <Image
+                                      src="/assets/icons/check.svg"
+                                      alt="search"
+                                      width={21}
+                                      height={21}
+                                      className="cursor-pointer mr-2"
+                                    />
+                                  ) : (
+                                    <></>
+                                  )}
+                                </div>
+                              </Dropdown.Item>
+                            ))}
+                          </div>
+                        </Dropdown>
+                      </FormControl>
+
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
+
+                {/* HỆ SỐ ĐIỂM */}
+                <FormField
+                  control={form.control}
+                  name="ratio"
+                  render={({ field }) => (
+                    <FormItem className="flex w-full flex-col">
+                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                        Hệ số điểm <span className="text-red-600">*</span>
+                      </FormLabel>
+                      <FormDescription className="body-regular mt-2.5 text-light-500">
+                        Hệ số còn lại trong cột điểm **Quá trình để phân bổ là{" "}
+                        {mockDbLeftRatio}% (**Bài tập đã chiếm{" "}
+                        {100 - mockDbLeftRatio}%).
+                      </FormDescription>
+                      <FormDescription className="body-regular mt-2.5 text-light-500">
+                        Nếu không đặt hệ số, hệ thống sẽ tự động phân bổ điểm
+                        đều giữa các thành phần trong cùng cột điểm.
+                      </FormDescription>
+                      <FormDescription className="body-regular mt-2.5 text-light-500">
+                        Bạn có thể chỉnh sửa chi tiết hệ số của cột điểm tại cài
+                        đặt lớp học.
+                      </FormDescription>
+                      <FormControl className="mt-3.5 ">
+                        <Input
+                          value={ratio}
+                          onChange={handleChangeRatio}
+                          name="ratio"
+                          placeholder="Nhập hệ số..."
+                          className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[46px] border"
+                        />
+                      </FormControl>
+
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
                 {/* TẠO FORM ĐIỂM DANH */}
                 <div>
                   <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
@@ -851,81 +987,6 @@ const ReportInfo = () => {
                           </div>
                         </BorderContainer>
                       </FormControl>
-                      <FormMessage className="text-red-500" />
-                    </FormItem>
-                  )}
-                />
-
-                {/* CỘT ĐIỂM */}
-                <FormField
-                  control={form.control}
-                  name="gradeColumn"
-                  render={({ field }) => (
-                    <FormItem className="flex w-full flex-col">
-                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Cột điểm <span className="text-red-600">*</span>
-                      </FormLabel>
-                      <FormControl className="mt-3.5 ">
-                        <Dropdown
-                          className="z-30 rounded-lg"
-                          label=""
-                          dismissOnClick={true}
-                          renderTrigger={() => (
-                            <div>
-                              <IconButton
-                                text={`${
-                                  selectedGradeColumn === -1
-                                    ? "Chọn cột điểm"
-                                    : mockGradeColumnList[
-                                        selectedGradeColumn - 1
-                                      ].value
-                                }`}
-                                onClick={() => {}}
-                                iconRight={"/assets/icons/chevron-down.svg"}
-                                bgColor="bg-white"
-                                textColor="text-black"
-                                border
-                                otherClasses="w-full"
-                              />
-                            </div>
-                          )}
-                        >
-                          <div className="scroll-container scroll-container-dropdown-content">
-                            {mockGradeColumnList.map((gradeColumn, index) => (
-                              <Dropdown.Item
-                                key={`${gradeColumn.id}_${index}`}
-                                onClick={() => {
-                                  if (selectedGradeColumn === gradeColumn.id) {
-                                    setSelectedGradeColumn(-1);
-                                  } else {
-                                    setSelectedGradeColumn(gradeColumn.id);
-                                  }
-                                }}
-                              >
-                                <div className="flex justify-between w-full">
-                                  <p className="w-[80%] text-left line-clamp-1">
-                                    {gradeColumn.value}
-                                  </p>
-                                  {selectedGradeColumn === gradeColumn.id ? (
-                                    <Image
-                                      src="/assets/icons/check.svg"
-                                      alt="search"
-                                      width={21}
-                                      height={21}
-                                      className="cursor-pointer mr-2"
-                                    />
-                                  ) : (
-                                    <></>
-                                  )}
-                                </div>
-                              </Dropdown.Item>
-                            ))}
-                          </div>
-                        </Dropdown>
-                      </FormControl>
-                      <FormDescription className="body-regular mt-2.5 text-light-500">
-                        báo cáo được sẽ được tính là 1 bài trong cột điểm này.
-                      </FormDescription>
                       <FormMessage className="text-red-500" />
                     </FormItem>
                   )}

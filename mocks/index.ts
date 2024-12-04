@@ -620,11 +620,20 @@ export const mockCoursesList = [
 ];
 
 //
+// TODO: Create course grade column
+//
+export const mockCourseGradeColumn = [
+  { id: 1, value: "Quá trình" },
+  { id: 2, value: "Giữa kỳ" },
+  { id: 3, value: "Cuối kỳ" },
+];
+
+//
 // TODO: Create big exercise
 //
 export const mockBigExerciseGradeColumn = [
   { id: 1, value: "Quá trình" },
-  { id: 3, value: "Cuối kỳ" },
+  { id: 2, value: "Cuối kỳ" },
 ];
 
 //

@@ -69,9 +69,6 @@ const CreateBigExercise = () => {
   const [numberOfRecheck, setNumberOfRecheck] = useState<string>("");
   const [ratio, setRatio] = useState<string>("");
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
-  const [selectedSubmitOption, setSelectedSubmitOption] = useState<number[]>([
-    1,
-  ]);
 
   const [dateStart, setDateStart] = React.useState<Date>();
 
@@ -172,9 +169,9 @@ const CreateBigExercise = () => {
       multipleCourses: z.number().optional(),
       groupOption: z.any().optional(),
       submitOption: z.any().optional(),
-      gradeColumn: z.any().optional(),
       date: z.date().optional(),
       maxRecheck: z.number().optional(),
+      gradeColumn: z.any().optional(),
       ratio: z.number().optional(),
     })
     .refine((data) => !(dateStart === undefined), {
