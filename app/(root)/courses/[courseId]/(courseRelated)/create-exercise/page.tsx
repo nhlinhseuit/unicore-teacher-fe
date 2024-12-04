@@ -1,8 +1,9 @@
 "use client";
 import BackToPrev from "@/components/shared/BackToPrev";
+import CreateExercise from "@/components/shared/PostItem/CreateExercise";
 import { usePathname, useRouter } from "next/navigation";
 
-const CreateExercise = () => {
+const page = () => {
   const router = useRouter();
   const pathName = usePathname();
 
@@ -23,4 +24,4 @@ const CreateExercise = () => {
   );
 };
 
-export default CreateExercise;
+export default page;
