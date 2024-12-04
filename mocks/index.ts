@@ -658,7 +658,7 @@ export const mockSettingGradeColumnDetail = [
       },
     ],
   },
-]
+];
 
 //
 // TODO: Setting Grade Column Detail
@@ -672,7 +672,7 @@ export const mockSettingGradeColumnDetailBigExercise = [
     title: "Thuyết trình Seminar",
     ratio: "70",
   },
-]
+];
 
 //
 // TODO: Create big exercise

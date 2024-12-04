@@ -125,6 +125,34 @@ const Setting = () => {
             </div>
 
             <div>
+              <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-medium leading-[20.8px]">
+                2. Cài đặt thời gian điểm danh
+              </label>
+              <BorderContainer otherClasses="p-6 mt-4">
+                <div className="flex gap-4 items-center">
+                  <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-medium leading-[20.8px]">
+                    Thời gian điểm danh (giây):
+                  </label>
+                  <div className="">
+                    <Input
+                      value={30}
+                      onChange={
+                        (e) => {}
+                        // handleInputChange(
+                        //   column.gradeColumn,
+                        //   index,
+                        //   e.target.value
+                        // )
+                      }
+                      placeholder="Nhập điểm..."
+                      className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[40px] border"
+                    />
+                  </div>
+                </div>
+              </BorderContainer>
+            </div>
+
+            <div>
               <IconButton text="Lưu cài đặt lớp" />
             </div>
           </div>
