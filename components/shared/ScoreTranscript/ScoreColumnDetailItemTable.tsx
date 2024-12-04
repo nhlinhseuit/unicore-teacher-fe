@@ -25,12 +25,13 @@ const ScoreColumnDetailItemTable = (params: DataTableParams) => {
   };
 
   const renderTableCellValue = (key: any, value: any) => {
-    if (key !== "Bài nộp" && params.isEditTable) {
+    if (key !== "Bài nộp" && key !== "Tỉ lệ điểm" && params.isEditTable) {
       return (
         <InputComponent
           value={value}
           placeholder={value}
           onChange={(newValue) => handleInputChange(key, newValue)}
+          isDescription={key === "Góp ý" ? true : false}
           otherClassess="w-full"
         />
       );

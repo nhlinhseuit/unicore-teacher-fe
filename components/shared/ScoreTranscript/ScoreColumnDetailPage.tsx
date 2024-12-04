@@ -228,7 +228,7 @@ const ScoreColumnDetailPage = (params: Props) => {
             }}
           />
         ))}
-      </div> */}
+      </div>
 
       {/* EDIT GRADE COLUMN */}
       <AlertDialog open={isEditGradeColumn}>

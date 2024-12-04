@@ -13,14 +13,14 @@ const InputComponent = (params: InputParams) => {
   const [inputValue, setInputValue] = useState(params.value);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value); 
+    setInputValue(e.target.value);
 
-    params.onChange(e.target.value); 
+    params.onChange(e.target.value);
   };
-  
+
   const handleTextAreaChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputValue(e.target.value);
-    
+
     params.onChange(e.target.value);
   };
 
@@ -74,9 +74,8 @@ const InputComponent = (params: InputParams) => {
             paragraph-regular no-focus placeholder
             background-light800_darkgradient
             shadow-none outline-none border-none truncate
-            w-[200px] 
-            ${params.otherClassess && ""}
-            ${params.isDescription && "w-full"}
+            w-[200px]
+            ${params.otherClassess || ""}
           `}
         />
       )}
