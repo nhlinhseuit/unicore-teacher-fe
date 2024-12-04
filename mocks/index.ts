@@ -623,7 +623,7 @@ export const mockGradeColumnList = [
   { id: 2, value: "Giữa kỳ - 30%" },
   { id: 3, value: "Cuối kỳ - 50%" },
 ];
-export const mockTeacherGradingList = [
+export const mockTeacherList = [
   { id: 1, value: "Huỳnh Hồ Thị Mộng Trinh" },
   { id: 2, value: "Nguyễn Thị Thanh Trúc" },
   { id: 3, value: "Đặng Việt Dũng" },

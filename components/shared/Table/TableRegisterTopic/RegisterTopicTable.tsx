@@ -7,7 +7,7 @@ import RowRegisterTopicTable from "./RowRegisterTopicTable";
 
 import { RegisterTopicTableType, itemsPerPageRegisterTable } from "@/constants";
 import { toast } from "@/hooks/use-toast";
-import { mockTeacherGradingList } from "@/mocks";
+import { mockTeacherList } from "@/mocks";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import IconButton from "../../Button/IconButton";
@@ -34,7 +34,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
   }, [params.dataTable]);
 
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
-  const [selectedTeacherGrading, setSelectedTeacherGrading] = useState(1);
+  const [selectedTeacher, setSelectedTeacher] = useState(1);
 
   const [feedback, setFeedback] = useState("");
   const [isShowDialog, setIsShowDialog] = useState(-1);
@@ -128,9 +128,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
                           <div>
                             <IconButton
                               text={`${
-                                mockTeacherGradingList[
-                                  selectedTeacherGrading - 1
-                                ].value
+                                mockTeacherList[selectedTeacher - 1].value
                               }`}
                               onClick={() => {}}
                               iconRight={"/assets/icons/chevron-down.svg"}
@@ -147,14 +145,14 @@ const RegisterTopicTable = (params: DataTableParams) => {
                           otherClasses="p-2"
                         />
                         <div className="w-full scroll-container scroll-container-dropdown-content">
-                          {mockTeacherGradingList.map((teacher, index) => (
+                          {mockTeacherList.map((teacher, index) => (
                             <Dropdown.Item
                               key={`${teacher.id}_${index}`}
                               onClick={() => {
-                                if (selectedTeacherGrading === teacher.id) {
-                                  setSelectedTeacherGrading(1);
+                                if (selectedTeacher === teacher.id) {
+                                  setSelectedTeacher(1);
                                 } else {
-                                  setSelectedTeacherGrading(teacher.id);
+                                  setSelectedTeacher(teacher.id);
                                 }
                               }}
                               className="min-w-max"
@@ -163,7 +161,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
                                 <p className="w-[80%] text-left line-clamp-1">
                                   {teacher.value}
                                 </p>
-                                {selectedTeacherGrading === teacher.id ? (
+                                {selectedTeacher === teacher.id ? (
                                   <Image
                                     src="/assets/icons/check.svg"
                                     alt="search"
@@ -206,8 +204,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
                             description: `Đề tài ${itemsSelected.join(
                               ", "
                             )} sẽ dược duyệt bởi ${
-                              mockTeacherGradingList[selectedTeacherGrading - 1]
-                                .value
+                              mockTeacherList[selectedTeacher - 1].value
                             }.`,
                             variant: "success",
                             duration: 3000,

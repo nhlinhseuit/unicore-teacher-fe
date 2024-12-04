@@ -169,7 +169,6 @@ const CreateBigExercise = () => {
       groupOption: z.any().optional(),
       submitOption: z.any().optional(),
       gradeColumn: z.any().optional(),
-      teacherGrading: z.any().optional(),
       date: z.date().optional(),
       maxRecheck: z.number().optional(),
     })
