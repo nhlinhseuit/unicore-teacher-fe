@@ -81,7 +81,6 @@ const ReportSchedule = () => {
         value: 1,
       },
     ]);
-
   };
 
   const handleUpdateReport = (
@@ -92,7 +91,6 @@ const ReportSchedule = () => {
       i === index ? { ...report, ...updatedData } : report
     );
     sReportOptions.set(newReports);
-
   };
 
   const handleRemoveReport = (index: number) => {
@@ -113,6 +111,11 @@ const ReportSchedule = () => {
               <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
                 Đăng ký thứ tự báo cáo
               </label>
+
+              <p className="text-[0.8rem] dark:text-slate-400 body-regular mt-2.5 text-light-500">
+                Tạo các lựa chọn thời gian báo cáo và số lượng câu trả lời cho
+                mỗi lựa chọn.
+              </p>
 
               <BorderContainer otherClasses="mt-3.5">
                 <div className="p-4">
@@ -170,11 +173,6 @@ const ReportSchedule = () => {
                   {/* <TimeReportComponent /> */}
                 </div>
               </BorderContainer>
-
-              <p className="text-[0.8rem] dark:text-slate-400 body-regular mt-2.5 text-light-500">
-                Tạo các lựa chọn thời gian báo cáo và số lượng câu trả lời cho
-                mỗi lựa chọn.
-              </p>
             </div>
           </div>
 

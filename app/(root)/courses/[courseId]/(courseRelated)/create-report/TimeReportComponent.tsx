@@ -134,11 +134,17 @@ const TimeReportComponent = ({
           </PopoverContent>
         </Popover>
 
-        <CustomNumberInput
-          value={value}
-          onIncrement={onValueIncrement}
-          onDecrement={onValueDecrement}
-        />
+        <div className="relative">
+          <label className="absolute top-[-24px] left-1 text-[12px] text-gray-600 dark:text-gray-400">
+            Số lượng
+          </label>
+
+          <CustomNumberInput
+            value={value}
+            onIncrement={onValueIncrement}
+            onDecrement={onValueDecrement}
+          />
+        </div>
       </div>
 
       {errorMessage ? (
