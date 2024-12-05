@@ -20,25 +20,6 @@ export const ALLOWED_FILE_TYPES = [
 ];
 export const MAX_CATEGORIES = 5; // Số danh mục tối đa chọn khi đăng thông báo
 
-// TODO: BORDER CONTAINER TAB
-export const AnnouncementTabs = [
-  { value: "postedAnnouncement", label: "Thông báo đã đăng" },
-  { value: "createdAnnouncement", label: "Thông báo đã tạo" },
-  { value: "hidedAnnouncement", label: "Thông báo đã ẩn" },
-];
-
-export const ReviewTabs = [
-  { value: "completedReviews", label: "Đã phúc khảo" },
-  { value: "waitingReviews", label: "Phúc khảo chờ duyệt" },
-  { value: "approvedReviews", label: "Phúc khảo đã duyệt" },
-];
-
-export const BookmarksTabs = [
-  { value: "generalPost", label: "Chung" },
-  { value: "announcements", label: "Thông báo" },
-  { value: "exercises", label: "Bài tập" },
-  { value: "bigExercises", label: "Bài tập lớn" },
-];
 
 // TODO: NAVBAR TAB
 export const TeacherAnnouncementsTabItems = [

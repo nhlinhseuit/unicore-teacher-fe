@@ -752,6 +752,16 @@ export const mockReviewOptions = [
 ];
 
 //
+// TODO: Bookmark
+//
+export const mockBookmarkOptions = [
+  { id: 1, value: "Tất cả" },
+  { id: 2, value: "Thông báo" },
+  { id: 3, value: "Bài tập" },
+  { id: 4, value: "Bài tập lớn" },
+];
+
+//
 // TODO: Approve Topic Options
 //
 export const mockApproveTopicOptions = [

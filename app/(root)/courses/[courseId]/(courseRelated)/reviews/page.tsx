@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import IconButton from "@/components/shared/Button/IconButton";
-import TableSearch from "@/components/shared/Search/TableSearch";
+import InputComponent from "@/components/shared/Table/components/InputComponent";
 import {
   Form,
   FormControl,
@@ -35,7 +35,6 @@ import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import InputComponent from "@/components/shared/Table/components/InputComponent";
 
 const Review = () => {
   const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
@@ -130,11 +129,6 @@ const Review = () => {
             </div>
           )}
         >
-          <TableSearch
-            setSearchTerm={() => {}}
-            searchTerm={""}
-            otherClasses="p-2"
-          />
           <div className="scroll-container scroll-container-dropdown-content">
             {mockReviewOptions.map((course: any, index) => (
               <Dropdown.Item
