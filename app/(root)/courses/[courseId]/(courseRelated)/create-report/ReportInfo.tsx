@@ -1052,7 +1052,7 @@ const ReportInfo = () => {
                     Thời điểm đăng thông báo{" "}
                     <span className="text-red-600">*</span>
                   </label>
-
+                      
                   <BorderContainer otherClasses="mt-3.5">
                     <div className="p-4 flex flex-col gap-10">
                       <RadioboxComponent

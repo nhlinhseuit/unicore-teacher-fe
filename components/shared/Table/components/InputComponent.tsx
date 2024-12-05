@@ -48,6 +48,7 @@ const InputComponent = (params: InputParams) => {
             min-h-[120px]
             rounded-md
             resize-none
+            min-w-[300px]
             w-full
             px-3
             py-4
@@ -61,7 +62,11 @@ const InputComponent = (params: InputParams) => {
             custom-scrollbar-desc
             background-light800_darkgradient 
             
-            ${params.isInTable ? 'background-light800_darkgradient border-none': "border light-border-2 bg-transparent"}
+            ${
+              params.isInTable
+                ? "background-light800_darkgradient border-none"
+                : "border light-border-2 bg-transparent"
+            }
             ${params.otherClassess || ""}
             `}
         />

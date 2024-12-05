@@ -14,7 +14,7 @@ export type CalendarProps = React.ComponentProps<typeof DayPicker> & {
 // Tạo mảng các options thời gian
 const timeOptions = Array.from({ length: 24 * 4 }, (_, i) => {
   const hour = Math.floor(i / 4);
-  const minute = (i % 4) * 15;
+  const minute = (i % 4) * 10;
   const ampm = hour < 12 ? "SA" : "CH";
   const displayHour = hour % 12 === 0 ? 12 : hour % 12;
   const displayMinute =

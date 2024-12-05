@@ -523,77 +523,84 @@ const CreateAnnouncement = () => {
               />
 
               {/* TẠO LỊCH ĐĂNG THÔNG BÁO */}
-              <BorderContainer otherClasses="p-6 flex flex-col gap-10">
-                <RadioboxComponent
-                  id={1}
-                  handleClick={() => {
-                    setSelectedScheduleOption(1);
-                  }}
-                  value={selectedScheduleOption}
-                  text="Đăng thông báo ngay bây giờ"
-                />
-                <RadioboxComponent
-                  id={2}
-                  handleClick={() => {
-                    setSelectedScheduleOption(2);
-                  }}
-                  value={selectedScheduleOption}
-                  text="Tạo lịch đăng thông báo"
-                />
-                {/* DATE */}
-                {selectedScheduleOption === 2 ? (
-                  <FormField
-                    control={form.control}
-                    name="date"
-                    render={({ field }) => (
-                      <FormItem className="flex w-full flex-col">
-                        <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                          Chọn ngày
-                        </FormLabel>
-                        <FormControl className="mt-3.5">
-                          <Popover>
-                            <PopoverTrigger asChild>
-                              <Button
-                                variant={"outline"}
-                                className={` flex items-center text-center font-normal ${
-                                  !date && "text-muted-foreground"
-                                } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
-                              >
-                                <span
-                                  className={`flex-grow text-center ${
-                                    !date && "text-muted-foreground"
-                                  }`}
-                                >
-                                  {date
-                                    ? format(date, "dd/MM/yyyy")
-                                    : "Chọn ngày"}
-                                </span>
-                                <CalendarIcon className="ml-2 h-4 w-4" />
-                              </Button>
-                            </PopoverTrigger>
-                            <PopoverContent className="w-auto p-0">
-                              <Calendar
-                                mode="single"
-                                selected={date}
-                                onSelect={setDate}
-                                initialFocus
-                                locale={vi}
-                              />
-                            </PopoverContent>
-                          </Popover>
-                        </FormControl>
-                        <FormDescription className="body-regular mt-2.5 text-light-500">
-                          Thông báo sẽ được lên lịch để đăng vào ngày này mà bạn
-                          chọn.
-                        </FormDescription>
-                        <FormMessage className="text-red-500" />
-                      </FormItem>
-                    )}
+              <div>
+                <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                  Thời điểm đăng thông báo{" "}
+                  <span className="text-red-600">*</span>
+                </label>
+
+                <BorderContainer otherClasses="p-6 flex flex-col gap-10">
+                  <RadioboxComponent
+                    id={1}
+                    handleClick={() => {
+                      setSelectedScheduleOption(1);
+                    }}
+                    value={selectedScheduleOption}
+                    text="Đăng thông báo ngay bây giờ"
                   />
-                ) : (
-                  <></>
-                )}
-              </BorderContainer>
+                  <RadioboxComponent
+                    id={2}
+                    handleClick={() => {
+                      setSelectedScheduleOption(2);
+                    }}
+                    value={selectedScheduleOption}
+                    text="Tạo lịch đăng thông báo"
+                  />
+                  {/* DATE */}
+                  {selectedScheduleOption === 2 ? (
+                    <FormField
+                      control={form.control}
+                      name="date"
+                      render={({ field }) => (
+                        <FormItem className="flex w-full flex-col">
+                          <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                            Chọn ngày
+                          </FormLabel>
+                          <FormControl className="mt-3.5">
+                            <Popover>
+                              <PopoverTrigger asChild>
+                                <Button
+                                  variant={"outline"}
+                                  className={` flex items-center text-center font-normal ${
+                                    !date && "text-muted-foreground"
+                                  } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
+                                >
+                                  <span
+                                    className={`flex-grow text-center ${
+                                      !date && "text-muted-foreground"
+                                    }`}
+                                  >
+                                    {date
+                                      ? format(date, "dd/MM/yyyy")
+                                      : "Chọn ngày"}
+                                  </span>
+                                  <CalendarIcon className="ml-2 h-4 w-4" />
+                                </Button>
+                              </PopoverTrigger>
+                              <PopoverContent className="w-auto p-0">
+                                <Calendar
+                                  mode="single"
+                                  selected={date}
+                                  onSelect={setDate}
+                                  initialFocus
+                                  locale={vi}
+                                />
+                              </PopoverContent>
+                            </Popover>
+                          </FormControl>
+                          <FormDescription className="body-regular mt-2.5 text-light-500">
+                            Thông báo sẽ được lên lịch để đăng vào ngày này mà
+                            bạn chọn.
+                          </FormDescription>
+                          <FormMessage className="text-red-500" />
+                        </FormItem>
+                      )}
+                    />
+                  ) : (
+                    <></>
+                  )}
+                </BorderContainer>
+              </div>
             </div>
           </div>
 

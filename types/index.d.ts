@@ -34,9 +34,9 @@ export interface CourseData {
 // nếu giữ như này thì phải đổi lại tên vì đây là data của 1 student
 export interface RegisterGroupData {
   "Mã nhóm": string;
-  MSSV: string;
-  SĐT: string;
-  "Họ và tên": string;
+  MSSV: string[];
+  SĐT: string[];
+  "Họ và tên": string[];
 }
 export interface RegisterTopicData {
   "Tên đề tài": string;
@@ -73,6 +73,7 @@ export interface FileData {
 }
 
 export interface GradingExerciseData {
+  "Điểm danh"?: boolean;
   // 1 là có nhóm
   // 0 là cá nhân
   "Hình thức": boolean;

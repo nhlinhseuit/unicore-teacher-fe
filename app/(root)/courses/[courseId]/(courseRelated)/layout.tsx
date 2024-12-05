@@ -14,6 +14,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   const { courseId } = params;
   // TODO: Get API lấy tên lớp học
 
+  //! CALL API để xem course này có phải có type là advisor hay không
+  let title = courseId
+  if (courseId.includes("800"))
+    title = "SE501.N21.PMCL - GVHD";
+
   return (
     <main
       className="
@@ -82,7 +87,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="max-w-[200px] py-1 text-sm font-medium rounded-md ">
           <div className="flex">
             <p className="text-left overflow-hidden text-ellipsis whitespace-nowrap body-semibold text-primary-500">
-              {courseId}
+              {title}
             </p>
             <Dropdown
               className="z-30 rounded-lg"

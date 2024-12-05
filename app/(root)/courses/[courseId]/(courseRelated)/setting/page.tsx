@@ -15,6 +15,7 @@ import {
   mockSettingGradeColumnDetail,
 } from "@/mocks";
 import { StudentDataItem, TeacherDataItem } from "@/types";
+import { title } from "process";
 import { useState } from "react";
 const Setting = () => {
   const [isEditTable, setIsEditTable] = useState(false);
@@ -126,12 +127,34 @@ const Setting = () => {
 
             <div>
               <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-medium leading-[20.8px]">
-                2. Cài đặt thời gian điểm danh
+                2. Cài đặt điểm danh
               </label>
-              <BorderContainer otherClasses="p-6 mt-4">
+              <BorderContainer otherClasses="p-6 mt-4 flex flex-col gap-4">
                 <div className="flex gap-4 items-center">
                   <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-medium leading-[20.8px]">
                     Thời gian điểm danh (giây):
+                  </label>
+                  <div className="">
+                    <Input
+                      value={30}
+                      onChange={
+                        (e) => {}
+                        // handleInputChange(
+                        //   column.gradeColumn,
+                        //   index,
+                        //   e.target.value
+                        // )
+                      }
+                      placeholder="Nhập điểm..."
+                      className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[40px] border"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex gap-4 items-center">
+                  <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-medium leading-[20.8px]">
+                    Tỉ lệ số lần điểm danh tối thiểu được cộng hệ số điểm danh
+                    (%):
                   </label>
                   <div className="">
                     <Input
@@ -178,22 +201,38 @@ const Setting = () => {
                   <BorderContainer otherClasses="p-6 mt-4">
                     {column.data.map((item, index) => (
                       <div key={index} className="flex gap-4 items-center mb-4">
-                        <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-medium leading-[20.8px]">
-                          {item.title} (%):
-                        </label>
-                        <div>
-                          <Input
-                            value={item.ratio}
-                            onChange={(e) =>
-                              handleInputChange(
-                                column.gradeColumn,
-                                index,
-                                e.target.value
-                              )
-                            }
-                            placeholder="Nhập điểm..."
-                            className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[40px] border"
-                          />
+                        <div className="flex gap-2 items-center w-1/2">
+                          <label
+                            className={`${
+                              item.title !== "Điểm danh"
+                                ? "underline cursor-pointer "
+                                : ""
+                            } peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-medium leading-[20.8px]`}
+                          >
+                            {item.title} (%):
+                          </label>
+                          {item.createdAt && (
+                            <label className="ml-4 whitespace-nowrap block small-regular italic text-[#636363] ">
+                              - {item.createdAt}
+                            </label>
+                          )}
+                        </div>
+
+                        <div className="w-1/2">
+                          <div className="max-w-max">
+                            <Input
+                              value={item.ratio}
+                              onChange={(e) =>
+                                handleInputChange(
+                                  column.gradeColumn,
+                                  index,
+                                  e.target.value
+                                )
+                              }
+                              placeholder="Nhập điểm..."
+                              className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[40px] border"
+                            />
+                          </div>
                         </div>
                       </div>
                     ))}

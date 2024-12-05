@@ -56,7 +56,7 @@ const LeftSideBar = () => {
 
   return (
     <section
-    className="
+      className="
       flex flex-col
       background-light900_dark200
       min-w-[250px]
@@ -70,25 +70,25 @@ const LeftSideBar = () => {
       shadow-light-300
       dark:shadow-none
     "
->
-  {/* LOGO */}
-  <div className="px-6 mb-2 ml-2 flex-shrink-0">
-    <Link href="/" className="flex items-center gap-1">
-      <Image
-        src={"/assets/images/site-logo.svg"}
-        width={23}
-        height={23}
-        alt="DevFlow"
-      />
-      <p className="ml-1 h1-bold font-spaceGrotesk text-dark-100 dark:text-light-900 max-lg:hidden">
-        Uni<span className="text-primary-500 ml-[2px]">Core</span>
-      </p>
-    </Link>
-  </div>
+    >
+      {/* LOGO */}
+      <div className="px-6 mb-2 ml-2 flex-shrink-0">
+        <Link href="/" className="flex items-center gap-1">
+          <Image
+            src={"/assets/images/site-logo.svg"}
+            width={23}
+            height={23}
+            alt="DevFlow"
+          />
+          <p className="ml-1 h1-bold font-spaceGrotesk text-dark-100 dark:text-light-900 max-lg:hidden">
+            Uni<span className="text-primary-500 ml-[2px]">Core</span>
+          </p>
+        </Link>
+      </div>
 
-  {/* NỘI DUNG CUỘN */}
-  <div
-    className="
+      {/* NỘI DUNG CUỘN */}
+      <div
+        className="
       flex flex-col
       gap-4
       px-6
@@ -97,133 +97,146 @@ const LeftSideBar = () => {
       flex-grow
       custom-scrollbar
     "
-  >
-    {sidebarTeacherLinks.map((item, index) => {
-      let isActive;
-      if (
-        (pathName === "/create-announcement" ||
-          pathName.startsWith("/announcements")) &&
-        item.route === "/"
-      ) {
-        isActive = true;
-      } else {
-        isActive =
-          (pathName.startsWith(item.route) && item.route.length > 1) ||
-          pathName === item.route;
-      }
+      >
+        {sidebarTeacherLinks.map((item, index) => {
+          let isActive;
+          if (
+            (pathName === "/create-announcement" ||
+              pathName.startsWith("/announcements")) &&
+            item.route === "/"
+          ) {
+            isActive = true;
+          } else {
+            isActive =
+              (pathName.startsWith(item.route) && item.route.length > 1) ||
+              pathName === item.route;
+          }
 
-      if (item.route !== "/profile") {
-        if (item.route === "/courses" && getCourseId()) {
-          isActive = true;
+          if (item.route !== "/profile") {
+            if (item.route === "/courses" && getCourseId()) {
+              isActive = true;
 
-          return (
-            <Fragment key={`${index}_${item.route}`}>
-              <Link href={item.route} className={getCoursesStyle(isActive)}>
-                <Image
-                  src={item.imgURL}
-                  alt={item.label}
-                  width={20}
-                  height={20}
-                  className={`${isActive ? "" : "invert-colors"}`}
-                />
-                <p
-                  className={`${isActive ? "normal-bold" : "normal-medium"} 
+              let title = getCourseId();
+
+              //! CALL API để xem course này có phải có type là advisor hay không
+              if (getCourseId()?.includes("800"))
+                title = "SE501.N21.PMCL - GVHD";
+
+              return (
+                <Fragment key={`${index}_${item.route}`}>
+                  <Link href={item.route} className={getCoursesStyle(isActive)}>
+                    <Image
+                      src={item.imgURL}
+                      alt={item.label}
+                      width={20}
+                      height={20}
+                      className={`${isActive ? "" : "invert-colors"}`}
+                    />
+                    <p
+                      className={`${isActive ? "normal-bold" : "normal-medium"} 
                       max-lg:hidden
                   `}
+                    >
+                      {item.label}
+                    </p>
+                  </Link>
+                  <div className="flex items-center gap-2">
+                    <div className="primary-gradient w-[6px] h-full rounded-sm ml-1"></div>
+                    <p className="body-semibold text-right cursor-pointer text-primary-500 line-clamp-1">
+                      {title}
+                    </p>
+                  </div>
+                </Fragment>
+              );
+            } else {
+              return (
+                <Link
+                  key={item.route}
+                  href={item.route}
+                  className={getStyle(isActive)}
                 >
-                  {item.label}
-                </p>
-              </Link>
-              <div className="flex items-center gap-2">
-                <div className="primary-gradient w-[6px] h-full rounded-sm ml-1"></div>
-                <p className="body-semibold text-right cursor-pointer text-primary-500 line-clamp-1">
-                  {getCourseId()}
-                </p>
-              </div>
-            </Fragment>
-          );
-        } else {
-          return (
-            <Link
-              key={item.route}
-              href={item.route}
-              className={getStyle(isActive)}
-            >
-              <Image
-                src={item.imgURL}
-                alt={item.label}
-                width={20}
-                height={20}
-                className={`${
-                  isActive ? "" : "invert-colors"
-                } group-hover:fill-[#5D87FF]`}
-              />
-              <p
-                className={`${isActive ? "normal-bold" : "normal-medium"} 
+                  <Image
+                    src={item.imgURL}
+                    alt={item.label}
+                    width={20}
+                    height={20}
+                    className={`${
+                      isActive ? "" : "invert-colors"
+                    } group-hover:fill-[#5D87FF]`}
+                  />
+                  <p
+                    className={`${isActive ? "normal-bold" : "normal-medium"} 
                 max-lg:hidden
             `}
-              >
-                {item.label}
-              </p>
-            </Link>
-          );
-        }
-      }
-    })}
-  </div>
+                  >
+                    {item.label}
+                  </p>
+                </Link>
+              );
+            }
+          }
+        })}
+      </div>
 
-  {/* PHẦN ĐĂNG NHẬP / ĐĂNG KÝ */}
-  <div className="flex flex-col gap-3 mx-6 mt-6 mb-6 flex-shrink-0">
-    <Link href="/sign-in" className="flex rounded-lg background-light800_dark400 ">
-      <Button
-        className="
+      {/* PHẦN ĐĂNG NHẬP / ĐĂNG KÝ */}
+      <div className="flex flex-col gap-3 mx-6 mt-6 mb-6 flex-shrink-0">
+        <Link
+          href="/sign-in"
+          className="flex rounded-lg background-light800_dark400 "
+        >
+          <Button
+            className="
           small-medium btn-secondary 
           min-h-[41px] w-full rounded-lg
           px-4 py-3 shadow-none
           max-lg:hidden
         "
-      >
-        <span className=" max-lg:hidden primary-text-gradient">Đăng nhập</span>
-      </Button>
-      <Image
-        src="/assets/icons/account.svg"
-        alt="login"
-        width={20}
-        height={20}
-        className="
+          >
+            <span className=" max-lg:hidden primary-text-gradient">
+              Đăng nhập
+            </span>
+          </Button>
+          <Image
+            src="/assets/icons/account.svg"
+            alt="login"
+            width={20}
+            height={20}
+            className="
           invert-colors 
           max-lg:w-[52px]
           bg-transparent p-4
           lg:hidden"
-      />
-    </Link>
+          />
+        </Link>
 
-    <Link href="/sign-up" className="flex rounded-lg background-light700_dark300">
-      <Button
-        className="
+        <Link
+          href="/sign-up"
+          className="flex rounded-lg background-light700_dark300"
+        >
+          <Button
+            className="
           small-medium btn-tertiary light-border-2 
           min-h-[41px] w-full rounded-lg
           px-4 py-3 shadow-none text-dark400_light900
           max-lg:hidden"
-      >
-        Đăng ký
-      </Button>
+          >
+            Đăng ký
+          </Button>
 
-      <Image
-        src="/assets/icons/sign-up.svg"
-        alt="signup"
-        width={20}
-        height={20}
-        className="
+          <Image
+            src="/assets/icons/sign-up.svg"
+            alt="signup"
+            width={20}
+            height={20}
+            className="
           invert-colors 
           max-lg:w-[52px]
           bg-transparent p-4
           lg:hidden"
-      />
-    </Link>
-  </div>
-</section>
-
+          />
+        </Link>
+      </div>
+    </section>
   );
 };
 

@@ -94,6 +94,11 @@ const JoinedCourses = () => {
                           key={item.id}
                           id={item.id}
                           teacher={item.teacher}
+                          type={item.type}
+                          color={
+                            ListCourseColors.find((course) => course.type === getCourseData(currentCourseId)?.type)
+                              ?.color || "#ffffff"
+                          }
                         />
                       </Link>
                       <div className="absolute right-0 top-0">

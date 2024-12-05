@@ -119,6 +119,7 @@ const RowGradingGroupTable = React.memo(
                 handleInputChange({ key: key, newValue: newValue })
               }
               isDescription
+              isInTable
             />
           );
         return (

@@ -30,7 +30,7 @@ const Setting = () => {
   };
 
   return (
-    <div className="ml-4 flex flex-col gap-4">
+    <div className="ml-4 flex flex-col gap-20">
       {/* Category */}
       <div className="mt-6 flex flex-col gap-4">
         <p className="paragraph-semibold">Tin tức</p>

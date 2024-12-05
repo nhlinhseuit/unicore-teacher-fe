@@ -516,16 +516,19 @@ export const mockCourses = [
     teachers: "Trịnh Văn A, Nguyễn Văn H, +1",
     subCourses: [
       {
-        id: "SE114.N21.PMCL.1",
+        id: "SE114.N21.PMCL",
+        type: "theory",
         teacher: "Trịnh Văn A",
       },
       {
-        id: "SE114.N21.PMCL.2",
+        id: "SE114.N21.PMCL.1",
+        type: "pratice",
         teacher: "Nguyễn Văn H",
       },
       {
-        id: "SE114.N21.PMCL.3",
-        teacher: "Nguyễn Hoàng Linh",
+        id: "SE114.N21.PMCL.2",
+        type: "pratice",
+        teacher: "Lê Minh T",
       },
     ],
   },
@@ -537,30 +540,54 @@ export const mockCourses = [
     teachers: "Nguyễn Hoàng Linh, Nguyễn Văn H",
     subCourses: [
       {
-        id: "SE114.N23.PMCL.1",
+        id: "SE100.N23.PMCL",
+        type: "theory",
         teacher: "Trịnh Văn A",
       },
       {
-        id: "SE114.N23.PMCL.2",
-        teacher: "Trịnh Văn A",
+        id: "SE100.N23.PMCL.1",
+        type: "pratice",
+        teacher: "Nguyễn Văn H",
       },
     ],
   },
   {
-    id: "SE502.N21",
+    id: "SE501.N21.PMCL",
     type: "internCourse",
     name: "Thực tập doanh nghiệp",
     semester: "HK1/2024",
     teachers: "Nguyễn Ngọc Quí",
-    subCourses: [],
+    subCourses: [
+      {
+        id: "SE501.N21.PMCL",
+        type: "general",
+        teacher: "Lớp chung",
+      },
+      {
+        id: "80001",
+        type: "advisor",
+        teacher: "Nguyễn Ngọc Quí",
+      },
+    ],
   },
   {
-    id: "SE502.N21",
+    id: "SE121.O21.PMCL",
     type: "thesisCourse",
     name: "Đồ án 1",
     semester: "HK1/2024",
-    teachers: "Nguyễn Hoàng Linh, Lê Thành Lộc",
-    subCourses: [],
+    teachers: "Nguyễn Hoàng Linh",
+    subCourses: [
+      {
+        id: "SE121.O21.PMCL",
+        type: "general",
+        teacher: "Lớp chung",
+      },
+      {
+        id: "80001",
+        type: "advisor",
+        teacher: "Nguyễn Hoàng Linh",
+      },
+    ],
   },
 ];
 
@@ -647,11 +674,17 @@ export const mockSettingGradeColumnDetail = [
     gradeColumn: "Quá trình",
     data: [
       {
+        title: "Điểm danh",
+        ratio: "0",
+      },
+      {
         title: "Báo cáo tiến độ",
+        createdAt: "29/8/2024 7:23AM",
         ratio: "30",
       },
       {
         title: "Thuyết trình Seminar",
+        createdAt: "29/8/2024 7:23AM",
         ratio: "70",
       },
     ],
@@ -661,10 +694,12 @@ export const mockSettingGradeColumnDetail = [
     data: [
       {
         title: "Bài tập nghiên cứu quan trọng",
+        createdAt: "29/8/2024 7:23AM",
         ratio: "30",
       },
       {
         title: "Đồ án cuối kỳ - Bài tập lớn",
+        createdAt: "29/8/2024 7:23AM",
         ratio: "70",
       },
     ],
@@ -888,18 +923,13 @@ export const mockFileDataTable = [
 
 export const mockDataStudentRegisterGroup = [
   {
-    //
-    // TODO: Kh// cần stt của sv ở đây
-    // TODO: //Hiện tại chỉ dùng làm key
-    // * FIX:// STT count ++ cho row leader
-
     STT: "1",
     isDeleted: false,
     data: {
       "Mã nhóm": "1",
-      MSSV: "21522289",
-      "Họ và tên": "Nguyễn Hoàng Linh",
-      SĐT: "0378060972",
+      MSSV: ["21522289"],
+      "Họ và tên": ["Nguyễn Hoàng Linh"],
+      SĐT: ["0378060972"],
     },
   },
   {
@@ -907,49 +937,29 @@ export const mockDataStudentRegisterGroup = [
     isDeleted: false,
     data: {
       "Mã nhóm": "2",
-      MSSV: "21522289",
-      "Họ và tên": "Lê Thành Lộc",
-      SĐT: "0378060972",
+      MSSV: ["21522289", "21522289"],
+      "Họ và tên": ["Lê Thành Lộc", "Huỳnh Hồ Thị Mộng Trinh"],
+      SĐT: ["0378060972", "0378060972"],
     },
   },
   {
     STT: "3",
     isDeleted: false,
     data: {
-      "Mã nhóm": "2",
-      MSSV: "21522289",
-      "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
-      SĐT: "0378060972",
+      "Mã nhóm": "3",
+      MSSV: ["21522289", "21522289"],
+      "Họ và tên": ["Nguyễn Tiến Vĩ", "Nguyễn Vĩ"],
+      SĐT: ["0378060972", "0378060972"],
     },
   },
   {
     STT: "4",
     isDeleted: false,
     data: {
-      "Mã nhóm": "3",
-      MSSV: "21522289",
-      "Họ và tên": "Nguyễn Tiến Vĩ",
-      SĐT: "0378060972",
-    },
-  },
-  {
-    STT: "5",
-    isDeleted: false,
-    data: {
-      "Mã nhóm": "3",
-      MSSV: "21522289",
-      "Họ và tên": "Nguyễn Thị Thanh Tuyền",
-      SĐT: "0378060972",
-    },
-  },
-  {
-    STT: "6",
-    isDeleted: false,
-    data: {
       "Mã nhóm": "4",
-      MSSV: "21522289",
-      "Họ và tên": "Võ Hữu Xike",
-      SĐT: "0378060972",
+      MSSV: ["21522289"],
+      "Họ và tên": ["Võ Hữu Xike"],
+      SĐT: ["0378060972"],
     },
   },
 ];

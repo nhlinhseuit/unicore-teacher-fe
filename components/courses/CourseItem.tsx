@@ -1,5 +1,3 @@
-import React, { useState } from "react";
-import MoreButtonCourseItem from "./MoreButtonCourseItem";
 
 interface Props {
   id: string;
@@ -25,7 +23,7 @@ const CourseItem = (params: Props) => {
         </p>
       </div>
 
-      <p className="small-regular text-center">{params.teachers}</p>
+      <p className="small-regular text-center">GV: {params.teachers}</p>
     </div>
   );
 };
