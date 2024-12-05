@@ -10,6 +10,16 @@ import { Fragment } from "react";
 const LeftSideBar = () => {
   const pathName = usePathname();
 
+  //! CALL API để xem SUBCOURSE này có phải có type là advisor hay không
+  const isGradeForThesisInternReport = true;
+
+  let renderSidebarLinks = sidebarTeacherLinks;
+
+  if (!isGradeForThesisInternReport)
+    renderSidebarLinks = renderSidebarLinks.filter(
+      (item) => item.route !== "/score-report"
+    );
+
   const isOriginalRoute = () => {
     return TeacherCoursesTabItems.find((item) => {
       if (item.route === "/courses") {
@@ -98,7 +108,7 @@ const LeftSideBar = () => {
       custom-scrollbar
     "
       >
-        {sidebarTeacherLinks.map((item, index) => {
+        {renderSidebarLinks.map((item, index) => {
           let isActive;
           if (
             (pathName === "/create-announcement" ||
@@ -149,10 +159,11 @@ const LeftSideBar = () => {
                 </Fragment>
               );
             } else {
+              console.log('item.route', item.route)
               return (
                 <Link
-                  key={item.route}
-                  href={item.route}
+                  key={item.route === '/score-report' ? `/score-report/thesis-report`: item.route}
+                  href={item.route === '/score-report' ? `/score-report/thesis-report`: item.route}
                   className={getStyle(isActive)}
                 >
                   <Image

@@ -20,7 +20,6 @@ export const ALLOWED_FILE_TYPES = [
 ];
 export const MAX_CATEGORIES = 5; // Số danh mục tối đa chọn khi đăng thông báo
 
-
 // TODO: NAVBAR TAB
 export const TeacherAnnouncementsTabItems = [
   { value: "listAnnouncements", label: "Danh sách thông báo", route: "/" },
@@ -32,6 +31,11 @@ export const TeacherCoursesTabItems = [
 
 export const TeacherSettingTabItems = [
   { value: "settingNoti", label: "Tin tức - thông báo", route: "/setting" },
+];
+
+export const TeacherScoreReportTabItems = [
+  { value: "scoreThesisReport", label: "Hội đồng phản biện Khóa luận", route: "/score-report/thesis-report" },
+  { value: "scoreInternReport", label: "Hội đồng chấm điểm Thực tập", route: "/score-report/intern-report" },
 ];
 
 export const TeacherSubjectsTabItems = [
@@ -286,18 +290,24 @@ export const sidebarTeacherLinks: SidebarLink[] = [
   },
   {
     id: "6",
+    imgURL: "/assets/icons/reward.svg",
+    route: "/score-report",
+    label: "Chấm điểm báo cáo",
+  },
+  {
+    id: "7",
     imgURL: "/assets/icons/bookmarks.svg",
     route: "/bookmarks",
     label: "Dấu trang",
   },
   {
-    id: "7",
+    id: "8",
     imgURL: "/assets/icons/subjects.svg",
     route: "/reviews",
     label: "Phúc khảo",
   },
   {
-    id: "8",
+    id: "9",
     imgURL: "/assets/icons/setting.svg",
     route: "/setting",
     label: "Cài đặt",
