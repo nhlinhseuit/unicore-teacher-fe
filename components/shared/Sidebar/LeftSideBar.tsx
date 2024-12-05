@@ -118,7 +118,7 @@ const LeftSideBar = () => {
 
               let title = getCourseId();
 
-              //! CALL API để xem course này có phải có type là advisor hay không
+              //! CALL API để xem SUBCOURSE này có phải có type là advisor hay không
               if (getCourseId()?.includes("800"))
                 title = "SE501.N21.PMCL - GVHD";
 

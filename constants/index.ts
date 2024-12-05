@@ -101,6 +101,44 @@ export const TeacherCourseTabItems = [
     route: "/setting",
   },
 ];
+export const TeacherNotRegularCourseTabItems = [
+  { value: "generalPost", label: "Thông báo chung", route: "/" },
+  {
+    value: "exercises",
+    label: "Bài tập",
+    route: "/exercises",
+  },
+  {
+    value: "manageGroup",
+    label: "Quản lý nhóm",
+    route: "/manage-group",
+  },
+  {
+    value: "scoreTranscript",
+    label: "Bảng điểm",
+    route: "/score-transcript",
+  },
+  {
+    value: "timeTable",
+    label: "Thời khóa biểu",
+    route: "/time-table",
+  },
+  {
+    value: "reviews",
+    label: "Phúc khảo",
+    route: "/reviews",
+  },
+  {
+    value: "files",
+    label: "Lưu trữ",
+    route: "/files",
+  },
+  {
+    value: "setting",
+    label: "Cài đặt",
+    route: "/setting",
+  },
+];
 export const BigExerciseTabItems = [
   { value: "generalPost", label: "Thông báo chung", route: "/" },
   {
@@ -144,6 +182,10 @@ export const BigExerciseTabItems = [
 export const AnnouncementTypes = [
   { route: "/create-announcement", label: "Tạo thông báo" },
   { route: "/create-exercise", label: "Tạo bài tập" },
+  { route: "/create-report", label: "Tạo báo cáo đồ án" },
+];
+export const AnnouncementTypesNotRegularCourse = [
+  { route: "/create-announcement", label: "Tạo thông báo" },
   { route: "/create-report", label: "Tạo báo cáo đồ án" },
 ];
 

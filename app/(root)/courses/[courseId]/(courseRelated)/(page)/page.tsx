@@ -6,7 +6,12 @@ import ExercisePostItem from "@/components/shared/PostItem/Item/ExercisePostItem
 import PostItem from "@/components/shared/PostItem/Item/PostItem";
 import ReportPostItem from "@/components/shared/PostItem/Item/ReportPostItem";
 import TableSearch from "@/components/shared/Search/TableSearch";
-import { AnnouncementTabs, AnnouncementTypes, FilterType } from "@/constants";
+import {
+  AnnouncementTabs,
+  AnnouncementTypes,
+  AnnouncementTypesNotRegularCourse,
+  FilterType,
+} from "@/constants";
 import { mockPostDataCourseIdPage } from "@/mocks";
 import { Dropdown } from "flowbite-react";
 import Link from "next/link";
@@ -17,6 +22,12 @@ const page = () => {
   const pathName = usePathname();
 
   var typeFilter = FilterType.SortNewer;
+
+  //! CALL API để xem course này có phải có type là internCourse hay thesisCourse hay không
+  const isNotRegularCourse = false;
+  const renderAnnouncementTypes = isNotRegularCourse
+    ? AnnouncementTypesNotRegularCourse
+    : AnnouncementTypes;
 
   const [selectedAnnouncement, setSelectedAnnouncement] = useState(
     AnnouncementTabs[0].value
@@ -197,7 +208,7 @@ const page = () => {
             )}
           >
             <div className="w-full">
-              {AnnouncementTypes.map((item) => (
+              {renderAnnouncementTypes.map((item) => (
                 <Link
                   key={`${pathName}${item.route}`}
                   href={`${pathName}${item.route}`}
@@ -210,6 +221,7 @@ const page = () => {
         </div>
       </div>
       {/* AnnouncementTabs */}
+
       <div className="flex gap-2">
         {AnnouncementTabs.map((item) => {
           return (
