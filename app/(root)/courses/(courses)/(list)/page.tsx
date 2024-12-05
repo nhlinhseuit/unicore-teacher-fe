@@ -17,13 +17,12 @@ import {
 } from "@/components/ui/alert-dialog";
 import { mockCourses } from "@/mocks";
 import { useRouter } from "next/navigation";
-import { listCourseColors } from "@/constants";
+import { ListCourseColors } from "@/constants";
 
 const JoinedCourses = () => {
   const [currentCourseId, setCurrentCourseId] = useState("");
 
   const router = useRouter();
-
 
   const getCourseData = (idCourse: string) => {
     return mockCourses.find((item) => item.id === idCourse);
@@ -58,7 +57,10 @@ const JoinedCourses = () => {
               name={item.name}
               semester={item.semester}
               teachers={item.teachers}
-              color={listCourseColors[index % listCourseColors.length]}
+              color={
+                ListCourseColors.find((course) => course.type === item.type)
+                  ?.color || "#ffffff"
+              }
             />
             <div className="absolute right-0 top-0">
               <MoreButtonCourseItem handleEdit={() => {}} />
