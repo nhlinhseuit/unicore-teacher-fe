@@ -48,13 +48,13 @@ export interface RegisterTopicData {
 }
 export interface ApproveTopicData {
   "Trạng thái": string;
-  "Chỉnh sửa lần cuối": string?;
+  "Chỉnh sửa lần cuối"?: string;
   "Tên đề tài": string;
   "Mô tả": string;
   "Mã nhóm": string;
-  MSSV: string;
-  SĐT: string;
-  "Họ và tên": string;
+  MSSV: string[];
+  SĐT: string[];
+  "Họ và tên": string[];
 }
 export interface TopicRegisterGroupData {
   MSSV: string;

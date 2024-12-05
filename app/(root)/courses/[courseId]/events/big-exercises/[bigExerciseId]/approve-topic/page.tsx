@@ -8,7 +8,8 @@ import {
   mockDataAllAppproveTopic,
   mockDataAppprovedTopic,
   mockDataNotAppproveTopic,
-  mockDataProcessingAppproveTopic,
+  mockDataProcessingTopic,
+  mockDataRefuseTopic
 } from "@/mocks";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
@@ -24,11 +25,13 @@ const ApproveTopic = () => {
       case 1:
         return mockDataAllAppproveTopic;
       case 2:
-        return mockDataAppprovedTopic;
-      case 3:
-        return mockDataProcessingAppproveTopic;
-      case 4:
         return mockDataNotAppproveTopic;
+      case 3:
+        return mockDataProcessingTopic;
+      case 4:
+        return mockDataAppprovedTopic;
+      case 5:
+        return mockDataRefuseTopic;
       default:
         return mockDataAllAppproveTopic;
     }
@@ -99,6 +102,7 @@ const ApproveTopic = () => {
         isEditTable={false}
         isMultipleDelete={false}
         dataTable={getDataTable()}
+        onSaveTable={(itemsSelected: string[]) => {}}
       />
     </>
   );
