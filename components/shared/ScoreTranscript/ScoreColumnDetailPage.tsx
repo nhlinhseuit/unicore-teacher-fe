@@ -26,8 +26,7 @@ import RenderFile from "../Annoucements/RenderFile";
 import BackToPrev from "../BackToPrev";
 import BorderContainer from "../BorderContainer";
 import IconButton from "../Button/IconButton";
-import { sErrorList } from "./(store)/scoreDetailStore";
-import PostScoreColumnDetailItem from "./PostScoreColumnDetailItem";
+import SubmitButton from "../Button/SubmitButton";
 
 interface Props {
   onClickPrev: () => void;
@@ -71,48 +70,49 @@ const ScoreColumnDetailPage = (params: Props) => {
   };
 
   const AnnoucementSchema = z
-  .object({})
-  .refine(
-    () => {
-      const issues: z.ZodIssue[] = [];
-      for (let i = 0; i < scoreRatios.length; i++) {
-        if (isNaN(parseInt(scoreRatios[i]))) {
-          issues.push({
-            code: "custom",
-            message: "Tỉ lệ điểm phải là chữ số",
-            path: [`scoreRatios.${i}`], 
-          });
+    .object({})
+    .refine(
+      () => {
+        const issues: z.ZodIssue[] = [];
+        for (let i = 0; i < scoreRatios.length; i++) {
+          if (isNaN(parseInt(scoreRatios[i]))) {
+            issues.push({
+              code: "custom",
+              message: "Tỉ lệ điểm phải là chữ số",
+              path: [`scoreRatios.${i}`],
+            });
+          }
         }
-      }
-      if (issues.length > 0) {
-        throw new z.ZodError(issues); // Ném lỗi với danh sách issue
-      }
-      return true; 
-    },
-    { message: "Tỉ lệ điểm phải là chữ số" } 
-  )
-  .refine(
-    () => {
-      const issues: z.ZodIssue[] = [];
-      for (let i = 0; i < scoreRatios.length; i++) {
-        const ratio = parseInt(scoreRatios[i]);
-        if (isNaN(ratio) || ratio < 0 || ratio > 100) {
-          issues.push({
-            code: "custom",
-            message:
-              "Tỉ lệ điểm phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 100",
-            path: [`scoreRatios.${i}`],
-          });
+        if (issues.length > 0) {
+          throw new z.ZodError(issues); // Ném lỗi với danh sách issue
         }
+        return true;
+      },
+      { message: "Tỉ lệ điểm phải là chữ số" }
+    )
+    .refine(
+      () => {
+        const issues: z.ZodIssue[] = [];
+        for (let i = 0; i < scoreRatios.length; i++) {
+          const ratio = parseInt(scoreRatios[i]);
+          if (isNaN(ratio) || ratio < 0 || ratio > 100) {
+            issues.push({
+              code: "custom",
+              message:
+                "Tỉ lệ điểm phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 100",
+              path: [`scoreRatios.${i}`],
+            });
+          }
+        }
+        if (issues.length > 0) {
+          throw new z.ZodError(issues); // Ném lỗi với danh sách issue
+        }
+        return true;
+      },
+      {
+        message: "Tỉ lệ điểm phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 100",
       }
-      if (issues.length > 0) {
-        throw new z.ZodError(issues); // Ném lỗi với danh sách issue
-      }
-      return true; 
-    },
-    { message: "Tỉ lệ điểm phải lớn hơn hoặc bằng 0 và nhỏ hơn hoặc bằng 100" } 
-  );
-
+    );
 
   const form = useForm<z.infer<typeof AnnoucementSchema>>({
     resolver: zodResolver(AnnoucementSchema),
@@ -155,7 +155,7 @@ const ScoreColumnDetailPage = (params: Props) => {
     <>
       <BackToPrev text="Quay lại Bảng điểm" onClickPrev={params.onClickPrev} />
 
-       {/* <div className="flex justify-between mb-6">
+      {/* <div className="flex justify-between mb-6">
         <div className="ml-4 flex gap-4 items-center">
           <p className="paragraph-semibold">
             Chi tiết cột điểm Quá trình - Sinh viên Nguyễn Hoàng Linh - MSSV
@@ -353,21 +353,14 @@ const ScoreColumnDetailPage = (params: Props) => {
                       Tổng phần trăm các hệ số phải là 100% ({ratio}%)
                     </p>
                   ) : null}
-                  <button
-                    type="button"
+                  <IconButton
+                    cancel
+                    text={"Hủy"}
                     onClick={() => {
                       setIsEditGradeColumn(false);
                     }}
-                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 dark:focus-visible:ring-slate-300 border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50 h-9 px-4 py-2 mt-2 sm:mt-0"
-                  >
-                    Hủy
-                  </button>
-                  <button
-                    type="submit"
-                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 dark:focus-visible:ring-slate-300 bg-primary-500 text-slate-50 shadow hover:bg-primary-500/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 h-9 px-4 py-2"
-                  >
-                    Đồng ý
-                  </button>
+                  />
+                  <SubmitButton text={"Đồng ý"} />
                 </div>
               </div>
             </form>

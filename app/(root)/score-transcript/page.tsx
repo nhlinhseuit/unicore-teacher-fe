@@ -4,10 +4,7 @@ import IconButton from "@/components/shared/Button/IconButton";
 import DetailFilterComponentScore from "@/components/shared/DetailFilterComponentScore";
 import ScoreColumnDetailPage from "@/components/shared/ScoreTranscript/ScoreColumnDetailPage";
 import ScoreTranscriptTable from "@/components/shared/Table/TableScoreTranscript/ScoreTranscriptTable";
-import {
-  mockDataScoreTranscript,
-  mockGradeColumnPercent
-} from "@/mocks";
+import { mockDataScoreTranscript, mockGradeColumnPercent } from "@/mocks";
 import { useState } from "react";
 
 const ScoreTranscript = () => {
@@ -258,26 +255,19 @@ const ScoreTranscript = () => {
                 />
 
                 <div className="relative flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 mt-4">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIsEditGradeColumn(false);
+                   <IconButton
+                      cancel
+                      text={"Hủy"}
+                      onClick={() => {
+                        setIsEditGradeColumn(false);
                       reset({
                         progress: mockGradeColumnPercent["Quá trình"],
                         midterm: mockGradeColumnPercent["Giữa kỳ"],
                         final: mockGradeColumnPercent["Cuối kỳ"],
                       });
-                    }}
-                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 dark:focus-visible:ring-slate-300 border border-slate-200 bg-white shadow-sm hover:bg-slate-100 hover:text-slate-900 dark:border-slate-800 dark:bg-slate-950 dark:hover:bg-slate-800 dark:hover:text-slate-50 h-9 px-4 py-2 mt-2 sm:mt-0"
-                  >
-                    Hủy
-                  </button>
-                  <button
-                    type="submit"
-                    className="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950 disabled:pointer-events-none disabled:opacity-50 [&amp;_svg]:pointer-events-none [&amp;_svg]:size-4 [&amp;_svg]:shrink-0 dark:focus-visible:ring-slate-300 bg-primary-500 text-slate-50 shadow hover:bg-primary-500/90 dark:bg-slate-50 dark:text-slate-900 dark:hover:bg-slate-50/90 h-9 px-4 py-2"
-                  >
-                    Đồng ý
-                  </button>
+                      }}
+                    />
+                  <SubmitButton text={"Đồng ý"} />
                 </div>
               </div>
             </form>
