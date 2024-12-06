@@ -245,11 +245,6 @@ export const mockPostData = [
 
 export const mockDataGradingExercise = [
   {
-    //
-    // TODO: Kh// cần stt của sv ở đây
-    // TODO: //Hiện tại chỉ dùng làm key
-    // * FIX:// STT count ++ cho row leader
-
     STT: "1",
     isDeleted: false,
     data: {
@@ -336,11 +331,6 @@ export const mockDataGradingExercise = [
 ];
 export const mockDataGradingReport = [
   {
-    //
-    // TODO: Kh// cần stt của sv ở đây
-    // TODO: //Hiện tại chỉ dùng làm key
-    // * FIX:// STT count ++ cho row leader
-
     STT: "1",
     isDeleted: false,
     data: {
@@ -791,11 +781,6 @@ export const mockSubCoursesOfCourseScoreTranscript = [
 ];
 export const mockDataScoreTranscript = [
   {
-    //
-    // TODO: Kh cần stt của sv ở đây
-    // TODO: Hiện tại chỉ dùng làm key
-    // * FIX:// STT count ++ cho row leader
-
     STT: "1",
     isDeleted: false,
     data: {
@@ -972,34 +957,6 @@ export const mockDataStudentRegisterGroup = [
       "Họ và tên": ["Võ Hữu Xike"],
       SĐT: ["0378060972"],
     },
-  },
-];
-
-//
-// TODO: Midterm exam
-//
-export const mockMidtermExam = [
-  {
-    id: "1",
-    name: "Thi tập trung giữa kỳ",
-    creator: "Huỳnh Hồ Thị Mộng Trinh",
-    createdAt: "29/8/2024 7:23AM",
-    happeningEvent: "Đăng ký nhóm và đề tài báo cáo",
-    deadline: "10/09/2024 - 00:00AM",
-  },
-];
-
-//
-// TODO: Final exam
-//
-export const mockFinalExam = [
-  {
-    id: "1",
-    name: "Thi tập trung cuối kỳ",
-    creator: "Huỳnh Hồ Thị Mộng Trinh",
-    createdAt: "29/8/2024 7:23AM",
-    happeningEvent: "Đăng ký nhóm và đề tài báo cáo",
-    deadline: "10/09/2024 - 00:00AM",
   },
 ];
 

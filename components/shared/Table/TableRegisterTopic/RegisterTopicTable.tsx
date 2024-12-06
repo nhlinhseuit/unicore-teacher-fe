@@ -1,4 +1,4 @@
-import { ApproveTopicDataItem } from "@/types";
+import { RegisterTopicDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import { useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
@@ -22,7 +22,7 @@ interface DataTableParams {
   type: RegisterTopicTableType;
   isEditTable: boolean;
   isMultipleDelete: boolean;
-  dataTable: ApproveTopicDataItem[];
+  dataTable: RegisterTopicDataItem[];
   onSaveTable: (itemsSelected: string[]) => void;
 }
 

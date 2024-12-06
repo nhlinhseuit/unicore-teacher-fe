@@ -1,7 +1,7 @@
 import { RegisterTopicTableType } from "@/constants";
 import {
   CourseData,
-  ApproveTopicDataItem,
+  RegisterTopicDataItem,
   StudentData,
   SubjectData,
   TeacherData,
@@ -14,7 +14,7 @@ import MoreButtonComponent from "../components/MoreButtonComponent";
 
 interface RowParams {
   type: RegisterTopicTableType;
-  dataItem: ApproveTopicDataItem;
+  dataItem: RegisterTopicDataItem;
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
   isHasSubCourses?: boolean;
@@ -63,7 +63,7 @@ const RowRegisterTopicTable = React.memo(
       isCheckbox,
     }: handleInputChangeParams) => {
       //@ts-ignore
-      const updatedDataItem: ApproveTopicDataItem = {
+      const updatedDataItem: RegisterTopicDataItem = {
         ...editDataItem,
         data: {
           ...editDataItem.data,

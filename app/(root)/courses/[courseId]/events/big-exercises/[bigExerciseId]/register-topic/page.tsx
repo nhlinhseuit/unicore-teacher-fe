@@ -392,6 +392,7 @@ const RegisterTopic = () => {
             isEditTable={false}
             isMultipleDelete={false}
             dataTable={mockDataStudentRegisterTopic}
+            onSaveTable={() => {}}
           />
         </div>
       ) : (
