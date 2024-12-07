@@ -64,17 +64,19 @@ const GradingReviewTable = (params: DataTableParams) => {
                 STT
               </Table.HeadCell>
 
-              {Object.keys(filteredDataTable[0]?.data || {}).map((key) => {
-                return (
-                  <Table.HeadCell
-                    key={key}
-                    theme={tableTheme?.head?.cell}
-                    className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
-                  >
-                    {key}
-                  </Table.HeadCell>
-                );
-              })}
+              {Object.keys(filteredDataTable[0]?.data || {}).map(
+                (key, index) => {
+                  return (
+                    <Table.HeadCell
+                      key={`${key}_${index}`}
+                      theme={tableTheme?.head?.cell}
+                      className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
+                    >
+                      {key}
+                    </Table.HeadCell>
+                  );
+                }
+              )}
             </Table.Head>
 
             {/* BODY */}
@@ -86,7 +88,7 @@ const GradingReviewTable = (params: DataTableParams) => {
                   <>
                     {/* //TODO: Main Row: Leader */}
                     <RowGradingReviewTable
-                      key={dataItem.STT}
+                      key={`${dataItem.STT}_${index}`}
                       dataItem={dataItem}
                       viewDetailGradeColumn={params.viewDetailGradeColumn}
                     />

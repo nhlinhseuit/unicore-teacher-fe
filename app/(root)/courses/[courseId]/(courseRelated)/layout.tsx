@@ -1,12 +1,12 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
-import { useParams, usePathname } from "next/navigation";
-import { TeacherCourseTabItems, TeacherNotRegularCourseTabItems } from "@/constants";
+import NavbarButton from "@/components/shared/NavbarButton";
+import { BigExerciseTabItems, TeacherCourseTabItems } from "@/constants";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
-import NavbarButton from "@/components/shared/NavbarButton";
+import Link from "next/link";
+import { useParams, usePathname } from "next/navigation";
+import React from "react";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const pathName = usePathname();
@@ -15,14 +15,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   // TODO: Get API lấy tên lớp học
 
   //! CALL API để xem SUBCOURSE này có phải có type là advisor hay không
-  let title = courseId
-  if (courseId.includes("800"))
-    title = "SE501.N21.PMCL - GVHD";
+  let title = courseId;
+  if (courseId.includes("800")) title = "SE501.N21.PMCL - GVHD";
 
   //! CALL API để xem course này có phải có type là internCourse hay thesisCourse hay không
   const isNotRegularCourse = false;
   const renderTeacherCourseTabItems = isNotRegularCourse
-    ? TeacherNotRegularCourseTabItems
+    ? BigExerciseTabItems
     : TeacherCourseTabItems;
 
   return (

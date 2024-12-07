@@ -21,7 +21,6 @@ export const ALLOWED_FILE_TYPES = [
 ];
 export const MAX_CATEGORIES = 5; // Số danh mục tối đa chọn khi đăng thông báo
 
-
 export const tableTheme: CustomFlowbiteTheme["table"] = {
   root: {
     base: "min-w-full text-center rounded-lg text-sm text-secondary-500",
@@ -48,7 +47,6 @@ export const tableTheme: CustomFlowbiteTheme["table"] = {
   },
 };
 
-
 // TODO: NAVBAR TAB
 export const TeacherAnnouncementsTabItems = [
   { value: "listAnnouncements", label: "Danh sách thông báo", route: "/" },
@@ -63,8 +61,16 @@ export const TeacherSettingTabItems = [
 ];
 
 export const TeacherScoreReportTabItems = [
-  { value: "scoreThesisReport", label: "Hội đồng phản biện Khóa luận", route: "/score-report/thesis-report" },
-  { value: "scoreInternReport", label: "Hội đồng chấm điểm Thực tập", route: "/score-report/intern-report" },
+  {
+    value: "scoreThesisReport",
+    label: "Hội đồng phản biện Khóa luận",
+    route: "/score-report/thesis-report",
+  },
+  {
+    value: "scoreInternReport",
+    label: "Hội đồng chấm điểm Thực tập",
+    route: "/score-report/intern-report",
+  },
 ];
 
 export const TeacherSubjectsTabItems = [
@@ -115,44 +121,6 @@ export const TeacherCourseTabItems = [
     route: "/setting",
   },
 ];
-export const TeacherNotRegularCourseTabItems = [
-  { value: "generalPost", label: "Thông báo chung", route: "/" },
-  {
-    value: "exercises",
-    label: "Bài tập",
-    route: "/exercises",
-  },
-  {
-    value: "manageGroup",
-    label: "Quản lý nhóm",
-    route: "/manage-group",
-  },
-  {
-    value: "scoreTranscript",
-    label: "Bảng điểm",
-    route: "/score-transcript",
-  },
-  {
-    value: "timeTable",
-    label: "Thời khóa biểu",
-    route: "/time-table",
-  },
-  {
-    value: "reviews",
-    label: "Phúc khảo",
-    route: "/reviews",
-  },
-  {
-    value: "files",
-    label: "Lưu trữ",
-    route: "/files",
-  },
-  {
-    value: "setting",
-    label: "Cài đặt",
-    route: "/setting",
-  },
-];
 export const BigExerciseTabItems = [
   { value: "generalPost", label: "Thông báo chung", route: "/" },
   {
@@ -163,7 +131,7 @@ export const BigExerciseTabItems = [
   {
     value: "listTopic",
     label: "Danh sách đề tài",
-    route: "/list-topic",
+    route: "/upload-topic",
   },
   {
     value: "registerTopic",

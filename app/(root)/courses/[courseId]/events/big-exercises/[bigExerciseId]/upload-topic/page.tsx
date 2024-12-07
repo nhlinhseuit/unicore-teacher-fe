@@ -37,6 +37,7 @@ import StudentItem from "@/components/shared/StudentItem";
 import { maxStudentPerGroup, minStudentPerGroup } from "@/constants";
 import Student from "@/types/entity/Student";
 import { usePathname } from "next/navigation";
+import TitleDescription from "@/components/shared/TitleDescription";
 
 const ListTopic = () => {
   // Update biến: Danh sách thành viên nhóm
@@ -250,9 +251,11 @@ const ListTopic = () => {
     <>
       {!isImport ? (
         <>
+          <TitleDescription />
+
           <div className="flex justify-end mb-3 gap-2">
             <IconButton
-              text="Import danh sách đề tài mới"
+              text="Import danh sách đề tài"
               onClick={() => {
                 setIsImport(true);
               }}
@@ -272,11 +275,6 @@ const ListTopic = () => {
               iconHeight={16}
             />
           </div>
-
-          <p className="flex justify-end pb-6 italic text-sm text-red-500">
-            * Hiện tại kh làm chức năng chỉnh sửa ở đây, cần sửa thì import lại
-            danh sách
-          </p>
 
           <TopicGroupTable
             isEditTable={false}
