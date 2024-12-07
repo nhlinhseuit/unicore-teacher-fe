@@ -2,10 +2,9 @@ import { RegisterTopicDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import { useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
-import { tableTheme } from "../components/DataTable";
 import RowRegisterTopicTable from "./RowRegisterTopicTable";
 
-import { RegisterTopicTableType, itemsPerPageRegisterTable } from "@/constants";
+import { RegisterTopicTableType, itemsPerPageRegisterTable, tableTheme } from "@/constants";
 import { toast } from "@/hooks/use-toast";
 import IconButton from "../../Button/IconButton";
 import SubmitButton from "../../Button/SubmitButton";

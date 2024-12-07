@@ -2,7 +2,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
-import { itemsPerPageRegisterTable } from "@/constants";
+import { itemsPerPageRegisterTable, tableTheme } from "@/constants";
 import { RegisterGroupDataItem } from "@/types";
 import {
   AlertDialog,
@@ -15,7 +15,6 @@ import {
 import { Table } from "flowbite-react";
 import { useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
-import { tableTheme } from "../components/DataTable";
 import MyFooter from "../components/MyFooter";
 import RowRegisterGroupTable from "./RowRegisterGroupTable";
 

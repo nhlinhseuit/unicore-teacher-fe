@@ -5,8 +5,7 @@ import MyAvatar from "../../../courses/MyAvatar";
 import RenderFile from "../../Annoucements/RenderFile";
 import IconButton from "../../Button/IconButton";
 import Divider from "../../Divider";
-import ScoreReviewItemTable from "./ScoreColumnDetailItemTable";
-import IconComponent from "../../IconComponent";
+import ReviewGradeTable from "./ReviewGradeTable";
 
 interface Props {
   postScoreDetail: PostDataGradingReviewItem;
@@ -94,11 +93,11 @@ const PostReviewScoreItem = (params: Props) => {
 
         <Divider />
 
-        <ScoreReviewItemTable
-          isEditTable={params.isEdit}
-          isMultipleDelete={false}
-          dataTable={params.postScoreDetail.scoreDetail}
-        />
+        <ReviewGradeTable
+              isEditTable={params.isEdit}
+              isMultipleDelete={false}
+              dataTable={params.postScoreDetail.scoreDetail}
+          />
       </div>
     </div>
   );

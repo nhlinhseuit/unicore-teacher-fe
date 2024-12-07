@@ -1,8 +1,7 @@
 import { Table } from "flowbite-react";
 import React, { useMemo, useState } from "react";
 import { TopicDataItem } from "@/types";
-import { itemsPerPageTopicTable } from "@/constants";
-import { tableTheme } from "../components/DataTable";
+import { itemsPerPageTopicTable, tableTheme } from "@/constants";
 import MyFooter from "../components/MyFooter";
 import RowTopicDataTable from "./RowTopicDataTable";
 

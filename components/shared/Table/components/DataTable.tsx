@@ -15,6 +15,7 @@ import {
   DetailFilter,
   FilterType,
   itemsPerPage,
+  tableTheme,
 } from "@/constants";
 import useDebounceSearchDataTable from "@/hooks/table/useDebounceSearchDataTable";
 import useDetailFilter from "@/hooks/table/useDetailFilter";
@@ -25,7 +26,7 @@ import {
   SubjectDataItem,
   TeacherDataItem,
 } from "@/types";
-import { CustomFlowbiteTheme, Dropdown, Table } from "flowbite-react";
+import { Dropdown, Table } from "flowbite-react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import IconButton from "../../Button/IconButton";
@@ -935,29 +936,3 @@ const DataTable = (params: DataTableParams) => {
 };
 
 export default DataTable;
-
-export const tableTheme: CustomFlowbiteTheme["table"] = {
-  root: {
-    base: "min-w-full text-center rounded-lg text-sm text-secondary-500",
-    shadow:
-      "absolute bg-background-secondary dark:bg-black w-full h-full top-0 left-0 rounded-lg drop-shadow-md -z-10",
-    wrapper: "relative ",
-  },
-  body: {
-    base: "group/body bg-background-secondary",
-    cell: {
-      base: `text-center group-first/body:group-first/row:first:rounded-tl-lg group-first/body:group-first/row:last:rounded-tr-lg group-last/body:group-last/row:first:rounded-bl-lg group-last/body:group-last/row:last:rounded-br-lg p-2 sm:p-3 md:p-4 font-normal text-secondary-900 `,
-    },
-  },
-  head: {
-    base: " text-center group/head bg-background-secondary text-xs border-b-2 border-secondary-200 uppercase text-secondary-700",
-    cell: {
-      base: "text-center  group-first/head:first:rounded-tl-lg border-b-[1px] border-secondary-200  group-first/head:last:rounded-tr-lg p-2 sm:p-3 md:p-4 sm:p-2 md:p-4",
-    },
-  },
-  row: {
-    base: "text-center group/row bg-background-secondary",
-    hovered: "hover:bg-light-800",
-    striped: "odd:bg-background-secondary even:bg-background-secondary ",
-  },
-};

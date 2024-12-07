@@ -166,7 +166,7 @@ export const mockNotiTypeList = [
 ];
 
 //
-//// TODO: Exercises
+//// TODO: Category
 //
 export const mockCategoryList = [
   { id: 1, value: "Thông báo - tin tức" },
@@ -178,16 +178,6 @@ export const mockCategoryList = [
   { id: 7, value: "Thông báo - tin tức" },
   { id: 8, value: "Khoa học - Công nghệ" },
   { id: 9, value: "Sự kiện nổi bật" },
-];
-
-//
-//// TODO: Officer Permission
-//
-export const mockOfficerPermissionList = [
-  { id: 1, value: "Theo dõi hoạt động" },
-  { id: 2, value: "Tạo bài tập" },
-  { id: 3, value: "Tạo thông báo" },
-  { id: 4, value: "Tạo bài tập lớn" },
 ];
 
 //
@@ -419,80 +409,6 @@ export const mockDataGradingReport = [
 //
 //// TODO: Exercises
 //
-export const mockDataReviewGrading = [
-  {
-    STT: "1",
-    isDeleted: false,
-    data: {
-      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
-      "Bài tập": "Bài tập ngày 29/8/2024",
-      "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
-      Điểm: [6],
-      MSSV: "21522289",
-      "Họ và tên": "Nguyễn Hoàng Linh",
-    },
-  },
-  {
-    STT: "2",
-    isDeleted: false,
-    data: {
-      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
-      "Bài tập": "Bài tập ngày 29/8/2024",
-      "Bài nộp": "LeThanhLoc_BaiTap.docx",
-      Điểm: [6],
-      MSSV: "21522289",
-      "Họ và tên": "Lê Thành Lộc",
-    },
-  },
-  {
-    STT: "3",
-    isDeleted: false,
-    data: {
-      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
-      "Bài tập": "Bài tập ngày 29/8/2024",
-      "Bài nộp": "",
-      Điểm: [6],
-      MSSV: "21522289",
-      "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
-    },
-  },
-  {
-    STT: "4",
-    isDeleted: false,
-    data: {
-      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
-      "Bài tập": "Bài tập ngày 29/8/2024",
-      "Bài nộp": "LeThanhLoc_BaiTap.docx",
-      Điểm: [6, 7],
-      MSSV: "21522289",
-      "Họ và tên": "Nguyễn Tiến Vĩ",
-    },
-  },
-  {
-    STT: "5",
-    isDeleted: false,
-    data: {
-      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
-      "Bài tập": "Bài tập ngày 29/8/2024",
-      "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
-      Điểm: [6, 8, 9],
-      MSSV: "21522289",
-      "Họ và tên": "Nguyễn Thị Thanh Tuyền",
-    },
-  },
-  {
-    STT: "6",
-    isDeleted: false,
-    data: {
-      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
-      "Bài tập": "Bài tập ngày 29/8/2024",
-      "Bài nộp": "LeThanhLoc_BaiTap.docx",
-      Điểm: [6, 8],
-      MSSV: "21522289",
-      "Họ và tên": "Võ Hữu Xike",
-    },
-  },
-];
 
 //
 // TODO: Joined Courses
@@ -789,6 +705,7 @@ export const mockDataScoreTranscript = [
       MSSV: "21522289",
       "Quá trình": 9,
       "Giữa kỳ": 8,
+      "Thực hành": 8,
       "Cuối kỳ": 10,
       "Điểm trung bình": 8,
     },
@@ -802,6 +719,7 @@ export const mockDataScoreTranscript = [
       MSSV: "21522289",
       "Quá trình": 9,
       "Giữa kỳ": 8,
+      "Thực hành": 8,
       "Cuối kỳ": 10,
       "Điểm trung bình": 8,
     },
@@ -815,6 +733,7 @@ export const mockDataScoreTranscript = [
       MSSV: "21522289",
       "Quá trình": 9,
       "Giữa kỳ": 8,
+      "Thực hành": 8,
       "Cuối kỳ": 10,
       "Điểm trung bình": 8,
     },
@@ -828,6 +747,7 @@ export const mockDataScoreTranscript = [
       MSSV: "21522289",
       "Quá trình": 9,
       "Giữa kỳ": 8,
+      "Thực hành": 8,
       "Cuối kỳ": 10,
       "Điểm trung bình": 8,
     },
@@ -841,6 +761,7 @@ export const mockDataScoreTranscript = [
       MSSV: "21522289",
       "Quá trình": 9,
       "Giữa kỳ": 8,
+      "Thực hành": 8,
       "Cuối kỳ": 10,
       "Điểm trung bình": 8,
     },
@@ -854,6 +775,7 @@ export const mockDataScoreTranscript = [
       MSSV: "21522289",
       "Quá trình": 9,
       "Giữa kỳ": 8,
+      "Thực hành": 8,
       "Cuối kỳ": 10,
       "Điểm trung bình": 8,
     },
@@ -1959,7 +1881,7 @@ export const mockGradeColumnPercent = {
 };
 
 //
-// TODO: Big Exercise Id Page
+// TODO: Score transcript: Data grading detail
 //
 export const mockPostDataGradingDetail = [
   {
@@ -2015,8 +1937,8 @@ export const mockPostReviewDetail = [
     fileName: "exercise.docx",
     scoreDetail: {
       "Bài nộp": "NHL_Bài 1.docx",
-      Điểm: 9,
-      "Góp ý": "Bài làm sai sót nhiều",
+      historyGrade: [6, 8],
+      historyFeedback: ["Bài làm sai sót nhiều", "Bài làm khá ổn"],
     },
   },
   {
@@ -2027,8 +1949,8 @@ export const mockPostReviewDetail = [
     fileName: "exercise.docx",
     scoreDetail: {
       "Bài nộp": "NHL_Bài 1.docx",
-      Điểm: 8,
-      "Góp ý": "Bài làm tốt",
+      historyGrade: [6, 8],
+      historyFeedback: ["Bài làm sai sót nhiều", "Bài làm khá ổn"],
     },
   },
   {
@@ -2039,8 +1961,83 @@ export const mockPostReviewDetail = [
     fileName: "exercise.docx",
     scoreDetail: {
       "Bài nộp": "NHL_Bài 1.docx",
-      Điểm: 10,
-      "Góp ý": "",
+      historyGrade: [6, 8],
+      historyFeedback: ["Bài làm sai sót nhiều", "Bài làm khá ổn"],
+    },
+  },
+];
+
+export const mockDataReviewGrading = [
+  {
+    STT: "1",
+    isDeleted: false,
+    data: {
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
+      "Bài tập": "Bài tập ngày 29/8/2024",
+      "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
+      Điểm: [6],
+      MSSV: "21522289",
+      "Họ và tên": "Nguyễn Hoàng Linh",
+    },
+  },
+  {
+    STT: "2",
+    isDeleted: false,
+    data: {
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
+      "Bài tập": "Bài tập ngày 29/8/2024",
+      "Bài nộp": "LeThanhLoc_BaiTap.docx",
+      Điểm: [6],
+      MSSV: "21522289",
+      "Họ và tên": "Lê Thành Lộc",
+    },
+  },
+  {
+    STT: "3",
+    isDeleted: false,
+    data: {
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
+      "Bài tập": "Bài tập ngày 29/8/2024",
+      "Bài nộp": "",
+      Điểm: [6],
+      MSSV: "21522289",
+      "Họ và tên": "Huỳnh Hồ Thị Mộng Trinh",
+    },
+  },
+  {
+    STT: "4",
+    isDeleted: false,
+    data: {
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
+      "Bài tập": "Bài tập ngày 29/8/2024",
+      "Bài nộp": "LeThanhLoc_BaiTap.docx",
+      Điểm: [6, 7],
+      MSSV: "21522289",
+      "Họ và tên": "Nguyễn Tiến Vĩ",
+    },
+  },
+  {
+    STT: "5",
+    isDeleted: false,
+    data: {
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
+      "Bài tập": "Bài tập ngày 29/8/2024",
+      "Bài nộp": "NguyenHoangLinh_BaiTap.docx",
+      Điểm: [6, 8, 9],
+      MSSV: "21522289",
+      "Họ và tên": "Nguyễn Thị Thanh Tuyền",
+    },
+  },
+  {
+    STT: "6",
+    isDeleted: false,
+    data: {
+      Lớp: "SE114.N21.PMCL - Nhập môn công nghệ phần mềm",
+      "Bài tập": "Bài tập ngày 29/8/2024",
+      "Bài nộp": "LeThanhLoc_BaiTap.docx",
+      Điểm: [6, 8],
+      MSSV: "21522289",
+      "Họ và tên": "Võ Hữu Xike",
     },
   },
 ];

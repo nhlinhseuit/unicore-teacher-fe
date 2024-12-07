@@ -1,9 +1,8 @@
-import { itemsPerPageRegisterTable } from "@/constants";
+import { itemsPerPageRegisterTable, tableTheme } from "@/constants";
 import { GradingReviewDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import { useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
-import { tableTheme } from "../components/DataTable";
 import MyFooter from "../components/MyFooter";
 import RowGradingReviewTable from "./RowGradingReviewTable";
 

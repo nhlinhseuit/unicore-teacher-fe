@@ -228,8 +228,8 @@ export interface DataGradingDetailItem {
 }
 export interface DataGradingReviewItem {
   "Bài nộp": string;
-  Điểm: number;
-  "Góp ý": string;
+  historyGrade: number[];
+  historyFeedback: string[];
 }
 
 export interface GradingReportDataItem {
