@@ -129,7 +129,7 @@ export const BigExerciseTabItems = [
     route: "/happening-event",
   },
   {
-    value: "listTopic",
+    value: "uploadTopic",
     label: "Danh sách đề tài",
     route: "/upload-topic",
   },
