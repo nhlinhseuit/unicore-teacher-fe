@@ -175,320 +175,331 @@ const ReviewForm = () => {
           </div>
 
           {/* //TODO: ĐÁNH GIÁ KHÓA LUẬN */}
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-6">
             <div>
               <label className="base-semibold">Đánh giá khóa luận: </label>
             </div>
 
             {/* //? Tổng quan về cuốn báo cáo: */}
 
-            <div>
-              <label className=" base-semibold">
-                1.. Tổng quan về cuốn báo cáo:
-              </label>
-            </div>
-
-            <div className="ml-4 flex flex-col gap-2">
-              <div className="flex items-center gap-4">
-                <label className="base-regular w-[20%]">Số trang: </label>
-                <div className="flex-grow">
-                  <InputForm
-                    placeholder="Nhập số trang"
-                    name="totalPages"
-                    value={formData.totalPages}
-                    onChange={handleChange}
-                    otherClassess="w-full"
-                  />
-                </div>
+            <div className="flex flex-col gap-4">
+              <div>
+                <label className="pt-6 base-semibold">
+                  1. Tổng quan về cuốn báo cáo:
+                </label>
               </div>
 
-              <div className=" flex items-center gap-4">
-                <label className="base-regular w-[20%]">Số chương: </label>
-                <div className="flex-grow">
-                  <InputForm
-                    placeholder="Nhập số chương"
-                    name="totalChapters"
-                    value={formData.totalChapters}
-                    onChange={handleChange}
-                    otherClassess="w-full"
-                  />
+              <div className="ml-4 flex flex-col gap-2">
+                <div className="flex items-center gap-4">
+                  <label className="base-regular w-[20%]">Số trang: </label>
+                  <div className="flex-grow">
+                    <InputForm
+                      placeholder="Nhập số trang"
+                      name="totalPages"
+                      value={formData.totalPages}
+                      onChange={handleChange}
+                      otherClassess="w-full"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className=" flex items-center gap-4">
-                <label className="base-regular w-[20%]">Số hình vẽ: </label>
-                <div className="flex-grow">
-                  <InputForm
-                    placeholder="Nhập số hình vẽ"
-                    name="totalFigures"
-                    value={formData.totalFigures}
-                    onChange={handleChange}
-                    otherClassess="w-full"
-                  />
+                <div className=" flex items-center gap-4">
+                  <label className="base-regular w-[20%]">Số chương: </label>
+                  <div className="flex-grow">
+                    <InputForm
+                      placeholder="Nhập số chương"
+                      name="totalChapters"
+                      value={formData.totalChapters}
+                      onChange={handleChange}
+                      otherClassess="w-full"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className=" flex items-center gap-4">
-                <label className="base-regular w-[20%]">Số bảng biểu: </label>
-                <div className="flex-grow">
-                  <InputForm
-                    placeholder="Nhập số bảng biểu"
-                    name="totalTables"
-                    value={formData.totalTables}
-                    onChange={handleChange}
-                    otherClassess="w-full"
-                  />
+                <div className=" flex items-center gap-4">
+                  <label className="base-regular w-[20%]">Số hình vẽ: </label>
+                  <div className="flex-grow">
+                    <InputForm
+                      placeholder="Nhập số hình vẽ"
+                      name="totalFigures"
+                      value={formData.totalFigures}
+                      onChange={handleChange}
+                      otherClassess="w-full"
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className=" flex items-center gap-4">
-                <label className="base-regular w-[20%]">
-                  Số tài liệu tham khảo:{" "}
+                <div className=" flex items-center gap-4">
+                  <label className="base-regular w-[20%]">Số bảng biểu: </label>
+                  <div className="flex-grow">
+                    <InputForm
+                      placeholder="Nhập số bảng biểu"
+                      name="totalTables"
+                      value={formData.totalTables}
+                      onChange={handleChange}
+                      otherClassess="w-full"
+                    />
+                  </div>
+                </div>
+
+                <div className=" flex items-center gap-4">
+                  <label className="base-regular w-[20%]">
+                    Số tài liệu tham khảo:{" "}
+                  </label>
+                  <div className="flex-grow">
+                    <InputForm
+                      placeholder="Nhập số tài liệu tham khảo"
+                      name="totalReferences"
+                      value={formData.totalReferences}
+                      onChange={handleChange}
+                      otherClassess="w-full"
+                    />
+                  </div>
+                </div>
+
+                <label className="base-regular italic">
+                  &lt;nhận xét về định dạng, cách thức viết báo cáo, văn phong,
+                  phân bố nội dung, chương mục có hợp lý không&gt;
                 </label>
                 <div className="flex-grow">
                   <InputForm
-                    placeholder="Nhập số tài liệu tham khảo"
-                    name="totalReferences"
-                    value={formData.totalReferences}
+                    placeholder="Nhận xét"
+                    name="overviewComment"
+                    value={formData.overviewComment}
                     onChange={handleChange}
                     otherClassess="w-full"
+                    isLongText
                   />
                 </div>
-              </div>
-
-              <label className="base-regular italic">
-                &lt;nhận xét về định dạng, cách thức viết báo cáo, văn phong,
-                phân bố nội dung, chương mục có hợp lý không&gt;
-              </label>
-              <div className="flex-grow">
-                <InputForm
-                  placeholder="Nhận xét"
-                  name="overviewComment"
-                  value={formData.overviewComment}
-                  onChange={handleChange}
-                  otherClassess="w-full"
-                  isLongText
-                />
               </div>
             </div>
 
             {/* //? Nhận xét chung */}
-
-            <div>
-              <label className=" base-semibold">2. Nhận xét chung:</label>
-            </div>
-
-            <div className="ml-4 flex flex-col gap-2">
-              <label className="base-regular underline">
-                a. Về nội dung nghiên cứu:
-              </label>
-              <label className="base-regular italic">
-                &lt;nhận xét về kiến thức, phương pháp mà sinh viên đã tìm hiểu,
-                nghiên cứu nhận xét ưu điểm và hạn chế&gt;
-              </label>
-              <div className="flex-grow">
-                <InputForm
-                  placeholder="Nhận xét"
-                  name="researchContentComment"
-                  value={formData.researchContentComment}
-                  onChange={handleChange}
-                  otherClassess="w-full"
-                  isLongText
-                />
+            <div className="flex flex-col gap-4">
+              <div>
+                <label className=" base-semibold">2. Nhận xét chung:</label>
               </div>
-            </div>
 
-            <div className="ml-4 flex flex-col gap-2">
-              <label className="base-regular underline">
-                b. Về chương trình ứng dụng:
-              </label>
-              <label className="base-regular italic">
-                &lt;nhận xét về việc xây dựng ứng dụng demo, nhận xét ưu điểm và
-                hạn chế&gt;
-              </label>
-              <div className="flex-grow">
-                <InputForm
-                  placeholder="Nhận xét"
-                  name="applicationProgramComment"
-                  value={formData.applicationProgramComment}
-                  onChange={handleChange}
-                  otherClassess="w-full"
-                  isLongText
-                />
+              <div className="ml-4 flex flex-col gap-2">
+                <label className="base-regular underline">
+                  a. Về nội dung nghiên cứu:
+                </label>
+                <label className="base-regular italic">
+                  &lt;nhận xét về kiến thức, phương pháp mà sinh viên đã tìm
+                  hiểu, nghiên cứu nhận xét ưu điểm và hạn chế&gt;
+                </label>
+                <div className="flex-grow">
+                  <InputForm
+                    placeholder="Nhận xét"
+                    name="researchContentComment"
+                    value={formData.researchContentComment}
+                    onChange={handleChange}
+                    otherClassess="w-full"
+                    isLongText
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="ml-4 flex flex-col gap-2">
-              <label className="base-regular underline">
-                c. Về thái độ làm việc của sinh viên:
-              </label>
-              <label className="base-regular italic">
-                &lt;nhận xét về thái độ, ưu khuyết điểm của từng sinh viên tham
-                gia&gt;
-              </label>
-              <div className="flex-grow">
-                <InputForm
-                  placeholder="Nhận xét"
-                  name="studentAttitudeComment"
-                  value={formData.studentAttitudeComment}
-                  onChange={handleChange}
-                  otherClassess="w-full"
-                  isLongText
-                />
+              <div className="ml-4 flex flex-col gap-2">
+                <label className="base-regular underline">
+                  b. Về chương trình ứng dụng:
+                </label>
+                <label className="base-regular italic">
+                  &lt;nhận xét về việc xây dựng ứng dụng demo, nhận xét ưu điểm
+                  và hạn chế&gt;
+                </label>
+                <div className="flex-grow">
+                  <InputForm
+                    placeholder="Nhận xét"
+                    name="applicationProgramComment"
+                    value={formData.applicationProgramComment}
+                    onChange={handleChange}
+                    otherClassess="w-full"
+                    isLongText
+                  />
+                </div>
               </div>
-            </div>
 
-            <div className="ml-4 flex flex-col gap-2">
-              <label className="base-regular underline">d. Ý kiến khác:</label>
-              <label className="base-regular italic">
-                &lt;nhận xét ưu điểm khác hoặc hạn chế, điểm cần bổ sung, chỉnh
-                sửa của khóa luận tốt nghiệp hoặc câu hỏi liên quan cần được làm
-                rõ&gt;
-              </label>
-              <div className="flex-grow">
-                <InputForm
-                  placeholder="Nhận xét"
-                  name="otherComments"
-                  value={formData.otherComments}
-                  onChange={handleChange}
-                  otherClassess="w-full"
-                  isLongText
-                />
+              <div className="ml-4 flex flex-col gap-2">
+                <label className="base-regular underline">
+                  c. Về thái độ làm việc của sinh viên:
+                </label>
+                <label className="base-regular italic">
+                  &lt;nhận xét về thái độ, ưu khuyết điểm của từng sinh viên
+                  tham gia&gt;
+                </label>
+                <div className="flex-grow">
+                  <InputForm
+                    placeholder="Nhận xét"
+                    name="studentAttitudeComment"
+                    value={formData.studentAttitudeComment}
+                    onChange={handleChange}
+                    otherClassess="w-full"
+                    isLongText
+                  />
+                </div>
+              </div>
+
+              <div className="ml-4 flex flex-col gap-2">
+                <label className="base-regular underline">
+                  d. Ý kiến khác:
+                </label>
+                <label className="base-regular italic">
+                  &lt;nhận xét ưu điểm khác hoặc hạn chế, điểm cần bổ sung,
+                  chỉnh sửa của khóa luận tốt nghiệp hoặc câu hỏi liên quan cần
+                  được làm rõ&gt;
+                </label>
+                <div className="flex-grow">
+                  <InputForm
+                    placeholder="Nhận xét"
+                    name="otherComments"
+                    value={formData.otherComments}
+                    onChange={handleChange}
+                    otherClassess="w-full"
+                    isLongText
+                  />
+                </div>
               </div>
             </div>
 
             {/* //? Phần chấm điểm của cán bộ hướng dẫn */}
+            <div className="flex flex-col gap-4">
+              <div>
+                <label className=" base-semibold">
+                  3. Phần chấm điểm của cán bộ hướng dẫn:
+                </label>
+              </div>
 
-            <div>
-              <label className=" base-semibold">
-                3. Phần chấm điểm của cán bộ hướng dẫn:
-              </label>
-            </div>
-
-            <div className="ml-4 flex flex-col gap-2">
-              <TableForm />
+              <div className="ml-4 flex flex-col gap-2">
+                <TableForm />
+              </div>
             </div>
 
             {/* //? Phần chấm điểm của cán bộ hướng dẫn */}
+            <div className="flex flex-col gap-4">
+              <div>
+                <label className=" base-semibold">4. Đánh giá chung:</label>
+              </div>
 
-            <div>
-              <label className=" base-semibold">4. Đánh giá chung:</label>
-            </div>
+              <div className="ml-4 flex gap-4 items-center">
+                <span className="base-regular">- Kết quả: </span>
 
-            <div className="ml-4 flex gap-4 items-center">
-              <span className="base-regular">- Kết quả: </span>
-
-              <Dropdown
-                className="z-30 rounded-lg"
-                label=""
-                dismissOnClick={true}
-                renderTrigger={() => (
-                  <div>
-                    <IconButton
-                      text={`${
-                        selectedThesisStatus !== -1
-                          ? statusThesis[selectedThesisStatus - 1].value
-                          : "Chọn kết quả"
-                      }`}
-                      onClick={() => {}}
-                      iconRight={"/assets/icons/chevron-down.svg"}
-                      bgColor="bg-white"
-                      textColor="text-black"
-                      border
-                    />
+                <Dropdown
+                  className="z-30 rounded-lg"
+                  label=""
+                  dismissOnClick={true}
+                  renderTrigger={() => (
+                    <div>
+                      <IconButton
+                        text={`${
+                          selectedThesisStatus !== -1
+                            ? statusThesis[selectedThesisStatus - 1].value
+                            : "Chọn kết quả"
+                        }`}
+                        onClick={() => {}}
+                        iconRight={"/assets/icons/chevron-down.svg"}
+                        bgColor="bg-white"
+                        textColor="text-black"
+                        border
+                      />
+                    </div>
+                  )}
+                >
+                  <div className="scroll-container scroll-container-dropdown-content">
+                    {statusThesis.map((course: any, index) => (
+                      <Dropdown.Item
+                        key={`${course}_${index}`}
+                        onClick={() => {
+                          if (selectedThesisStatus === course.id) {
+                            setSelectedThesisStatus(-1);
+                          } else {
+                            setSelectedThesisStatus(course.id);
+                          }
+                        }}
+                      >
+                        <div className="flex justify-between w-full gap-4">
+                          <p className="text-left line-clamp-1">
+                            {course.value}
+                          </p>
+                          {selectedThesisStatus === course.id ? (
+                            <Image
+                              src="/assets/icons/check.svg"
+                              alt="search"
+                              width={21}
+                              height={21}
+                              className="cursor-pointer mr-2"
+                            />
+                          ) : (
+                            <></>
+                          )}
+                        </div>
+                      </Dropdown.Item>
+                    ))}
                   </div>
-                )}
-              >
-                <div className="scroll-container scroll-container-dropdown-content">
-                  {statusThesis.map((course: any, index) => (
-                    <Dropdown.Item
-                      key={`${course}_${index}`}
-                      onClick={() => {
-                        if (selectedThesisStatus === course.id) {
-                          setSelectedThesisStatus(-1);
-                        } else {
-                          setSelectedThesisStatus(course.id);
-                        }
-                      }}
-                    >
-                      <div className="flex justify-between w-full gap-4">
-                        <p className="text-left line-clamp-1">{course.value}</p>
-                        {selectedThesisStatus === course.id ? (
-                          <Image
-                            src="/assets/icons/check.svg"
-                            alt="search"
-                            width={21}
-                            height={21}
-                            className="cursor-pointer mr-2"
-                          />
-                        ) : (
-                          <></>
-                        )}
-                      </div>
-                    </Dropdown.Item>
-                  ))}
-                </div>
-              </Dropdown>
+                </Dropdown>
 
-              <span className="base-regular">
-                yêu cầu của Khóa luận tốt nghiệp.
-              </span>
-            </div>
+                <span className="base-regular">
+                  yêu cầu của Khóa luận tốt nghiệp.
+                </span>
+              </div>
 
-            <div className="ml-4 flex gap-4 items-center">
-              <span className="base-regular">- Xếp loại:</span>
+              <div className="ml-4 flex gap-4 items-center">
+                <span className="base-regular">- Xếp loại:</span>
 
-              <Dropdown
-                className="z-30 rounded-lg"
-                label=""
-                dismissOnClick={true}
-                renderTrigger={() => (
-                  <div>
-                    <IconButton
-                      text={`${
-                        selectedThesisRating !== -1
-                          ? ratingThesis[selectedThesisRating - 1].value
-                          : "Chọn xếp loại"
-                      }`}
-                      onClick={() => {}}
-                      iconRight={"/assets/icons/chevron-down.svg"}
-                      bgColor="bg-white"
-                      textColor="text-black"
-                      border
-                    />
+                <Dropdown
+                  className="z-30 rounded-lg"
+                  label=""
+                  dismissOnClick={true}
+                  renderTrigger={() => (
+                    <div>
+                      <IconButton
+                        text={`${
+                          selectedThesisRating !== -1
+                            ? ratingThesis[selectedThesisRating - 1].value
+                            : "Chọn xếp loại"
+                        }`}
+                        onClick={() => {}}
+                        iconRight={"/assets/icons/chevron-down.svg"}
+                        bgColor="bg-white"
+                        textColor="text-black"
+                        border
+                      />
+                    </div>
+                  )}
+                >
+                  <div className="scroll-container scroll-container-dropdown-content">
+                    {ratingThesis.map((course: any, index) => (
+                      <Dropdown.Item
+                        key={`${course}_${index}`}
+                        onClick={() => {
+                          if (selectedThesisRating === course.id) {
+                            setSelectedThesisRating(-1);
+                          } else {
+                            setSelectedThesisRating(course.id);
+                          }
+                        }}
+                      >
+                        <div className="flex justify-between w-full gap-4">
+                          <p className="text-left line-clamp-1">
+                            {course.value}
+                          </p>
+                          {selectedThesisRating === course.id ? (
+                            <Image
+                              src="/assets/icons/check.svg"
+                              alt="search"
+                              width={21}
+                              height={21}
+                              className="cursor-pointer mr-2"
+                            />
+                          ) : (
+                            <></>
+                          )}
+                        </div>
+                      </Dropdown.Item>
+                    ))}
                   </div>
-                )}
-              >
-                <div className="scroll-container scroll-container-dropdown-content">
-                  {ratingThesis.map((course: any, index) => (
-                    <Dropdown.Item
-                      key={`${course}_${index}`}
-                      onClick={() => {
-                        if (selectedThesisRating === course.id) {
-                          setSelectedThesisRating(-1);
-                        } else {
-                          setSelectedThesisRating(course.id);
-                        }
-                      }}
-                    >
-                      <div className="flex justify-between w-full gap-4">
-                        <p className="text-left line-clamp-1">{course.value}</p>
-                        {selectedThesisRating === course.id ? (
-                          <Image
-                            src="/assets/icons/check.svg"
-                            alt="search"
-                            width={21}
-                            height={21}
-                            className="cursor-pointer mr-2"
-                          />
-                        ) : (
-                          <></>
-                        )}
-                      </div>
-                    </Dropdown.Item>
-                  ))}
-                </div>
-              </Dropdown>
+                </Dropdown>
+              </div>
             </div>
           </div>
         </div>
