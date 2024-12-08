@@ -1,10 +1,11 @@
-import { itemsPerPageTopicTable, tableTheme } from "@/constants";
+import { itemsPerPageTopicTable } from "@/constants";
 import { FileDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import MyFooter from "../components/MyFooter";
 import RowFileDataTable from "./RowFileDataTable";
+import { tableTheme } from "../components/DataTable";
 
 interface DataTableParams {
   isEditTable: boolean;

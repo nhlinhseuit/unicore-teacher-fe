@@ -2,7 +2,6 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
 } from "@/components/ui/alert-dialog";
-import { tableTheme } from "@/constants";
 import { DataGradingReviewItem } from "@/types";
 import {
   AlertDialog,
@@ -14,6 +13,7 @@ import {
 } from "@radix-ui/react-alert-dialog";
 import { Table } from "flowbite-react";
 import { useState } from "react";
+import { tableTheme } from "../../components/DataTable";
 
 interface DataTableParams {
   isEditTable: boolean;

@@ -39,7 +39,7 @@ import Student from "@/types/entity/Student";
 import { usePathname } from "next/navigation";
 import TitleDescription from "@/components/shared/TitleDescription";
 
-const ListTopic = () => {
+const UploadTopic = () => {
   // Update biến: Danh sách thành viên nhóm
   const pathName = usePathname();
   const courseId = pathName.split("/")[2];
@@ -524,4 +524,4 @@ const ListTopic = () => {
   );
 };
 
-export default ListTopic;
+export default UploadTopic;

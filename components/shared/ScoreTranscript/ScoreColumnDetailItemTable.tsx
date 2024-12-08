@@ -2,7 +2,7 @@ import { DataGradingDetailItem } from "@/types";
 import { Table } from "flowbite-react";
 import { useRef } from "react";
 import InputComponent from "../Table/components/InputComponent";
-import { tableTheme } from "@/constants";
+import { tableTheme } from "../Table/components/DataTable";
 
 interface DataTableParams {
   isEditTable: boolean;
