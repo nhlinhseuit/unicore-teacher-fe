@@ -10,7 +10,7 @@ import { tableTheme } from "../components/DataTable";
 interface DataTableParams {
   isMultipleDelete: boolean;
   dataTable: GradingReviewDataItem[];
-  viewDetailGradeColumn: () => void;
+  viewDetailGradeColumn: (key: string) => void;
 }
 
 const GradingReviewTable = (params: DataTableParams) => {
@@ -29,13 +29,11 @@ const GradingReviewTable = (params: DataTableParams) => {
     );
   }, [dataTable, currentPage]);
 
-  const [filteredDataTable, setFilteredDataTable] =
-    useState<GradingReviewDataItem[]>(currentItems);
 
   return (
     <div>
       {/* TABLE */}
-      {currentItems.length > 0 && filteredDataTable.length === 0 ? (
+      {currentItems.length > 0 && currentItems.length === 0 ? (
         <NoResult
           title="Không có dữ liệu!"
           description="💡 Bạn hãy thử tìm kiếm 1 từ khóa khác nhé."
@@ -65,7 +63,7 @@ const GradingReviewTable = (params: DataTableParams) => {
                 STT
               </Table.HeadCell>
 
-              {Object.keys(filteredDataTable[0]?.data || {}).map(
+              {Object.keys(currentItems[0]?.data || {}).map(
                 (key, index) => {
                   return (
                     <Table.HeadCell
@@ -82,7 +80,7 @@ const GradingReviewTable = (params: DataTableParams) => {
 
             {/* BODY */}
             <Table.Body className="text-left divide-y">
-              {filteredDataTable.map((dataItem, index) =>
+              {currentItems.map((dataItem, index) =>
                 dataItem.isDeleted ? (
                   <></>
                 ) : (
@@ -91,7 +89,9 @@ const GradingReviewTable = (params: DataTableParams) => {
                     <RowGradingReviewTable
                       key={`${dataItem.STT}_${index}`}
                       dataItem={dataItem}
-                      viewDetailGradeColumn={params.viewDetailGradeColumn}
+                      viewDetailGradeColumn={() => {
+                        params.viewDetailGradeColumn(dataItem.STT)
+                      }}
                     />
                   </>
                 )

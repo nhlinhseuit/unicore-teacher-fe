@@ -2,11 +2,13 @@
 
 import GradingReviewTable from "@/components/shared/Table/TableReview/GradingReviewTable";
 import {
-  mockDataReviewGrading,
+  mockDataAllReviewGrading,
+  mockDataNotReviewGrading,
+  mockDataReviewedGrading,
   mockPostReviewDetail,
   mockReviewOptions,
 } from "@/mocks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import PostReviewScoreItem from "@/components/shared/Table/TableReview/PostReviewScoreItem";
 import {
@@ -39,9 +41,28 @@ import { z } from "zod";
 import TextAreaComponent from "@/components/shared/TextAreaComponent";
 
 const Review = () => {
-  const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
+  const [selectedReviewOption, setSelectedReviewOption] = useState(3);
+  const getDataTable = () => {
+    switch (selectedReviewOption) {
+      case 1:
+        return mockDataAllReviewGrading;
+      case 2:
+        return mockDataReviewedGrading;
+      case 3:
+        return mockDataNotReviewGrading;
+      default:
+        return mockDataAllReviewGrading;
+    }
+  };
+
+  const [renderDataTable, setRenderDataTable] = useState(getDataTable());
+
+  useEffect(() => {
+    setRenderDataTable(getDataTable());
+  }, [selectedReviewOption]);
+
+  const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState("");
   const [isReview, setIsReview] = useState(-1);
-  const [selectedReviewOption, setSelectedReviewOption] = useState(1);
 
   const [score, setScore] = useState("");
   const [feedback, setFeedback] = useState("");
@@ -70,6 +91,13 @@ const Review = () => {
       }
     );
 
+  const saveDataTable = () => {
+    const updatedTable = renderDataTable.filter(
+      (item) => item.STT !== isViewDetailGradeColumn
+    );
+    setRenderDataTable(updatedTable);
+  };
+
   const form = useForm<z.infer<typeof AnnoucementSchema>>({
     resolver: zodResolver(AnnoucementSchema),
     defaultValues: {},
@@ -85,9 +113,6 @@ const Review = () => {
         reason: reason,
       });
 
-      // naviate to home page
-      // router.push("/");
-
       toast({
         title: "Phúc khảo bài làm thành công.",
         variant: "success",
@@ -95,10 +120,10 @@ const Review = () => {
       });
 
       setIsReview(-1);
-      setIsViewDetailGradeColumn(false);
-
-      // reset({
-      // });
+      setIsViewDetailGradeColumn("");
+      setScore("");
+      setFeedback("");
+      saveDataTable();
     } catch {
     } finally {
     }
@@ -120,7 +145,7 @@ const Review = () => {
                 text={`${
                   selectedReviewOption !== -1
                     ? mockReviewOptions[selectedReviewOption - 1].value
-                    : "Chọn lớp"
+                    : "Chọn bộ lọc"
                 }`}
                 onClick={() => {}}
                 iconRight={"/assets/icons/chevron-down.svg"}
@@ -165,14 +190,14 @@ const Review = () => {
 
       <GradingReviewTable
         isMultipleDelete={false}
-        dataTable={mockDataReviewGrading}
-        viewDetailGradeColumn={() => {
-          setIsViewDetailGradeColumn(true);
+        dataTable={renderDataTable}
+        viewDetailGradeColumn={(key: string) => {
+          setIsViewDetailGradeColumn(key);
         }}
       />
 
       {/* EDIT GRADE COLUMN */}
-      <AlertDialog open={isViewDetailGradeColumn}>
+      <AlertDialog open={isViewDetailGradeColumn !== ""}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-center">
@@ -212,7 +237,7 @@ const Review = () => {
                 cancel
                 text={"Hủy"}
                 onClick={() => {
-                  setIsViewDetailGradeColumn(false);
+                  setIsViewDetailGradeColumn("");
                 }}
               />
             </div>

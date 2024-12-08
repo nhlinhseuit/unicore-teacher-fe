@@ -2,7 +2,7 @@
 
 import GradingReviewTable from "@/components/shared/Table/TableReview/GradingReviewTable";
 import {
-  mockDataReviewGrading,
+  mockDataAllReviewGrading,
   mockPostReviewDetail,
   mockReviewOptions,
 } from "@/mocks";
@@ -165,7 +165,7 @@ const Review = () => {
 
       <GradingReviewTable
         isMultipleDelete={false}
-        dataTable={mockDataReviewGrading}
+        dataTable={mockDataAllReviewGrading}
         viewDetailGradeColumn={() => {
           setIsViewDetailGradeColumn(true);
         }}
