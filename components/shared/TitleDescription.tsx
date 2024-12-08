@@ -22,7 +22,7 @@ const TitleDescription = (params: Props) => {
           alt="breadcrumbImg"
           width="140"
           height="140"
-          src="https://modernize-nextjs.adminmart.com/_next/image?url=%2Fimages%2Fbreadcrumb%2FChatBc.png&w=256&q=75"
+          src={"/assets/images/ChatBc.webp"} 
         ></img>
       </div>
     </div>
