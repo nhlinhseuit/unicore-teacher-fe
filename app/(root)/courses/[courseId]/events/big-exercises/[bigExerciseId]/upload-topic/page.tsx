@@ -251,7 +251,10 @@ const UploadTopic = () => {
     <>
       {!isImport ? (
         <>
-          <TitleDescription />
+          <TitleDescription
+            title="Đăng đề tài"
+            description={["Thời hạn: 7/12/2024 - 28/12/2024"]}
+          />
 
           <div className="flex justify-end mb-3 gap-2">
             <IconButton

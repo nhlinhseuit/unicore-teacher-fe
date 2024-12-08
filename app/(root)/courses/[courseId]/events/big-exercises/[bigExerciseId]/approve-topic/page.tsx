@@ -9,17 +9,16 @@ import {
   mockDataAppprovedTopic,
   mockDataNotAppproveTopic,
   mockDataProcessingTopic,
-  mockDataRefuseTopic
+  mockDataRefuseTopic,
 } from "@/mocks";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ApproveTopic = () => {
   const [selectedApproveTopicOption, setSelectedApproveTopicOption] =
     useState(3);
-
   const getDataTable = () => {
     switch (selectedApproveTopicOption) {
       case 1:
@@ -35,6 +34,22 @@ const ApproveTopic = () => {
       default:
         return mockDataAllAppproveTopic;
     }
+  };
+
+  const [renderDataTable, setRenderDataTable] = useState(getDataTable());
+
+  useEffect(() => {
+    setRenderDataTable(getDataTable())
+  }, [selectedApproveTopicOption])
+  
+
+  const onSaveTable = (itemsSelected: string[]) => {
+    console.log('itemsSelected', itemsSelected)
+
+    const updatedTable = renderDataTable.filter(
+      (item) => !itemsSelected.includes(item.data["Mã nhóm"])
+    );
+    setRenderDataTable(updatedTable);
   };
 
   return (
@@ -101,8 +116,12 @@ const ApproveTopic = () => {
         type={RegisterTopicTableType.approveTopic}
         isEditTable={false}
         isMultipleDelete={false}
-        dataTable={getDataTable()}
-        onSaveTable={(itemsSelected: string[]) => {}}
+        dataTable={renderDataTable}
+        isNotShowButton={selectedApproveTopicOption === 1}
+        isOnlyShowResponseTopicButton={selectedApproveTopicOption === 4 || selectedApproveTopicOption === 5}
+        onSaveTable={(itemsSelected: string[]) => {
+          onSaveTable(itemsSelected)
+        }}
       />
     </>
   );

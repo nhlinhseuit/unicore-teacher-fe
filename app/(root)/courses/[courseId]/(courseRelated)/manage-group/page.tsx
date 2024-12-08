@@ -328,7 +328,7 @@ const ManageGroup = () => {
           </p>
 
       {isToggleViewTable ? (
-        <div className="px-6">
+        <div>
           <RegisterGroupTable
             isEditTable={false}
             isMultipleDelete={false}

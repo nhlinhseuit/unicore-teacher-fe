@@ -1,6 +1,6 @@
 import { RegisterTopicDataItem } from "@/types";
 import { Table } from "flowbite-react";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
 import RowRegisterTopicTable from "./RowRegisterTopicTable";
 
@@ -23,6 +23,8 @@ interface DataTableParams {
   isEditTable: boolean;
   isMultipleDelete: boolean;
   dataTable: RegisterTopicDataItem[];
+  isNotShowButton: boolean;
+  isOnlyShowResponseTopicButton: boolean;
   onSaveTable: (itemsSelected: string[]) => void;
 }
 
@@ -30,6 +32,11 @@ const RegisterTopicTable = (params: DataTableParams) => {
   const dataTable = useMemo(() => {
     return params.dataTable.filter((dataItem) => dataItem.isDeleted !== true);
   }, [params.dataTable]);
+
+  useEffect(() => {
+    setItemsSelected([])
+  }, [params.dataTable])
+  
 
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
 
@@ -39,6 +46,17 @@ const RegisterTopicTable = (params: DataTableParams) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [isShowFooter, setIsShowFooter] = useState(true);
   const totalItems = dataTable.length;
+
+  const handleInvalid = () => {
+    if (itemsSelected.length === 0) {
+      toast({
+        title: "Vui lòng chọn đề tài!",
+        variant: "error",
+        duration: 3000,
+      });
+      return;
+    }
+  };
 
   const currentItems = useMemo(() => {
     return dataTable.slice(
@@ -71,9 +89,6 @@ const RegisterTopicTable = (params: DataTableParams) => {
           variant: "success",
           duration: 3000,
         });
-        params.onSaveTable(itemsSelected)
-        setItemsSelected([]);
-        // TODO: Xóa local
       } else if (isShowDialog === 2) {
         toast({
           title: "Phản hồi đề tài thành công.",
@@ -81,7 +96,6 @@ const RegisterTopicTable = (params: DataTableParams) => {
           variant: "success",
           duration: 3000,
         });
-        setItemsSelected([]);
       } else {
         toast({
           title: "Từ chối các đề tài thành công.",
@@ -89,10 +103,11 @@ const RegisterTopicTable = (params: DataTableParams) => {
           variant: "success",
           duration: 3000,
         });
-        setItemsSelected([]);
       }
     } catch {
     } finally {
+      params.onSaveTable(itemsSelected);
+      setItemsSelected([]);
     }
   }
 
@@ -109,7 +124,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
           ) : (
             <>
               {params.type === RegisterTopicTableType.approveTopic ? (
-                isShowDialog === -1 ? (
+                isShowDialog === -1 && !params.isNotShowButton ? (
                   <BorderContainer otherClasses="mb-4 p-6">
                     <div className="flex justify-end items-center">
                       <div className="flex items-center gap-2">
@@ -119,56 +134,45 @@ const RegisterTopicTable = (params: DataTableParams) => {
                             {` ${itemsSelected.length}`}
                           </span>
                         </p>
-                        <IconButton
-                          text="Duyệt đề tài"
-                          onClick={() => {
-                            if (itemsSelected.length === 0) {
-                              toast({
-                                title: "Vui lòng chọn đề tài!",
-                                variant: "error",
-                                duration: 3000,
-                              });
-                              return;
-                            }
-                            setIsShowDialog(1);
-                          }}
-                          iconWidth={16}
-                          iconHeight={16}
-                        />
+
+                        {params.isOnlyShowResponseTopicButton ? null : (
+                          <IconButton
+                            text="Duyệt đề tài"
+                            onClick={() => {
+                              handleInvalid();
+
+                              setIsShowDialog(1);
+                            }}
+                            iconWidth={16}
+                            iconHeight={16}
+                          />
+                        )}
+
                         <IconButton
                           text="Phản hồi đề tài"
                           green
                           onClick={() => {
-                            if (itemsSelected.length === 0) {
-                              toast({
-                                title: "Vui lòng chọn đề tài!",
-                                variant: "error",
-                                duration: 3000,
-                              });
-                              return;
-                            }
+                            handleInvalid();
+
                             setIsShowDialog(2);
                           }}
                           iconWidth={16}
                           iconHeight={16}
                         />
-                        <IconButton
-                          text="Từ chối đề tài"
-                          red
-                          onClick={() => {
-                            if (itemsSelected.length === 0) {
-                              toast({
-                                title: "Vui lòng chọn đề tài!",
-                                variant: "error",
-                                duration: 3000,
-                              });
-                              return;
-                            }
-                            setIsShowDialog(3);
-                          }}
-                          iconWidth={16}
-                          iconHeight={16}
-                        />
+
+                        {params.isOnlyShowResponseTopicButton ? null : (
+                          <IconButton
+                            text="Từ chối đề tài"
+                            red
+                            onClick={() => {
+                              handleInvalid();
+
+                              setIsShowDialog(3);
+                            }}
+                            iconWidth={16}
+                            iconHeight={16}
+                          />
+                        )}
                       </div>
                     </div>
                   </BorderContainer>
@@ -248,21 +252,19 @@ const RegisterTopicTable = (params: DataTableParams) => {
                       STT
                     </Table.HeadCell>
 
-                    {Object.keys(currentItems[0]?.data || {}).map(
-                      (key) => {
-                        if (key === "Mã nhóm") return null;
+                    {Object.keys(currentItems[0]?.data || {}).map((key) => {
+                      if (key === "Mã nhóm") return null;
 
-                        return (
-                          <Table.HeadCell
-                            key={key}
-                            theme={tableTheme?.head?.cell}
-                            className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
-                          >
-                            {key}
-                          </Table.HeadCell>
-                        );
-                      }
-                    )}
+                      return (
+                        <Table.HeadCell
+                          key={key}
+                          theme={tableTheme?.head?.cell}
+                          className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
+                        >
+                          {key}
+                        </Table.HeadCell>
+                      );
+                    })}
                   </Table.Head>
 
                   {/* BODY */}
@@ -279,6 +281,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
                             dataItem={dataItem}
                             isEditTable={params.isEditTable}
                             isMultipleDelete={params.isMultipleDelete}
+                            itemsSelected={itemsSelected}
                             onClickCheckBoxSelect={(item: string) => {
                               setItemsSelected((prev) => {
                                 if (prev.includes(item)) {

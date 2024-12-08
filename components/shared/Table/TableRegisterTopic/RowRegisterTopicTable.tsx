@@ -15,6 +15,7 @@ import MoreButtonComponent from "../components/MoreButtonComponent";
 interface RowParams {
   type: RegisterTopicTableType;
   dataItem: RegisterTopicDataItem;
+  itemsSelected: string[];
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
   isHasSubCourses?: boolean;
@@ -232,6 +233,7 @@ const RowRegisterTopicTable = React.memo(
                   type="checkbox"
                   name="filterOptions"
                   value={valueUniqueInput}
+                  checked={params.itemsSelected.includes(valueUniqueInput)}
                   onChange={() => {
                     {
                       params.onClickCheckBoxSelect &&
