@@ -76,7 +76,7 @@ const ExercisePostItem = (params: Props) => {
         <Divider />
 
         <GradingInPost
-          onClickBack={params.setGrading}
+          setGrading={params.setGrading}
           submissionNumber={mockSubmissionPost.submissionNumber}
           totalNumber={mockSubmissionPost.totalNumber}
           lateTime={mockSubmissionPost.lateTime}
