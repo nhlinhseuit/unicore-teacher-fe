@@ -4,6 +4,7 @@ interface Props {
   value: string | number;
   placeholder: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  otherClassess?: string;
 }
 
 const TextAreaComponent = (params: Props) => {
@@ -12,7 +13,7 @@ const TextAreaComponent = (params: Props) => {
       value={params.value}
       onChange={params.onChange}
       placeholder={params.placeholder}
-      className="
+      className={`
         no-focus
         paragraph-regular
         background-light900_dark300
@@ -29,7 +30,10 @@ const TextAreaComponent = (params: Props) => {
         focus:ring-0
         active:outline-none
         focus:border-inherit
-        text-sm"
+        text-sm
+
+        ${params.otherClassess}
+        `}
     />
   );
 };

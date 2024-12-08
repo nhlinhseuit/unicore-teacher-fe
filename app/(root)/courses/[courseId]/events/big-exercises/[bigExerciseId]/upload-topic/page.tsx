@@ -45,7 +45,7 @@ const UploadTopic = () => {
   const pathName = usePathname();
   const courseId = pathName.split("/")[2];
   const [selectedStudents, setSelectedStudents] = useState<Student[]>([]);
-  const [reason, setReason] = useState("");
+  const [description, setDescription] = useState("");
   const studentIdRef = useRef<HTMLInputElement>(null);
   const updateStudentId = (value: string) => {
     if (studentIdRef.current) {
@@ -199,7 +199,7 @@ const UploadTopic = () => {
         .string().optional(),
       studentList: z.string().optional(),
     })
-    .refine(() => reason.length >= 20, {
+    .refine(() => description.length >= 20, {
       message: `Nội dung đề tài phải chứa ít nhất 20 ký tự`,
       path: ["description"],
     })
@@ -230,7 +230,7 @@ const UploadTopic = () => {
     try {
       console.log({
         title: values.title,
-        description: reason,
+        description: description,
       });
 
       toast({
@@ -406,10 +406,10 @@ const UploadTopic = () => {
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
                         <TextAreaComponent
-                          value={reason}
+                          value={description}
                           placeholder="Nhập mô tả..."
                           onChange={(e) => {
-                            setReason(e.target.value);
+                            setDescription(e.target.value);
                           }}
                         />
                       </FormControl>

@@ -201,6 +201,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
                         onChange={(e) => {
                           setFeedback(e.target.value);
                         }}
+                        otherClassess={'mt-3.5'}
                       />
                     </div>
                   </div>
