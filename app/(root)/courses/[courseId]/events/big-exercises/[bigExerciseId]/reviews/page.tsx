@@ -36,6 +36,7 @@ import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import TextAreaComponent from "@/components/shared/TextAreaComponent";
 
 const Review = () => {
   const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
@@ -303,30 +304,12 @@ const Review = () => {
                           </FormDescription>
 
                           <FormControl className="mt-3.5 ">
-                            <textarea
+                            <TextAreaComponent
                               value={reason}
+                              placeholder="Nhập phản hồi..."
                               onChange={(e) => {
                                 setReason(e.target.value);
                               }}
-                              placeholder="Nhập phản hồi..."
-                              className="
-                                no-focus
-                                paragraph-regular
-                                background-light900_dark300
-                                light-border-2
-                                text-dark300_light700
-                                min-h-[200px]
-                                rounded-md
-                                border
-                                resize-none
-                                w-full
-                                px-3
-                                py-4
-                                focus:outline-none
-                                focus:ring-0
-                                active:outline-none
-                                focus:border-inherit
-                                text-sm"
                             />
                           </FormControl>
                           <FormMessage className="text-red-500" />

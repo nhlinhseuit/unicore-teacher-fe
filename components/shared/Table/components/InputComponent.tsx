@@ -1,5 +1,6 @@
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
+import TextAreaComponent from "../../TextAreaComponent";
 
 interface InputParams {
   placeholder: string | number;
@@ -37,38 +38,10 @@ const InputComponent = (params: InputParams) => {
         {params.value || params.placeholder}
       </span>
       {params.isDescription ? (
-        <textarea
+        <TextAreaComponent
           value={inputValue}
           onChange={handleTextAreaChange}
           placeholder={params.placeholder.toString() || "Trống"}
-          className={`
-            no-focus
-            paragraph-regular
-            text-dark300_light700
-            min-h-[120px]
-            rounded-md
-            resize-none
-            min-w-[300px]
-            w-full
-            px-3
-            py-4
-            focus:outline-none
-            focus:ring-0
-            active:outline-none
-            focus:border-inherit
-            text-sm
-            paragraph-regular no-focus placeholder
-            shadow-none outline-none
-            custom-scrollbar-desc
-            background-light800_darkgradient 
-            
-            ${
-              params.isInTable
-                ? "background-light800_darkgradient border-none"
-                : "border light-border-2 bg-transparent"
-            }
-            ${params.otherClassess || ""}
-            `}
         />
       ) : (
         <Input

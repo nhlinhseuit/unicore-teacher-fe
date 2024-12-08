@@ -329,7 +329,6 @@ const ScoreColumnDetailPage = (params: Props) => {
                           </FormLabel>
                           <FormControl className="mt-3.5">
                             <Input
-                              {...field}
                               value={scoreRatios[index]} // Giá trị từ state
                               onChange={
                                 (e) =>

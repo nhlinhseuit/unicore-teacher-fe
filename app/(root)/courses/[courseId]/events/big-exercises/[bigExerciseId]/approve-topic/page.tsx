@@ -44,8 +44,6 @@ const ApproveTopic = () => {
   
 
   const onSaveTable = (itemsSelected: string[]) => {
-    console.log('itemsSelected', itemsSelected)
-
     const updatedTable = renderDataTable.filter(
       (item) => !itemsSelected.includes(item.data["Mã nhóm"])
     );

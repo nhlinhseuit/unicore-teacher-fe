@@ -17,14 +17,15 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import BorderContainer from "../../BorderContainer";
 import { tableTheme } from "../components/DataTable";
+import TextAreaComponent from "../../TextAreaComponent";
 
 interface DataTableParams {
   type: RegisterTopicTableType;
   isEditTable: boolean;
   isMultipleDelete: boolean;
   dataTable: RegisterTopicDataItem[];
-  isNotShowButton: boolean;
-  isOnlyShowResponseTopicButton: boolean;
+  isNotShowButton?: boolean;
+  isOnlyShowResponseTopicButton?: boolean;
   onSaveTable: (itemsSelected: string[]) => void;
 }
 
@@ -34,9 +35,8 @@ const RegisterTopicTable = (params: DataTableParams) => {
   }, [params.dataTable]);
 
   useEffect(() => {
-    setItemsSelected([])
-  }, [params.dataTable])
-  
+    setItemsSelected([]);
+  }, [params.dataTable]);
 
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
 
@@ -195,28 +195,12 @@ const RegisterTopicTable = (params: DataTableParams) => {
                           ? "Bạn có thể phản hồi và đề xuất sinh viên chỉnh sửa đề tài phù hợp hơn tại đây. Đề tài sẽ chuyển sang trạng thái đang xử lý."
                           : "Không bắt buộc."}
                       </p>
-                      <textarea
+                      <TextAreaComponent
+                        value={feedback}
                         placeholder="Nhập phản hồi đề tài..."
-                        onChange={(e) => setFeedback(e.target.value)}
-                        className="
-                         mt-3.5
-                        no-focus
-                        paragraph-regular
-                        background-light900_dark300
-                        light-border-2
-                        text-dark300_light700
-                        min-h-[200px]
-                        rounded-md
-                        border
-                        resize-none
-                        w-full
-                        px-3
-                        py-4
-                        focus:outline-none
-                        focus:ring-0
-                        active:outline-none
-                        focus:border-inherit
-                        text-sm"
+                        onChange={(e) => {
+                          setFeedback(e.target.value);
+                        }}
                       />
                     </div>
                   </div>

@@ -197,7 +197,6 @@ const ScoreTranscript = () => {
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
                         <Input
-                          {...field}
                           value={scoreProgress}
                           onChange={handleChangeNumberOfScoreProgress}
                           placeholder="Nhập tên đề tài..."
@@ -219,7 +218,6 @@ const ScoreTranscript = () => {
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
                         <Input
-                          {...field}
                           value={scoreMidterm}
                           onChange={handleChangeNumberOfScoreMidterm}
                           placeholder="Nhập tên đề tài..."
@@ -241,7 +239,6 @@ const ScoreTranscript = () => {
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
                         <Input
-                          {...field}
                           value={scoreFinal}
                           onChange={handleChangeNumberOfScoreFinal}
                           placeholder="Nhập tên đề tài..."

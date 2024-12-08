@@ -159,11 +159,18 @@ const LeftSideBar = () => {
                 </Fragment>
               );
             } else {
-              console.log('item.route', item.route)
               return (
                 <Link
-                  key={item.route === '/score-report' ? `/score-report/thesis-report`: item.route}
-                  href={item.route === '/score-report' ? `/score-report/thesis-report`: item.route}
+                  key={
+                    item.route === "/score-report"
+                      ? `/score-report/thesis-report`
+                      : item.route
+                  }
+                  href={
+                    item.route === "/score-report"
+                      ? `/score-report/thesis-report`
+                      : item.route
+                  }
                   className={getStyle(isActive)}
                 >
                   <Image

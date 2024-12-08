@@ -38,12 +38,14 @@ import { maxStudentPerGroup, minStudentPerGroup } from "@/constants";
 import Student from "@/types/entity/Student";
 import { usePathname } from "next/navigation";
 import TitleDescription from "@/components/shared/TitleDescription";
+import TextAreaComponent from "@/components/shared/TextAreaComponent";
 
 const UploadTopic = () => {
   // Update biến: Danh sách thành viên nhóm
   const pathName = usePathname();
   const courseId = pathName.split("/")[2];
   const [selectedStudents, setSelectedStudents] = useState<Student[]>([]);
+  const [reason, setReason] = useState("");
   const studentIdRef = useRef<HTMLInputElement>(null);
   const updateStudentId = (value: string) => {
     if (studentIdRef.current) {
@@ -194,9 +196,12 @@ const UploadTopic = () => {
         .min(5, { message: "Tên đề tài phải chứa ít nhất 5 ký tự" })
         .max(130),
       description: z
-        .string()
-        .min(20, { message: "Nội dung đề tài phải chứa ít nhất 20 ký tự" }),
+        .string().optional(),
       studentList: z.string().optional(),
+    })
+    .refine(() => reason.length >= 20, {
+      message: `Nội dung đề tài phải chứa ít nhất 20 ký tự`,
+      path: ["description"],
     })
     .refine(() => selectedStudents.length >= minStudentPerGroup, {
       message: `Nhóm phải có ít nhất ${minStudentPerGroup} thành viên.`,
@@ -225,11 +230,8 @@ const UploadTopic = () => {
     try {
       console.log({
         title: values.title,
-        description: values.description,
+        description: reason,
       });
-
-      // naviate to home page
-      // router.push("/");
 
       toast({
         title: "Đăng đề tài mới thành công.",
@@ -403,27 +405,12 @@ const UploadTopic = () => {
                         Mô tả đề tài <span className="text-red-600">*</span>
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
-                        <textarea
-                          {...field}
+                        <TextAreaComponent
+                          value={reason}
                           placeholder="Nhập mô tả..."
-                          className="
-                          no-focus
-                          paragraph-regular
-                          background-light900_dark300
-                          light-border-2
-                          text-dark300_light700
-                          min-h-[200px]
-                          rounded-md
-                          border
-                          resize-none
-                          w-full
-                          px-3
-                          py-4
-                          focus:outline-none
-                          focus:ring-0
-                          active:outline-none
-                          focus:border-inherit
-                          text-sm"
+                          onChange={(e) => {
+                            setReason(e.target.value);
+                          }}
                         />
                       </FormControl>
                       <FormMessage className="text-red-500" />
