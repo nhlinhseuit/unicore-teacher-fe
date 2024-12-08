@@ -477,6 +477,25 @@ export const mockCourses = [
     ],
   },
   {
+    id: "SE505.P11.PMCL",
+    type: "thesisCourse",
+    name: "Khóa luận tốt nghiệp",
+    semester: "HK1/2024",
+    teachers: "Huỳnh Hồ Thị Mộng Trinh",
+    subCourses: [
+      {
+        id: "	SE505.P11.PMCL",
+        type: "general",
+        teacher: "Lớp chung",
+      },
+      {
+        id: "80001",
+        type: "advisor",
+        teacher: "Huỳnh Hồ Thị Mộng Trinh",
+      },
+    ],
+  },
+  {
     id: "SE121.O21.PMCL",
     type: "thesisCourse",
     name: "Đồ án 1",
@@ -503,6 +522,7 @@ export const mockCourses = [
 export const mockPostDataCourseIdPage = [
   {
     id: "1",
+    isFinalReport: true,
     typePost: "report",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",
@@ -523,6 +543,26 @@ export const mockPostDataCourseIdPage = [
   },
   {
     id: "2",
+    typePost: "report",
+    creator: "Huỳnh Hồ Thị Mộng Trinh",
+    createdAt: "29/8/2024 7:23AM",
+    title: "Báo cáo ngày 29/9/2024",
+    fileName: "Requirements.docx",
+    comments: [
+      {
+        id: "1",
+        author: "Huỳnh Hồ Thị Mộng Trinh",
+        content: "Các em mau chóng đăng ký nhóm đúng hạn",
+      },
+      {
+        id: "2",
+        author: "Lê Thành Lộc",
+        content: "Nộp bài trễ được không cô?",
+      },
+    ],
+  },
+  {
+    id: "3",
     typePost: "exercise",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",
@@ -537,7 +577,7 @@ export const mockPostDataCourseIdPage = [
     ],
   },
   {
-    id: "3",
+    id: "4",
     typePost: "exercise",
     creator: "Huỳnh Hồ Thị Mộng Trinh",
     createdAt: "29/8/2024 7:23AM",

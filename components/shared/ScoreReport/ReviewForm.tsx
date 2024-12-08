@@ -6,10 +6,16 @@ import SubmitButton from "@/components/shared/Button/SubmitButton";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import React, { useState } from "react";
+import GeneralOfReport from "./GeneralOfReport";
 import InputForm from "./InputForm";
+import SubGeneralOfReport from "./SubGeneralOfReport";
 import TableForm from "./TableForm";
 
-const ReviewForm = () => {
+interface Props {
+  isReviewer: boolean;
+}
+
+const ReviewForm = (params: Props) => {
   const [formData, setFormData] = useState({
     topicTitle: "",
     student1Name: "",
@@ -27,6 +33,12 @@ const ReviewForm = () => {
     applicationProgramComment: "",
     studentAttitudeComment: "",
     otherComments: "",
+
+    acknowledgements: false,
+    overviewVN: false,
+    overviewEN: false,
+    abbreviations: false,
+    tableOfContents: false,
   });
 
   const [selectedThesisStatus, setSelectedThesisStatus] = useState(-1);
@@ -53,15 +65,14 @@ const ReviewForm = () => {
     }));
   };
 
-  // @ts-ignore
-  const handleNestedChange = (section, field, value) => {
-    setFormData((prev) => ({
-      ...prev,
-      [section]: {
-        // @ts-ignore
-        ...prev[section],
-        [field]: value,
-      },
+  const handleClick = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const target = e.target as HTMLInputElement;
+    const { name, checked } = target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [name]: checked,
     }));
   };
 
@@ -91,7 +102,11 @@ const ReviewForm = () => {
 
         <div className="text-center flex flex-col gap-4">
           <p className="paragraph-semibold">NHẬN XÉT KHÓA LUẬN TỐT NGHIỆP</p>
-          <p className="paragraph-semibold">CỦA CÁN BỘ PHẢN BIỆN</p>
+          {params.isReviewer ? (
+            <p className="paragraph-semibold">CỦA CÁN BỘ PHẢN BIỆN</p>
+          ) : (
+            <p className="paragraph-semibold">CỦA CÁN BỘ HƯỚNG DẪN</p>
+          )}
         </div>
 
         <div className="mt-10 flex flex-col gap-6">
@@ -147,88 +162,55 @@ const ReviewForm = () => {
                 </label>
               </div>
 
-              <div className="ml-4 flex flex-col gap-2">
-                <div className="flex items-center gap-4">
-                  <label className="base-regular w-[20%]">Số trang: </label>
-                  <div className="flex-grow">
-                    <InputForm
-                      placeholder="Nhập số trang"
-                      name="totalPages"
-                      value={formData.totalPages}
-                      onChange={handleChange}
-                      otherClassess="w-full"
+              {params.isReviewer ? (
+                <GeneralOfReport
+                  totalPages={formData.totalPages}
+                  totalChapters={formData.totalChapters}
+                  totalFigures={formData.totalFigures}
+                  totalTables={formData.totalTables}
+                  totalReferences={formData.totalReferences}
+                  overviewComment={formData.overviewComment}
+                  handleChange={handleChange}
+                />
+              ) : (
+                <div className="flex gap-20">
+                  <div className="w-[60%]">
+                    <GeneralOfReport
+                      totalPages={formData.totalPages}
+                      totalChapters={formData.totalChapters}
+                      totalFigures={formData.totalFigures}
+                      totalTables={formData.totalTables}
+                      totalReferences={formData.totalReferences}
+                      overviewComment={formData.overviewComment}
+                      handleChange={handleChange}
+                    />
+                  </div>
+                  <div className="w-[30%]">
+                    <SubGeneralOfReport
+                      acknowledgements={formData.acknowledgements}
+                      overviewVN={formData.overviewVN}
+                      overviewEN={formData.overviewEN}
+                      abbreviations={formData.abbreviations}
+                      tableOfContents={formData.tableOfContents}
+                      handleClick={handleClick}
                     />
                   </div>
                 </div>
+              )}
 
-                <div className=" flex items-center gap-4">
-                  <label className="base-regular w-[20%]">Số chương: </label>
-                  <div className="flex-grow">
-                    <InputForm
-                      placeholder="Nhập số chương"
-                      name="totalChapters"
-                      value={formData.totalChapters}
-                      onChange={handleChange}
-                      otherClassess="w-full"
-                    />
-                  </div>
-                </div>
-
-                <div className=" flex items-center gap-4">
-                  <label className="base-regular w-[20%]">Số hình vẽ: </label>
-                  <div className="flex-grow">
-                    <InputForm
-                      placeholder="Nhập số hình vẽ"
-                      name="totalFigures"
-                      value={formData.totalFigures}
-                      onChange={handleChange}
-                      otherClassess="w-full"
-                    />
-                  </div>
-                </div>
-
-                <div className=" flex items-center gap-4">
-                  <label className="base-regular w-[20%]">Số bảng biểu: </label>
-                  <div className="flex-grow">
-                    <InputForm
-                      placeholder="Nhập số bảng biểu"
-                      name="totalTables"
-                      value={formData.totalTables}
-                      onChange={handleChange}
-                      otherClassess="w-full"
-                    />
-                  </div>
-                </div>
-
-                <div className=" flex items-center gap-4">
-                  <label className="base-regular w-[20%]">
-                    Số tài liệu tham khảo:{" "}
-                  </label>
-                  <div className="flex-grow">
-                    <InputForm
-                      placeholder="Nhập số tài liệu tham khảo"
-                      name="totalReferences"
-                      value={formData.totalReferences}
-                      onChange={handleChange}
-                      otherClassess="w-full"
-                    />
-                  </div>
-                </div>
-
-                <label className="base-regular italic">
-                  &lt;nhận xét về định dạng, cách thức viết báo cáo, văn phong,
-                  phân bố nội dung, chương mục có hợp lý không&gt;
-                </label>
-                <div className="flex-grow">
-                  <InputForm
-                    placeholder="Nhận xét"
-                    name="overviewComment"
-                    value={formData.overviewComment}
-                    onChange={handleChange}
-                    otherClassess="w-full"
-                    isLongText
-                  />
-                </div>
+              <label className="base-regular italic">
+                &lt;nhận xét về định dạng, cách thức viết báo cáo, văn phong,
+                phân bố nội dung, chương mục có hợp lý không&gt;
+              </label>
+              <div className="flex-grow">
+                <InputForm
+                  placeholder="Nhận xét"
+                  name="overviewComment"
+                  value={formData.overviewComment}
+                  onChange={handleChange}
+                  otherClassess="w-full"
+                  isLongText
+                />
               </div>
             </div>
 

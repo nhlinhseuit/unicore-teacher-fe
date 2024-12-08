@@ -1,5 +1,7 @@
 "use client";
 
+import ReviewForm from "@/components/shared/ScoreReport/ReviewForm";
+import BackToPrev from "@/components/shared/BackToPrev";
 import IconButton from "@/components/shared/Button/IconButton";
 import ExercisePostItem from "@/components/shared/PostItem/Item/ExercisePostItem";
 import PostItem from "@/components/shared/PostItem/Item/PostItem";
@@ -8,15 +10,17 @@ import TableSearch from "@/components/shared/Search/TableSearch";
 import {
   AnnouncementTypes,
   AnnouncementTypesNotRegularCourse,
-  FilterType
+  FilterType,
 } from "@/constants";
 import { mockPostDataCourseIdPage } from "@/mocks";
 import { Dropdown } from "flowbite-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useState } from "react";
 
 const page = () => {
   const pathName = usePathname();
+  const [isGradeThesisReport, setIsGradeThesisReport] = useState(false);
 
   var typeFilter = FilterType.SortNewer;
 
@@ -38,8 +42,10 @@ const page = () => {
             title={item.title}
             fileName={item.fileName}
             comments={item.comments}
+            isFinalReport={item.isFinalReport}
             setGrading={() => {
               // setIsGrading(true);
+              if (item.isFinalReport) setIsGradeThesisReport(true);
             }}
           />
         );
@@ -74,7 +80,17 @@ const page = () => {
     }
   };
 
-  return (
+  return isGradeThesisReport ? (
+    <>
+      <BackToPrev
+        text={"Quay lại danh sách thông báo"}
+        onClickPrev={() => {
+          setIsGradeThesisReport(false);
+        }}
+      />
+      <ReviewForm isReviewer={false} />
+    </>
+  ) : (
     <div>
       <div
         className="

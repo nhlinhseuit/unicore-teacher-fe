@@ -2,11 +2,12 @@ import React from "react";
 import IconButton from "../shared/Button/IconButton";
 
 interface Props {
-  onClickBack: () => void;
+  setGrading: () => void;
   submissionNumber: number;
   totalNumber: number;
   lateTime: string;
   columnGrade: string;
+  isFinalReport?: boolean;
 }
 
 const GradingInPost = (params: Props) => {
@@ -37,7 +38,14 @@ const GradingInPost = (params: Props) => {
         </p>
 
         <div className="inline-flex mt-4">
-          <IconButton text="Chấm điểm" onClick={params.onClickBack} />
+          {params.isFinalReport ? (
+            <IconButton
+              text="Nhận xét khóa luận tốt nghiệp"
+              onClick={params.setGrading}
+            />
+          ) : (
+            <IconButton text="Chấm điểm" onClick={params.setGrading} />
+          )}
         </div>
       </div>
     </>

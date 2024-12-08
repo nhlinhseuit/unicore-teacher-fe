@@ -23,6 +23,7 @@ interface Props {
   fileName: string;
   comments: Comment[];
   setGrading: () => void;
+  isFinalReport?: boolean;
 }
 
 const ReportPostItem = (params: Props) => {
@@ -76,7 +77,8 @@ const ReportPostItem = (params: Props) => {
         <Divider />
 
         <GradingInPost
-          onClickBack={params.setGrading}
+          isFinalReport={params.isFinalReport}
+          setGrading={params.setGrading}
           submissionNumber={mockSubmissionPost.submissionNumber}
           totalNumber={mockSubmissionPost.totalNumber}
           lateTime={mockSubmissionPost.lateTime}
