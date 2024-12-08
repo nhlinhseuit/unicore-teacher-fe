@@ -16,7 +16,6 @@ const BigExercises = () => {
   const [isCreate, setIsCreate] = useState(false);
   const [isToggleShowCentralizedExam, setIsToggleShowCentralizedExam] =
     useState(true);
-  const [isToggleShowFinalExam, setIsToggleShowFinalExam] = useState(false);
   const [isToggleShowBigExercise, setIsToggleShowBigExercise] = useState(true);
 
   return (

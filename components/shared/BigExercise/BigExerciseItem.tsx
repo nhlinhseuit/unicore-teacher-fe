@@ -1,11 +1,3 @@
-import React from "react";
-import Image from "next/image";
-import RenderFile from "../Annoucements/RenderFile";
-import Avatar from "../../courses/MyAvatar";
-import OtherComment from "../../courses/OtherComment";
-import MyComment from "../../courses/MyComment";
-import Divider from "../Divider";
-import { getAvatarName } from "@/lib/utils";
 
 interface Props {
   id: string;

@@ -688,35 +688,6 @@ export const mockTeacherList = [
   { id: 3, value: "Đặng Việt Dũng" },
 ];
 
-//
-// TODO: Review
-//
-export const mockReviewOptions = [
-  { id: 1, value: "Tất cả" },
-  { id: 2, value: "Đã phúc khảo" },
-  { id: 3, value: "Chưa phúc khảo" },
-];
-
-//
-// TODO: Bookmark
-//
-export const mockBookmarkOptions = [
-  { id: 1, value: "Tất cả" },
-  { id: 2, value: "Thông báo" },
-  { id: 3, value: "Bài tập" },
-  { id: 4, value: "Bài tập lớn" },
-];
-
-//
-// TODO: Approve Topic Options
-//
-export const mockApproveTopicOptions = [
-  { id: 1, value: "Tất cả" },
-  { id: 2, value: "Đề tài chưa duyệt" },
-  { id: 3, value: "Đề tài đang xử lý" },
-  { id: 4, value: "Đề tài đã duyệt" },
-  { id: 5, value: "Đề tài đã từ chối" },
-];
 
 //
 // TODO: Score Transcript
@@ -963,6 +934,24 @@ export const mockBigExercisesList = [
     createdAt: "29/8/2024 7:23AM",
     happeningEvent: "Đăng ký nhóm và đề tài báo cáo",
     deadline: "10/09/2024 - 00:00AM",
+  },
+];
+
+//
+// TODO: Thesis Course Review
+//
+export const mockThesisCourseReview = [
+  {
+    id: "1",
+    name: "Ứng dụng quản lý môn học",
+    supervisor: "Huỳnh Hồ Thị Mộng Trinh",
+    reportAt: "29/8/2024 7:23AM",
+  },
+  {
+    id: "2",
+    name: "Ứng dụng chia sẻ hình ảnh",
+    supervisor: "Huỳnh Hồ Thị Mộng Trinh",
+    reportAt: "29/8/2024 7:23AM",
   },
 ];
 

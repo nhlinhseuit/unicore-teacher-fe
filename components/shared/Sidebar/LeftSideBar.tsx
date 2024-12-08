@@ -163,12 +163,12 @@ const LeftSideBar = () => {
                 <Link
                   key={
                     item.route === "/score-report"
-                      ? `/score-report/thesis-report`
+                      ? `/score-report/supervisor-thesis-report`
                       : item.route
                   }
                   href={
                     item.route === "/score-report"
-                      ? `/score-report/thesis-report`
+                      ? `/score-report/supervisor-thesis-report`
                       : item.route
                   }
                   className={getStyle(isActive)}

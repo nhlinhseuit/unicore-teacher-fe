@@ -5,7 +5,8 @@ import ExercisePostItem from "@/components/shared/PostItem/Item/ExercisePostItem
 import PostItem from "@/components/shared/PostItem/Item/PostItem";
 import ReportPostItem from "@/components/shared/PostItem/Item/ReportPostItem";
 import ShowOriginPostContainer from "@/components/shared/ShowOriginPostContainer";
-import { mockBookmarkOptions, mockPostDataCourseIdPage } from "@/mocks";
+import { BookmarkOptions } from "@/constants";
+import {  mockPostDataCourseIdPage } from "@/mocks";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -77,7 +78,7 @@ const Bookmarks = () => {
               <IconButton
                 text={`${
                   selectedBookmarkOption !== -1
-                    ? mockBookmarkOptions[selectedBookmarkOption - 1].value
+                    ? BookmarkOptions[selectedBookmarkOption - 1].value
                     : "Chọn lớp"
                 }`}
                 onClick={() => {}}
@@ -90,7 +91,7 @@ const Bookmarks = () => {
           )}
         >
           <div className="scroll-container scroll-container-dropdown-content">
-            {mockBookmarkOptions.map((course: any, index) => (
+            {BookmarkOptions.map((course: any, index) => (
               <Dropdown.Item
                 key={`${course}_${index}`}
                 onClick={() => {

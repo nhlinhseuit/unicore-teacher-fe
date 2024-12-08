@@ -29,7 +29,6 @@ const GradingReviewTable = (params: DataTableParams) => {
     );
   }, [dataTable, currentPage]);
 
-
   return (
     <div>
       {/* TABLE */}
@@ -41,7 +40,7 @@ const GradingReviewTable = (params: DataTableParams) => {
       ) : (
         <div
           className="
-          scroll-container 
+          scroll-container
           overflow-auto
           max-w-full
           h-fit
@@ -63,19 +62,17 @@ const GradingReviewTable = (params: DataTableParams) => {
                 STT
               </Table.HeadCell>
 
-              {Object.keys(currentItems[0]?.data || {}).map(
-                (key, index) => {
-                  return (
-                    <Table.HeadCell
-                      key={`${key}_${index}`}
-                      theme={tableTheme?.head?.cell}
-                      className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
-                    >
-                      {key}
-                    </Table.HeadCell>
-                  );
-                }
-              )}
+              {Object.keys(currentItems[0]?.data || {}).map((key, index) => {
+                return (
+                  <Table.HeadCell
+                    key={`${key}_${index}`}
+                    theme={tableTheme?.head?.cell}
+                    className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
+                  >
+                    {key}
+                  </Table.HeadCell>
+                );
+              })}
             </Table.Head>
 
             {/* BODY */}
@@ -90,7 +87,7 @@ const GradingReviewTable = (params: DataTableParams) => {
                       key={`${dataItem.STT}_${index}`}
                       dataItem={dataItem}
                       viewDetailGradeColumn={() => {
-                        params.viewDetailGradeColumn(dataItem.STT)
+                        params.viewDetailGradeColumn(dataItem.STT);
                       }}
                     />
                   </>

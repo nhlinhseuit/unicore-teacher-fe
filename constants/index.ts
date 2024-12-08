@@ -21,7 +21,6 @@ export const ALLOWED_FILE_TYPES = [
 ];
 export const MAX_CATEGORIES = 5; // Số danh mục tối đa chọn khi đăng thông báo
 
-
 // TODO: NAVBAR TAB
 export const TeacherAnnouncementsTabItems = [
   { value: "listAnnouncements", label: "Danh sách thông báo", route: "/" },
@@ -38,13 +37,18 @@ export const TeacherSettingTabItems = [
 export const TeacherScoreReportTabItems = [
   {
     value: "scoreThesisReport",
+    label: "GVHD nhận xét Khóa luận",
+    route: "/score-report/supervisor-thesis-report",
+  },
+  {
+    value: "scoreThesisReport",
     label: "Hội đồng phản biện Khóa luận",
-    route: "/score-report/thesis-report",
+    route: "/score-report/reviewer-thesis-report",
   },
   {
     value: "scoreInternReport",
     label: "Hội đồng chấm điểm Thực tập",
-    route: "/score-report/intern-report",
+    route: "/score-report/reviewer-intern-report",
   },
 ];
 
@@ -184,6 +188,42 @@ export enum DetailFilter {
   Year,
   Subject,
 }
+
+export const ReviewThesisFilterType = [
+  { id: 1, value: "Tất cả" },
+  { id: 2, value: "Đã nhận xét" },
+  { id: 3, value: "Chưa nhận xét" },
+];
+
+//
+// TODO: Review
+//
+export const ReviewOptions = [
+  { id: 1, value: "Tất cả" },
+  { id: 2, value: "Đã phúc khảo" },
+  { id: 3, value: "Chưa phúc khảo" },
+];
+
+//
+// TODO: Bookmark
+//
+export const BookmarkOptions = [
+  { id: 1, value: "Tất cả" },
+  { id: 2, value: "Thông báo" },
+  { id: 3, value: "Bài tập" },
+  { id: 4, value: "Bài tập lớn" },
+];
+
+//
+// TODO: Approve Topic Options
+//
+export const ApproveTopicOptions = [
+  { id: 1, value: "Tất cả" },
+  { id: 2, value: "Đề tài chưa duyệt" },
+  { id: 3, value: "Đề tài đang xử lý" },
+  { id: 4, value: "Đề tài đã duyệt" },
+  { id: 5, value: "Đề tài đã từ chối" },
+];
 
 export enum DetailFilterScore {
   Semester,

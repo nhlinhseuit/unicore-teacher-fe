@@ -245,7 +245,7 @@
 
   .scroll-container::-webkit-scrollbar {
     width: 6px;
-    height: 6px;
+    height: 8px;
   }
 
   .scroll-container::-webkit-scrollbar-track {
@@ -256,7 +256,7 @@
   }
 
   .scroll-container::-webkit-scrollbar-thumb {
-    background: #eff2f7;
+    background: #c1c1c1;
     border-radius: 10px;
     /* d9ebff */
   }

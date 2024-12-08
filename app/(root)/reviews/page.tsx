@@ -4,7 +4,6 @@ import GradingReviewTable from "@/components/shared/Table/TableReview/GradingRev
 import {
   mockDataAllReviewGrading,
   mockPostReviewDetail,
-  mockReviewOptions,
 } from "@/mocks";
 import { useState } from "react";
 
@@ -37,6 +36,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import SubmitButton from "@/components/shared/Button/SubmitButton";
 import TextAreaComponent from "@/components/shared/TextAreaComponent";
+import { ReviewOptions } from "@/constants";
 
 const Review = () => {
   const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
@@ -119,7 +119,7 @@ const Review = () => {
               <IconButton
                 text={`${
                   selectedReviewOption !== -1
-                    ? mockReviewOptions[selectedReviewOption - 1].value
+                    ? ReviewOptions[selectedReviewOption - 1].value
                     : "Chọn lớp"
                 }`}
                 onClick={() => {}}
@@ -132,7 +132,7 @@ const Review = () => {
           )}
         >
           <div className="scroll-container scroll-container-dropdown-content">
-            {mockReviewOptions.map((course: any, index) => (
+            {ReviewOptions.map((course: any, index) => (
               <Dropdown.Item
                 key={`${course}_${index}`}
                 onClick={() => {

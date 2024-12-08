@@ -2,9 +2,11 @@
 
 import IconButton from "@/components/shared/Button/IconButton";
 import RegisterTopicTable from "@/components/shared/Table/TableRegisterTopic/RegisterTopicTable";
-import { RegisterTopicTableType } from "@/constants";
 import {
-  mockApproveTopicOptions,
+  ApproveTopicOptions,
+  RegisterTopicTableType
+} from "@/constants";
+import {
   mockDataAllAppproveTopic,
   mockDataAppprovedTopic,
   mockDataNotAppproveTopic,
@@ -39,9 +41,8 @@ const ApproveTopic = () => {
   const [renderDataTable, setRenderDataTable] = useState(getDataTable());
 
   useEffect(() => {
-    setRenderDataTable(getDataTable())
-  }, [selectedApproveTopicOption])
-  
+    setRenderDataTable(getDataTable());
+  }, [selectedApproveTopicOption]);
 
   const onSaveTable = (itemsSelected: string[]) => {
     const updatedTable = renderDataTable.filter(
@@ -65,8 +66,7 @@ const ApproveTopic = () => {
               <IconButton
                 text={`${
                   selectedApproveTopicOption !== -1
-                    ? mockApproveTopicOptions[selectedApproveTopicOption - 1]
-                        .value
+                    ? ApproveTopicOptions[selectedApproveTopicOption - 1].value
                     : "Chọn bộ lọc"
                 }`}
                 onClick={() => {}}
@@ -79,7 +79,7 @@ const ApproveTopic = () => {
           )}
         >
           <div className="scroll-container scroll-container-dropdown-content">
-            {mockApproveTopicOptions.map((course: any, index) => (
+            {ApproveTopicOptions.map((course: any, index) => (
               <Dropdown.Item
                 key={`${course}_${index}`}
                 onClick={() => {
@@ -116,9 +116,11 @@ const ApproveTopic = () => {
         isMultipleDelete={false}
         dataTable={renderDataTable}
         isNotShowButton={selectedApproveTopicOption === 1}
-        isOnlyShowResponseTopicButton={selectedApproveTopicOption === 4 || selectedApproveTopicOption === 5}
+        isOnlyShowResponseTopicButton={
+          selectedApproveTopicOption === 4 || selectedApproveTopicOption === 5
+        }
         onSaveTable={(itemsSelected: string[]) => {
-          onSaveTable(itemsSelected)
+          onSaveTable(itemsSelected);
         }}
       />
     </>

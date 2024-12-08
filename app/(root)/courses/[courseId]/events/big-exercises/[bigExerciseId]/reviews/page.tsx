@@ -6,7 +6,6 @@ import {
   mockDataNotReviewGrading,
   mockDataReviewedGrading,
   mockPostReviewDetail,
-  mockReviewOptions,
 } from "@/mocks";
 import { useEffect, useState } from "react";
 
@@ -39,6 +38,7 @@ import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import TextAreaComponent from "@/components/shared/TextAreaComponent";
+import { ReviewOptions } from "@/constants";
 
 const Review = () => {
   const [selectedReviewOption, setSelectedReviewOption] = useState(3);
@@ -144,7 +144,7 @@ const Review = () => {
               <IconButton
                 text={`${
                   selectedReviewOption !== -1
-                    ? mockReviewOptions[selectedReviewOption - 1].value
+                    ? ReviewOptions[selectedReviewOption - 1].value
                     : "Chọn bộ lọc"
                 }`}
                 onClick={() => {}}
@@ -157,7 +157,7 @@ const Review = () => {
           )}
         >
           <div className="scroll-container scroll-container-dropdown-content">
-            {mockReviewOptions.map((course: any, index) => (
+            {ReviewOptions.map((course: any, index) => (
               <Dropdown.Item
                 key={`${course}_${index}`}
                 onClick={() => {
