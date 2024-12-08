@@ -118,7 +118,8 @@ const ReviewForm = () => {
               <div className="mt-2 flex items-center gap-4">
                 <div className="w-2/3">
                   <InputForm
-                    placeholder="Họ và tên SV 1"
+                    isDisabled
+                    placeholder="Nguyễn Hoàng Linh"
                     name="student1Name"
                     value={formData.student1Name}
                     onChange={handleChange}
@@ -127,7 +128,8 @@ const ReviewForm = () => {
                 </div>
                 <div className="w-1/3">
                   <InputForm
-                    placeholder="MSSV"
+                    isDisabled
+                    placeholder="21522289"
                     name="student1ID"
                     value={formData.student1ID}
                     onChange={handleChange}
@@ -140,7 +142,8 @@ const ReviewForm = () => {
               <div className="mt-2 flex items-center gap-4">
                 <div className="w-2/3">
                   <InputForm
-                    placeholder="Họ và tên SV 2"
+                    isDisabled
+                    placeholder="Lê Thành Lộc"
                     name="student2Name"
                     value={formData.student2Name}
                     onChange={handleChange}
@@ -149,7 +152,8 @@ const ReviewForm = () => {
                 </div>
                 <div className="w-1/3">
                   <InputForm
-                    placeholder="MSSV"
+                    isDisabled
+                    placeholder="21521087"
                     name="student2ID"
                     value={formData.student2ID}
                     onChange={handleChange}
@@ -164,7 +168,8 @@ const ReviewForm = () => {
               <label className="base-semibold">Cán bộ phản biện: </label>
               <div className="mt-2 flex-grow">
                 <InputForm
-                  placeholder="Họ và tên cán bộ"
+                  isDisabled
+                  placeholder="Huỳnh Hồ Thị Mộng Trinh"
                   name="reviewerName"
                   value={formData.reviewerName}
                   onChange={handleChange}

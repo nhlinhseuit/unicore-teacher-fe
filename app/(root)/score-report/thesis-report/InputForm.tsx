@@ -10,6 +10,7 @@ interface InputParams {
   ) => void;
   otherClassess?: string;
   isLongText?: boolean;
+  isDisabled?: boolean;
 }
 
 const InputForm = (params: InputParams) => {
@@ -40,6 +41,7 @@ const InputForm = (params: InputParams) => {
       </span>
       {params.isLongText ? (
         <textarea
+          disabled={params.isDisabled}
           value={inputValue}
           onChange={handleTextAreaChange}
           placeholder={params.placeholder.toString() || "Trống"}
@@ -69,6 +71,7 @@ const InputForm = (params: InputParams) => {
         />
       ) : (
         <Input
+          disabled={params.isDisabled}
           name={params.name}
           type="text"
           placeholder={params.placeholder.toString() || "Trống"}
@@ -78,6 +81,9 @@ const InputForm = (params: InputParams) => {
             paragraph-regular no-focus placeholder
             shadow-none outline-none truncate
             w-[200px]
+             ${
+               params.isDisabled ? "bg-gray-100 cursor-not-allowed" : "bg-white"
+             }
             ${params.otherClassess || ""}
           `}
         />
