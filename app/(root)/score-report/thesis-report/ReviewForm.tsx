@@ -85,7 +85,7 @@ const ReviewForm = () => {
           <div>
             <p className="base-semibold">CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</p>
             <p className="base-semibold">Độc Lập - Tự Do - Hạnh Phúc</p>
-            <p className="base-regular">TP. HCM, ngày … tháng … năm 20…</p>
+            <p className="base-regular">TP. HCM, ngày 8 tháng 12 năm 2024</p>
           </div>
         </div>
 
@@ -98,15 +98,9 @@ const ReviewForm = () => {
           {/*  //TODO: TÊN ĐỀ TÀI */}
           <div className=" flex items-center gap-4">
             <label className="base-semibold">Tên đề tài: </label>
-            <div className="flex-grow">
-              <InputForm
-                placeholder="Nhập tên đề tài"
-                name="topicTitle"
-                value={formData.topicTitle}
-                onChange={handleChange}
-                otherClassess="w-full"
-              />
-            </div>
+            <label className="base-regular">
+              Ứng dụng quản lý lớp học - Class Management System
+            </label>
           </div>
 
           {/*  //TODO: THÔNG TIN SV, CÁN BỘ */}
@@ -116,65 +110,24 @@ const ReviewForm = () => {
 
               {/*  SINH VIÊN 1 */}
               <div className="mt-2 flex items-center gap-4">
-                <div className="w-2/3">
-                  <InputForm
-                    isDisabled
-                    placeholder="Nguyễn Hoàng Linh"
-                    name="student1Name"
-                    value={formData.student1Name}
-                    onChange={handleChange}
-                    otherClassess="w-full"
-                  />
-                </div>
-                <div className="w-1/3">
-                  <InputForm
-                    isDisabled
-                    placeholder="21522289"
-                    name="student1ID"
-                    value={formData.student1ID}
-                    onChange={handleChange}
-                    otherClassess="w-full"
-                  />
-                </div>
+                <label className="base-regular">
+                  1. Nguyễn Hoàng Linh - 21522289
+                </label>
               </div>
 
               {/*  SINH VIÊN 2 */}
               <div className="mt-2 flex items-center gap-4">
-                <div className="w-2/3">
-                  <InputForm
-                    isDisabled
-                    placeholder="Lê Thành Lộc"
-                    name="student2Name"
-                    value={formData.student2Name}
-                    onChange={handleChange}
-                    otherClassess="w-full"
-                  />
-                </div>
-                <div className="w-1/3">
-                  <InputForm
-                    isDisabled
-                    placeholder="21521087"
-                    name="student2ID"
-                    value={formData.student2ID}
-                    onChange={handleChange}
-                    otherClassess="w-full"
-                  />
-                </div>
+                <label className="base-regular">
+                  2. Lê Thành Lộc - 21521087
+                </label>
               </div>
             </div>
 
             {/*  CÁN BỘ */}
             <div className="w-[40%]">
               <label className="base-semibold">Cán bộ phản biện: </label>
-              <div className="mt-2 flex-grow">
-                <InputForm
-                  isDisabled
-                  placeholder="Huỳnh Hồ Thị Mộng Trinh"
-                  name="reviewerName"
-                  value={formData.reviewerName}
-                  onChange={handleChange}
-                  otherClassess="w-full"
-                />
+              <div className="mt-2 flex items-center gap-4">
+                <label className="base-regular">Huỳnh Hồ Thị Mộng Trinh</label>
               </div>
             </div>
           </div>
