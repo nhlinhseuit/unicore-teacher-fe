@@ -1,7 +1,7 @@
 "use client";
 
 import BackToPrev from "@/components/shared/BackToPrev";
-import ReviewPost from "@/components/shared/ScoreReport/ReviewPost";
+import ReviewPost from "@/components/shared/ScoreReport/ThesisTopic";
 import TitleDescription from "@/components/shared/TitleDescription";
 import { mockThesisCourseReview } from "@/mocks";
 import { Dropdown } from "flowbite-react";
@@ -38,7 +38,7 @@ const ReviewerThesisReport = () => {
 
           <div className="mt-6 mb-6 flex justify-start ml-10 w-1/2 items-center gap-4">
             <p className="inline-flex justify-start text-sm whitespace-nowrap">
-              Bộ lọc
+              Bộ lọc danh sách đề tài
             </p>
             <Dropdown
               className="z-30 rounded-lg"

@@ -954,6 +954,16 @@ export const mockThesisCourseReview = [
     reportAt: "29/8/2024 7:23AM",
   },
 ];
+export const mockThesisCommentTickets = [
+  {
+    id: "1",
+    reviewer: "Nguyễn Thị Thanh Trúc",
+  },
+  {
+    id: "2",
+    reviewer: "Đặng Việt Dũng",
+  },
+];
 
 //
 // TODO: BigExerciseId Page
