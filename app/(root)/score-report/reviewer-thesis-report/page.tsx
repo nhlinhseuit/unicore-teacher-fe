@@ -22,7 +22,7 @@ const ReviewerThesisReport = () => {
       {isGradeThesisReport ? (
         <>
           <BackToPrev
-            text="Quay lại danh sách phiếu nhận xét"
+            text="Quay lại danh sách đề tài"
             onClickPrev={() => {
               setIsGradeThesisReport(false);
             }}
@@ -125,6 +125,8 @@ const ReviewerThesisReport = () => {
                 }}
                 name={item.name}
                 supervisor={item.supervisor}
+                studentIds={item.studentIds}
+                studentNames={item.names}
                 reportAt={item.reportAt}
               />
             ))}

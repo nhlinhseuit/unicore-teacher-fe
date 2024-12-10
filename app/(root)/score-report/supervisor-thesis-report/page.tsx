@@ -1,7 +1,7 @@
 "use client";
 
 import BackToPrev from "@/components/shared/BackToPrev";
-import ReviewPost from "@/components/shared/ScoreReport/ThesisTopic";
+import ThesisTopic from "@/components/shared/ScoreReport/ThesisTopic";
 import TitleDescription from "@/components/shared/TitleDescription";
 import { mockThesisCourseReview } from "@/mocks";
 import { Dropdown } from "flowbite-react";
@@ -15,14 +15,12 @@ const ReviewerThesisReport = () => {
   const [isGradeThesisReport, setIsGradeThesisReport] = useState(false);
   const [selectedThesisStatus, setSelectedThesisStatus] = useState(-1);
 
-  
-
   return (
     <>
       {isGradeThesisReport ? (
         <div>
           <BackToPrev
-            text={"Quay lại danh sách thông báo"}
+            text={"Quay lại danh sách đề tài"}
             onClickPrev={() => {
               setIsGradeThesisReport(false);
             }}
@@ -95,13 +93,15 @@ const ReviewerThesisReport = () => {
 
           <div className="flex flex-col gap-4">
             {mockThesisCourseReview.map((item) => (
-              <ReviewPost
+              <ThesisTopic
                 id={item.id}
                 onClick={() => {
                   setIsGradeThesisReport(true);
                 }}
                 name={item.name}
                 supervisor={item.supervisor}
+                studentIds={item.studentIds}
+                studentNames={item.names}
                 reportAt={item.reportAt}
               />
             ))}

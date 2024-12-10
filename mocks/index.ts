@@ -688,7 +688,6 @@ export const mockTeacherList = [
   { id: 3, value: "Đặng Việt Dũng" },
 ];
 
-
 //
 // TODO: Score Transcript
 //
@@ -894,6 +893,73 @@ export const mockDataStudentRegisterGroup = [
 ];
 
 //
+// TODO: Manage Group
+// ! Từ d//ata của group đăng ký, biến đổi nó thành data dạng này để render
+// ! mỗi student 1 row
+
+export const mockInternReviewDetail = [
+  {
+    STT: "1",
+    data: {
+      MSSV: "21522289",
+      "Họ và tên": "Nguyễn Hoàng Linh",
+      "Vị trí thực tập": "Mobile Devloper",
+      "Công ty thực tập": "iZOTA",
+      "Giảng viên chấm điểm": [
+        "Huỳnh Hồ Thị Mộng Trinh",
+        "Đặng Việt Dũng",
+        " Nguyễn Thị Thanh Trúc",
+      ],
+      Điểm: ["", "", ""],
+    },
+  },
+  {
+    STT: "2",
+    data: {
+      MSSV: "21521087",
+      "Họ và tên": "Lê Thành Lộc",
+      "Vị trí thực tập": "Frontend Devloper",
+      "Công ty thực tập": "Phúc Long",
+      "Giảng viên chấm điểm": [
+        "Huỳnh Hồ Thị Mộng Trinh",
+        "Đặng Việt Dũng",
+        " Nguyễn Thị Thanh Trúc",
+      ],
+      Điểm: ["", "", ""],
+    },
+  },
+  {
+    STT: "3",
+    data: {
+      MSSV: "21522289",
+      "Họ và tên": "Võ Hữu",
+      "Vị trí thực tập": "Mobile Devloper",
+      "Công ty thực tập": "DevOps",
+      "Giảng viên chấm điểm": [
+        "Huỳnh Hồ Thị Mộng Trinh",
+        "Đặng Việt Dũng",
+        " Nguyễn Thị Thanh Trúc",
+      ],
+      Điểm: ["", "", ""],
+    },
+  },
+  {
+    STT: "1",
+    data: {
+      MSSV: "21522289",
+      "Họ và tên": "Nguyễn Tiến Vĩ",
+      "Vị trí thực tập": "Mobile Devloper",
+      "Công ty thực tập": "Korea",
+      "Giảng viên chấm điểm": [
+        "Huỳnh Hồ Thị Mộng Trinh",
+        "Đặng Việt Dũng",
+        " Nguyễn Thị Thanh Trúc",
+      ],
+      Điểm: ["", "", ""],
+    },
+  },
+];
+//
 // TODO: Centralized exam
 //
 export const mockCentralizedExam = [
@@ -945,12 +1011,38 @@ export const mockThesisCourseReview = [
     id: "1",
     name: "Ứng dụng quản lý môn học",
     supervisor: "Huỳnh Hồ Thị Mộng Trinh",
+    studentIds: ["21522289", "21521087"],
+    names: ["Nguyễn Tiến Vĩ", "Võ Hữu"],
     reportAt: "29/8/2024 7:23AM",
   },
   {
     id: "2",
     name: "Ứng dụng chia sẻ hình ảnh",
     supervisor: "Huỳnh Hồ Thị Mộng Trinh",
+    studentIds: ["21522289", "21521087"],
+    names: ["Nguyễn Hoàng Linh", "Lê Thành Lộc"],
+    reportAt: "29/8/2024 7:23AM",
+  },
+];
+
+//
+// TODO: Intern Review
+//
+export const mockInternReviewTopic = [
+  {
+    id: "1",
+    name: "Mobile Developer - iZOTA",
+    supervisor: "Nguyễn Ngọc Quí",
+    studentId: "21522289",
+    studentName: "Nguyễn Hoàng Linh",
+    reportAt: "29/8/2024 7:23AM",
+  },
+  {
+    id: "2",
+    name: "DevOps Engineer - BOSCH",
+    supervisor: "Nguyễn Ngọc Quí",
+    studentId: "21521087",
+    studentName: "Lê Thành Lộc",
     reportAt: "29/8/2024 7:23AM",
   },
 ];

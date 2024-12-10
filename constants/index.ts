@@ -37,17 +37,17 @@ export const TeacherSettingTabItems = [
 export const TeacherScoreReportTabItems = [
   {
     value: "scoreThesisReport",
-    label: "GVHD nhận xét Khóa luận",
+    label: "Hướng dẫn KLTN",
     route: "/score-report/supervisor-thesis-report",
   },
   {
     value: "scoreThesisReport",
-    label: "Hội đồng phản biện Khóa luận",
+    label: "Phản biện KLTN",
     route: "/score-report/reviewer-thesis-report",
   },
   {
     value: "scoreInternReport",
-    label: "Hội đồng chấm điểm Thực tập",
+    label: "Thực tập doanh nghiệp",
     route: "/score-report/reviewer-intern-report",
   },
 ];
@@ -193,6 +193,12 @@ export const ReviewThesisFilterType = [
   { id: 1, value: "Tất cả" },
   { id: 2, value: "Đã nhận xét" },
   { id: 3, value: "Chưa nhận xét" },
+];
+
+export const ReviewInternFilterType = [
+  { id: 1, value: "Tất cả" },
+  { id: 2, value: "Đã chấm điểm" },
+  { id: 3, value: "Chưa chấm điểm" },
 ];
 
 //

@@ -1,3 +1,5 @@
+import BorderContainer from "../BorderContainer";
+
 interface Props {
   id: string;
   reviewer: string;
@@ -6,9 +8,9 @@ interface Props {
 
 const ReviewPost = (params: Props) => {
   return (
-    <div
+    <BorderContainer
+      otherClasses="cursor-pointer !bg-[#ecf2ff]"
       onClick={params.onClick}
-      className="cursor-pointer card-wrapper  rounded-[10px]"
     >
       <div className=" rounded-[10px] relative flex-col w-full p-6">
         <div className="flex justify-start items-center gap-2">
@@ -17,7 +19,7 @@ const ReviewPost = (params: Props) => {
           </p>
         </div>
       </div>
-    </div>
+    </BorderContainer>
   );
 };
 

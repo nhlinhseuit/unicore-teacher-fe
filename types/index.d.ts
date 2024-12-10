@@ -237,6 +237,18 @@ export interface GradingReportDataItem {
   isDeleted: boolean;
   data: GradingReportData;
 }
+export interface InternReviewDataItem {
+  STT: string;
+  data: InternReviewData;
+}
+export interface InternReviewData {
+  MSSV: string;
+  "Họ và tên": string;
+  "Vị trí thực tập": string;
+  "Công ty thực tập": string;
+  "Giảng viên chấm điểm": string[];
+  Điểm: string[];
+}
 export interface ScoreTranscriptDataItem {
   STT: string;
   isDeleted: boolean;
