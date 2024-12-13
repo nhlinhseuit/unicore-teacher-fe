@@ -11,11 +11,7 @@ import InputForm from "./InputForm";
 import SubGeneralOfReport from "./SubGeneralOfReport";
 import TableForm from "./TableForm";
 
-interface Props {
-  isReviewer: boolean;
-}
-
-const ReviewForm = (params: Props) => {
+const ReviewForm = () => {
   const [formData, setFormData] = useState({
     topicTitle: "",
     student1Name: "",
@@ -102,11 +98,8 @@ const ReviewForm = (params: Props) => {
 
         <div className="text-center flex flex-col gap-4">
           <p className="paragraph-semibold">NHẬN XÉT KHÓA LUẬN TỐT NGHIỆP</p>
-          {params.isReviewer ? (
-            <p className="paragraph-semibold">CỦA CÁN BỘ PHẢN BIỆN</p>
-          ) : (
-            <p className="paragraph-semibold">CỦA CÁN BỘ HƯỚNG DẪN</p>
-          )}
+          <p className="paragraph-semibold">CỦA CÁN BỘ HƯỚNG DẪN</p>
+
         </div>
 
         <div className="mt-10 flex flex-col gap-6">
@@ -162,18 +155,7 @@ const ReviewForm = (params: Props) => {
                 </label>
               </div>
 
-              {params.isReviewer ? (
-                <GeneralOfReport
-                  totalPages={formData.totalPages}
-                  totalChapters={formData.totalChapters}
-                  totalFigures={formData.totalFigures}
-                  totalTables={formData.totalTables}
-                  totalReferences={formData.totalReferences}
-                  overviewComment={formData.overviewComment}
-                  handleChange={handleChange}
-                />
-              ) : (
-                <div className="flex gap-20">
+              <div className="flex gap-20">
                   <div className="w-[60%]">
                     <GeneralOfReport
                       totalPages={formData.totalPages}
@@ -196,7 +178,6 @@ const ReviewForm = (params: Props) => {
                     />
                   </div>
                 </div>
-              )}
 
               <label className="base-regular italic">
                 &lt;nhận xét về định dạng, cách thức viết báo cáo, văn phong,
@@ -446,7 +427,7 @@ const ReviewForm = (params: Props) => {
 
         <div className="flex mt-20 gap-2">
           <SubmitButton text="Lưu" otherClasses="w-fit" />
-          <IconButton text="Tạm lưu" temp otherClasses="w-fit" />
+
           <IconButton text="Hủy" red otherClasses="w-fit" onClick={() => {}} />
         </div>
       </form>

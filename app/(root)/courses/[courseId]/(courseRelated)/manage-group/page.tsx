@@ -324,8 +324,8 @@ const ManageGroup = () => {
       </div>
 
       <p className="flex justify-end pb-6 italic text-sm text-red-500">
-            * Nhóm trưởng điền tên đầu tiên
-          </p>
+        * Nhóm trưởng điền tên đầu tiên
+      </p>
 
       {isToggleViewTable ? (
         <div>
@@ -341,7 +341,7 @@ const ManageGroup = () => {
 
       <div className="flex mt-12 gap-2">
         <SubmitButton text="Đăng" otherClasses="w-fit" onClick={handleSubmit} />
-        <IconButton text="Tạm lưu" temp otherClasses="w-fit" />
+
         <IconButton text="Hủy" red otherClasses="w-fit" onClick={() => {}} />
       </div>
     </div>

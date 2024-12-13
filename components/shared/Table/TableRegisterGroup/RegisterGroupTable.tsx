@@ -163,26 +163,6 @@ const RegisterGroupTable = (params: DataTableParams) => {
                         //  params.onClickDelete
                       }}
                     />
-
-                    {/* //TODO: MEMBER */}
-                    {/* {dataItem.data.listStudent
-                      .filter((student) => !student.isLeader)
-                      .map((student, index) => (
-                        <RowRegisterGroupTable
-                          key={`${dataItem.STT}-${index}`}
-                          dataItem={{
-                            ...dataItem,
-                            data: { ...dataItem.data, student },
-                          }}
-                          isEditTable={params.isEditTable}
-                          isMultipleDelete={params.isMultipleDelete}
-                          onClickCheckBoxSelect={() => {}}
-                          onChangeRow={() => {}}
-                          saveSingleRow={() => {}}
-                          onClickGetOut={() => {}}
-                          deleteSingleRow={() => {}}
-                        />
-                      ))} */}
                   </>
                 )
               )}

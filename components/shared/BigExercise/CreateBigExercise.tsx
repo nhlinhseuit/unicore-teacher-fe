@@ -20,7 +20,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
-  import { mockBigExerciseGradeColumn, mockDbLeftRatio } from "@/mocks";
+import { mockBigExerciseGradeColumn, mockDbLeftRatio } from "@/mocks";
 import { TopicDataItem } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
@@ -511,9 +511,9 @@ const CreateBigExercise = () => {
                         Hệ số điểm <span className="text-red-600">*</span>
                       </FormLabel>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
-                        Hệ số còn lại trong cột điểm **Quá trình để
-                        phân bổ là {mockDbLeftRatio}% (**Bài tập
-                        đã chiếm {100 - mockDbLeftRatio}%).
+                        Hệ số còn lại trong cột điểm **Quá trình để phân bổ là{" "}
+                        {mockDbLeftRatio}% (**Bài tập đã chiếm{" "}
+                        {100 - mockDbLeftRatio}%).
                       </FormDescription>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
                         Nếu không đặt hệ số, hệ thống sẽ tự động phân bổ điểm
@@ -685,7 +685,7 @@ const CreateBigExercise = () => {
 
             <div className="flex mt-12 gap-2">
               <SubmitButton text="Đăng" otherClasses="w-fit" />
-              <IconButton text="Tạm lưu" temp otherClasses="w-fit" />
+
               <IconButton
                 text="Hủy"
                 red

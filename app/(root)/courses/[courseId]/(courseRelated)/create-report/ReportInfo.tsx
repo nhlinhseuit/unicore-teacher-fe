@@ -27,10 +27,7 @@ import {
 } from "@/components/ui/popover";
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
-import {
-  mockCourseGradeColumn,
-  mockDbLeftRatio
-} from "@/mocks";
+import { mockCourseGradeColumn, mockDbLeftRatio } from "@/mocks";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { format } from "date-fns";
@@ -1144,7 +1141,7 @@ const ReportInfo = () => {
 
             <div className="flex px-6 mt-12 gap-2">
               <SubmitButton text="Đăng" otherClasses="w-fit" />
-              <IconButton text="Tạm lưu" temp otherClasses="w-fit" />
+
               <IconButton
                 text="Hủy"
                 red

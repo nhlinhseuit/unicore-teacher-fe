@@ -2,36 +2,23 @@
 import BorderContainer from "@/components/shared/BorderContainer";
 import IconButton from "@/components/shared/Button/IconButton";
 import CheckboxComponent from "@/components/shared/CheckboxComponent";
-import OfficerPermission from "@/components/shared/OfficerPermission";
 import DataTable from "@/components/shared/Table/components/DataTable";
 import ToggleTitle from "@/components/shared/ToggleTitle";
 import { Input } from "@/components/ui/input";
 import { DataTableType } from "@/constants";
-import { useToast } from "@/hooks/use-toast";
 import {
   mockDataImportStudentList,
   mockDataImportTeacherList,
-  mockDataOfficerPermissions,
-  mockSettingGradeColumnDetail,
+  mockSettingGradeColumnDetail
 } from "@/mocks";
-import { StudentDataItem, TeacherDataItem } from "@/types";
 import { useState } from "react";
-const Setting = () => {
-  const [isEditTable, setIsEditTable] = useState(false);
-  const [isMultipleDelete, setIsMultipleDelete] = useState(false);
-  const [dataTableStudent, setDataTableStudent] = useState<StudentDataItem[]>(
-    mockDataImportStudentList
-  );
-  const [dataTableTeacher, setDataTableTeacher] = useState<TeacherDataItem[]>(
-    mockDataImportTeacherList
-  );
 
+const Setting = () => {
   const [isToggleShowListStudent, setIsToggleShowListStudent] = useState(true);
   const [isToggleShowListTeacher, setIsToggleShowListTeacher] = useState(true);
   const [isToggleShowCourseInfo, setIsToggleShowCourseInfo] = useState(true);
   const [isToggleShowCourseSetting, setIsToggleShowCourseSetting] =
     useState(true);
-  const { toast } = useToast();
 
   const [mockData, setMockData] = useState(mockSettingGradeColumnDetail);
 
@@ -228,60 +215,7 @@ const Setting = () => {
         {isToggleShowListStudent ? (
           <DataTable
             type={DataTableType.Student}
-            dataTable={dataTableStudent}
-            isEditTable={isEditTable}
-            isMultipleDelete={isMultipleDelete}
-            onClickEditTable={() => {
-              setIsEditTable(true);
-            }}
-            onSaveEditTable={(localDataTable) => {
-              setIsEditTable(false);
-              // set lại data import hoặc patch API
-              localDataTable = localDataTable as StudentDataItem[];
-              setDataTableStudent(localDataTable);
-            }}
-            onClickMultipleDelete={() => {
-              setIsMultipleDelete(true);
-            }}
-            onClickDeleteAll={() => {
-              setDataTableStudent((prevData) => {
-                return prevData.map((item) => ({
-                  ...item,
-                  isDeleted: true,
-                }));
-              });
-              toast({
-                title: "Xóa thành công",
-                description: `Đã xóa tất cả sinh viên`,
-                variant: "success",
-                duration: 3000,
-              });
-            }}
-            onClickDelete={(itemsSelected: string[]) => {
-              // ? DELETE THEO MSSV
-              setDataTableStudent((prevData) => {
-                return prevData.map((item) => {
-                  if (itemsSelected.includes(item.data["MSSV"])) {
-                    return {
-                      ...item,
-                      isDeleted: true,
-                    };
-                  }
-                  return item;
-                });
-              });
-              toast({
-                title: "Xóa thành công",
-                description: `${`Các sinh viên ${itemsSelected.join(
-                  ", "
-                )} đã được xóa.`}`,
-                variant: "success",
-                duration: 3000,
-              });
-            }}
-            onClickGetOut={() => {
-              setIsMultipleDelete(false);
-            }}
+            dataTable={mockDataImportStudentList}
           />
         ) : null}
       </div>
@@ -297,60 +231,7 @@ const Setting = () => {
         {isToggleShowListTeacher ? (
           <DataTable
             type={DataTableType.Teacher}
-            dataTable={dataTableTeacher}
-            isEditTable={isEditTable}
-            isMultipleDelete={isMultipleDelete}
-            onClickEditTable={() => {
-              setIsEditTable(true);
-            }}
-            onSaveEditTable={(localDataTable) => {
-              setIsEditTable(false);
-              // set lại data import hoặc patch API
-              localDataTable = localDataTable as TeacherDataItem[];
-              setDataTableTeacher(localDataTable);
-            }}
-            onClickMultipleDelete={() => {
-              setIsMultipleDelete(true);
-            }}
-            onClickDeleteAll={() => {
-              setDataTableTeacher((prevData) => {
-                return prevData.map((item) => ({
-                  ...item,
-                  isDeleted: true,
-                }));
-              });
-              toast({
-                title: "Xóa thành công",
-                description: `Đã xóa tất cả sinh viên`,
-                variant: "success",
-                duration: 3000,
-              });
-            }}
-            onClickDelete={(itemsSelected: string[]) => {
-              // ? DELETE THEO MSSV
-              setDataTableTeacher((prevData) => {
-                return prevData.map((item) => {
-                  if (itemsSelected.includes(item.data["Mã cán bộ"])) {
-                    return {
-                      ...item,
-                      isDeleted: true,
-                    };
-                  }
-                  return item;
-                });
-              });
-              toast({
-                title: "Xóa thành công",
-                description: `${`Các sinh viên ${itemsSelected.join(
-                  ", "
-                )} đã được xóa.`}`,
-                variant: "success",
-                duration: 3000,
-              });
-            }}
-            onClickGetOut={() => {
-              setIsMultipleDelete(false);
-            }}
+            dataTable={mockDataImportTeacherList}
           />
         ) : null}
       </div>

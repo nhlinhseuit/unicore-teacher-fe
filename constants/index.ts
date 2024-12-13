@@ -40,16 +40,6 @@ export const TeacherScoreReportTabItems = [
     label: "Hướng dẫn KLTN",
     route: "/score-report/supervisor-thesis-report",
   },
-  {
-    value: "scoreThesisReport",
-    label: "Phản biện KLTN",
-    route: "/score-report/reviewer-thesis-report",
-  },
-  {
-    value: "scoreInternReport",
-    label: "Thực tập doanh nghiệp",
-    route: "/score-report/reviewer-intern-report",
-  },
 ];
 
 export const TeacherSubjectsTabItems = [
@@ -172,14 +162,16 @@ export enum FilterType {
 }
 
 export enum CourseType {
-  RegularCourseWithProject = "regularCourseWithProject",
-  InternCourse = "internCourse",
-  ThesisCourse = "thesisCourse",
+  RegularCourseWithProject = "regular",
+  InternCourse = "intern",
+  ProjectCourse = "project",
+  ThesisCourse = "thesis",
 }
 
 export const ListCourseColors = [
   { type: CourseType.RegularCourseWithProject, color: "#e8f7ff" },
   { type: CourseType.InternCourse, color: "#fef5e5" },
+  { type: CourseType.ProjectCourse, color: "#ecf2ff" },
   { type: CourseType.ThesisCourse, color: "#ecf2ff" },
 ];
 
@@ -193,12 +185,6 @@ export const ReviewThesisFilterType = [
   { id: 1, value: "Tất cả" },
   { id: 2, value: "Đã nhận xét" },
   { id: 3, value: "Chưa nhận xét" },
-];
-
-export const ReviewInternFilterType = [
-  { id: 1, value: "Tất cả" },
-  { id: 2, value: "Đã chấm điểm" },
-  { id: 3, value: "Chưa chấm điểm" },
 ];
 
 //

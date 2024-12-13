@@ -416,7 +416,7 @@ export const mockDataGradingReport = [
 export const mockCourses = [
   {
     id: "SE114.N21.PMCL",
-    type: "regularCourseWithProject",
+    type: "regular",
     name: "Nhập môn ứng dụng di động",
     semester: "HK1/2024",
     teachers: "Trịnh Văn A, Nguyễn Văn H, +1",
@@ -440,7 +440,7 @@ export const mockCourses = [
   },
   {
     id: "SE100.N23.PMCL",
-    type: "regularCourseWithProject",
+    type: "regular",
     name: "Phương pháp phát triển phần mềm hướng đối tượng",
     semester: "HK2/2024",
     teachers: "Nguyễn Hoàng Linh, Nguyễn Văn H",
@@ -459,7 +459,7 @@ export const mockCourses = [
   },
   {
     id: "SE501.N21.PMCL",
-    type: "internCourse",
+    type: "intern",
     name: "Thực tập doanh nghiệp",
     semester: "HK1/2024",
     teachers: "Nguyễn Ngọc Quí",
@@ -478,7 +478,7 @@ export const mockCourses = [
   },
   {
     id: "SE505.P11.PMCL",
-    type: "thesisCourse",
+    type: "thesis",
     name: "Khóa luận tốt nghiệp",
     semester: "HK1/2024",
     teachers: "Huỳnh Hồ Thị Mộng Trinh",
@@ -497,7 +497,7 @@ export const mockCourses = [
   },
   {
     id: "SE121.O21.PMCL",
-    type: "thesisCourse",
+    type: "project",
     name: "Đồ án 1",
     semester: "HK1/2024",
     teachers: "Nguyễn Hoàng Linh",
@@ -893,10 +893,8 @@ export const mockDataStudentRegisterGroup = [
 ];
 
 //
-// TODO: Manage Group
-// ! Từ d//ata của group đăng ký, biến đổi nó thành data dạng này để render
-// ! mỗi student 1 row
-
+// TODO: Intern Review Detail
+//
 export const mockInternReviewDetail = [
   {
     STT: "1",
@@ -959,6 +957,7 @@ export const mockInternReviewDetail = [
     },
   },
 ];
+
 //
 // TODO: Centralized exam
 //
@@ -1046,6 +1045,7 @@ export const mockInternReviewTopic = [
     reportAt: "29/8/2024 7:23AM",
   },
 ];
+
 export const mockThesisCommentTickets = [
   {
     id: "1",
