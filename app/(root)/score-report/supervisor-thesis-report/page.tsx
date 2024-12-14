@@ -25,7 +25,7 @@ const ReviewerThesisReport = () => {
               setIsGradeThesisReport(false);
             }}
           />
-          <ReviewForm isReviewer={false} />
+          <ReviewForm/>
         </div>
       ) : (
         <>

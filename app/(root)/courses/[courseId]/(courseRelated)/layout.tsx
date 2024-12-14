@@ -19,6 +19,13 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   if (courseId.includes("800")) title = "SE501.N21.PMCL - GVHD";
 
   //! CALL API để xem course này có phải có type là internCourse hay thesisCourse hay không
+  //! nếu internCourse hay thesisCourse là bigExercise, nên kh có tab events
+  //! còn regular course mới có tab events có bài tập lớn và thi tập trung
+
+  //? Chỉ check để handle có tab events hay kh, còn lớp của Khoa hay lớp GVHD thì đều có các action
+  //? !!!CẦN HANDLE: Nếu lớp của Khoa thì kh được đăng
+ 
+  //TODO: GV thì được tương tác với regularCourse
   const isNotRegularCourse = false;
   const renderTeacherCourseTabItems = isNotRegularCourse
     ? BigExerciseTabItems
