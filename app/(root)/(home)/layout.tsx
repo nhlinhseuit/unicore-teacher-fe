@@ -34,7 +34,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       >
         {TeacherAnnouncementsTabItems.map((item) => {
           let isActive =
-            pathName === item.route || pathName.includes(`${item.route}`);
+            pathName === item.route || pathName.includes(`/${item.route}`);
           if (pathName.startsWith("/announcements") && item.route === "/") {
             isActive = true;
           }

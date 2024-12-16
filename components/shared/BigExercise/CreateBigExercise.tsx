@@ -108,7 +108,8 @@ const CreateBigExercise = () => {
       const transformedData = parsedData.map((item: any, index: number) => {
         // Kiểm tra các trường quan trọng (required fields)
         const requiredFields = {
-          "Tên đề tài": item["Tên đề tài"],
+          "Tên đề tài tiếng Việt": item["Tên đề tài tiếng Việt"],
+          "Tên đề tài tiếng Anh": item["Tên đề tài tiếng Anh"],
           "Mô tả": item["Mô tả"],
           "GV phụ trách": item["GV phụ trách"],
         };
@@ -126,11 +127,7 @@ const CreateBigExercise = () => {
           type: "topic",
           STT: item.STT,
           isDeleted: false,
-          data: {
-            "Tên đề tài": item["Tên đề tài"],
-            "Mô tả": item["Mô tả"],
-            "GV phụ trách": item["GV phụ trách"],
-          },
+          data: requiredFields,
         };
       });
 

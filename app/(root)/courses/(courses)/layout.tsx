@@ -34,7 +34,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       >
         {TeacherCoursesTabItems.map((item) => {
           const isActive =
-            pathName === item.route || pathName.includes(`${item.route}`);
+            pathName === item.route || pathName.includes(`/${item.route}`);
 
           return (
             <Link key={item.route} href={item.route}>

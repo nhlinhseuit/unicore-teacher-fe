@@ -115,7 +115,11 @@ const AlertCreateNewTopic = (params: Props) => {
 
   const AnnoucementSchema = z
     .object({
-      title: z
+      titleVi: z
+        .string()
+        .min(5, { message: "Tên đề tài phải chứa ít nhất 5 ký tự" })
+        .max(130),
+      titleEn: z
         .string()
         .min(5, { message: "Tên đề tài phải chứa ít nhất 5 ký tự" })
         .max(130),
@@ -142,7 +146,8 @@ const AlertCreateNewTopic = (params: Props) => {
   const form = useForm<z.infer<typeof AnnoucementSchema>>({
     resolver: zodResolver(AnnoucementSchema),
     defaultValues: {
-      title: "",
+      titleVi: "",
+      titleEn: "",
       description: "",
     },
   });
@@ -152,7 +157,8 @@ const AlertCreateNewTopic = (params: Props) => {
   async function onSubmit(values: any) {
     try {
       console.log({
-        title: values.title,
+        titleVi: values.titleVi,
+        titleEn: values.titleEn,
         description: description,
       });
 
@@ -167,7 +173,8 @@ const AlertCreateNewTopic = (params: Props) => {
 
       params.handleSetCreateNew(false);
       reset({
-        title: "",
+        titleVi: "",
+        titleEn: "",
         description: "",
       });
     } catch {
@@ -190,16 +197,36 @@ const AlertCreateNewTopic = (params: Props) => {
             <div className="flex flex-col gap-6">
               <FormField
                 control={form.control}
-                name="title"
+                name="titleVi"
                 render={({ field }) => (
                   <FormItem className="flex w-full flex-col">
                     <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                      Tên đề tài <span className="text-red-600">*</span>
+                      Tên đề tài tiếng Việt<span className="text-red-600">*</span>
                     </FormLabel>
                     <FormControl className="mt-3.5 ">
                       <Input
                         {...field}
-                        placeholder="Nhập tên đề tài..."
+                        placeholder="Nhập tên đề tài tiếng Việt..."
+                        className="
+                          no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="titleEn"
+                render={({ field }) => (
+                  <FormItem className="flex w-full flex-col">
+                    <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                      Tên đề tài tiếng Anh<span className="text-red-600">*</span>
+                    </FormLabel>
+                    <FormControl className="mt-3.5 ">
+                      <Input
+                        {...field}
+                        placeholder="Nhập tên đề tài tiếng Anh..."
                         className="
                           no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
                       />
