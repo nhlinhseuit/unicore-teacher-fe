@@ -701,8 +701,8 @@ export const mockCoursesListScoreTranscript = [
   { id: 4, value: "SE104.N21.PMCL - Kiểm chứng phần mềm" },
 ];
 export const mockSubCoursesOfCourseScoreTranscript = [
-  { id: 1, value: "Điểm lớp lý thuyết" },
-  { id: 2, value: "Điểm lớp thực hành" },
+  { id: 1, value: "SE114.N23.PMCL - LT" },
+  { id: 2, value: "SE114.N23.PMCL - TH" },
   { id: 3, value: "Điểm tổng kết" },
 ];
 export const mockDataScoreTranscript = [

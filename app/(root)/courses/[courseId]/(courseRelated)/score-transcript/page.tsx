@@ -2,7 +2,6 @@
 
 import IconButton from "@/components/shared/Button/IconButton";
 import ScoreColumnDetailPage from "@/components/shared/ScoreTranscript/ScoreColumnDetailPage";
-import TableSearch from "@/components/shared/Search/TableSearch";
 import ScoreTranscriptTable from "@/components/shared/Table/TableScoreTranscript/ScoreTranscriptTable";
 import {
   mockDataScoreTranscript,
@@ -65,11 +64,6 @@ const ScoreTranscript = () => {
                   </div>
                 )}
               >
-                <TableSearch
-                  setSearchTerm={() => {}}
-                  searchTerm={""}
-                  otherClasses="p-2"
-                />
                 <div className="scroll-container scroll-container-dropdown-content">
                   {mockSubCoursesOfCourseScoreTranscript.map(
                     (course: any, index) => (
