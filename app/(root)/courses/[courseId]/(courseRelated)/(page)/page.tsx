@@ -88,7 +88,7 @@ const page = () => {
           setIsGradeThesisReport(false);
         }}
       />
-      <ReviewForm isReviewer={false} />
+      <ReviewForm/>
     </>
   ) : (
     <div>
