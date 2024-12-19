@@ -23,6 +23,7 @@ interface Props {
   fileName: string;
   comments: Comment[];
   setGrading: () => void;
+  isOnlyView?: boolean;
 }
 
 const ExercisePostItem = (params: Props) => {
@@ -73,15 +74,19 @@ const ExercisePostItem = (params: Props) => {
 
         <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-2 px-2"} />
 
-        <Divider />
+        {params.isOnlyView ? null : (
+          <>
+            <Divider />
 
-        <GradingInPost
+            <GradingInPost
           setGrading={params.setGrading}
           submissionNumber={mockSubmissionPost.submissionNumber}
           totalNumber={mockSubmissionPost.totalNumber}
           lateTime={mockSubmissionPost.lateTime}
           columnGrade={mockSubmissionPost.columnGrade}
         />
+          </>
+        )}
 
         <Divider />
 

@@ -79,13 +79,12 @@ export interface GradingExerciseData {
   "Điểm danh"?: boolean;
   // 1 là có nhóm
   // 0 là cá nhân
-  "Hình thức": boolean;
-  "Mã nhóm": string;
   "Bài nộp": string;
+  "Mã nhóm": string;
   "Trễ hạn": string;
-  MSSV: string;
-  "Họ và tên": string;
-  Điểm: number;
+  MSSV: string[];
+  "Họ và tên": string[];
+  Điểm: number[];
   "Góp ý": string;
 }
 export interface GradingReviewData {
@@ -99,12 +98,12 @@ export interface GradingReviewData {
 
 export interface GradingReportData {
   "Điểm danh": boolean;
-  "Mã nhóm": string;
-  "Bài nộp": string;
   "Trễ hạn": string;
-  MSSV: string;
-  "Họ và tên": string;
-  Điểm: number;
+  "Bài nộp": string;
+  "Mã nhóm": string;
+  MSSV: string[];
+  "Họ và tên": string[];
+  Điểm: number[];
   "Góp ý": string;
 }
 

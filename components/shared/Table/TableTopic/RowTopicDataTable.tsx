@@ -5,13 +5,6 @@ import { TopicDataItem } from "@/types";
 interface RowParams {
   dataItem: TopicDataItem;
 }
-interface handleInputChangeParams {
-  key: TopicDataItem;
-  newValue: any;
-  isMultipleInput?: boolean;
-  currentIndex?: number;
-  isCheckbox?: boolean;
-}
 
 const RowTopicDataTable = (params: RowParams) => {
   return (

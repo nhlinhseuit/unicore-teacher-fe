@@ -126,9 +126,9 @@ const RowRegisterGroupTable = React.memo(
             value={value as string | number}
             placeholder={value as string | number}
             onChange={(newValue) =>
-                  //@ts-ignore
-                  handleInputChange({ key: key, newValue: newValue })
-                }
+              //@ts-ignore
+              handleInputChange({ key: key, newValue: newValue })
+            }
           />
         )
       ) : Array.isArray(value) ? (
@@ -192,41 +192,21 @@ const RowRegisterGroupTable = React.memo(
               e.stopPropagation(); // Ngăn sự kiện lan truyền đến Table.RowRegisterGroupTable
             }}
           >
-            {params.isMultipleDelete ? (
-              <div className="flex items-center justify-center w-10 h-10">
-                <input
-                  id="apple"
-                  type="checkbox"
-                  name="filterOptions"
-                  value={valueUniqueInput}
-                  onChange={() => {
-                    {
-                      params.onClickCheckBoxSelect &&
-                        params.onClickCheckBoxSelect(valueUniqueInput);
-                    }
-                  }}
-                  className="w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600"
-                />
-              </div>
-            ) : isEdit ? (
-              <IconButton
-                text="Lưu"
-                onClick={() => {
-                  params.saveSingleRow &&
-                    params.saveSingleRow(refInput.current);
-                  setIsEdit(false);
+            <div className="flex items-center justify-center w-10 h-10">
+              <input
+                id="apple"
+                type="checkbox"
+                name="filterOptions"
+                value={valueUniqueInput}
+                onChange={() => {
+                  {
+                    params.onClickCheckBoxSelect &&
+                      params.onClickCheckBoxSelect(valueUniqueInput);
+                  }
                 }}
+                className="w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600"
               />
-            ) : (
-              <MoreButtonComponent
-                handleEdit={handleEdit}
-                onClickGetOut={params.onClickGetOut}
-                onClickDelete={() => {
-                  params.deleteSingleRow &&
-                    params.deleteSingleRow([valueUniqueInput]);
-                }}
-              />
-            )}
+            </div>
           </div>
         </Table.Cell>
 

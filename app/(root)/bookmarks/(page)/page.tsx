@@ -6,13 +6,12 @@ import PostItem from "@/components/shared/PostItem/Item/PostItem";
 import ReportPostItem from "@/components/shared/PostItem/Item/ReportPostItem";
 import ShowOriginPostContainer from "@/components/shared/ShowOriginPostContainer";
 import { BookmarkOptions } from "@/constants";
-import {  mockPostDataCourseIdPage } from "@/mocks";
+import { mockPostDataCourseIdPage } from "@/mocks";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useState } from "react";
 
 const Bookmarks = () => {
-
   const [selectedBookmarkOption, setSelectedBookmarkOption] = useState(1);
 
   const getRenderPostItem = (item: any): JSX.Element => {
@@ -21,6 +20,7 @@ const Bookmarks = () => {
         return (
           <ReportPostItem
             key={item.id}
+            isOnlyView
             id={item.id}
             creator={item.creator}
             createdAt={item.createdAt}
@@ -36,6 +36,7 @@ const Bookmarks = () => {
         return (
           <ExercisePostItem
             key={item.id}
+            isOnlyView
             id={item.id}
             creator={item.creator}
             createdAt={item.createdAt}

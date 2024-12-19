@@ -1,112 +1,62 @@
 import {
-  CourseData,
+  GradingExerciseData,
   GradingExerciseDataItem,
+  GradingReportData,
   GradingReportDataItem,
-  StudentData,
-  SubjectData,
-  TeacherData,
 } from "@/types";
 import { Table } from "flowbite-react";
-import React, { useEffect, useRef, useState } from "react";
-import IconButton from "../../Button/IconButton";
+import React, { useRef, useState } from "react";
 import InputComponent from "../components/InputComponent";
-import MoreButtonComponent from "../components/MoreButtonComponent";
 
 interface RowParams {
-  isMemberOfAboveGroup: boolean;
   dataItem: GradingExerciseDataItem | GradingReportDataItem;
   isEditTable?: boolean;
-  isMultipleDelete?: boolean;
-  isHasSubCourses?: boolean;
-  onClickGetOut?: () => void;
-  saveSingleRow?: (item: any) => void;
-  deleteSingleRow?: (itemsSelected: string[]) => void;
-  onClickCheckBoxSelect?: (item: string) => void;
   onChangeRow?: (item: any) => void;
 }
 interface handleInputChangeParams {
-  key:
-    | keyof CourseData
-    | keyof SubjectData
-    | keyof StudentData
-    | keyof TeacherData;
+  key: keyof GradingExerciseData | keyof GradingReportData;
   newValue: any;
   isMultipleInput?: boolean;
   currentIndex?: number;
-  isCheckbox?: boolean;
 }
 
 const RowGradingGroupTable = React.memo(
   (params: RowParams) => {
-    const [isEdit, setIsEdit] = useState(false);
-    const [editDataItem, setEditDataItem] = useState(params.dataItem);
-
     const [isChecked, setIsChecked] = useState(
       //@ts-ignore
       params.dataItem.data["Điểm danh"] as boolean
     );
 
-    const refInput = useRef({});
-
-    useEffect(() => {
-      if (params.isEditTable) setIsEdit(false);
-    }, [[params.isEditTable]]);
-
-    const handleEdit = () => {
-      if (isEdit === false) {
-        setIsEdit(true);
-      } else {
-        setIsEdit(false);
-      }
-    };
+    const refInput = useRef(params.dataItem);
 
     const handleInputChange = ({
       key,
       newValue,
       isMultipleInput,
       currentIndex,
-      isCheckbox,
     }: handleInputChangeParams) => {
       //@ts-ignore
       const updatedDataItem: GradingExerciseDataItem | GradingReportDataItem = {
-        ...editDataItem,
+        ...refInput.current,
         data: {
-          ...editDataItem.data,
+          ...refInput.current.data,
           [key]: isMultipleInput
-            ? //@ts-ignore
-              (editDataItem.data[key] as string)
-                .split(/\r\n|\n/)
-                .map((line, index) =>
-                  index === currentIndex ? newValue : line
-                )
-                .join("\r\n")
+            ? (refInput.current.data[key] as string[]).map((value, index) =>
+                index === currentIndex ? newValue : value
+              )
             : newValue,
         },
       };
 
-      // TODO: inputref for save single row
-      if (isEdit) {
-        refInput.current = updatedDataItem;
-        return;
-      }
-
-      // setEditDataItem(updatedDataItem); // ??
+      refInput.current = updatedDataItem; //? ĐỂ UPATE ĐƯỢC NHIỀU FIELD TRÊN 1 HÀNG
 
       params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
     };
 
     var valueUniqueInput = params.dataItem.data["Mã nhóm"];
 
-    const renderTableCellValue = (
-      keyId: string,
-      key: string,
-      value: any,
-      isEdit: boolean
-    ) => {
-      if (
-        (key === "Điểm" || key === "Góp ý") &&
-        (isEdit || params.isEditTable)
-      ) {
+    const renderTableCellValue = (keyId: string, key: string, value: any) => {
+      if ((key === "Điểm" || key === "Góp ý") && params.isEditTable) {
         if (key === "Góp ý")
           return (
             <InputComponent
@@ -122,7 +72,25 @@ const RowGradingGroupTable = React.memo(
               isInTable
             />
           );
-        return (
+        return Array.isArray(value) ? (
+          <div className="flex flex-col gap-1">
+            {value.map((item, index) => (
+              <InputComponent
+                key={`${keyId}_${item}_${index}`}
+                value={item}
+                placeholder={item as string | number}
+                onChange={(newValue) => {
+                  handleInputChange({
+                    key,
+                    newValue,
+                    isMultipleInput: true,
+                    currentIndex: index,
+                  });
+                }}
+              />
+            ))}
+          </div>
+        ) : (
           <InputComponent
             key={`${keyId}_input_${key}_${value}`}
             value={value as string | number}
@@ -134,8 +102,6 @@ const RowGradingGroupTable = React.memo(
             }
           />
         );
-      } else if (key === "Hình thức") {
-        return value ? "Nhóm" : "Cá nhân";
       } else if (key === "Trễ hạn" && value === "0") {
         return "Không";
       } else if (key === "Điểm danh") {
@@ -148,7 +114,14 @@ const RowGradingGroupTable = React.memo(
           />
         );
       } else {
-        return value;
+        return Array.isArray(value)
+          ? value.map((item, index) => (
+              <React.Fragment key={index}>
+                {item}
+                {index < value.length - 1 && <br />}
+              </React.Fragment>
+            ))
+          : value;
       }
     };
 
@@ -157,64 +130,15 @@ const RowGradingGroupTable = React.memo(
         key={params.dataItem.STT}
         onClick={() => {}}
         className={`bg-background-secondary  text-left ${
-          isEdit || params.isEditTable
+          params.isEditTable
             ? "hover:bg-white cursor-default"
             : "hover:bg-light-800 cursor-default"
         } duration-100`}
       >
-        {/* checkbox */}
-        <Table.Cell className="w-10 border-r-[1px] z-100 ">
-          <div
-            onClick={(e) => {
-              e.stopPropagation(); // Ngăn sự kiện lan truyền đến Table.RowGradingGroupTable
-            }}
-          >
-            {params.isMultipleDelete ? (
-              <div className="flex items-center justify-center w-10 h-10">
-                <input
-                  id="apple"
-                  type="checkbox"
-                  name="filterOptions"
-                  value={valueUniqueInput}
-                  onChange={() => {
-                    {
-                      params.onClickCheckBoxSelect &&
-                        params.onClickCheckBoxSelect(valueUniqueInput);
-                    }
-                  }}
-                  className="w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600"
-                />
-              </div>
-            ) : isEdit ? (
-              <IconButton
-                text="Lưu"
-                onClick={() => {
-                  params.saveSingleRow &&
-                    params.saveSingleRow(refInput.current);
-                  setIsEdit(false);
-                }}
-              />
-            ) : (
-              <MoreButtonComponent
-                handleEdit={handleEdit}
-                onClickGetOut={params.onClickGetOut}
-                onClickDelete={() => {
-                  params.deleteSingleRow &&
-                    params.deleteSingleRow([valueUniqueInput]);
-                }}
-              />
-            )}
-          </div>
-        </Table.Cell>
-
         {/* STT - Là STT của nhóm */}
-        {params.isMemberOfAboveGroup ? (
-          <Table.Cell className="w-10 border-r-[1px]  text-left"></Table.Cell>
-        ) : (
-          <Table.Cell className="w-10 border-r-[1px]  text-left">
-            <span>{params.dataItem.data["Mã nhóm"]}</span>
-          </Table.Cell>
-        )}
+        <Table.Cell className="w-10 border-r-[1px]  text-left">
+          <span>{params.dataItem.data["Mã nhóm"]}</span>
+        </Table.Cell>
 
         {/* Các giá trị khác */}
         {Object.entries(params.dataItem.data).map(([key, value]) => {
@@ -234,10 +158,10 @@ const RowGradingGroupTable = React.memo(
               className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left 
               ${key === "Bài nộp" ? "underline cursor-pointer" : ""}
               ${key === "Trễ hạn" && value !== "0" ? "text-red-500" : ""}
-              ${key === "Điểm danh" ? "text-center" : ""}
+              ${key === "Điểm danh" || key === "Điểm" ? "text-center" : ""}
             `}
             >
-              {renderTableCellValue(keyId, key, value, isEdit)}
+              {renderTableCellValue(keyId, key, value)}
             </Table.Cell>
           );
         })}
@@ -248,8 +172,7 @@ const RowGradingGroupTable = React.memo(
     // Kiểm tra nếu `dataItem` của RowGradingGroupTable không thay đổi thì không cần re-render
     return (
       prevProps.dataItem === nextProps.dataItem &&
-      prevProps.isEditTable === nextProps.isEditTable &&
-      prevProps.isMultipleDelete === nextProps.isMultipleDelete
+      prevProps.isEditTable === nextProps.isEditTable
     );
   }
 );

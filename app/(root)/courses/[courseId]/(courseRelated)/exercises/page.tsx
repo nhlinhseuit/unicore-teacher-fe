@@ -1,7 +1,6 @@
 "use client";
 
 import BackToPrev from "@/components/shared/BackToPrev";
-import IconButton from "@/components/shared/Button/IconButton";
 import ExercisePostItem from "@/components/shared/PostItem/Item/ExercisePostItem";
 import GradingGroupTable from "@/components/shared/Table/TableGrading/GradingGroupTable";
 import {
@@ -9,6 +8,7 @@ import {
   mockDataGradingReport,
   mockPostData,
 } from "@/mocks";
+import { GradingExerciseDataItem, GradingReportDataItem } from "@/types";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useState } from "react";
@@ -16,6 +16,16 @@ import { useState } from "react";
 const Exercises = () => {
   const [isGrading, setIsGrading] = useState(false);
   const [isEditTable, setIsEditTable] = useState(false);
+
+  const [dataTableGradingExercise, setDataTableGradingExercise] = useState<
+    GradingExerciseDataItem[]
+  >(mockDataGradingExercise);
+
+  const [isEditTableReport, setIsEditTableReport] = useState(false);
+
+  const [dataTableGradingReport, setDataTableGradingReport] = useState<
+    GradingReportDataItem[]
+  >(mockDataGradingReport);
 
   return isGrading ? (
     <>
@@ -54,6 +64,15 @@ const Exercises = () => {
                     type="button"
                     className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
                   >
+                    <span className="font-semibold">Hình thức:</span>
+                    <span>Nhóm</span>
+                  </button>
+                </li>
+                <li role="menuitem">
+                  <button
+                    type="button"
+                    className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
+                  >
                     <span className="font-semibold">Thời hạn nộp bài:</span>
                     <span> 12h SA 8/11/2024 - 11h30 SA 15/11/2024</span>
                   </button>
@@ -82,32 +101,22 @@ const Exercises = () => {
             </div>
           </Dropdown>
         </div>
-
-        <div>
-          {isEditTable ? (
-            <IconButton
-              text="Lưu"
-              onClick={() => {
-                setIsEditTable(false);
-              }}
-            />
-          ) : (
-            <IconButton
-              text="Chấm điểm"
-              green
-              onClick={() => {
-                setIsEditTable(true);
-              }}
-            />
-          )}
-        </div>
       </div>
 
       {/* //TODO: BÀI TẬP */}
       <GradingGroupTable
         isEditTable={isEditTable}
-        isMultipleDelete={false}
-        dataTable={mockDataGradingExercise}
+        dataTable={dataTableGradingExercise}
+        onClickEditTable={() => {
+          setIsEditTable(true);
+        }}
+        onSaveEditTable={(localDataTable) => {
+          setIsEditTable(false);
+          // set lại data import hoặc patch API
+          localDataTable = localDataTable as GradingExerciseDataItem[];
+
+          setDataTableGradingExercise(localDataTable);
+        }}
       />
 
       <p className="mt-10 mb-10 paragraph-semibold">
@@ -116,9 +125,17 @@ const Exercises = () => {
 
       {/* //TODO: BÁO CÁO */}
       <GradingGroupTable
-        isEditTable={isEditTable}
-        isMultipleDelete={false}
-        dataTable={mockDataGradingReport}
+        isEditTable={isEditTableReport}
+        dataTable={dataTableGradingReport}
+        onClickEditTable={() => {
+          setIsEditTableReport(true);
+        }}
+        onSaveEditTable={(localDataTable) => {
+          setIsEditTableReport(false);
+          // set lại data import hoặc patch API
+          localDataTable = localDataTable as GradingReportDataItem[];
+          setDataTableGradingReport(localDataTable);
+        }}
       />
     </>
   ) : (

@@ -24,6 +24,7 @@ interface Props {
   comments: Comment[];
   setGrading: () => void;
   isFinalReport?: boolean;
+  isOnlyView?: boolean;
 }
 
 const ReportPostItem = (params: Props) => {
@@ -74,16 +75,20 @@ const ReportPostItem = (params: Props) => {
 
         <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-2 px-2"} />
 
-        <Divider />
+        {params.isOnlyView ? null : (
+          <>
+            <Divider />
 
-        <GradingInPost
-          isFinalReport={params.isFinalReport}
-          setGrading={params.setGrading}
-          submissionNumber={mockSubmissionPost.submissionNumber}
-          totalNumber={mockSubmissionPost.totalNumber}
-          lateTime={mockSubmissionPost.lateTime}
-          columnGrade={mockSubmissionPost.columnGrade}
-        />
+            <GradingInPost
+              isFinalReport={params.isFinalReport}
+              setGrading={params.setGrading}
+              submissionNumber={mockSubmissionPost.submissionNumber}
+              totalNumber={mockSubmissionPost.totalNumber}
+              lateTime={mockSubmissionPost.lateTime}
+              columnGrade={mockSubmissionPost.columnGrade}
+            />
+          </>
+        )}
 
         <Divider />
 
