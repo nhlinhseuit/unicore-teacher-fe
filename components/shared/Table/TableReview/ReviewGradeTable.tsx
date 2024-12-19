@@ -1,30 +1,13 @@
-import {
-  AlertDialogFooter,
-  AlertDialogHeader,
-} from "@/components/ui/alert-dialog";
 import { DataGradingReviewItem } from "@/types";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogTitle,
-} from "@radix-ui/react-alert-dialog";
 import { Table } from "flowbite-react";
-import { useState } from "react"
+import { useState } from "react";
 import { tableTheme } from "../components/DataTable";
 
 interface DataTableParams {
-  isEditTable: boolean;
-  isMultipleDelete: boolean;
   dataTable: DataGradingReviewItem;
 }
 
 const ReviewGradeTable = (params: DataTableParams) => {
-  const [itemsSelected, setItemsSelected] = useState<string[]>([]);
-  const [isShowDialog, setIsShowDialog] = useState(-1);
-
   return (
     <div>
       <div
@@ -156,48 +139,6 @@ const ReviewGradeTable = (params: DataTableParams) => {
         </Table>
       </div>
 
-      {/* ALERT CONFIRM */}
-      {isShowDialog !== -1 ? (
-        <AlertDialog open={isShowDialog !== -1}>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Bạn có chắc chắn muốn xóa?</AlertDialogTitle>
-              <AlertDialogDescription>
-                Thao tác này không thể hoàn tác, dữ liệu của bạn sẽ bị xóa vĩnh
-                viễn và không thể khôi phục.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel
-                onClick={() => {
-                  setIsShowDialog(-1);
-                  setItemsSelected([]);
-                  // params.onClickGetOut && params.onClickGetOut();
-                }}
-              >
-                Hủy
-              </AlertDialogCancel>
-              <AlertDialogAction
-                onClick={() => {
-                  setItemsSelected([]);
-                  // params.onClickGetOut && params.onClickGetOut();
-                  // if (isShowDialog === 1) {
-                  //   params.onClickDelete && params.onClickDelete(itemsSelected);
-                  // } else if (isShowDialog === 2) {
-                  //   params.onClickDeleteAll && params.onClickDeleteAll();
-                  // }
-                  setIsShowDialog(-1);
-                }}
-                className="bg-primary-500 hover:bg-primary-500/90"
-              >
-                Đồng ý
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      ) : (
-        <></>
-      )}
     </div>
   );
 };

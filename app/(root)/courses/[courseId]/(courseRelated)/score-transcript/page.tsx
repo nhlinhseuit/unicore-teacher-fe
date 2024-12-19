@@ -14,7 +14,6 @@ import { useState } from "react";
 
 const ScoreTranscript = () => {
   const [selectedCourse, setSelectedCourse] = useState(-1);
-  const [isEditTable, setIsEditTable] = useState(false);
   const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
 
   return (
@@ -114,8 +113,6 @@ const ScoreTranscript = () => {
 
           {/* //TODO: BÀI TẬP */}
           <ScoreTranscriptTable
-            isEditTable={isEditTable}
-            isMultipleDelete={false}
             dataTable={mockDataScoreTranscript}
             dataGradeColumnPercent={mockGradeColumnPercent}
             viewDetailGradeColumn={() => {

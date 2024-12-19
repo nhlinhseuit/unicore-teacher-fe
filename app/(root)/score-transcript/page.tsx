@@ -116,8 +116,6 @@ const ScoreTranscript = () => {
 
               {/* //TODO: BÀI TẬP */}
               <ScoreTranscriptTable
-                isEditTable={isEditTable}
-                isMultipleDelete={false}
                 dataTable={mockDataScoreTranscript}
                 dataGradeColumnPercent={mockGradeColumnPercent}
                 viewDetailGradeColumn={() => {

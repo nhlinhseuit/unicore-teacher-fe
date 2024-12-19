@@ -1,11 +1,9 @@
 "use client";
 
 import IconButton from "@/components/shared/Button/IconButton";
-import RegisterTopicTable from "@/components/shared/Table/TableRegisterTopic/RegisterTopicTable";
-import {
-  ApproveTopicOptions,
-  RegisterTopicTableType
-} from "@/constants";
+import NoResult from "@/components/shared/Status/NoResult";
+import ApproveTopicTable from "@/components/shared/Table/TableRegisterTopic/ApproveTopicTable";
+import { ApproveTopicOptions, RegisterTopicTableType } from "@/constants";
 import {
   mockDataAllAppproveTopic,
   mockDataAppprovedTopic,
@@ -110,19 +108,24 @@ const ApproveTopic = () => {
         </Dropdown>
       </div>
 
-      <RegisterTopicTable
-        type={RegisterTopicTableType.approveTopic}
-        isEditTable={false}
-        isMultipleDelete={false}
-        dataTable={renderDataTable}
-        isNotShowButton={selectedApproveTopicOption === 1}
-        isOnlyShowResponseTopicButton={
-          selectedApproveTopicOption === 4 || selectedApproveTopicOption === 5
-        }
-        onSaveTable={(itemsSelected: string[]) => {
-          onSaveTable(itemsSelected);
-        }}
-      />
+      {renderDataTable.filter((item) => !item.isDeleted).length > 0 ? (
+        <ApproveTopicTable
+          type={RegisterTopicTableType.approveTopic}
+          dataTable={renderDataTable}
+          isNotShowButton={selectedApproveTopicOption === 1}
+          isOnlyShowResponseTopicButton={
+            selectedApproveTopicOption === 4 || selectedApproveTopicOption === 5
+          }
+          onSaveTable={(itemsSelected: string[]) => {
+            onSaveTable(itemsSelected);
+          }}
+        />
+      ) : (
+        <NoResult
+          title="Không có dữ liệu!"
+          description="🚀 Chưa có đề tài nào được đề xuất."
+        />
+      )}
     </>
   );
 };

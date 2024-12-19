@@ -1,9 +1,8 @@
-import { Table } from "flowbite-react";
-import React, { useState } from "react";
-import { FileDataItem } from "@/types";
-import MoreButtonComponent from "../components/MoreButtonComponent";
 import { FileTableDataMoreComponentItems } from "@/constants";
+import { FileDataItem } from "@/types";
+import { Table } from "flowbite-react";
 import Image from "next/image";
+import MoreButtonComponent from "../components/MoreButtonComponent";
 
 interface RowParams {
   dataItem: FileDataItem;
@@ -18,15 +17,6 @@ interface handleInputChangeParams {
 }
 
 const RowTopicDataTable = (params: RowParams) => {
-  const [isEdit, setIsEdit] = useState(false);
-
-  const handleEdit = () => {
-    if (isEdit === false) {
-      setIsEdit(true);
-    } else {
-      setIsEdit(false);
-    }
-  };
 
   const getFileIcon = (nameFile: string) => {
     if (nameFile === undefined) return;

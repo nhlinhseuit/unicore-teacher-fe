@@ -14,17 +14,6 @@ interface RowParams {
   dataItem: StudentDataItem | TeacherDataItem;
   isHasSubCourses?: boolean;
 }
-interface handleInputChangeParams {
-  key:
-    | keyof CourseData
-    | keyof SubjectData
-    | keyof StudentData
-    | keyof TeacherData;
-  newValue: any;
-  isMultipleInput?: boolean;
-  currentIndex?: number;
-  isCheckbox?: boolean;
-}
 
 const Row = React.memo(
   (params: RowParams) => {

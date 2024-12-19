@@ -93,11 +93,7 @@ const PostReviewScoreItem = (params: Props) => {
 
         <Divider />
 
-        <ReviewGradeTable
-              isEditTable={params.isEdit}
-              isMultipleDelete={false}
-              dataTable={params.postScoreDetail.scoreDetail}
-          />
+        <ReviewGradeTable dataTable={params.postScoreDetail.scoreDetail} />
       </div>
     </div>
   );

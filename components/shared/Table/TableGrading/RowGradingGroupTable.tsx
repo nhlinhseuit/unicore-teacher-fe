@@ -53,7 +53,6 @@ const RowGradingGroupTable = React.memo(
       params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
     };
 
-    var valueUniqueInput = params.dataItem.data["Mã nhóm"];
 
     const renderTableCellValue = (keyId: string, key: string, value: any) => {
       if ((key === "Điểm" || key === "Góp ý") && params.isEditTable) {
@@ -158,7 +157,7 @@ const RowGradingGroupTable = React.memo(
               className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left 
               ${key === "Bài nộp" ? "underline cursor-pointer" : ""}
               ${key === "Trễ hạn" && value !== "0" ? "text-red-500" : ""}
-              ${key === "Điểm danh" || key === "Điểm" ? "text-center" : ""}
+              ${key === "Điểm danh" || key === "Điểm" || key === 'MSSV' ? "text-center" : ""}
             `}
             >
               {renderTableCellValue(keyId, key, value)}

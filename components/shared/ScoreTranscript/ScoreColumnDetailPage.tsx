@@ -1,3 +1,5 @@
+"use client";
+
 import {
   AlertDialog,
   AlertDialogContent,
@@ -28,7 +30,6 @@ import BorderContainer from "../BorderContainer";
 import IconButton from "../Button/IconButton";
 import SubmitButton from "../Button/SubmitButton";
 import PostScoreColumnDetailItem from "./PostScoreColumnDetailItem";
-import { sErrorList } from "./(store)/scoreDetailStore";
 
 interface Props {
   onClickPrev: () => void;
@@ -141,7 +142,7 @@ const ScoreColumnDetailPage = (params: Props) => {
       // router.push("/");
 
       toast({
-        title: "Đăng đề tài mới thành công.",
+        title: "Chỉnh sửa hệ số điểm thành công.",
         variant: "success",
         duration: 3000,
       });
@@ -157,7 +158,7 @@ const ScoreColumnDetailPage = (params: Props) => {
     <>
       <BackToPrev text="Quay lại Bảng điểm" onClickPrev={params.onClickPrev} />
 
-      {/* <div className="flex justify-between mb-6">
+      <div className="flex justify-between mb-6">
         <div className="ml-4 flex gap-4 items-center">
           <p className="paragraph-semibold">
             Chi tiết cột điểm Quá trình - Sinh viên Nguyễn Hoàng Linh - MSSV
@@ -167,11 +168,6 @@ const ScoreColumnDetailPage = (params: Props) => {
             <IconButton
               text="Lưu"
               onClick={() => {
-                const hasError = sErrorList.value.some(
-                  (item) => item.errorList.length > 0
-                );
-
-                if (hasError) return;
                 if (totalScorePercentage(refData.current) !== 100) {
                   setTotalScore(totalScorePercentage(refData.current));
                   setIsPercentageValid(false);
@@ -230,7 +226,7 @@ const ScoreColumnDetailPage = (params: Props) => {
             }}
           />
         ))}
-      </div> */}
+      </div>
 
       {/* EDIT GRADE COLUMN */}
       <AlertDialog open={isEditGradeColumn}>

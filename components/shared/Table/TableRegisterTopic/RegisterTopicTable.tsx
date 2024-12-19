@@ -1,32 +1,43 @@
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+
 import { RegisterTopicDataItem } from "@/types";
 import { Table } from "flowbite-react";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import NoResult from "../../Status/NoResult";
+import { tableTheme } from "../components/DataTable";
 import RowRegisterTopicTable from "./RowRegisterTopicTable";
 
 import { RegisterTopicTableType, itemsPerPageRegisterTable } from "@/constants";
-import { toast } from "@/hooks/use-toast";
+import { Dropdown } from "flowbite-react";
 import IconButton from "../../Button/IconButton";
-import SubmitButton from "../../Button/SubmitButton";
 import MyFooter from "../components/MyFooter";
 
-import { Form } from "@/components/ui/form";
-
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import BorderContainer from "../../BorderContainer";
-import { tableTheme } from "../components/DataTable";
-import TextAreaComponent from "../../TextAreaComponent";
+import useDebounceSearchDataTable from "@/hooks/table/useDebounceSearchDataTable";
+import useSetDebounceSearchTerm from "@/hooks/table/useSetDebounceSearchTerm";
+import TableSearch from "../../Search/TableSearch";
 
 interface DataTableParams {
   type: RegisterTopicTableType;
   isEditTable: boolean;
   isMultipleDelete: boolean;
   dataTable: RegisterTopicDataItem[];
-  isNotShowButton?: boolean;
-  isOnlyShowResponseTopicButton?: boolean;
-  onSaveTable: (itemsSelected: string[]) => void;
+  isOnlyView?: boolean;
+
+  onClickEditTable?: () => void;
+  onSaveEditTable?: (localDataTable: any) => void;
+  onClickMultipleDelete?: () => void;
+  onClickDelete?: (itemsSelected: string[]) => void;
+  onClickDeleteAll?: () => void;
+  onClickGetOut?: () => void;
 }
 
 const RegisterTopicTable = (params: DataTableParams) => {
@@ -34,29 +45,11 @@ const RegisterTopicTable = (params: DataTableParams) => {
     return params.dataTable.filter((dataItem) => dataItem.isDeleted !== true);
   }, [params.dataTable]);
 
-  useEffect(() => {
-    setItemsSelected([]);
-  }, [params.dataTable]);
-
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
-
-  const [feedback, setFeedback] = useState("");
   const [isShowDialog, setIsShowDialog] = useState(-1);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [isShowFooter, setIsShowFooter] = useState(true);
   const totalItems = dataTable.length;
-
-  const handleInvalid = () => {
-    if (itemsSelected.length === 0) {
-      toast({
-        title: "Vui lòng chọn đề tài!",
-        variant: "error",
-        duration: 3000,
-      });
-      return;
-    }
-  };
 
   const currentItems = useMemo(() => {
     return dataTable.slice(
@@ -65,151 +58,154 @@ const RegisterTopicTable = (params: DataTableParams) => {
     );
   }, [dataTable, currentPage]);
 
-  const AnnoucementSchema = z.object({
-    title: z.string().optional(),
-    description: z.string().optional(),
-  });
+  const localDataTableRef = useRef(currentItems);
+  const updateLocalDataTableRef = (newValue: any) => {
+    localDataTableRef.current = newValue;
+  };
 
-  const form = useForm<z.infer<typeof AnnoucementSchema>>({
-    resolver: zodResolver(AnnoucementSchema),
-    defaultValues: {
-      title: "",
-      description: "",
-    },
-  });
+  //TODO: SEARCH
+  const applyFilter = () => {
+    setFilteredDataTable(currentItems);
+  };
 
-  async function onSubmit(values: any) {
-    try {
-      setIsShowDialog(-1);
+  useEffect(() => {
+    applyFilter();
+  }, [currentItems]);
 
-      if (isShowDialog === 1) {
-        toast({
-          title: "Duyệt đề xuất các đề tài thành công.",
-          description: `Các đề tài ${itemsSelected.join(", ")} đã dược duyệt.`,
-          variant: "success",
-          duration: 3000,
-        });
-      } else if (isShowDialog === 2) {
-        toast({
-          title: "Phản hồi đề tài thành công.",
-          description: `Các đề tài ${itemsSelected.join(", ")} đã dược duyệt.`,
-          variant: "success",
-          duration: 3000,
-        });
-      } else {
-        toast({
-          title: "Từ chối các đề tài thành công.",
-          description: `Các đề tài ${itemsSelected.join(", ")} đã bị từ chối.`,
-          variant: "success",
-          duration: 3000,
-        });
-      }
-    } catch {
-    } finally {
-      params.onSaveTable(itemsSelected);
-      setItemsSelected([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
+  const [filteredDataTable, setFilteredDataTable] = useState(currentItems);
+
+  useSetDebounceSearchTerm(setDebouncedSearchTerm, searchTerm);
+  useDebounceSearchDataTable(
+    debouncedSearchTerm,
+    setFilteredDataTable,
+    applyFilter,
+    () => {},
+    () => {},
+    dataTable,
+    currentItems
+  );
+
+  const [isShowDeleteInfo, setIsShowDeleteInfo] = useState(false);
+  useEffect(() => {
+    if (itemsSelected.length > 0 || params.isMultipleDelete) {
+      if (!isShowDeleteInfo) setIsShowDeleteInfo(true);
+    } else {
+      if (isShowDeleteInfo) setIsShowDeleteInfo(false);
     }
-  }
+  }, [itemsSelected, params.isMultipleDelete]);
+
+  const saveDataTable = () => {
+    const updatedDataTable = dataTable.map((item) => {
+      // Tìm item tương ứng trong localDataTable dựa vào STT (hoặc một identifier khác)
+      const localItem = localDataTableRef.current.find(
+        (local) => local.STT === item.STT
+      );
+
+      // * Nếu tìm thấy, cập nhật giá trị bằng localItem, ngược lại giữ nguyên item
+      // * Trải item và localitem ra, nếu trùng nhau thì localItem ghi đè
+      return localItem ? { ...item, ...localItem } : item;
+    });
+
+    if (params.onSaveEditTable) {
+      console.log("updatedDataTable", updatedDataTable);
+      params.onSaveEditTable(updatedDataTable);
+    }
+  };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)}>
-        <div>
-          {/* TABLE */}
-          {currentItems.length > 0 && currentItems.length === 0 ? (
-            <NoResult
-              title="Không có dữ liệu!"
-              description="💡 Bạn hãy thử tìm kiếm 1 từ khóa khác nhé."
-            />
+    <div>
+      <div className="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0">
+        {/* ACTION VỚI TABLE */}
+        <div className="w-full mr-3 md:w-1/3">
+          {params.isEditTable || params.isMultipleDelete ? (
+            <></>
           ) : (
-            <>
-              {params.type === RegisterTopicTableType.approveTopic ? (
-                isShowDialog === -1 && !params.isNotShowButton ? (
-                  <BorderContainer otherClasses="mb-4 p-6">
-                    <div className="flex justify-end items-center">
-                      <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium">
-                          Đã chọn:
-                          <span className="font-semibold">
-                            {` ${itemsSelected.length}`}
-                          </span>
-                        </p>
+            <TableSearch
+              setSearchTerm={(value) => setSearchTerm(value)}
+              searchTerm={searchTerm}
+            />
+          )}
+        </div>
 
-                        {params.isOnlyShowResponseTopicButton ? null : (
-                          <IconButton
-                            text="Duyệt đề tài"
-                            onClick={() => {
-                              handleInvalid();
-
-                              setIsShowDialog(1);
-                            }}
-                            iconWidth={16}
-                            iconHeight={16}
-                          />
-                        )}
-
-                        <IconButton
-                          text="Phản hồi đề tài"
-                          green
-                          onClick={() => {
-                            handleInvalid();
-
-                            setIsShowDialog(2);
-                          }}
-                          iconWidth={16}
-                          iconHeight={16}
-                        />
-
-                        {params.isOnlyShowResponseTopicButton ? null : (
-                          <IconButton
-                            text="Từ chối đề tài"
-                            red
-                            onClick={() => {
-                              handleInvalid();
-
-                              setIsShowDialog(3);
-                            }}
-                            iconWidth={16}
-                            iconHeight={16}
-                          />
-                        )}
-                      </div>
-                    </div>
-                  </BorderContainer>
-                ) : null
-              ) : null}
-
-              {itemsSelected.length > 0 && isShowDialog !== -1 ? (
-                <BorderContainer otherClasses="mb-4 p-6">
+        {params.isOnlyView ? null : (
+          <div className="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center">
+            {params.isEditTable ? (
+              <IconButton text="Lưu" onClick={saveDataTable} />
+            ) : isShowDeleteInfo ? (
+              <div className="flex items-center gap-2">
+                <p className="text-sm font-medium">
+                  Đã chọn:
+                  <span className="font-semibold">
+                    {` ${itemsSelected.length}`}
+                  </span>
+                </p>
+                <IconButton
+                  text="Xóa"
+                  onClick={() => {
+                    setIsShowDialog(1);
+                  }}
+                  bgColor="bg-red"
+                />
+                <IconButton
+                  text="Thoát"
+                  onClick={() => {
+                    setItemsSelected([]);
+                    params.onClickGetOut && params.onClickGetOut();
+                  }}
+                  bgColor="bg-gray-500"
+                />
+              </div>
+            ) : (
+              <Dropdown
+                className="z-30 rounded-lg"
+                label=""
+                dismissOnClick={false}
+                renderTrigger={() => (
                   <div>
-                    <div className="flex justify-end items-center mb-3 gap-2">
-                      <SubmitButton text="Lưu" iconWidth={16} iconHeight={16} />
-                    </div>
-
-                    <div className="mb-4">
-                      <p className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Phản hồi cho đề tài (nếu có)
-                      </p>
-                      <p className="body-regular mt-3.5 text-light-500">
-                        {isShowDialog === 2
-                          ? "Bạn có thể phản hồi và đề xuất sinh viên chỉnh sửa đề tài phù hợp hơn tại đây. Đề tài sẽ chuyển sang trạng thái đang xử lý."
-                          : "Không bắt buộc."}
-                      </p>
-                      <TextAreaComponent
-                        value={feedback}
-                        placeholder="Nhập phản hồi đề tài..."
-                        onChange={(e) => {
-                          setFeedback(e.target.value);
-                        }}
-                        otherClassess={'mt-3.5'}
-                      />
-                    </div>
+                    <IconButton
+                      text="Hành động"
+                      onClick={() => {}}
+                      iconRight={"/assets/icons/chevron-down.svg"}
+                      bgColor="bg-white"
+                      textColor="text-black"
+                      border
+                    />
                   </div>
-                </BorderContainer>
-              ) : null}
+                )}
+              >
+                <Dropdown.Item onClick={params.onClickEditTable}>
+                  Chỉnh sửa
+                </Dropdown.Item>
 
-              <div
-                className="
+                <Dropdown.Item onClick={params.onClickMultipleDelete}>
+                  Xóa nhiều
+                </Dropdown.Item>
+
+                <Dropdown.Item
+                  onClick={() => {
+                    setIsShowDialog(2);
+                  }}
+                >
+                  Xóa tất cả
+                </Dropdown.Item>
+              </Dropdown>
+            )}
+          </div>
+        )}
+      </div>
+
+      {/* TABLE */}
+      {currentItems.length > 0 && filteredDataTable.length === 0 ? (
+        <NoResult
+          title="Không có dữ liệu!"
+          description="💡 Bạn hãy thử tìm kiếm 1 từ khóa khác nhé."
+        />
+      ) : (
+        <>
+          <div
+            className="
             scroll-container 
             overflow-auto
             max-w-full
@@ -218,115 +214,144 @@ const RegisterTopicTable = (params: DataTableParams) => {
             border-[1px]
             border-secondary-200
             "
+          >
+            <Table hoverable theme={tableTheme}>
+              {/* HEADER */}
+              <Table.Head
+                theme={tableTheme?.head}
+                className="sticky top-0 z-10 uppercase border-b bg-gray"
               >
-                <Table hoverable theme={tableTheme}>
-                  {/* HEADER */}
-                  <Table.Head
-                    theme={tableTheme?.head}
-                    className="sticky top-0 z-10 uppercase border-b bg-gray"
-                  >
-                    <Table.HeadCell
-                      theme={tableTheme?.head?.cell}
-                      className={`border-r-[1px] uppercase`}
-                    ></Table.HeadCell>
+                <Table.HeadCell
+                  theme={tableTheme?.head?.cell}
+                  className={`border-r-[1px] uppercase`}
+                ></Table.HeadCell>
 
-                    <Table.HeadCell
-                      theme={tableTheme?.head?.cell}
-                      className={` w-10 border-r-[1px] uppercase`}
-                    >
-                      STT
-                    </Table.HeadCell>
+                <Table.HeadCell
+                  theme={tableTheme?.head?.cell}
+                  className={` w-10 border-r-[1px] uppercase`}
+                >
+                  STT
+                </Table.HeadCell>
 
-                    {Object.keys(currentItems[0]?.data || {}).map((key) => {
-                      if (key === "Mã nhóm") return null;
+                {Object.keys(filteredDataTable[0]?.data || {}).map(
+                  (key, index) => {
+                    if (key === "Mã nhóm") return null;
 
-                      return (
-                        <Table.HeadCell
-                          key={key}
-                          theme={tableTheme?.head?.cell}
-                          className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
-                        >
-                          {key}
-                        </Table.HeadCell>
-                      );
-                    })}
-                  </Table.Head>
+                    return (
+                      <Table.HeadCell
+                        key={`${key}_${index}`}
+                        theme={tableTheme?.head?.cell}
+                        className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
+                      >
+                        {key}
+                      </Table.HeadCell>
+                    );
+                  }
+                )}
+              </Table.Head>
 
-                  {/* BODY */}
-                  <Table.Body className="text-left divide-y">
-                    {currentItems.map((dataItem, index) =>
-                      dataItem.isDeleted ? (
-                        <></>
-                      ) : (
-                        <>
-                          {/* //TODO: Main Row: Leader */}
-                          <RowRegisterTopicTable
-                            type={params.type}
-                            key={dataItem.STT}
-                            dataItem={dataItem}
-                            isEditTable={params.isEditTable}
-                            isMultipleDelete={params.isMultipleDelete}
-                            itemsSelected={itemsSelected}
-                            onClickCheckBoxSelect={(item: string) => {
-                              setItemsSelected((prev) => {
-                                if (prev.includes(item)) {
-                                  return prev.filter((i) => i !== item);
-                                } else {
-                                  return [...prev, item];
-                                }
-                              });
-                            }}
-                            onChangeRow={(updatedDataItem: any) => {
-                              //   setLocalDataTable((prevTable) =>
-                              //     prevTable.map((item) =>
-                              //       item.STT === updatedDataItem.STT
-                              //         ? updatedDataItem
-                              //         : item
-                              //     )
-                              //   );
-                            }}
-                            saveSingleRow={(updatedDataItem: any) => {
-                              const updatedDataTable = dataTable.map(
-                                (item, index) =>
-                                  item.STT === updatedDataItem.STT
-                                    ? updatedDataItem
-                                    : item
-                              );
+              {/* BODY */}
+              <Table.Body className="text-left divide-y">
+                {filteredDataTable.map((dataItem, index) => {
+                  var valueUniqueInput = dataItem.STT;
 
-                              //   if (params.onSaveEditTable) {
-                              //     params.onSaveEditTable(updatedDataTable);
-                              //   }
-                            }}
-                            onClickGetOut={() => {
-                              // params.onClickGetOut
-                            }}
-                            deleteSingleRow={() => {
-                              //  params.onClickDelete
-                            }}
-                          />
-                        </>
-                      )
-                    )}
-                  </Table.Body>
-                </Table>
-              </div>
-            </>
-          )}
+                  return dataItem.isDeleted ? (
+                    <></>
+                  ) : (
+                    // {/* //TODO: Main Row: Leader */}
+                    <RowRegisterTopicTable
+                      type={params.type}
+                      key={`${dataItem.STT}_${index}`}
+                      dataItem={dataItem}
+                      valueUniqueInput={valueUniqueInput.toString()}
+                      itemsSelected={itemsSelected}
+                      isEditTable={params.isEditTable}
+                      isMultipleDelete={params.isMultipleDelete}
+                      onClickCheckBoxSelect={(item: string) => {
+                        setItemsSelected((prev) => {
+                          if (prev.includes(item)) {
+                            return prev.filter((i) => i !== item);
+                          } else {
+                            return [...prev, item];
+                          }
+                        });
+                      }}
+                      onChangeRow={(updatedDataItem: any) => {
+                        updateLocalDataTableRef(
+                          localDataTableRef.current.map((item) =>
+                            item.STT === updatedDataItem.STT
+                              ? updatedDataItem
+                              : item
+                          )
+                        );
+                      }}
+                    />
+                  );
+                })}
+              </Table.Body>
+            </Table>
+          </div>
+        </>
+      )}
 
-          {/* FOOTER */}
-          {!isShowFooter || params.isEditTable || params.isMultipleDelete ? (
-            <></>
-          ) : (
-            <MyFooter
-              currentPage={currentPage}
-              itemsPerPage={itemsPerPageRegisterTable}
-              totalItems={totalItems}
-              onPageChange={(newPage) => setCurrentPage(newPage)} //HERE
-            />
-          )}
-        </div>
-      </form>
-    </Form>
+      {/* FOOTER */}
+      {searchTerm !== "" ||
+      params.isEditTable ||
+      params.isMultipleDelete ||
+      (currentItems.length > 0 && filteredDataTable.length === 0) ? (
+        <></>
+      ) : (
+        <MyFooter
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPageRegisterTable}
+          totalItems={totalItems}
+          onPageChange={(newPage) => setCurrentPage(newPage)}
+        />
+      )}
+
+      {/* ALERT CONFIRM */}
+      {isShowDialog !== -1 ? (
+        <AlertDialog open={isShowDialog !== -1}>
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Bạn có chắc chắn muốn xóa?</AlertDialogTitle>
+              <AlertDialogDescription>
+                Thao tác này không thể hoàn tác, dữ liệu của bạn sẽ bị xóa vĩnh
+                viễn và không thể khôi phục.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel
+                onClick={() => {
+                  setIsShowDialog(-1);
+                  setItemsSelected([]);
+                  params.onClickGetOut && params.onClickGetOut();
+                }}
+              >
+                Hủy
+              </AlertDialogCancel>
+              <AlertDialogAction
+                onClick={() => {
+                  setItemsSelected([]);
+                  params.onClickGetOut && params.onClickGetOut();
+                  if (isShowDialog === 1) {
+                    params.onClickDelete && params.onClickDelete(itemsSelected);
+                  } else if (isShowDialog === 2) {
+                    params.onClickDeleteAll && params.onClickDeleteAll();
+                  }
+                  setIsShowDialog(-1);
+                }}
+                className="bg-primary-500 hover:bg-primary-500/90"
+              >
+                Đồng ý
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
+      ) : (
+        <></>
+      )}
+    </div>
   );
 };
 

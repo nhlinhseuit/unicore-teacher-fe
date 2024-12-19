@@ -1,77 +1,59 @@
 import { RegisterTopicTableType } from "@/constants";
 import {
-  RegisterTopicData,
   RegisterTopicDataItem
 } from "@/types";
 import { Table } from "flowbite-react";
-import React, { useRef } from "react";
+import React, { useEffect, useState } from "react";
 import InputComponent from "../components/InputComponent";
 
 interface RowParams {
   type: RegisterTopicTableType;
+  dataItem: RegisterTopicDataItem;
   valueUniqueInput: string;
   itemsSelected: string[];
-  dataItem: RegisterTopicDataItem;
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
   isHasSubCourses?: boolean;
   onClickCheckBoxSelect?: (item: string) => void;
-  onChangeRow?: (item: any) => void;
-}
-interface handleInputChangeParams {
-  key: keyof RegisterTopicData;
-  newValue: any;
-  isMultipleInput?: boolean;
-  currentIndex?: number;
-  isCheckbox?: boolean;
 }
 
-const RowRegisterTopicTable = React.memo(
+const RowApproveTopicTable = React.memo(
   (params: RowParams) => {
-    const refInput = useRef(params.dataItem);
+    const [isEdit, setIsEdit] = useState(false);
 
-    const handleInputChange = ({
-      key,
-      newValue,
-      isMultipleInput,
-      currentIndex,
-      isCheckbox,
-    }: handleInputChangeParams) => {
-      //@ts-ignore
-      const updatedDataItem: RegisterTopicDataItem = {
-        ...refInput.current,
-        data: {
-          ...refInput.current.data,
-          [key]: isMultipleInput
-            ? (refInput.current.data[key] as string[]).map((value, index) =>
-              index === currentIndex ? newValue : value
-            )
-            : newValue,
-        },
-      };
 
-      refInput.current = updatedDataItem; //? ĐỂ UPATE ĐƯỢC NHIỀU FIELD TRÊN 1 HÀNG
+    useEffect(() => {
+      if (params.isEditTable) setIsEdit(false);
+    }, [[params.isEditTable]]);
 
-      params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
+    const handleEdit = () => {
+      if (isEdit === false) {
+        setIsEdit(true);
+      } else {
+        setIsEdit(false);
+      }
     };
 
+    var valueUniqueInput = params.dataItem.data["Mã nhóm"];
 
     const renderCellValue = ({
       key,
       value,
       keyId,
       params,
+      isEdit,
     }: {
       key: string;
       value: string | number | Array<string | number>;
       keyId: string | number;
       params: any;
+      isEdit: boolean;
     }) => {
       switch (key) {
         case "MSSV":
         case "Họ và tên":
         case "SĐT":
-          return params.isEditTable ? (
+          return isEdit || params.isEditTable ? (
             Array.isArray(value) ? (
               <div className="flex flex-col gap-1">
                 {value.map((item, index) => (
@@ -80,12 +62,12 @@ const RowRegisterTopicTable = React.memo(
                     value={item}
                     placeholder={item as string | number}
                     onChange={(newValue) => {
-                      handleInputChange({
-                        key,
-                        newValue,
-                        isMultipleInput: true,
-                        currentIndex: index,
-                      });
+                      // handleInputChange({
+                      //   key,
+                      //   newValue,
+                      //   isMultipleInput: true,
+                      //   currentIndex: index,
+                      // })
                     }}
                   />
                 ))}
@@ -96,7 +78,7 @@ const RowRegisterTopicTable = React.memo(
                 value={value as string | number}
                 placeholder={value as string | number}
                 onChange={(newValue) => {
-                  handleInputChange({ key, newValue });
+                  // handleInputChange({ key, newValue });
                 }}
               />
             )
@@ -112,15 +94,16 @@ const RowRegisterTopicTable = React.memo(
           );
 
         default:
-          return params.isEditTable ? (
+          return isEdit || params.isEditTable ? (
             <InputComponent
               key={`${keyId}_input_${key}_${value}`}
               value={value as string | number}
               placeholder={value as string | number}
               //@ts-ignore
-              onChange={(newValue) =>
+              onChange={
+                (newValue) => {}
                 //@ts-ignore
-                handleInputChange({ key: key, newValue: newValue })
+                // handleInputChange({ key: key, newValue: newValue })
               }
               //! NOTE: Đặt w-full cho ô input Mô tả
               isDescription={key === "Mô tả"}
@@ -137,11 +120,13 @@ const RowRegisterTopicTable = React.memo(
       value,
       keyId,
       params,
+      isEdit,
     }: {
       key: string;
       value: string | number | Array<string | number>;
       keyId: string | number;
       params: any;
+      isEdit: boolean;
     }) => {
       if (key === "Mã nhóm") return null;
 
@@ -162,7 +147,7 @@ const RowRegisterTopicTable = React.memo(
               : "whitespace-nowrap"
           }`}
         >
-          {renderCellValue({ key, value, keyId, params })}
+          {renderCellValue({ key, value, keyId, params, isEdit })}
         </Table.Cell>
       );
     };
@@ -172,7 +157,7 @@ const RowRegisterTopicTable = React.memo(
         key={params.dataItem.STT}
         onClick={() => {}}
         className={`bg-background-secondary  text-left ${
-          params.isEditTable
+          isEdit || params.isEditTable
             ? "hover:bg-white cursor-default"
             : "hover:bg-light-800 cursor-default"
         } duration-100`}
@@ -181,25 +166,22 @@ const RowRegisterTopicTable = React.memo(
         <Table.Cell className="w-10 border-r-[1px] z-100 ">
           <div
             onClick={(e) => {
-              e.stopPropagation(); // Ngăn sự kiện lan truyền đến Table.Row
+              e.stopPropagation(); // Ngăn sự kiện lan truyền đến Table.RowApproveTopicTable
             }}
           >
-            <div className="flex items-center justify-center w-10 h-10">
-              <input
-                id="apple"
-                type="checkbox"
-                name="filterOptions"
-                value={params.valueUniqueInput}
-                checked={params.itemsSelected.includes(params.valueUniqueInput)}
-                onChange={() => {
-                  {
-                    params.onClickCheckBoxSelect &&
-                      params.onClickCheckBoxSelect(params.valueUniqueInput);
-                  }
-                }}
-                className="w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600"
-              />
-            </div>
+            <input
+          id="approveTopic"
+          type="checkbox"
+          name="approveTopic"
+          value={valueUniqueInput}
+          onChange={() => {
+            {
+              params.onClickCheckBoxSelect &&
+                params.onClickCheckBoxSelect(valueUniqueInput);
+            }
+          }}
+          className="w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600"
+        />
           </div>
         </Table.Cell>
 
@@ -216,13 +198,14 @@ const RowRegisterTopicTable = React.memo(
             value,
             keyId,
             params,
+            isEdit,
           });
         })}
       </Table.Row>
     );
   },
   (prevProps, nextProps) => {
-    // Kiểm tra nếu `dataItem` của RowRegisterTopicTable không thay đổi thì không cần re-render
+    // Kiểm tra nếu `dataItem` của RowApproveTopicTable không thay đổi thì không cần re-render
     return (
       prevProps.itemsSelected === nextProps.itemsSelected &&
       prevProps.dataItem === nextProps.dataItem &&
@@ -232,4 +215,4 @@ const RowRegisterTopicTable = React.memo(
   }
 );
 
-export default RowRegisterTopicTable;
+export default RowApproveTopicTable;

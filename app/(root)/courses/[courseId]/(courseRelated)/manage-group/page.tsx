@@ -2,6 +2,7 @@
 import IconButton from "@/components/shared/Button/IconButton";
 import SubmitButton from "@/components/shared/Button/SubmitButton";
 import CheckboxComponent from "@/components/shared/CheckboxComponent";
+import NoResult from "@/components/shared/Status/NoResult";
 import RegisterGroupTable from "@/components/shared/Table/TableRegisterGroup/RegisterGroupTable";
 import ToggleTitle from "@/components/shared/ToggleTitle";
 import { Button } from "@/components/ui/button";
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
 import { mockDataStudentRegisterGroup } from "@/mocks";
+import { RegisterGroupDataItem } from "@/types";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -156,6 +158,13 @@ const ManageGroup = () => {
   const handleChangeMaxMember = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMaxMember(e.target.value);
   };
+
+  //TODO: TANBLE
+  const [isEditTable, setIsEditTable] = useState(false);
+  const [isMultipleDelete, setIsMultipleDelete] = useState(false);
+  const [dataTable, setDataTable] = useState<RegisterGroupDataItem[]>(
+    mockDataStudentRegisterGroup
+  );
 
   return (
     <div>
@@ -323,18 +332,76 @@ const ManageGroup = () => {
         />
       </div>
 
-      <p className="flex justify-end pb-6 italic text-sm text-red-500">
-        * Nhóm trưởng điền tên đầu tiên
-      </p>
-
       {isToggleViewTable ? (
-        <div>
-          <RegisterGroupTable
-            isEditTable={false}
-            isMultipleDelete={false}
-            dataTable={mockDataStudentRegisterGroup}
+        dataTable.filter((item) => !item.isDeleted).length > 0 ? (
+          <div>
+            <RegisterGroupTable
+              dataTable={dataTable}
+              isEditTable={isEditTable}
+              isMultipleDelete={isMultipleDelete}
+              // @ts-ignore
+              onClickEditTable={() => {
+                setIsEditTable(true);
+              }}
+              onSaveEditTable={(localDataTable) => {
+                console.log("here");
+                setIsEditTable(false);
+                // set lại data import hoặc patch API
+                localDataTable = localDataTable as RegisterGroupDataItem[];
+                setDataTable(localDataTable);
+              }}
+              onClickMultipleDelete={() => {
+                setIsMultipleDelete(true);
+              }}
+              onClickDeleteAll={() => {
+                setDataTable((prevData) => {
+                  return prevData.map((item) => ({
+                    ...item,
+                    isDeleted: true,
+                  }));
+                });
+
+                toast({
+                  title: "Xóa thành công",
+                  description: `Tất cả nhóm đã được xóa.`,
+                  variant: "success",
+                  duration: 3000,
+                });
+              }}
+              onClickDelete={(itemsSelected: string[]) => {
+                // ? DELETE THEO MÃ LỚP
+                setDataTable((prevData) => {
+                  return prevData.map((item) => {
+                    if (itemsSelected.includes(item.STT.toString())) {
+                      return {
+                        ...item,
+                        isDeleted: true,
+                      };
+                    }
+                    return item;
+                  });
+                });
+
+                toast({
+                  title: "Xóa thành công",
+                  description: `${`Các lớp ${itemsSelected.join(
+                    ", "
+                  )} đã được xóa.`}`,
+                  variant: "success",
+                  duration: 3000,
+                });
+              }}
+              onClickGetOut={() => {
+                setIsMultipleDelete(false);
+              }}
+            />
+          </div>
+        ) : (
+          <NoResult
+            title="Không có dữ liệu!"
+            description="🚀 Chưa có nhóm nào được đăng ký."
           />
-        </div>
+        )
       ) : (
         <></>
       )}
