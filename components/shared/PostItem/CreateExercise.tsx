@@ -658,7 +658,7 @@ const CreateExercise = () => {
                       Cột điểm <span className="text-red-600">*</span>
                     </FormLabel>
                     <FormDescription className="body-regular mt-2.5 text-light-500">
-                      Bài tập lớn được tạo sẽ là thành phần của cột điểm này.
+                      Bài tập được tạo sẽ là thành phần của cột điểm này.
                     </FormDescription>
                     <FormControl className="mt-3.5 ">
                       <Dropdown
@@ -686,7 +686,7 @@ const CreateExercise = () => {
                         )}
                       >
                         <div className="scroll-container scroll-container-dropdown-content">
-                          {mockCourseGradeColumn.map((gradeColumn, index) => (
+                          {mockGradeColumnList.map((gradeColumn, index) => (
                             <Dropdown.Item
                               key={`${gradeColumn.id}_${index}`}
                               onClick={() => {
@@ -945,79 +945,6 @@ const CreateExercise = () => {
                         </div>
                       </BorderContainer>
                     </FormControl>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
-
-              {/* CỘT ĐIỂM */}
-              <FormField
-                control={form.control}
-                name="gradeColumn"
-                render={({ field }) => (
-                  <FormItem className="flex w-full flex-col">
-                    <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                      Cột điểm <span className="text-red-600">*</span>
-                    </FormLabel>
-                    <FormControl className="mt-3.5 ">
-                      <Dropdown
-                        className="z-30 rounded-lg"
-                        label=""
-                        dismissOnClick={true}
-                        renderTrigger={() => (
-                          <div>
-                            <IconButton
-                              text={`${
-                                selectedGradeColumn === -1
-                                  ? "Chọn cột điểm"
-                                  : mockGradeColumnList[selectedGradeColumn - 1]
-                                      .value
-                              }`}
-                              onClick={() => {}}
-                              iconRight={"/assets/icons/chevron-down.svg"}
-                              bgColor="bg-white"
-                              textColor="text-black"
-                              border
-                            />
-                          </div>
-                        )}
-                      >
-                        <div className="scroll-container scroll-container-dropdown-content">
-                          {mockGradeColumnList.map((gradeColumn, index) => (
-                            <Dropdown.Item
-                              key={`${gradeColumn.id}_${index}`}
-                              onClick={() => {
-                                if (selectedGradeColumn === gradeColumn.id) {
-                                  setSelectedGradeColumn(-1);
-                                } else {
-                                  setSelectedGradeColumn(gradeColumn.id);
-                                }
-                              }}
-                            >
-                              <div className="flex justify-between w-full">
-                                <p className="w-[80%] text-left line-clamp-1">
-                                  {gradeColumn.value}
-                                </p>
-                                {selectedGradeColumn === gradeColumn.id ? (
-                                  <Image
-                                    src="/assets/icons/check.svg"
-                                    alt="search"
-                                    width={21}
-                                    height={21}
-                                    className="cursor-pointer mr-2"
-                                  />
-                                ) : (
-                                  <></>
-                                )}
-                              </div>
-                            </Dropdown.Item>
-                          ))}
-                        </div>
-                      </Dropdown>
-                    </FormControl>
-                    <FormDescription className="body-regular mt-2.5 text-light-500">
-                      Bài tập được sẽ được tính là 1 bài trong cột điểm này.
-                    </FormDescription>
                     <FormMessage className="text-red-500" />
                   </FormItem>
                 )}

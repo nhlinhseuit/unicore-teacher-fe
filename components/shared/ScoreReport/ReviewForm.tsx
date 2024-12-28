@@ -49,6 +49,7 @@ const ReviewForm = () => {
     { id: 2, value: "Giỏi" },
     { id: 3, value: "Khá" },
     { id: 4, value: "Trung bình" },
+    { id: 5, value: "kém" },
   ];
 
   const handleChange = (
@@ -99,7 +100,6 @@ const ReviewForm = () => {
         <div className="text-center flex flex-col gap-4">
           <p className="paragraph-semibold">NHẬN XÉT KHÓA LUẬN TỐT NGHIỆP</p>
           <p className="paragraph-semibold">CỦA CÁN BỘ HƯỚNG DẪN</p>
-
         </div>
 
         <div className="mt-10 flex flex-col gap-6">
@@ -156,28 +156,28 @@ const ReviewForm = () => {
               </div>
 
               <div className="flex gap-20">
-                  <div className="w-[60%]">
-                    <GeneralOfReport
-                      totalPages={formData.totalPages}
-                      totalChapters={formData.totalChapters}
-                      totalFigures={formData.totalFigures}
-                      totalTables={formData.totalTables}
-                      totalReferences={formData.totalReferences}
-                      overviewComment={formData.overviewComment}
-                      handleChange={handleChange}
-                    />
-                  </div>
-                  <div className="w-[30%]">
-                    <SubGeneralOfReport
-                      acknowledgements={formData.acknowledgements}
-                      overviewVN={formData.overviewVN}
-                      overviewEN={formData.overviewEN}
-                      abbreviations={formData.abbreviations}
-                      tableOfContents={formData.tableOfContents}
-                      handleClick={handleClick}
-                    />
-                  </div>
+                <div className="w-[60%]">
+                  <GeneralOfReport
+                    totalPages={formData.totalPages}
+                    totalChapters={formData.totalChapters}
+                    totalFigures={formData.totalFigures}
+                    totalTables={formData.totalTables}
+                    totalReferences={formData.totalReferences}
+                    overviewComment={formData.overviewComment}
+                    handleChange={handleChange}
+                  />
                 </div>
+                <div className="w-[30%]">
+                  <SubGeneralOfReport
+                    acknowledgements={formData.acknowledgements}
+                    overviewVN={formData.overviewVN}
+                    overviewEN={formData.overviewEN}
+                    abbreviations={formData.abbreviations}
+                    tableOfContents={formData.tableOfContents}
+                    handleClick={handleClick}
+                  />
+                </div>
+              </div>
 
               <label className="base-regular italic">
                 &lt;nhận xét về định dạng, cách thức viết báo cáo, văn phong,

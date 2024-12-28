@@ -529,7 +529,7 @@ const CreateAnnouncement = () => {
                   <span className="text-red-600">*</span>
                 </label>
 
-                <BorderContainer otherClasses="p-6 flex flex-col gap-10">
+                <BorderContainer otherClasses="mt-3.5 p-6 flex flex-col gap-10">
                   <RadioboxComponent
                     id={1}
                     handleClick={() => {

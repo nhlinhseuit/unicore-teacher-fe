@@ -1,12 +1,16 @@
 import { FilterType } from "@/constants";
 import { normalizeSearchItem } from "@/lib/utils";
 import {
+  ThesisTopicGradeDataItem,
   CourseDataItem,
-  RegisterGroupDataItem,
   RegisterTopicDataItem,
   StudentDataItem,
   SubjectDataItem,
   TeacherDataItem,
+  TopicDataItem,
+  RegisterGroupDataItem,
+  InternReviewDataItem,
+  ThesisReviewTicketDataItem,
 } from "@/types";
 import { useEffect } from "react";
 
@@ -22,16 +26,46 @@ const useDebounceSearchDataTable = (
     | SubjectDataItem[]
     | StudentDataItem[]
     | TeacherDataItem[]
+    | TopicDataItem[]
     | RegisterTopicDataItem[]
-    | (CourseDataItem | SubjectDataItem | StudentDataItem | TeacherDataItem | RegisterTopicDataItem | RegisterGroupDataItem)[],
+    | ThesisTopicGradeDataItem[]
+    | InternReviewDataItem[]
+    | ThesisReviewTicketDataItem[]
+    | (
+        | CourseDataItem
+        | RegisterGroupDataItem
+        | SubjectDataItem
+        | StudentDataItem
+        | TeacherDataItem
+        | TopicDataItem
+        | RegisterTopicDataItem
+        | ThesisTopicGradeDataItem
+        | InternReviewDataItem
+        | ThesisReviewTicketDataItem
+      )[],
   currentItems:
     | CourseDataItem[]
-    | RegisterGroupDataItem[]
     | SubjectDataItem[]
     | StudentDataItem[]
     | TeacherDataItem[]
+    | TopicDataItem[]
     | RegisterTopicDataItem[]
-    | (CourseDataItem | SubjectDataItem | StudentDataItem | TeacherDataItem | RegisterTopicDataItem | RegisterGroupDataItem)[]
+    | RegisterGroupDataItem[]
+    | ThesisTopicGradeDataItem[]
+    | InternReviewDataItem[]
+    | ThesisReviewTicketDataItem[]
+    | (
+        | CourseDataItem
+        | SubjectDataItem
+        | StudentDataItem
+        | TeacherDataItem
+        | TopicDataItem
+        | RegisterTopicDataItem
+        | RegisterGroupDataItem
+        | ThesisTopicGradeDataItem
+        | InternReviewDataItem
+        | ThesisReviewTicketDataItem
+      )[]
 ) => {
   useEffect(() => {
     if (debouncedSearchTerm.trim() === "") {

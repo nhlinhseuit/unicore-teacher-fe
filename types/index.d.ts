@@ -1,3 +1,24 @@
+export interface ThesisReportCouncilDataItem {
+  id: string;
+  numberOfCompletedGradingTopic: number;
+  numberOfTopic: number;
+  council: string;
+  councilInfo: string;
+  president: string;
+  secretary: string;
+  member: string;
+}
+export interface InternReportCouncilDataItem {
+  id: string;
+  numberOfCompletedGradingForStudents: number;
+  numberOfStudents: number;
+  council: string;
+  councilInfo: string;
+  president: string;
+  secretary: string;
+  member: string;
+}
+
 // TODO: PAGE INTERFACE
 
 interface ReportDataOption {
@@ -37,6 +58,35 @@ export interface RegisterGroupData {
   MSSV: string[];
   SĐT: string[];
   "Họ và tên": string[];
+}
+export interface ThesisTopicGradeData {
+  "Mã nhóm": string;
+  MSSV: string[];
+  "Họ và tên": string[];
+  "Tên đề tài tiếng Việt": string;
+  "Tên đề tài tiếng Anh": string;
+  "Phản biện": string;
+  "Hướng dẫn": string;
+  "Chủ tịch": string;
+  "Thư ký": string;
+  "Ủy viên": string;
+  "Điểm tổng": string;
+}
+export interface SupervisorThesisReviewTicketData {
+  "Mã nhóm": string;
+  MSSV: string[];
+  "Họ và tên": string[];
+  "Tên đề tài tiếng Việt": string;
+  "Tên đề tài tiếng Anh": string;
+  "Hướng dẫn": string;
+}
+export interface ReviewerThesisReviewTicketData {
+  "Mã nhóm": string;
+  MSSV: string[];
+  "Họ và tên": string[];
+  "Tên đề tài tiếng Việt": string;
+  "Tên đề tài tiếng Anh": string;
+  "Phản biện": string;
 }
 export interface RegisterTopicData {
   "Tên đề tài tiếng Việt": string;
@@ -174,6 +224,19 @@ export interface RegisterTopicDataItem {
   isDeleted: boolean;
   data: RegisterTopicData;
 }
+export interface ThesisTopicGradeDataItem {
+  STT: string;
+  data: ThesisTopicGradeData;
+}
+export interface SupervisorThesisReviewTicketDataItem {
+  STT: string;
+  data: SupervisorThesisReviewTicketData;
+}
+export interface ReviewerThesisReviewTicketDataItem {
+  STT: string;
+  data: ReviewerThesisReviewTicketData;
+}
+
 export interface ApproveTopicDataItem {
   STT: string;
   isDeleted: boolean;
@@ -248,8 +311,10 @@ export interface InternReviewData {
   "Họ và tên": string;
   "Vị trí thực tập": string;
   "Công ty thực tập": string;
-  "Giảng viên chấm điểm": string[];
-  Điểm: string[];
+  "Chủ tịch": string;
+  "Thư ký": string;
+  "Ủy viên": string;
+  "Điểm tổng": string;
 }
 export interface ScoreTranscriptDataItem {
   STT: string;

@@ -595,9 +595,9 @@ const ReportInfo = () => {
                               </Popover>
                             </FormControl>
                             <FormDescription className="body-regular mt-2.5 text-light-500">
-                              Khi bài tập tới hạn, vẫn cho phép sinh viên nộp
+                              Khi báo cáo tới hạn, vẫn cho phép sinh viên nộp
                               bài nhưng sẽ bị đánh dấu là nộp bài trễ. Sinh viên
-                              sẽ không thể nộp bài tập khi quá ngày đóng bài
+                              sẽ không thể nộp báo cáo khi quá ngày đóng bài
                               nộp.
                             </FormDescription>
                             <FormMessage className="text-red-500" />
@@ -680,7 +680,7 @@ const ReportInfo = () => {
                             Cột điểm <span className="text-red-600">*</span>
                           </FormLabel>
                           <FormDescription className="body-regular mt-2.5 text-light-500">
-                            Bài tập lớn được tạo sẽ là thành phần của cột điểm
+                            Báo cáo được tạo sẽ là thành phần của cột điểm
                             này.
                           </FormDescription>
                           <FormControl className="mt-3.5 ">
@@ -1058,7 +1058,7 @@ const ReportInfo = () => {
                 {/*  CUSTOM ĐĂNG THÔNG BÁO*/}
                 <div>
                   <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                    Thời điểm đăng thông báo{" "}
+                    Thời điểm đăng thông báo báo cáo đồ án{" "}
                     <span className="text-red-600">*</span>
                   </label>
 

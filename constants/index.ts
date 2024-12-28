@@ -36,9 +36,19 @@ export const TeacherSettingTabItems = [
 
 export const TeacherScoreReportTabItems = [
   {
+    value: "thesisReviewTicket",
+    label: "Phiếu nhận xét Khóa luận tốt nghiệp",
+    route: "/score-report/thesis-review-ticket",
+  },
+  {
     value: "scoreThesisReport",
-    label: "Hướng dẫn KLTN",
-    route: "/score-report/supervisor-thesis-report",
+    label: "Nhập điểm hội đồng Khóa luận tốt nghiệp",
+    route: "/score-report/thesis-report",
+  },
+  {
+    value: "scoreInternReport",
+    label: "Nhập điểm hội đồng Thực tập doanh nghiệp",
+    route: "/score-report/intern-report",
   },
 ];
 
@@ -175,6 +185,12 @@ export const ListCourseColors = [
   { type: CourseType.ThesisCourse, color: "#ecf2ff" },
 ];
 
+
+export const GradingThesisTopicFilterType = [
+  { id: 0, value: "Đã hoàn thành" },
+  { id: 1, value: "Chưa hoàn thành" },
+];
+
 export enum DetailFilter {
   Semester,
   Year,
@@ -182,9 +198,8 @@ export enum DetailFilter {
 }
 
 export const ReviewThesisFilterType = [
-  { id: 1, value: "Tất cả" },
-  { id: 2, value: "Đã nhận xét" },
-  { id: 3, value: "Chưa nhận xét" },
+  { id: 0, value: "Đề tài chưa nhận xét" },
+  { id: 1, value: "Đề tài đã nhận xét" },
 ];
 
 //

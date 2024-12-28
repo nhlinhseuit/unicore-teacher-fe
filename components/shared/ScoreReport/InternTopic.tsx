@@ -1,13 +1,13 @@
-import { ThesisReportCouncilDataItem } from "@/types";
+import { InternReportCouncilDataItem } from "@/types";
 import BorderContainer from "../BorderContainer";
 import StatusButton from "../Button/StatusButton";
 
 interface Props {
-  topic: ThesisReportCouncilDataItem;
+  topic: InternReportCouncilDataItem;
   onClick?: () => void;
 }
 
-const ThesisTopic = (params: Props) => {
+const InternTopic = (params: Props) => {
   return (
     <BorderContainer otherClasses="cursor-pointer" onClick={params.onClick}>
       <div className="rounded-[10px] relative flex-col w-full p-6">
@@ -17,19 +17,19 @@ const ThesisTopic = (params: Props) => {
             <StatusButton
               orange={
                 !(
-                  params.topic.numberOfTopic ===
-                  params.topic.numberOfCompletedGradingTopic
+                  params.topic.numberOfStudents ===
+                  params.topic.numberOfCompletedGradingForStudents
                 )
               }
               green={
-                params.topic.numberOfTopic ===
-                params.topic.numberOfCompletedGradingTopic
+                params.topic.numberOfStudents ===
+                params.topic.numberOfCompletedGradingForStudents
               }
               text={
-                params.topic.numberOfTopic ===
-                params.topic.numberOfCompletedGradingTopic
+                params.topic.numberOfStudents ===
+                params.topic.numberOfCompletedGradingForStudents
                   ? "Đã hoàn thành nhập điểm"
-                  : `Đã nhập điểm ${params.topic.numberOfCompletedGradingTopic}/${params.topic.numberOfTopic} đề tài`
+                  : `Đã nhập điểm ${params.topic.numberOfCompletedGradingForStudents}/${params.topic.numberOfStudents} sinh viên báo cáo`
               }
               smallText
               otherClasses="rounded-md ml-4"
@@ -59,4 +59,4 @@ const ThesisTopic = (params: Props) => {
   );
 };
 
-export default ThesisTopic;
+export default InternTopic;
