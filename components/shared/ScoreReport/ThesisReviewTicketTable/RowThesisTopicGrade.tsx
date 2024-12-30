@@ -95,6 +95,17 @@ const RowThesisReviewTicketTable = React.memo(
       params: any;
     }) => {
       switch (key) {
+        case "MSSV":
+        case "Họ và tên":
+          return Array.isArray(value)
+            ? value.map((item, index) => (
+                <React.Fragment key={index}>
+                  {item}
+                  {index < value.length - 1 && <br />}
+                </React.Fragment>
+              ))
+            : value;
+
         case "Phản biện":
         case "Hướng dẫn":
           return params.isEditTable ? (
@@ -140,7 +151,7 @@ const RowThesisReviewTicketTable = React.memo(
       keyId: string | number;
       params: any;
     }) => {
-      if (key === "Mã nhóm" || key === 'Mã đề tài') return null;
+      if (key === "Mã nhóm" || key === "Mã đề tài") return null;
 
       return (
         <Table.Cell
