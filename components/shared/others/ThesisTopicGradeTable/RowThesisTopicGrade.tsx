@@ -172,7 +172,7 @@ const RowThesisTopicGrade = React.memo(
       keyId: string | number;
       params: any;
     }) => {
-      if (key === "Mã nhóm") return null;
+      if (key === "Mã nhóm" || key === 'Mã đề tài') return null;
 
       return (
         <Table.Cell

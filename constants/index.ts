@@ -127,11 +127,6 @@ export const BigExerciseTabItems = [
     label: "Lưu trữ",
     route: "/files",
   },
-  {
-    value: "setting",
-    label: "Cài đặt",
-    route: "/setting",
-  },
 ];
 
 // TODO: OTHERS
@@ -298,36 +293,30 @@ export const sidebarTeacherLinks: SidebarLink[] = [
   },
   {
     id: "4",
-    imgURL: "/assets/icons/timetable.svg",
-    route: "/timetable",
-    label: "Lịch biểu",
-  },
-  {
-    id: "5",
     imgURL: "/assets/icons/messageIc.svg",
     route: "/messages",
     label: "Tin nhắn",
   },
   {
-    id: "6",
+    id: "5",
     imgURL: "/assets/icons/reward.svg",
     route: "/score-report",
     label: "Chấm điểm báo cáo",
   },
   {
-    id: "7",
+    id: "6",
     imgURL: "/assets/icons/bookmarks.svg",
     route: "/bookmarks",
     label: "Dấu trang",
   },
   {
-    id: "8",
+    id: "7",
     imgURL: "/assets/icons/subjects.svg",
     route: "/reviews",
     label: "Phúc khảo",
   },
   {
-    id: "9",
+    id: "8",
     imgURL: "/assets/icons/setting.svg",
     route: "/setting",
     label: "Cài đặt",

@@ -20,7 +20,7 @@ const RowTopicDataTable = (params: RowParams) => {
 
       {/* Các giá trị khác */}
       {Object.entries(params.dataItem.data).map(([key, value]) => {
-        if (key === "Mã nhóm") return null;
+       if (key === "Mã nhóm" || key === 'Mã đề tài') return null;
 
         return (
         <Table.Cell
