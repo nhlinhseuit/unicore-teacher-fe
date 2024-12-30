@@ -60,7 +60,7 @@ const page = () => {
       {isReviewingFormAndFormId.formId !== "" ? (
         <>
           <BackToPrev
-            text="Quay lại nhập điểm hội đồng"
+            text="Quay lại danh sách phiếu nhận xét"
             onClickPrev={() => {
               setIsReviewingFormAndFormId({ formId: "", isReviewer: -1 });
             }}

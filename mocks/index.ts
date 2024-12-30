@@ -925,6 +925,7 @@ export const mockInternReviewCouncils = [
     president: "Đỗ Trọng Hợp",
     secretary: "Đỗ Thị Thanh Tuyền",
     member: "Nguyễn Thị Thanh Trúc",
+    myRole: "Chủ tịch",
   },
   {
     id: "2",
@@ -935,6 +936,7 @@ export const mockInternReviewCouncils = [
     president: "Đỗ Thị Thanh Tuyền",
     secretary: "Đỗ Trọng Hợp",
     member: "Nguyễn Thị Thanh Trúc",
+    myRole: "Ủy viên",
   },
   {
     id: "3",
@@ -945,6 +947,7 @@ export const mockInternReviewCouncils = [
     president: "Nguyễn Thị Thanh Trúc",
     secretary: "Đỗ Trọng Hợp",
     member: "Đỗ Thị Thanh Tuyền",
+    myRole: "Thư ký",
   },
   {
     id: "4",
@@ -955,6 +958,7 @@ export const mockInternReviewCouncils = [
     president: "Đỗ Trọng Hợp",
     secretary: "Nguyễn Thị Thanh Trúc",
     member: "Đỗ Thị Thanh Tuyền",
+    myRole: "Thư ký",
   },
   {
     id: "5",
@@ -965,6 +969,7 @@ export const mockInternReviewCouncils = [
     president: "Đỗ Thị Thanh Tuyền",
     secretary: "Nguyễn Thị Thanh Trúc",
     member: "Đỗ Trọng Hợp",
+    myRole: "Chủ tịch",
   },
 ];
 

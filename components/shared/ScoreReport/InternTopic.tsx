@@ -53,6 +53,7 @@ const InternTopic = (params: Props) => {
           <p className="body-regular line-clamp-1 ">
             - Ủy viên: {params.topic.member}
           </p>
+          <p className="body-semibold line-clamp-1 ">Vai trò của bạn trong hội đồng: <span className="body-regular">{params.topic.myRole}</span></p>
         </div>
       </div>
     </BorderContainer>

@@ -17,6 +17,7 @@ export interface InternReportCouncilDataItem {
   president: string;
   secretary: string;
   member: string;
+  myRole: string;
 }
 
 // TODO: PAGE INTERFACE

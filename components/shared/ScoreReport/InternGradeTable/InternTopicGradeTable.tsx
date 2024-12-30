@@ -176,58 +176,6 @@ const InternTopicGradeTable = (params: DataTableParams) => {
                 ))}
               </div>
             </Dropdown>
-
-            <Dropdown
-              className="z-30 rounded-lg"
-              label=""
-              dismissOnClick={true}
-              renderTrigger={() => (
-                <div>
-                  <IconButton
-                    text={`${
-                      selectedRole !== -1
-                        ? mockRoles[selectedRole].value
-                        : "Bộ lọc vai trò"
-                    }`}
-                    onClick={() => {}}
-                    iconRight={"/assets/icons/chevron-down.svg"}
-                    bgColor="bg-white"
-                    textColor="text-black"
-                    border
-                  />
-                </div>
-              )}
-            >
-              <div className="scroll-container scroll-container-dropdown-content">
-                {mockRoles.map((course: any, index) => (
-                  <Dropdown.Item
-                    key={`${course}_${index}`}
-                    onClick={() => {
-                      if (selectedRole === course.id) {
-                        setSelectedRole(-1);
-                      } else {
-                        setSelectedRole(course.id);
-                      }
-                    }}
-                  >
-                    <div className="flex justify-between w-full gap-4">
-                      <p className="text-left line-clamp-1">{course.value}</p>
-                      {selectedRole === course.id ? (
-                        <Image
-                          src="/assets/icons/check.svg"
-                          alt="search"
-                          width={21}
-                          height={21}
-                          className="cursor-pointer mr-2"
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  </Dropdown.Item>
-                ))}
-              </div>
-            </Dropdown>
           </div>
         )}
 
