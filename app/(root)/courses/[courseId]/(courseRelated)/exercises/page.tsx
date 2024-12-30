@@ -64,7 +64,7 @@ const Exercises = () => {
                     type="button"
                     className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
                   >
-                    <span className="font-semibold">Hình thức:</span>
+                    <span className="font-semibold">Hình thức: {" "}</span>
                     <span>Nhóm</span>
                   </button>
                 </li>
@@ -73,7 +73,7 @@ const Exercises = () => {
                     type="button"
                     className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
                   >
-                    <span className="font-semibold">Thời hạn nộp bài:</span>
+                    <span className="font-semibold">Thời hạn nộp bài: {" "}</span>
                     <span> 12h SA 8/11/2024 - 11h30 SA 15/11/2024</span>
                   </button>
                 </li>
@@ -82,7 +82,7 @@ const Exercises = () => {
                     type="button"
                     className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
                   >
-                    <span className="font-semibold">Thời hạn nộp trễ:</span>
+                    <span className="font-semibold">Thời hạn nộp trễ: {" "}</span>
                     <span>12h SA 8/11/2024 - 11h30 SA 15/11/2024</span>
                   </button>
                 </li>
@@ -92,7 +92,7 @@ const Exercises = () => {
                     className="flex items-center justify-start w-full px-4 py-2 text-sm text-gray-700 cursor-default dark:text-gray-200 "
                   >
                     <span className="font-semibold">
-                      Thời hạn đóng bài nộp:
+                      Thời hạn đóng bài nộp: {" "}
                     </span>
                     <span>12h SA 16/11/2024</span>
                   </button>
@@ -119,12 +119,12 @@ const Exercises = () => {
         }}
       />
 
-      <p className="mt-10 mb-10 paragraph-semibold">
+      {/* <p className="mt-10 mb-10 paragraph-semibold">
         [TEST CODE] Báo cáo ngày 29/08/2024
-      </p>
+      </p> */}
 
       {/* //TODO: BÁO CÁO */}
-      <GradingGroupTable
+      {/* <GradingGroupTable
         isEditTable={isEditTableReport}
         dataTable={dataTableGradingReport}
         onClickEditTable={() => {
@@ -136,7 +136,7 @@ const Exercises = () => {
           localDataTable = localDataTable as GradingReportDataItem[];
           setDataTableGradingReport(localDataTable);
         }}
-      />
+      /> */}
     </>
   ) : (
     <div className="mt-6 flex flex-col gap-4">

@@ -85,11 +85,6 @@ export const TeacherCourseTabItems = [
     route: "/score-transcript",
   },
   {
-    value: "timeTable",
-    label: "Thời khóa biểu",
-    route: "/time-table",
-  },
-  {
     value: "reviews",
     label: "Phúc khảo",
     route: "/reviews",
