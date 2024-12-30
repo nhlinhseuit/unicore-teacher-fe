@@ -282,7 +282,7 @@ const InternTopicGradeTable = (params: DataTableParams) => {
           {/* BODY */}
           <Table.Body className="text-left divide-y">
             {filteredDataTable.map((dataItem, index) => {
-              var valueUniqueInput = dataItem.STT;
+              var valueUniqueInput = dataItem.data.MSSV;
               return (
                 <RowInternGrade
                   key={`${dataItem.STT}_${index}`}

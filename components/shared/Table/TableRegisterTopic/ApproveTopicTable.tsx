@@ -38,6 +38,10 @@ const ApproveTopicTable = (params: DataTableParams) => {
 
   const [itemsSelected, setItemsSelected] = useState<string[]>([]);
 
+  useEffect(() => {
+    if (itemsSelected.length === 0) setIsShowDialog(-1);
+  }, [itemsSelected]);
+
   const [feedback, setFeedback] = useState("");
   const [isShowDialog, setIsShowDialog] = useState(-1);
 
@@ -55,6 +59,12 @@ const ApproveTopicTable = (params: DataTableParams) => {
       return false;
     }
     return true;
+  };
+
+  const handleInvalidFeedback = () => {
+    if (isShowDialog === 2 && feedback === "") {
+      return true;
+    }
   };
 
   const currentItems = useMemo(() => {
@@ -79,34 +89,50 @@ const ApproveTopicTable = (params: DataTableParams) => {
 
   async function onSubmit(values: any) {
     try {
-      setIsShowDialog(-1);
+      if (!handleInvalidFeedback()) {
+        setIsShowDialog(-1);
 
-      if (isShowDialog === 1) {
-        toast({
-          title: "Duyệt đề xuất các đề tài thành công.",
-          description: `Các đề tài ${itemsSelected.join(", ")} đã dược duyệt.`,
-          variant: "success",
-          duration: 3000,
-        });
-      } else if (isShowDialog === 2) {
-        toast({
-          title: "Phản hồi đề tài thành công.",
-          description: `Các đề tài ${itemsSelected.join(", ")} đã dược duyệt.`,
-          variant: "success",
-          duration: 3000,
-        });
+        if (isShowDialog === 1) {
+          toast({
+            title: "Duyệt đề xuất các đề tài thành công.",
+            description: `Các đề tài ${itemsSelected.join(
+              ", "
+            )} đã dược duyệt.`,
+            variant: "success",
+            duration: 3000,
+          });
+        } else if (isShowDialog === 2) {
+          toast({
+            title: "Phản hồi đề tài thành công.",
+            description: `Các đề tài ${itemsSelected.join(
+              ", "
+            )} đã dược duyệt.`,
+            variant: "success",
+            duration: 3000,
+          });
+        } else {
+          toast({
+            title: "Từ chối các đề tài thành công.",
+            description: `Các đề tài ${itemsSelected.join(
+              ", "
+            )} đã bị từ chối.`,
+            variant: "success",
+            duration: 3000,
+          });
+        }
       } else {
         toast({
-          title: "Từ chối các đề tài thành công.",
-          description: `Các đề tài ${itemsSelected.join(", ")} đã bị từ chối.`,
-          variant: "success",
+          title: "Vui lòng nhập phản hồi đề tài!",
+          variant: "error",
           duration: 3000,
         });
       }
     } catch {
     } finally {
-      params.onSaveTable(itemsSelected);
-      setItemsSelected([]);
+      if (!handleInvalidFeedback()) {
+        params.onSaveTable(itemsSelected);
+        setItemsSelected([]);
+      }
     }
   }
 
@@ -189,11 +215,11 @@ const ApproveTopicTable = (params: DataTableParams) => {
 
                     <div className="mb-4">
                       <p className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Phản hồi cho đề tài (nếu có)
+                        Phản hồi cho đề tài
                       </p>
                       <p className="body-regular mt-3.5 text-light-500">
                         {isShowDialog === 2
-                          ? "Bạn có thể phản hồi và đề xuất sinh viên chỉnh sửa đề tài phù hợp hơn tại đây. Đề tài sẽ chuyển sang trạng thái đang xử lý."
+                          ? "Phản hồi và đề xuất sinh viên chỉnh sửa đề tài phù hợp hơn tại đây. Đề tài sẽ chuyển sang trạng thái đang xử lý."
                           : "Không bắt buộc."}
                       </p>
                       <TextAreaComponent

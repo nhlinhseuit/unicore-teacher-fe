@@ -130,10 +130,6 @@ const AlertCreateNewTopic = (params: Props) => {
       message: `Nội dung đề tài phải chứa ít nhất 20 ký tự`,
       path: ["description"],
     })
-    .refine(() => selectedStudents.length >= minStudentPerGroup, {
-      message: `Nhóm phải có ít nhất ${minStudentPerGroup} thành viên.`,
-      path: ["studentList"],
-    })
     .refine(() => selectedStudents.length <= maxStudentPerGroup, {
       message: `Nhóm chỉ được phép tối đa ${maxStudentPerGroup} thành viên.`,
       path: ["studentList"],
@@ -201,7 +197,7 @@ const AlertCreateNewTopic = (params: Props) => {
                 render={({ field }) => (
                   <FormItem className="flex w-full flex-col">
                     <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                      Tên đề tài tiếng Việt<span className="text-red-600">*</span>
+                      Tên đề tài tiếng Việt{" "}<span className="text-red-600">*</span>
                     </FormLabel>
                     <FormControl className="mt-3.5 ">
                       <Input
@@ -221,7 +217,7 @@ const AlertCreateNewTopic = (params: Props) => {
                 render={({ field }) => (
                   <FormItem className="flex w-full flex-col">
                     <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                      Tên đề tài tiếng Anh<span className="text-red-600">*</span>
+                      Tên đề tài tiếng Anh{" "}<span className="text-red-600">*</span>
                     </FormLabel>
                     <FormControl className="mt-3.5 ">
                       <Input
@@ -241,7 +237,7 @@ const AlertCreateNewTopic = (params: Props) => {
                 render={({ field }) => (
                   <FormItem className="flex w-full flex-col">
                     <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                      Mô tả đề tài <span className="text-red-600">*</span>
+                      Mô tả đề tài{" "}<span className="text-red-600">*</span>
                     </FormLabel>
                     <FormControl className="mt-3.5 ">
                       <TextAreaComponent
@@ -265,8 +261,7 @@ const AlertCreateNewTopic = (params: Props) => {
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Danh sách thành viên nhóm{" "}
-                        <span className="text-red-600">*</span>
+                        Danh sách thành viên nhóm
                       </FormLabel>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
                         Nhóm trưởng điền tên đầu tiên. Thành viên nhóm phải là

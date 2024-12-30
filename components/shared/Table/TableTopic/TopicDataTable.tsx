@@ -1,6 +1,6 @@
 import { Table } from "flowbite-react";
 import React, { useMemo, useState } from "react";
-import { TopicDataItem } from "@/types";
+import { RegisterTopicDataItem } from "@/types";
 import { itemsPerPageTopicTable } from "@/constants";
 import MyFooter from "../components/MyFooter";
 import RowTopicDataTable from "./RowTopicDataTable";
@@ -9,7 +9,7 @@ import { tableTheme } from "../components/DataTable";
 interface DataTableParams {
   isEditTable: boolean;
   isMultipleDelete: boolean;
-  dataTable: TopicDataItem[];
+  dataTable: RegisterTopicDataItem[];
 }
 
 const TopicDataTable = (params: DataTableParams) => {
@@ -56,6 +56,8 @@ const TopicDataTable = (params: DataTableParams) => {
             </Table.HeadCell>
 
             {Object.keys(currentItems[0]?.data || {}).map((key, index) => {
+              if (key === "Mã nhóm") return null;
+
               return (
                 <Table.HeadCell
                   key={`${key}_${index}`}

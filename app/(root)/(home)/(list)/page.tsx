@@ -5,14 +5,18 @@ import IconButton from "@/components/shared/Button/IconButton";
 import TableSearch from "@/components/shared/Search/TableSearch";
 import CategorySideBar from "@/components/shared/Sidebar/CategorySideBar";
 import NoResult from "@/components/shared/Status/NoResult";
-import { FilterType } from "@/constants";
+import { FilterType, AnnouncementsFilterType } from "@/constants";
 import { mockAnnouncementLists } from "@/mocks";
 import { Dropdown } from "flowbite-react";
+import Image from "next/image";
+import { useState } from "react";
 
 
 
 const Home = () => {
   var typeFilter = FilterType.SortNewer;
+  const [selectedAnnouncementType, setSelectedAnnouncementType] = useState(-1);
+
 
   return (
     <>
@@ -20,11 +24,11 @@ const Home = () => {
         className="
       mt-6 mb-10 flex w-full gap-6 sm:flex-row sm:items-center justify-between"
       >
-        <div className="flex justify-start w-1/2">
+        <div className="flex justify-start w-2/3">
           <TableSearch
             setSearchTerm={() => {}}
             searchTerm={""}
-            otherClasses="pr-2 w-[75%]"
+            otherClasses="pr-2 w-[50%]"
           />
 
           <Dropdown
@@ -34,16 +38,12 @@ const Home = () => {
             renderTrigger={() => (
               <div>
                 <IconButton
-                  text="Bộ lọc"
-                  iconLeft={
-                    typeFilter === FilterType.None
-                      ? "/assets/icons/filter.svg"
-                      : "/assets/icons/filter_active.svg"
-                  }
+                  text="Bộ lọc thời gian"
                   iconRight={"/assets/icons/chevron-down.svg"}
                   bgColor="bg-white"
                   textColor="text-black"
                   border
+                  otherClasses="mr-2"
                 />
               </div>
             )}
@@ -121,6 +121,58 @@ const Home = () => {
                 </label>
               </li>
             </ul>
+          </Dropdown>
+
+          <Dropdown
+            className="z-30 rounded-lg"
+            label=""
+            dismissOnClick={true}
+            renderTrigger={() => (
+              <div>
+                <IconButton
+                  text={`${
+                    selectedAnnouncementType !== -1
+                      ? AnnouncementsFilterType[selectedAnnouncementType].value
+                      : "Bộ lọc thông báo"
+                  }`}
+                  onClick={() => {}}
+                  iconRight={"/assets/icons/chevron-down.svg"}
+                  bgColor="bg-white"
+                  textColor="text-black"
+                  border
+                />
+              </div>
+            )}
+          >
+            <div className="scroll-container scroll-container-dropdown-content">
+              {AnnouncementsFilterType.map((course: any, index) => (
+                <Dropdown.Item
+                  key={`${course}_${index}`}
+                  onClick={() => {
+                    if (selectedAnnouncementType === course.id) {
+                      setSelectedAnnouncementType(-1);
+                    } else {
+                      setSelectedAnnouncementType(course.id);
+                    }
+                  }}
+                >
+                  <div className="flex justify-between w-full gap-4">
+                    <p className="text-left line-clamp-1">{course.value}</p>
+                    {selectedAnnouncementType === course.id ? (
+                      <Image
+                        src="/assets/icons/check.svg"
+                        alt="search"
+                        width={21}
+                        height={21}
+                        className="cursor-pointer mr-2"
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </Dropdown.Item>
+              ))}
+            </div>
           </Dropdown>
         </div>
       </div>

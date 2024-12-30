@@ -48,7 +48,7 @@ const ExercisePostItem = (params: Props) => {
                     Thời hạn nộp bài: 12h SA 8/11/2024 - 11h30 SA 15/11/2024
                   </span>
                 </li>
-                <li role="menuitem">
+              <li role="menuitem">
                   <span>
                     Thời hạn nộp trễ: 12h SA 8/11/2024 - 11h30 SA 15/11/2024
                   </span>

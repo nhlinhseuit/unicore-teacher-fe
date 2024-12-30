@@ -7,7 +7,7 @@ import NoResult from "@/components/shared/Status/NoResult";
 import TableSkeleton from "@/components/shared/Table/components/TableSkeleton";
 import TopicGroupTable from "@/components/shared/Table/TableTopic/TopicDataTable";
 
-import { TopicDataItem } from "@/types";
+import { RegisterTopicDataItem } from "@/types";
 import { useRef, useState } from "react";
 import * as XLSX from "xlsx";
 
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const ImportListTopic = (params: Props) => {
-  const [dataTable, setDataTable] = useState<TopicDataItem[]>([]);
+  const [dataTable, setDataTable] = useState<RegisterTopicDataItem[]>([]);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 

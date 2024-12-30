@@ -1,9 +1,9 @@
 import { Table } from "flowbite-react";
 import React from "react";
-import { TopicDataItem } from "@/types";
+import { RegisterTopicDataItem } from "@/types";
 
 interface RowParams {
-  dataItem: TopicDataItem;
+  dataItem: RegisterTopicDataItem;
 }
 
 const RowTopicDataTable = (params: RowParams) => {
@@ -20,8 +20,10 @@ const RowTopicDataTable = (params: RowParams) => {
 
       {/* Các giá trị khác */}
       {Object.entries(params.dataItem.data).map(([key, value]) => {
+        if (key === "Mã nhóm") return null;
+
         return (
-          <Table.Cell
+        <Table.Cell
             key={`${key}_${value}`}
             theme={{
               base: `group-first/body:group-first/row:first:rounded-tl-lg
@@ -32,7 +34,16 @@ const RowTopicDataTable = (params: RowParams) => {
             }}
             className={`border-r-[1px] px-2 py-4 normal-case text-left max-w-[800px]`}
           >
-            {value}
+            {key === "MSSV" || key === "Họ và tên" || key === "SĐT"
+              ? Array.isArray(value)
+                ? value.map((item, index) => (
+                    <React.Fragment key={index}>
+                      {item}
+                      {index < value.length - 1 && <br />}
+                    </React.Fragment>
+                  ))
+                : value
+              : value}
           </Table.Cell>
         );
       })}

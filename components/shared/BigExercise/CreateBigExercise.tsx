@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
 import { mockBigExerciseGradeColumn, mockDbLeftRatio } from "@/mocks";
-import { TopicDataItem } from "@/types";
+import { RegisterTopicDataItem } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { format } from "date-fns";
@@ -74,7 +74,7 @@ const CreateBigExercise = () => {
 
   const [selectedGradeColumn, setSelectedGradeColumn] = useState<number>(-1);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
-  const [dataTable, setDataTable] = useState<TopicDataItem[]>([]);
+  const [dataTable, setDataTable] = useState<RegisterTopicDataItem[]>([]);
 
   const handleChangeNumberOfRecheck = (
     e: React.ChangeEvent<HTMLInputElement>

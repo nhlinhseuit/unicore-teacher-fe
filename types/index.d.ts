@@ -89,6 +89,7 @@ export interface ReviewerThesisReviewTicketData {
   "Phản biện": string;
 }
 export interface RegisterTopicData {
+  "Mã đề tài": string;
   "Tên đề tài tiếng Việt": string;
   "Tên đề tài tiếng Anh": string;
   "Mô tả": string;

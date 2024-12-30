@@ -60,6 +60,11 @@ export const TeacherSubjectsTabItems = [
 export const TeacherCourseTabItems = [
   { value: "generalPost", label: "Thông báo chung", route: "/" },
   {
+    value: "happeningEvent",
+    label: "Hoạt động đang diễn ra",
+    route: "/happening-event",
+  },
+  {
     value: "exercises",
     label: "Bài tập",
     route: "/exercises",
@@ -102,11 +107,6 @@ export const TeacherCourseTabItems = [
 ];
 export const BigExerciseTabItems = [
   { value: "generalPost", label: "Thông báo chung", route: "/" },
-  {
-    value: "happeningEvent",
-    label: "Hoạt động đang diễn ra",
-    route: "/happening-event",
-  },
   {
     value: "uploadTopic",
     label: "Danh sách đề tài",
@@ -151,6 +151,7 @@ export const AnnouncementTypesNotRegularCourse = [
 ];
 
 export enum RegisterTopicTableType {
+  uploadTopic,
   registerTopic,
   approveTopic,
   // !: GỘP SAU:
@@ -189,6 +190,13 @@ export const ListCourseColors = [
 export const GradingThesisTopicFilterType = [
   { id: 0, value: "Đã hoàn thành" },
   { id: 1, value: "Chưa hoàn thành" },
+];
+
+
+export const AnnouncementsFilterType = [
+  { id: 0, value: "Thông báo đã đăng" },
+  { id: 1, value: "Thông báo đã ẩn" },
+  { id: 1, value: "Thông báo đã tạo" },
 ];
 
 export enum DetailFilter {
@@ -270,9 +278,7 @@ export const FileTableDataMoreComponentItems = [
 ];
 
 export const CourseItemMoreComponentItems = [
-  { value: "edit", label: "Chỉnh sửa" },
   { value: "hide", label: "Ẩn" },
-  { value: "archive", label: "Lưu trữ" },
 ];
 
 // TODO: SIDEBAR

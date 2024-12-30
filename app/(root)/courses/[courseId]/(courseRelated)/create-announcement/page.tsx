@@ -18,7 +18,7 @@ const page = () => {
         text={"Quay lại danh sách thông báo"}
         onClickPrev={handleClick}
       />
-      <CreateAnnouncement />;
+      <CreateAnnouncement />
     </div>
   );
 };

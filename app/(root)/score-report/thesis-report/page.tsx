@@ -3,7 +3,7 @@
 import BackToPrev from "@/components/shared/BackToPrev";
 import ReviewForm from "@/components/shared/ScoreReport/ReviewForm";
 import ThesisTopic from "@/components/shared/ScoreReport/ThesisTopic";
-import ThesisTopicGradeTable from "@/components/shared/ScoreReport/ThesisTopicGradeTable/ThesisTopicGradeTable";
+import ThesisTopicGradeTable from "@/components/shared/others/ThesisTopicGradeTable/ThesisTopicGradeTable";
 import TitleDescription from "@/components/shared/TitleDescription";
 import {
   mockThesisReviewCouncils,

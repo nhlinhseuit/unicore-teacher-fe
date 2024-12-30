@@ -1,40 +1,42 @@
 "use client";
 
-import IconButton from "@/components/shared/Button/IconButton";
 import FileDataTable from "@/components/shared/Table/TableFile/FileDataTable";
+import { toast } from "@/hooks/use-toast";
 import { mockFileDataTable } from "@/mocks";
+import { useState } from "react";
 
 const Files = () => {
+  const [dataTable, setDataTable] = useState<any[]>(mockFileDataTable);
+
+
   return (
-    <>
-      <>
-        <div className="flex justify-end mb-3 gap-2">
-          <IconButton
-            text="Tải lên"
-            green
-            onClick={() => {}}
-            iconLeft={"/assets/icons/upload-white.svg"}
-            iconWidth={16}
-            iconHeight={16}
-          />
+    <FileDataTable
+      isEditTable={false}
+      isMultipleDelete={false}
+      // @ts-ignore
+      dataTable={dataTable}
+      onClickDelete={(itemsSelected: string[]) => {
+        // ? DELETE THEO MÃ LỚP
+        setDataTable((prevData) => {
+          return prevData.map((item) => {
+            if (itemsSelected.includes(item.STT.toString())) {
+              return {
+                ...item,
+                isDeleted: true,
+              };
+            }
+            return item;
+          });
+        });
 
-          <IconButton
-            text="Tải xuống"
-            onClick={() => {}}
-            iconLeft={"/assets/icons/download-white.svg"}
-            iconWidth={16}
-            iconHeight={16}
-          />
-        </div>
-
-        <FileDataTable
-          isEditTable={false}
-          isMultipleDelete={false}
-          // @ts-ignore
-          dataTable={mockFileDataTable}
-        />
-      </>
-    </>
+        toast({
+          title: "Xóa thành công",
+          description: `${`Các file ${itemsSelected.join(", ")} đã được xóa.`}`,
+          variant: "success",
+          duration: 3000,
+        });
+      }}
+    />
   );
 };
 

@@ -1,11 +1,13 @@
-import { FileTableDataMoreComponentItems } from "@/constants";
 import { FileDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import Image from "next/image";
-import MoreButtonComponent from "../components/MoreButtonComponent";
 
 interface RowParams {
   dataItem: FileDataItem;
+  itemsSelected: string[];
+  valueUniqueInput: string;
+  isOnlyView?: boolean;
+  onClickCheckBoxSelect?: (item: string) => void;
   onClickDelete?: () => void;
 }
 interface handleInputChangeParams {
@@ -17,7 +19,6 @@ interface handleInputChangeParams {
 }
 
 const RowTopicDataTable = (params: RowParams) => {
-
   const getFileIcon = (nameFile: string) => {
     if (nameFile === undefined) return;
 
@@ -103,15 +104,29 @@ const RowTopicDataTable = (params: RowParams) => {
       onClick={() => {}}
       className={`bg-background-secondary  text-leftduration-100`}
     >
+      {/* checkbox */}
       <Table.Cell className="w-10 border-r-[1px] z-100 ">
         <div
           onClick={(e) => {
             e.stopPropagation(); // Ngăn sự kiện lan truyền đến Table.Row
           }}
         >
-          <MoreButtonComponent
-            actions={FileTableDataMoreComponentItems}
-          />
+          <div className="flex items-center justify-center w-10 h-10">
+            <input
+              id="apple"
+              type="checkbox"
+              name="filterOptions"
+              value={params.valueUniqueInput}
+              checked={params.itemsSelected.includes(params.valueUniqueInput)}
+              onChange={() => {
+                {
+                  params.onClickCheckBoxSelect &&
+                    params.onClickCheckBoxSelect(params.valueUniqueInput);
+                }
+              }}
+              className="w-4 h-4 bg-gray-100 border-gray-300 rounded cursor-pointer text-primary-600"
+            />
+          </div>
         </div>
       </Table.Cell>
 

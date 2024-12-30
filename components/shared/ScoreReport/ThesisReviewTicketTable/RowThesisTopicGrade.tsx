@@ -1,19 +1,25 @@
-import { ThesisReviewTicketData, ThesisReviewTicketDataItem } from "@/types";
+import {
+  ReviewerThesisReviewTicketData,
+  ReviewerThesisReviewTicketDataItem,
+  SupervisorThesisReviewTicketData,
+  SupervisorThesisReviewTicketDataItem,
+} from "@/types";
 import { Table } from "flowbite-react";
 import Image from "next/image";
 import React, { useRef } from "react";
-import InputComponent from "../../Table/components/InputComponent";
 
 interface RowParams {
   valueUniqueInput: string;
-  dataItem: ThesisReviewTicketDataItem;
+  dataItem:
+    | ReviewerThesisReviewTicketDataItem
+    | SupervisorThesisReviewTicketDataItem;
   isEditTable?: boolean;
   isHasSubCourses?: boolean;
   onChangeRow?: (item: any) => void;
   onReviewForm?: (formId: string, isReviewer: number) => void;
 }
 interface handleInputChangeParams {
-  key: keyof ThesisReviewTicketData;
+  key: keyof ReviewerThesisReviewTicketData | SupervisorThesisReviewTicketData;
   newValue: any;
   isMultipleInput?: boolean;
   currentIndex?: number;
@@ -24,30 +30,30 @@ const RowThesisReviewTicketTable = React.memo(
   (params: RowParams) => {
     const refInput = useRef(params.dataItem);
 
-    const handleInputChange = ({
-      key,
-      newValue,
-      isMultipleInput,
-      currentIndex,
-      isCheckbox,
-    }: handleInputChangeParams) => {
-      //@ts-ignore
-      const updatedDataItem: ThesisReviewTicketDataItem = {
-        ...refInput.current,
-        data: {
-          ...refInput.current.data,
-          [key]: isMultipleInput
-            ? (refInput.current.data[key] as string[]).map((value, index) =>
-                index === currentIndex ? newValue : value
-              )
-            : newValue,
-        },
-      };
+    // const handleInputChange = ({
+    //   key,
+    //   newValue,
+    //   isMultipleInput,
+    //   currentIndex,
+    //   isCheckbox,
+    // }: handleInputChangeParams) => {
+    //   //@ts-ignore
+    //   const updatedDataItem: any = {
+    //     ...refInput.current,
+    //     data: {
+    //       ...refInput.current.data,
+    //       [key]: isMultipleInput
+    //         ? (refInput.current.data[key] as string[]).map((value, index) =>
+    //             index === currentIndex ? newValue : value
+    //           )
+    //         : newValue,
+    //     },
+    //   };
 
-      refInput.current = updatedDataItem; //? ĐỂ UPATE ĐƯỢC NHIỀU FIELD TRÊN 1 HÀNG
+    //   refInput.current = updatedDataItem; //? ĐỂ UPATE ĐƯỢC NHIỀU FIELD TRÊN 1 HÀNG
 
-      params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
-    };
+    //   params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
+    // };
 
     var valueUniqueInput = params.dataItem.data["Mã nhóm"];
 

@@ -3,7 +3,7 @@ import React from "react";
 
 const Timetable = () => {
   return (
-    <div>
+    <div className="mt-4">
       <TitleDescription
         title="Lịch biểu sinh viên báo cáo đồ án"
         description={[""]}
