@@ -15,7 +15,12 @@ import {
 } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
 import { mockDataStudentRegisterGroup } from "@/mocks";
+import { createGroupRegisterSchedule } from "@/services/groupRegisterServices";
 import { RegisterGroupDataItem } from "@/types";
+import {
+  formatDayToISODateWithDefaultTime,
+  formatStartDayToISO,
+} from "@/utils/util";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -59,6 +64,9 @@ const ManageGroup = () => {
     },
   ]);
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   // 2. Define a submit handler.
   async function handleSubmit() {
     setIsSubmitting(true);
@@ -80,18 +88,41 @@ const ManageGroup = () => {
         maxMembers: maxMember,
       });
 
-      // naviate to home page
-      router.push("/");
+      const params = {
+        class_id: "6728d58b38829046d82ccc3c",
+        subclass_code: "IT006.CLC",
+        start_register_date: formatDayToISODateWithDefaultTime(
+          dateStart ?? new Date()
+        ),
+        end_register_date: formatDayToISODateWithDefaultTime(
+          dateEnd ?? new Date()
+        ),
+        has_leader: true,
+        max_size: maxMember,
+        min_size: minMember,
+        create_subclass: false,
+        groups: [],
+      };
 
-      toast({
-        title: "Tạo lịch thành công.",
-        description: `Đăng ký nhóm sẽ diễn ra vào ngày ${format(
-          dateStart ?? "",
-          "dd/MM/yyyy"
-        )}`,
-        variant: "success",
-        duration: 3000,
+      setIsLoading(true);
+      createGroupRegisterSchedule(params).then((data) => {
+        setIsLoading(false);
+        console.log("data API", data);
+
+        router.push("/");
+
+        toast({
+          title: "Tạo lịch thành công.",
+          description: `Đăng ký nhóm sẽ diễn ra vào ngày ${format(
+            dateStart ?? "",
+            "dd/MM/yyyy"
+          )}`,
+          variant: "success",
+          duration: 3000,
+        });
       });
+
+      // naviate to home page
     } catch {
     } finally {
       setIsSubmitting(false);
@@ -299,7 +330,7 @@ const ManageGroup = () => {
 
               {/* //! ERROR */}
               {errorList.map((item, index) => {
-                if (index != 0 && item.value)
+                if (index != 0 && item.id)
                   return (
                     <p
                       key={`${index}_${item.id}`}
