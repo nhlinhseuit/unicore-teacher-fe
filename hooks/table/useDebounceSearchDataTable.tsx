@@ -3,16 +3,15 @@ import { normalizeSearchItem } from "@/lib/utils";
 import {
   ThesisTopicGradeDataItem,
   CourseDataItem,
-  RegisterTopicDataItem,
   StudentDataItem,
   SubjectDataItem,
   TeacherDataItem,
-  TopicDataItem,
   RegisterGroupDataItem,
   InternReviewDataItem,
   SupervisorThesisReviewTicketDataItem,
-ReviewerThesisReviewTicketDataItem
+ReviewerThesisReviewTicketDataItem,
 } from "@/types";
+import { TopicDataItem } from "@/types/entity/Topic";
 import { useEffect } from "react";
 
 const useDebounceSearchDataTable = (
@@ -28,7 +27,6 @@ const useDebounceSearchDataTable = (
     | StudentDataItem[]
     | TeacherDataItem[]
     | TopicDataItem[]
-    | RegisterTopicDataItem[]
     | ThesisTopicGradeDataItem[]
     | InternReviewDataItem[]
     | ReviewerThesisReviewTicketDataItem[]
@@ -40,7 +38,6 @@ const useDebounceSearchDataTable = (
         | StudentDataItem
         | TeacherDataItem
         | TopicDataItem
-        | RegisterTopicDataItem
         | ThesisTopicGradeDataItem
         | InternReviewDataItem
         | ReviewerThesisReviewTicketDataItem
@@ -52,7 +49,6 @@ const useDebounceSearchDataTable = (
     | StudentDataItem[]
     | TeacherDataItem[]
     | TopicDataItem[]
-    | RegisterTopicDataItem[]
     | RegisterGroupDataItem[]
     | ThesisTopicGradeDataItem[]
     | InternReviewDataItem[]
@@ -64,7 +60,6 @@ const useDebounceSearchDataTable = (
         | StudentDataItem
         | TeacherDataItem
         | TopicDataItem
-        | RegisterTopicDataItem
         | RegisterGroupDataItem
         | ThesisTopicGradeDataItem
         | InternReviewDataItem

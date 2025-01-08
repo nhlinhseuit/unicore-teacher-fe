@@ -1,14 +1,12 @@
 import { RegisterTopicTableType } from "@/constants";
-import {
-  RegisterTopicDataItem
-} from "@/types";
 import { Table } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import InputComponent from "../components/InputComponent";
+import { TopicDataItem } from "@/types/entity/Topic";
 
 interface RowParams {
   type: RegisterTopicTableType;
-  dataItem: RegisterTopicDataItem;
+  dataItem: TopicDataItem;
   valueUniqueInput: string;
   itemsSelected: string[];
   isEditTable?: boolean;

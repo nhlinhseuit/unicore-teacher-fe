@@ -19,9 +19,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { RegisterTopicTableType } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
-import { mockBigExerciseGradeColumn, mockDbLeftRatio } from "@/mocks";
-import { RegisterTopicDataItem } from "@/types";
+import { mockDbLeftRatio } from "@/mocks";
+import { createProject } from "@/services/projectServices";
+import { formatDayToISODateWithDefaultTime } from "@/utils/dateTimeUtil";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { format } from "date-fns";
@@ -37,8 +39,11 @@ import { z } from "zod";
 import BorderContainer from "../BorderContainer";
 import SubmitButton from "../Button/SubmitButton";
 import ErrorComponent from "../Status/ErrorComponent";
-import TopicGroupTable from "../Table/TableTopic/TopicDataTable";
 import TableSkeleton from "../Table/components/TableSkeleton";
+import RegisterTopicTable from "../Table/TableRegisterTopic/RegisterTopicTable";
+import { convertToAPIDataTableTopics } from "@/lib/convertToDataTableTopic";
+import { TopicDataItem } from "@/types/entity/Topic";
+import LoadingComponent from "../LoadingComponent";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -63,6 +68,9 @@ const CreateBigExercise = () => {
   const router = useRouter();
   const pathName = usePathname();
 
+  const [isEditTable, setIsEditTable] = useState(false);
+  const [isMultipleDelete, setIsMultipleDelete] = useState(false);
+
   const [isLoading, setIsLoading] = useState(false);
   const [selectedRecheckOption, setSelectedRecheckOption] = useState(1);
   const [selectedSuggestOption, setSelectedSuggestOption] = useState(1);
@@ -74,7 +82,7 @@ const CreateBigExercise = () => {
 
   const [selectedGradeColumn, setSelectedGradeColumn] = useState<number>(-1);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
-  const [dataTable, setDataTable] = useState<RegisterTopicDataItem[]>([]);
+  const [dataTable, setDataTable] = useState<TopicDataItem[]>([]);
 
   const handleChangeNumberOfRecheck = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -161,7 +169,6 @@ const CreateBigExercise = () => {
       file: z.any(),
       dateSubmit: z.date().optional(),
       dateStart: z.date().optional(),
-      dateLate: z.date().optional(),
       dateClose: z.date().optional(),
       multipleCourses: z.number().optional(),
       groupOption: z.any().optional(),
@@ -222,6 +229,21 @@ const CreateBigExercise = () => {
     },
   });
 
+  const bigExerciseGradeColumn = [
+    { id: 1, type: "COURSEWORK", value: "Quá trình" },
+    { id: 2, type: "PRACTICAL", value: "Thực hành" },
+    { id: 3, type: "MIDTERM", value: "Giữa kỳ" },
+    { id: 4, type: "FINAL_TERM", value: "Cuối kỳ" },
+  ];
+
+  const createBigExerciseAPI = async (params: any) => {
+    console.log("createBigExerciseAPI");
+
+    const res = await createProject(params);
+
+    console.log("res", res);
+  };
+
   // 2. Define a submit handler.
   async function onSubmit(values: any) {
     setIsSubmitting(true);
@@ -236,6 +258,33 @@ const CreateBigExercise = () => {
         target: selectedGradeColumn,
         path: pathName,
       });
+
+      const APIdataTable = convertToAPIDataTableTopics({
+        data: dataTable,
+      });
+
+      const params = {
+        class_id: "1",
+        subclass_code: "IT002.PMCL",
+        name: values.title,
+        description: values.description,
+        weight: ratio,
+        weight_type: bigExerciseGradeColumn.find(
+          (item) => item.id === selectedGradeColumn
+        )?.type,
+
+        in_group: true,
+
+        allow_grade_review: selectedRecheckOption === 2,
+        review_times: numberOfRecheck,
+        start_date: formatDayToISODateWithDefaultTime(dateStart ?? new Date()),
+        allow_topic_suggestion: selectedSuggestOption,
+        ...APIdataTable
+      };
+
+      console.log('params', params)
+
+      createBigExerciseAPI(params);
 
       // naviate to home page
       router.push("/");
@@ -255,6 +304,8 @@ const CreateBigExercise = () => {
       setIsSubmitting(false);
     }
   }
+
+  if (isLoading) return <LoadingComponent />
 
   const tinymceKey = process.env.NEXT_PUBLIC_TINYMCE_EDITOR_API_KEY;
 
@@ -360,7 +411,7 @@ const CreateBigExercise = () => {
                         />
                       </FormControl>
                       <FormDescription className="body-regular mt-2.5 text-light-500">
-                       Mô tả về bài tập lớn. Tối thiểu 20 kí tự.
+                        Mô tả về bài tập lớn. Tối thiểu 20 kí tự.
                       </FormDescription>
                       <FormMessage className="text-red-500" />
                     </FormItem>
@@ -440,7 +491,7 @@ const CreateBigExercise = () => {
                                 text={`${
                                   selectedGradeColumn === -1
                                     ? "Chọn cột điểm"
-                                    : mockBigExerciseGradeColumn[
+                                    : bigExerciseGradeColumn[
                                         selectedGradeColumn - 1
                                       ].value
                                 }`}
@@ -455,7 +506,7 @@ const CreateBigExercise = () => {
                           )}
                         >
                           <div className="scroll-container scroll-container-dropdown-content">
-                            {mockBigExerciseGradeColumn.map(
+                            {bigExerciseGradeColumn.map(
                               (gradeColumn, index) => (
                                 <Dropdown.Item
                                   key={`${gradeColumn.id}_${index}`}
@@ -670,10 +721,71 @@ const CreateBigExercise = () => {
             {isLoading ? (
               <TableSkeleton />
             ) : dataTable.length > 0 ? (
-              <TopicGroupTable
-                isEditTable={false}
-                isMultipleDelete={false}
+              // <TopicGroupTable
+              //   isEditTable={false}
+              //   isMultipleDelete={false}
+              //   dataTable={dataTable}
+              // />
+
+              <RegisterTopicTable
+                type={RegisterTopicTableType.registerTopic}
+                isEditTable={isEditTable}
+                isMultipleDelete={isMultipleDelete}
+                // @ts-ignore
                 dataTable={dataTable}
+                onClickEditTable={() => {
+                  setIsEditTable(true);
+                }}
+                onSaveEditTable={(localDataTable) => {
+                  setIsEditTable(false);
+                  // set lại data import hoặc patch API
+                  localDataTable = localDataTable as TopicDataItem[];
+                  setDataTable(localDataTable);
+                }}
+                onClickMultipleDelete={() => {
+                  setIsMultipleDelete(true);
+                }}
+                onClickDeleteAll={() => {
+                  setDataTable((prevData) => {
+                    return prevData.map((item) => ({
+                      ...item,
+                      isDeleted: true,
+                    }));
+                  });
+
+                  toast({
+                    title: "Xóa thành công",
+                    description: `Đã xóa tất cả lớp học`,
+                    variant: "success",
+                    duration: 3000,
+                  });
+                }}
+                onClickDelete={(itemsSelected: string[]) => {
+                  // ? DELETE THEO MÃ LỚP
+                  setDataTable((prevData) => {
+                    return prevData.map((item) => {
+                      if (itemsSelected.includes(item.STT.toString())) {
+                        return {
+                          ...item,
+                          isDeleted: true,
+                        };
+                      }
+                      return item;
+                    });
+                  });
+
+                  toast({
+                    title: "Xóa thành công",
+                    description: `${`Các lớp ${itemsSelected.join(
+                      ", "
+                    )} đã được xóa.`}`,
+                    variant: "success",
+                    duration: 3000,
+                  });
+                }}
+                onClickGetOut={() => {
+                  setIsMultipleDelete(false);
+                }}
               />
             ) : (
               <></>

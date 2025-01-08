@@ -6,11 +6,10 @@ import ErrorComponent from "@/components/shared/Status/ErrorComponent";
 import NoResult from "@/components/shared/Status/NoResult";
 import TableSkeleton from "@/components/shared/Table/components/TableSkeleton";
 import RegisterTopicTable from "@/components/shared/Table/TableRegisterTopic/RegisterTopicTable";
-import TopicGroupTable from "@/components/shared/Table/TableTopic/TopicDataTable";
 import { RegisterTopicTableType } from "@/constants";
 import { toast } from "@/hooks/use-toast";
+import { TopicDataItem } from "@/types/entity/Topic";
 
-import { RegisterTopicDataItem } from "@/types";
 import { parseToArray } from "@/utils/utils";
 import { useRef, useState } from "react";
 import * as XLSX from "xlsx";
@@ -20,7 +19,7 @@ interface Props {
 }
 
 const ImportListTopic = (params: Props) => {
-  const [dataTable, setDataTable] = useState<RegisterTopicDataItem[]>([]);
+  const [dataTable, setDataTable] = useState<TopicDataItem[]>([]);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -167,7 +166,7 @@ const ImportListTopic = (params: Props) => {
           onSaveEditTable={(localDataTable) => {
             setIsEditTable(false);
             // set lại data import hoặc patch API
-            localDataTable = localDataTable as RegisterTopicDataItem[];
+            localDataTable = localDataTable as TopicDataItem[];
             setDataTable(localDataTable);
           }}
           onClickMultipleDelete={() => {

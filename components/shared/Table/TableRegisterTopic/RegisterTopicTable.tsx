@@ -9,7 +9,6 @@ import {
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-import { RegisterTopicDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import NoResult from "../../Status/NoResult";
@@ -24,12 +23,13 @@ import MyFooter from "../components/MyFooter";
 import useDebounceSearchDataTable from "@/hooks/table/useDebounceSearchDataTable";
 import useSetDebounceSearchTerm from "@/hooks/table/useSetDebounceSearchTerm";
 import TableSearch from "../../Search/TableSearch";
+import { TopicDataItem } from "@/types/entity/Topic";
 
 interface DataTableParams {
   type: RegisterTopicTableType;
   isEditTable: boolean;
   isMultipleDelete: boolean;
-  dataTable: RegisterTopicDataItem[];
+  dataTable: TopicDataItem[];
   isOnlyView?: boolean;
 
   onClickEditTable?: () => void;
@@ -235,7 +235,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
 
                 {Object.keys(filteredDataTable[0]?.data || {}).map(
                   (key, index) => {
-                    if (key === "Mã nhóm" || key === 'Mã đề tài') return null;
+                    if (key === "Mã nhóm" || key === "Mã đề tài") return null;
 
                     return (
                       <Table.HeadCell
@@ -254,7 +254,6 @@ const RegisterTopicTable = (params: DataTableParams) => {
               <Table.Body className="text-left divide-y">
                 {filteredDataTable.map((dataItem, index) => {
                   var valueUniqueInput = dataItem.STT;
-
 
                   return dataItem.isDeleted ? (
                     <></>

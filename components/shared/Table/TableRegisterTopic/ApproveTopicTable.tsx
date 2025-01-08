@@ -1,10 +1,12 @@
-import { RegisterTopicDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import { useEffect, useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
 import RowApproveTopicTable from "./RowApproveTopicTable";
 
-import { RegisterTopicTableType, itemsPerPageRegisterTable } from "@/constants";
+import {
+  RegisterTopicTableType,
+  itemsPerPageRegisterTable,
+} from "@/constants";
 import { toast } from "@/hooks/use-toast";
 import IconButton from "../../Button/IconButton";
 import SubmitButton from "../../Button/SubmitButton";
@@ -18,10 +20,11 @@ import { z } from "zod";
 import BorderContainer from "../../BorderContainer";
 import TextAreaComponent from "../../TextAreaComponent";
 import { tableTheme } from "../components/DataTable";
+import { TopicDataItem } from "@/types/entity/Topic";
 
 interface DataTableParams {
   type: RegisterTopicTableType;
-  dataTable: RegisterTopicDataItem[];
+  dataTable: TopicDataItem[];
   isNotShowButton?: boolean;
   isOnlyShowResponseTopicButton?: boolean;
   onSaveTable: (itemsSelected: string[]) => void;
@@ -265,7 +268,7 @@ const ApproveTopicTable = (params: DataTableParams) => {
                     </Table.HeadCell>
 
                     {Object.keys(currentItems[0]?.data || {}).map((key) => {
-                      if (key === "Mã nhóm" || key === 'Mã đề tài') return null;
+                      if (key === "Mã nhóm" || key === "Mã đề tài") return null;
 
                       return (
                         <Table.HeadCell

@@ -1,4 +1,3 @@
-
 interface Props {
   id: string;
   name: string;
@@ -21,12 +20,12 @@ const BigExerciseItem = (params: Props) => {
         <p className="small-regular text-[#636363] line-clamp-1 ">
           {params.createdAt}
         </p>
-        <p className="mt-4 small-regular line-clamp-1 ">
-          <span className="italic">Sự kiện đang diễn ra: </span>{" "}
-          {params.happeningEvent}
+        <p className="mt-4 small-regular line-clamp-1 text-red-400">
+          <span className="italic">Sự kiện đang diễn ra: </span>
+          Đăng ký nhóm và đề tài báo cáo
         </p>
-        <p className="small-regular line-clamp-1 ">
-          <span className="italic">Hạn cuối: </span> {params.deadline}
+        <p className="small-regular line-clamp-1 text-red-400">
+          <span className="italic">Hạn cuối: </span> 10/09/2024 - 00:00AM
         </p>
       </div>
     </div>

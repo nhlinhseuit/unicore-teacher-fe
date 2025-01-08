@@ -1,9 +1,9 @@
+import { TopicDataItem } from "@/types/entity/Topic";
 import { Table } from "flowbite-react";
 import React from "react";
-import { RegisterTopicDataItem } from "@/types";
 
 interface RowParams {
-  dataItem: RegisterTopicDataItem;
+  dataItem: TopicDataItem;
 }
 
 const RowTopicDataTable = (params: RowParams) => {

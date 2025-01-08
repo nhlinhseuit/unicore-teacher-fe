@@ -19,7 +19,7 @@ import {
 import { RegisterTopicTableType } from "@/constants";
 import { toast } from "@/hooks/use-toast";
 import { mockDataStudentRegisterTopic } from "@/mocks";
-import { RegisterTopicDataItem } from "@/types";
+import { TopicDataItem } from "@/types/entity/Topic";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { CalendarIcon } from "lucide-react";
@@ -173,7 +173,7 @@ const RegisterTopic = () => {
   //! TABLE
   const [isEditTable, setIsEditTable] = useState(false);
   const [isMultipleDelete, setIsMultipleDelete] = useState(false);
-  const [dataTable, setDataTable] = useState<RegisterTopicDataItem[]>(
+  const [dataTable, setDataTable] = useState<TopicDataItem[]>(
     mockDataStudentRegisterTopic
   );
 
@@ -410,7 +410,7 @@ const RegisterTopic = () => {
               console.log("here");
               setIsEditTable(false);
               // set lại data import hoặc patch API
-              localDataTable = localDataTable as RegisterTopicDataItem[];
+              localDataTable = localDataTable as TopicDataItem[];
               setDataTable(localDataTable);
             }}
             onClickMultipleDelete={() => {

@@ -89,38 +89,15 @@ export interface ReviewerThesisReviewTicketData {
   "Tên đề tài tiếng Anh": string;
   "Phản biện": string;
 }
-export interface RegisterTopicData {
-  "Mã đề tài": string;
-  "Tên đề tài tiếng Việt": string;
-  "Tên đề tài tiếng Anh": string;
-  "Mô tả": string;
-  "Mã nhóm": string;
-  MSSV: string[];
-  SĐT: string[];
-  "Họ và tên": string[];
-}
-export interface ApproveTopicData {
-  "Trạng thái": string;
-  "Chỉnh sửa lần cuối"?: string;
-  "Tên đề tài tiếng Việt": string;
-  "Tên đề tài tiếng Anh": string;
-  "Mô tả": string;
-  "Mã nhóm": string;
-  MSSV: string[];
-  SĐT: string[];
-  "Họ và tên": string[];
-}
+
+
 export interface TopicRegisterGroupData {
   MSSV: string;
   SĐT: string;
   "Họ và tên": string;
 }
 
-export interface TopicData {
-  "Tên đề tài tiếng Việt": string;
-  "Tên đề tài tiếng Anh": string;
-  "Mô tả": string;
-}
+
 export interface FileData {
   "Tên file": string;
   "Ngày sửa đổi": string;
@@ -221,11 +198,49 @@ export interface RegisterGroupDataItem {
   data: RegisterGroupData;
 }
 
-export interface RegisterTopicDataItem {
-  STT: string;
-  isDeleted: boolean;
-  data: RegisterTopicData;
-}
+// export interface RegisterTopicDataItem {
+//   STT: string;
+//   isDeleted: boolean;
+//   data: RegisterTopicData;
+// }
+// export interface RegisterTopicData {
+//   "Mã đề tài": string;
+//   "Tên đề tài tiếng Việt": string;
+//   "Tên đề tài tiếng Anh": string;
+//   "Mô tả": string;
+//   "Mã nhóm": string;
+//   MSSV: string[];
+//   SĐT: string[];
+//   "Họ và tên": string[];
+// }
+
+// export interface ApproveTopicDataItem {
+//   STT: string;
+//   isDeleted: boolean;
+//   data: ApproveTopicData;
+// }
+// export interface ApproveTopicData {
+//   "Trạng thái": string;
+//   "Chỉnh sửa lần cuối"?: string;
+//   "Tên đề tài tiếng Việt": string;
+//   "Tên đề tài tiếng Anh": string;
+//   "Mô tả": string;
+//   "Mã nhóm": string;
+//   MSSV: string[];
+//   SĐT: string[];
+//   "Họ và tên": string[];
+// }
+
+// export interface TopicDataItem {
+//   STT: string;
+//   isDeleted: boolean;
+//   data: TopicData;
+// }
+// export interface TopicData {
+//   "Tên đề tài tiếng Việt": string;
+//   "Tên đề tài tiếng Anh": string;
+//   "Mô tả": string;
+// }
 export interface ThesisTopicGradeDataItem {
   STT: string;
   data: ThesisTopicGradeData;
@@ -239,21 +254,13 @@ export interface ReviewerThesisReviewTicketDataItem {
   data: ReviewerThesisReviewTicketData;
 }
 
-export interface ApproveTopicDataItem {
-  STT: string;
-  isDeleted: boolean;
-  data: ApproveTopicData;
-}
+
 
 export interface TopicRegisterGroupDataItem {
   STT: string;
   data: TopicRegisterGroupData;
 }
-export interface TopicDataItem {
-  STT: string;
-  isDeleted: boolean;
-  data: TopicData;
-}
+
 export interface FileDataItem {
   STT: string;
   isDeleted: boolean;

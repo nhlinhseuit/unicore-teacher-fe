@@ -6,13 +6,37 @@ import CreateBigExercise from "@/components/shared/BigExercise/CreateBigExercise
 import BorderContainer from "@/components/shared/BorderContainer";
 import IconButton from "@/components/shared/Button/IconButton";
 import ToggleTitle from "@/components/shared/ToggleTitle";
-import { mockBigExercisesList, mockCentralizedExam } from "@/mocks";
+import { mockCentralizedExam } from "@/mocks";
+import { fetchProjectsInClass } from "@/services/projectServices";
+import { ITProjectResponseData } from "@/types/entity/Project";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const BigExercises = () => {
   const pathName = usePathname();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const [projects, setProjects] = useState<ITProjectResponseData[]>([]);
+
+  const params = {
+    class_id: "677cd4ae0a706479b8773770",
+    subclass_code: "SE113.O21.PMCL",
+  };
+
+  useEffect(() => {
+    fetchProjectsInClass(params)
+      .then((data: any) => {
+        setProjects(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setIsLoading(false);
+      });
+  }, []);
 
   const [isCreate, setIsCreate] = useState(false);
   const [isToggleShowCentralizedExam, setIsToggleShowCentralizedExam] =
@@ -79,7 +103,7 @@ const BigExercises = () => {
             {isToggleShowReportSchedule ? (
               <BorderContainer otherClasses="p-6 flex flex-col gap-4">
                 {mockReportOptions.map((item, index) => (
-                  <div>
+                  <div key={index}>
                     <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-medium leading-[20.8px]">
                       <span className="font-semibold">
                         {item.id + 1}. {item.value}:{" "}
@@ -124,7 +148,7 @@ const BigExercises = () => {
               value={isToggleShowBigExercise}
             />
             {isToggleShowBigExercise
-              ? mockBigExercisesList.map((item) => (
+              ? projects.map((item) => (
                   <Link
                     key={item.id}
                     href={`${pathName}/big-exercises/${item.id}`}
@@ -132,10 +156,10 @@ const BigExercises = () => {
                     <BigExerciseItem
                       id={item.id}
                       name={item.name}
-                      creator={item.creator}
-                      createdAt={item.createdAt}
-                      happeningEvent={item.happeningEvent}
-                      deadline={item.deadline}
+                      creator={item.created_by}
+                      createdAt={item.created_date}
+                      happeningEvent={""}
+                      deadline={""}
                     />
                   </Link>
                 ))

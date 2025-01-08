@@ -1,15 +1,15 @@
 import { Table } from "flowbite-react";
 import React, { useMemo, useState } from "react";
-import { RegisterTopicDataItem } from "@/types";
 import { itemsPerPageTopicTable } from "@/constants";
 import MyFooter from "../components/MyFooter";
 import RowTopicDataTable from "./RowTopicDataTable";
 import { tableTheme } from "../components/DataTable";
+import { TopicDataItem } from "@/types/entity/Topic";
 
 interface DataTableParams {
   isEditTable: boolean;
   isMultipleDelete: boolean;
-  dataTable: RegisterTopicDataItem[];
+  dataTable: TopicDataItem[];
 }
 
 const TopicDataTable = (params: DataTableParams) => {

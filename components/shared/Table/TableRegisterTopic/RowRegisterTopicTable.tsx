@@ -1,14 +1,14 @@
 import { RegisterTopicTableType } from "@/constants";
-import { RegisterTopicData, RegisterTopicDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import React, { useRef } from "react";
 import InputComponent from "../components/InputComponent";
+import { TopicData, TopicDataItem } from "@/types/entity/Topic";
 
 interface RowParams {
   type: RegisterTopicTableType;
   valueUniqueInput: string;
   itemsSelected: string[];
-  dataItem: RegisterTopicDataItem;
+  dataItem: TopicDataItem;
   isEditTable?: boolean;
   isMultipleDelete?: boolean;
   isHasSubCourses?: boolean;
@@ -16,7 +16,7 @@ interface RowParams {
   onChangeRow?: (item: any) => void;
 }
 interface handleInputChangeParams {
-  key: keyof RegisterTopicData;
+  key: keyof TopicData;
   newValue: any;
   isMultipleInput?: boolean;
   currentIndex?: number;
@@ -35,7 +35,7 @@ const RowRegisterTopicTable = React.memo(
       isCheckbox,
     }: handleInputChangeParams) => {
       //@ts-ignore
-      const updatedDataItem: RegisterTopicDataItem = {
+      const updatedDataItem: TopicDataItem = {
         ...refInput.current,
         data: {
           ...refInput.current.data,

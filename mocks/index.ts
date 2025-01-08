@@ -634,14 +634,6 @@ export const mockSettingGradeColumnDetailBigExercise = [
 ];
 
 //
-// TODO: Create big exercise
-//
-export const mockBigExerciseGradeColumn = [
-  { id: 1, value: "Quá trình" },
-  { id: 2, value: "Cuối kỳ" },
-];
-
-//
 // TODO: Create exercise
 //
 export const mockGradeColumnList = [
@@ -1488,6 +1480,7 @@ export const mockTopicDataTable = [
 export const mockDataStudentRegisterTopic = [
   {
     STT: "1",
+    type: "topic",
     isDeleted: false,
     data: {
       "Mã nhóm": "1",
@@ -1503,6 +1496,7 @@ export const mockDataStudentRegisterTopic = [
   },
   {
     STT: "2",
+    type: "topic",
     isDeleted: false,
     data: {
       "Mã nhóm": "2",
@@ -1518,6 +1512,7 @@ export const mockDataStudentRegisterTopic = [
   },
   {
     STT: "3",
+    type: "topic",
     isDeleted: false,
     data: {
       "Mã nhóm": "3",
@@ -1532,6 +1527,7 @@ export const mockDataStudentRegisterTopic = [
   },
   {
     STT: "4",
+    type: "topic",
     isDeleted: false,
     data: {
       "Mã nhóm": "4",

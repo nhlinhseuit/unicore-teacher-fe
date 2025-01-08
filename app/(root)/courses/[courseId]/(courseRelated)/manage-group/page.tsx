@@ -330,7 +330,7 @@ const ManageGroup = () => {
 
               {/* //! ERROR */}
               {errorList.map((item, index) => {
-                if (index != 0 && item.id)
+                if (index != 0 && item.id && item.value)
                   return (
                     <p
                       key={`${index}_${item.id}`}

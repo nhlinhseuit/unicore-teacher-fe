@@ -18,6 +18,7 @@ import {
 import { mockCourses } from "@/mocks";
 import { useRouter } from "next/navigation";
 import { ListCourseColors } from "@/constants";
+import { sClassCode, sClassId } from "../(store)/courseStore";
 
 const JoinedCourses = () => {
   const [currentCourseId, setCurrentCourseId] = useState("");
@@ -48,6 +49,9 @@ const JoinedCourses = () => {
                 setCurrentCourseId(item.id);
               } else {
                 router.push(`/courses/${item.id}`);
+
+                sClassId.set(item.id)
+                sClassCode.set(item.subCourses[0].id)
               }
             }}
           >
@@ -96,8 +100,11 @@ const JoinedCourses = () => {
                           teacher={item.teacher}
                           type={item.type}
                           color={
-                            ListCourseColors.find((course) => course.type === getCourseData(currentCourseId)?.type)
-                              ?.color || "#ffffff"
+                            ListCourseColors.find(
+                              (course) =>
+                                course.type ===
+                                getCourseData(currentCourseId)?.type
+                            )?.color || "#ffffff"
                           }
                         />
                       </Link>
