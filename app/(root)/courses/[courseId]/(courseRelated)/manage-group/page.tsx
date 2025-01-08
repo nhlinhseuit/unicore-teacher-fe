@@ -20,7 +20,7 @@ import { RegisterGroupDataItem } from "@/types";
 import {
   formatDayToISODateWithDefaultTime,
   formatStartDayToISO,
-} from "@/utils/util";
+} from "@/utils/dateTimeUtil";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";

@@ -5,9 +5,13 @@ import IconButton from "@/components/shared/Button/IconButton";
 import ErrorComponent from "@/components/shared/Status/ErrorComponent";
 import NoResult from "@/components/shared/Status/NoResult";
 import TableSkeleton from "@/components/shared/Table/components/TableSkeleton";
+import RegisterTopicTable from "@/components/shared/Table/TableRegisterTopic/RegisterTopicTable";
 import TopicGroupTable from "@/components/shared/Table/TableTopic/TopicDataTable";
+import { RegisterTopicTableType } from "@/constants";
+import { toast } from "@/hooks/use-toast";
 
 import { RegisterTopicDataItem } from "@/types";
+import { parseToArray } from "@/utils/utils";
 import { useRef, useState } from "react";
 import * as XLSX from "xlsx";
 
@@ -19,6 +23,9 @@ const ImportListTopic = (params: Props) => {
   const [dataTable, setDataTable] = useState<RegisterTopicDataItem[]>([]);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [isEditTable, setIsEditTable] = useState(false);
+  const [isMultipleDelete, setIsMultipleDelete] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const handleButtonClick = () => {
@@ -48,10 +55,12 @@ const ImportListTopic = (params: Props) => {
       const transformedData = parsedData.map((item: any, index: number) => {
         // Kiểm tra các trường quan trọng (required fields)
         const requiredFields = {
+          MSSV: parseToArray(item["MSSV"]),
+          "Họ và tên": parseToArray(item["Họ và tên"]),
+          SĐT: parseToArray(item["SĐT"]),
           "Tên đề tài tiếng Việt": item["Tên đề tài tiếng Việt"],
           "Tên đề tài tiếng Anh": item["Tên đề tài tiếng Anh"],
           "Mô tả": item["Mô tả"],
-          "GV phụ trách": item["GV phụ trách"],
         };
 
         // Lặp qua các trường để kiểm tra nếu có giá trị undefined
@@ -141,10 +150,70 @@ const ImportListTopic = (params: Props) => {
       {isLoading ? (
         <TableSkeleton />
       ) : dataTable.length > 0 ? (
-        <TopicGroupTable
-          isEditTable={false}
-          isMultipleDelete={false}
+        // <TopicGroupTable
+        //   isEditTable={false}
+        //   isMultipleDelete={false}
+        //   dataTable={dataTable}
+        // />
+        <RegisterTopicTable
+          type={RegisterTopicTableType.registerTopic}
+          isEditTable={isEditTable}
+          isMultipleDelete={isMultipleDelete}
+          // @ts-ignore
           dataTable={dataTable}
+          onClickEditTable={() => {
+            setIsEditTable(true);
+          }}
+          onSaveEditTable={(localDataTable) => {
+            setIsEditTable(false);
+            // set lại data import hoặc patch API
+            localDataTable = localDataTable as RegisterTopicDataItem[];
+            setDataTable(localDataTable);
+          }}
+          onClickMultipleDelete={() => {
+            setIsMultipleDelete(true);
+          }}
+          onClickDeleteAll={() => {
+            setDataTable((prevData) => {
+              return prevData.map((item) => ({
+                ...item,
+                isDeleted: true,
+              }));
+            });
+
+            toast({
+              title: "Xóa thành công",
+              description: `Đã xóa tất cả lớp học`,
+              variant: "success",
+              duration: 3000,
+            });
+          }}
+          onClickDelete={(itemsSelected: string[]) => {
+            // ? DELETE THEO MÃ LỚP
+            setDataTable((prevData) => {
+              return prevData.map((item) => {
+                if (itemsSelected.includes(item.STT.toString())) {
+                  return {
+                    ...item,
+                    isDeleted: true,
+                  };
+                }
+                return item;
+              });
+            });
+
+            toast({
+              title: "Xóa thành công",
+              description: `${`Các lớp ${itemsSelected.join(
+                ", "
+              )} đã được xóa.`}`,
+              variant: "success",
+              duration: 3000,
+            });
+          }}
+          onClickGetOut={() => {
+            setIsMultipleDelete(false);
+          }}
         />
       ) : (
         <NoResult

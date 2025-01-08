@@ -253,7 +253,8 @@ const RegisterTopicTable = (params: DataTableParams) => {
               {/* BODY */}
               <Table.Body className="text-left divide-y">
                 {filteredDataTable.map((dataItem, index) => {
-                  var valueUniqueInput = dataItem.data["Mã đề tài"];
+                  var valueUniqueInput = dataItem.STT;
+
 
                   return dataItem.isDeleted ? (
                     <></>

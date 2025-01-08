@@ -1,8 +1,5 @@
 import { RegisterTopicTableType } from "@/constants";
-import {
-  RegisterTopicData,
-  RegisterTopicDataItem
-} from "@/types";
+import { RegisterTopicData, RegisterTopicDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import React, { useRef } from "react";
 import InputComponent from "../components/InputComponent";
@@ -44,8 +41,8 @@ const RowRegisterTopicTable = React.memo(
           ...refInput.current.data,
           [key]: isMultipleInput
             ? (refInput.current.data[key] as string[]).map((value, index) =>
-              index === currentIndex ? newValue : value
-            )
+                index === currentIndex ? newValue : value
+              )
             : newValue,
         },
       };
@@ -54,7 +51,6 @@ const RowRegisterTopicTable = React.memo(
 
       params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
     };
-
 
     const renderCellValue = ({
       key,
@@ -143,7 +139,7 @@ const RowRegisterTopicTable = React.memo(
       keyId: string | number;
       params: any;
     }) => {
-      if (key === "Mã nhóm" || key === 'Mã đề tài') return null;
+      if (key === "Mã nhóm" || key === "Mã đề tài") return null;
 
       return (
         <Table.Cell
@@ -205,12 +201,21 @@ const RowRegisterTopicTable = React.memo(
 
         {/* STT - Là STT của nhóm */}
         <Table.Cell className="w-10 border-r-[1px]  text-left">
-          <span>{params.dataItem.data["Mã nhóm"]}</span>
+          <span>
+            {params.dataItem.data["Mã nhóm"] &&
+            params.dataItem.data["Mã nhóm"] !== ""
+              ? params.dataItem.data["Mã nhóm"]
+              : params.dataItem.STT}
+          </span>
         </Table.Cell>
 
         {/* Các giá trị khác */}
         {Object.entries(params.dataItem.data).map(([key, value]) => {
-          const keyId = params.dataItem.data["Mã nhóm"];
+          const keyId =
+            params.dataItem.data["Mã nhóm"] &&
+            params.dataItem.data["Mã nhóm"] !== ""
+              ? params.dataItem.data["Mã nhóm"]
+              : params.dataItem.STT;
           return renderCell({
             key,
             value,
