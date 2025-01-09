@@ -27,7 +27,9 @@ const CourseItemDialog = (params: Props) => {
     >
       <div className="text-center flex flex-col justify-between w-full">
         <h4 className="body-bold">{getTitle()}</h4>
-        <p className="small-regular mt-4">GV: {params.teacher}</p>
+        {params.teacher !== "" ? (
+          <p className="small-regular mt-4">GV: {params.teacher}</p>
+        ) : null}
       </div>
     </div>
   );

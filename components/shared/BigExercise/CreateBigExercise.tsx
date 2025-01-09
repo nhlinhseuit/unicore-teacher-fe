@@ -21,8 +21,10 @@ import {
 } from "@/components/ui/popover";
 import { RegisterTopicTableType } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
+import { convertToAPIDataTableTopics } from "@/lib/convertToDataTableTopic";
 import { mockDbLeftRatio } from "@/mocks";
 import { createProject } from "@/services/projectServices";
+import { TopicDataItem } from "@/types/entity/Topic";
 import { formatDayToISODateWithDefaultTime } from "@/utils/dateTimeUtil";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
@@ -38,31 +40,21 @@ import * as XLSX from "xlsx";
 import { z } from "zod";
 import BorderContainer from "../BorderContainer";
 import SubmitButton from "../Button/SubmitButton";
+import LoadingComponent from "../LoadingComponent";
 import ErrorComponent from "../Status/ErrorComponent";
 import TableSkeleton from "../Table/components/TableSkeleton";
 import RegisterTopicTable from "../Table/TableRegisterTopic/RegisterTopicTable";
-import { convertToAPIDataTableTopics } from "@/lib/convertToDataTableTopic";
-import { TopicDataItem } from "@/types/entity/Topic";
-import LoadingComponent from "../LoadingComponent";
 
 // ! CẬP NHẬT
 const type: any = "create";
 
 // TODO: Search debouce tìm kiếm lớp nếu cần
 
-interface DateTimeState {
-  date: Date | undefined;
-  time: string;
+interface Props {
+  navigateBack: () => void;
 }
 
-interface DateTimeFields {
-  start: DateTimeState;
-  end: DateTimeState;
-  late: DateTimeState;
-  close: DateTimeState;
-}
-
-const CreateBigExercise = () => {
+const CreateBigExercise = (props: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
@@ -237,11 +229,7 @@ const CreateBigExercise = () => {
   ];
 
   const createBigExerciseAPI = async (params: any) => {
-    console.log("createBigExerciseAPI");
-
-    const res = await createProject(params);
-
-    console.log("res", res);
+    return await createProject(params);
   };
 
   // 2. Define a submit handler.
@@ -249,17 +237,7 @@ const CreateBigExercise = () => {
     setIsSubmitting(true);
 
     try {
-      // make an async call to your API -> create a question
-      // contain all form data
-
-      console.log({
-        title: values.title,
-        description: values.description,
-        target: selectedGradeColumn,
-        path: pathName,
-      });
-
-      const APIdataTable = convertToAPIDataTableTopics({
+      const TopicAPIdataTable = convertToAPIDataTableTopics({
         data: dataTable,
       });
 
@@ -279,33 +257,30 @@ const CreateBigExercise = () => {
         review_times: numberOfRecheck,
         start_date: formatDayToISODateWithDefaultTime(dateStart ?? new Date()),
         allow_topic_suggestion: selectedSuggestOption,
-        ...APIdataTable
+        ...TopicAPIdataTable,
       };
 
-      console.log('params', params)
+      createBigExerciseAPI(params).then((data) => {
+        // naviate to home page
+        props.navigateBack();
 
-      createBigExerciseAPI(params);
+        toast({
+          title: "Tạo thông báo thành công.",
+          description: `Thông báo đã được gửi đến lớp ${
+            selectedCourses.length > 0
+              ? `và các lớp ${selectedCourses.join(", ")}`
+              : ""
+          }`,
+          variant: "success",
+          duration: 3000,
+        });
 
-      // naviate to home page
-      router.push("/");
-
-      toast({
-        title: "Tạo thông báo thành công.",
-        description: `Thông báo đã được gửi đến lớp ${
-          selectedCourses.length > 0
-            ? `và các lớp ${selectedCourses.join(", ")}`
-            : ""
-        }`,
-        variant: "success",
-        duration: 3000,
+        setIsSubmitting(false);
       });
     } catch {
     } finally {
-      setIsSubmitting(false);
     }
   }
-
-  if (isLoading) return <LoadingComponent />
 
   const tinymceKey = process.env.NEXT_PUBLIC_TINYMCE_EDITOR_API_KEY;
 
@@ -318,6 +293,8 @@ const CreateBigExercise = () => {
 
   return (
     <div>
+      {isSubmitting ? <LoadingComponent /> : null}
+
       {errorMessages.length > 0 && (
         <div className="mb-6">
           {errorMessages.map((item, index) => (

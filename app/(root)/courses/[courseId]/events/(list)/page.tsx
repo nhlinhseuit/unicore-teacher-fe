@@ -79,7 +79,7 @@ const BigExercises = () => {
             }}
           />
 
-          <CreateBigExercise />
+          <CreateBigExercise navigateBack={()=> {setIsCreate(false)}}/>
         </>
       ) : (
         <>
