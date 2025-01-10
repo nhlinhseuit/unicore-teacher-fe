@@ -17,12 +17,13 @@ import { Dropdown } from "flowbite-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import Image from "next/image";
 
 const page = () => {
   const pathName = usePathname();
   const [isGradeThesisReport, setIsGradeThesisReport] = useState(false);
 
-  var typeFilter = FilterType.SortNewer;
+  const [typeFilter, setTypeFilter] = useState(FilterType.None);
 
   //! CALL API để xem course này có phải có type là internCourse hay thesisCourse hay không
   const isNotRegularCourse = false;
@@ -80,6 +81,18 @@ const page = () => {
     }
   };
 
+  const cancelDetailFilter = () => {
+    setTypeFilter(FilterType.None);
+  };
+
+  const annoucementTypes = [
+    { id: 1, value: "Thông báo" },
+    { id: 2, value: "Bài tập" },
+    { id: 3, value: "Báo cáo" },
+  ];
+
+  const [selectedAnnoucementType, setSelectedAnnoucementType] = useState(1);
+
   return isGradeThesisReport ? (
     <>
       <BackToPrev
@@ -88,7 +101,7 @@ const page = () => {
           setIsGradeThesisReport(false);
         }}
       />
-      <ReviewForm/>
+      <ReviewForm />
     </>
   ) : (
     <div>
@@ -97,14 +110,67 @@ const page = () => {
         mt-6 mb-10 flex w-full gap-6 sm:flex-row sm:items-center justify-between"
       >
         {/* Search & Filter */}
-        <div className="flex justify-start w-1/2">
+        <div className="flex items-center gap-2 justify-start w-2/3">
           <TableSearch
             setSearchTerm={() => {}}
             searchTerm={""}
-            otherClasses="pr-2 w-[70%]"
+            otherClasses="w-[50%]"
           />
+
           <Dropdown
-            className="z-30 rounded-lg w-[30%]"
+            className="z-30 rounded-lg w-[25%]"
+            label=""
+            dismissOnClick={false}
+            renderTrigger={() => (
+              <div>
+                <IconButton
+                  text={`${
+                    annoucementTypes[selectedAnnoucementType - 1].value
+                  }`}
+                  iconRight={"/assets/icons/chevron-down.svg"}
+                  bgColor="bg-white"
+                  textColor="text-black"
+                  border
+                />
+              </div>
+            )}
+          >
+            <div className="w-full scroll-container scroll-container-dropdown-content">
+              {annoucementTypes.map((type, index) => (
+                <Dropdown.Item
+                  key={`${type.id}_${index}`}
+                  onClick={() => {
+                    if (selectedAnnoucementType === type.id) {
+                      setSelectedAnnoucementType(1);
+                    } else {
+                      setSelectedAnnoucementType(type.id);
+                    }
+                  }}
+                  className="min-w-max"
+                >
+                  <div className="flex justify-between w-full">
+                    <p className="w-[80%] text-left line-clamp-1">
+                      {type.value}
+                    </p>
+                    {selectedAnnoucementType === type.id ? (
+                      <Image
+                        src="/assets/icons/check.svg"
+                        alt="search"
+                        width={21}
+                        height={21}
+                        className="cursor-pointer mr-2"
+                      />
+                    ) : (
+                      <></>
+                    )}
+                  </div>
+                </Dropdown.Item>
+              ))}
+            </div>
+          </Dropdown>
+
+          <Dropdown
+            className="z-30 rounded-lg w-[25%]"
             label=""
             dismissOnClick={false}
             renderTrigger={() => (
@@ -127,8 +193,7 @@ const page = () => {
             <Dropdown.Header>
               <span
                 onClick={() => {
-                  // cancelDetailFilter();
-                  // handleChooseFilter(FilterType.None);
+                  cancelDetailFilter();
                 }}
                 className="block truncate text-sm font-medium cursor-pointer"
               >
@@ -154,7 +219,7 @@ const page = () => {
                   name="filterOptions"
                   value={FilterType.SortNewer}
                   onChange={() => {
-                    // handleChooseFilter(FilterType.SortNewer)
+                    setTypeFilter(FilterType.SortNewer);
                   }}
                   className="w-4 h-4  cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600"
                 />
@@ -177,14 +242,13 @@ const page = () => {
                     "
               >
                 <input
-                  // checked={typeFilter === FilterType.SortOlder}
-                  checked={true}
+                  checked={typeFilter === FilterType.SortOlder}
                   id="SortOlder"
                   type="radio"
                   name="filterOptions"
                   value={FilterType.SortOlder}
                   onChange={() => {
-                    // handleChooseFilter(FilterType.SortOlder)
+                    setTypeFilter(FilterType.SortOlder);
                   }}
                   className="w-4 h-4  cursor-pointer bg-gray-100 border-gray-300 rounded text-primary-600"
                 />

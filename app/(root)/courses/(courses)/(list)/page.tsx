@@ -47,8 +47,6 @@ const JoinedCourses = () => {
     return courses.find((item) => item.code === currentCourseId);
   };
 
-  console.log("courses", courses);
-
   return (
     <>
       <div className="items-center flex w-full gap-2 mb-8">
@@ -59,63 +57,63 @@ const JoinedCourses = () => {
         <DetailFilterComponent />
       </div>
 
-      {isLoading ? (
-        <LoadingComponent />
-      ) : courses ? (
-        <div className="flex gap-4 flex-wrap">
-          {courses.map((item, index) => (
-            <div
-              key={item.id}
-              className="relative"
-              onClick={() => {
-                if (item.subclasses.length > 1) {
-                  //? Lưu code, id vào store
-                  sClassId.set(item.id);
-
-                  setCurrentCourseId(item.code);
-                } else {
-                  router.push(`/courses/${item.code}`);
-
-                  //? Lưu code, id vào store
-                  sClassId.set(item.id);
-                  sClassCode.set(item.subclasses[0].code);
-                }
-              }}
-            >
-              <CourseItem
+        {isLoading ? (
+          <LoadingComponent />
+        ) : courses ? (
+          <div className="flex gap-4 flex-wrap">
+            {courses.map((item, index) => (
+              <div
                 key={item.id}
-                id={item.code}
-                name={item.subject_metadata.name}
-                semester={item.semester.toString()}
-                year={item.semester.toString()}
-                teachers={item.subclasses
-                  .map((item) => item.teacher_code)
-                  .filter(
-                    (item) =>
-                      item &&
-                      !(
-                        item.length === 0 ||
-                        (item.length === 1 && item[0] === "")
-                      )
-                  )
-                  .join(", ")}
-                color={
-                  ListCourseColors.find((course) => course.type === item.type)
-                    ?.color || "#e8f7ff"
-                } // các lớp như LT, HT1, HT2... đều là lớp thường nên màu vàng
-              />
-              <div className="absolute right-0 top-0">
-                <MoreButtonCourseItem handleEdit={() => {}} />
+                className="relative"
+                onClick={() => {
+                  if (item.subclasses.length > 1) {
+                    //? Lưu code, id vào store
+                    sClassId.set(item.id);
+
+                    setCurrentCourseId(item.code);
+                  } else {
+                    router.push(`/courses/${item.code}`);
+
+                    //? Lưu code, id vào store
+                    sClassId.set(item.id);
+                    sClassCode.set(item.subclasses[0].code);
+                  }
+                }}
+              >
+                <CourseItem
+                  key={item.id}
+                  id={item.code}
+                  name={item.subject_metadata.name}
+                  semester={item.semester.toString()}
+                  year={item.semester.toString()}
+                  teachers={item.subclasses
+                    .map((item) => item.teacher_code)
+                    .filter(
+                      (item) =>
+                        item &&
+                        !(
+                          item.length === 0 ||
+                          (item.length === 1 && item[0] === "")
+                        )
+                    )
+                    .join(", ")}
+                  color={
+                    ListCourseColors.find((course) => course.type === item.type)
+                      ?.color || "#e8f7ff"
+                  } // các lớp như LT, HT1, HT2... đều là lớp thường nên màu vàng
+                />
+                <div className="absolute right-0 top-0">
+                  <MoreButtonCourseItem handleEdit={() => {}} />
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
-      ) : (
-        <NoResult
-          title="Không có dữ liệu!"
-          description="🚀 Import file danh sách để thấy được dữ liệu."
-        />
-      )}
+            ))}
+          </div>
+        ) : (
+          <NoResult
+            title="Không có dữ liệu lớp học!"
+            description="🚀 Thử tải lại trang để xem dữ liệu lớp học."
+          />
+        )}
 
       {currentCourseId != "" && getCurrentCourse() ? (
         <AlertDialog open={currentCourseId !== ""}>

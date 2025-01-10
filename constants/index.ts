@@ -1,4 +1,5 @@
 import { SidebarLink } from "@/types";
+import { CourseType } from "@/types/entity/Course";
 import { CustomFlowbiteTheme } from "flowbite-react";
 
 export const itemsPerPage = 30;
@@ -160,13 +161,6 @@ export enum FilterType {
   SortOlder,
   DetailFilter,
   None,
-}
-
-export enum CourseType {
-  RegularCourseWithProject = "regular",
-  InternCourse = "intern",
-  ProjectCourse = "project",
-  ThesisCourse = "thesis",
 }
 
 export const ListCourseColors = [
