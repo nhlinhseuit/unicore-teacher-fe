@@ -1548,6 +1548,7 @@ export const mockDataStudentRegisterTopic = [
 export const mockDataAllAppproveTopic = [
   {
     STT: "1",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đang xử lý",
@@ -1564,6 +1565,7 @@ export const mockDataAllAppproveTopic = [
   },
   {
     STT: "2",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã duyệt",
@@ -1580,6 +1582,7 @@ export const mockDataAllAppproveTopic = [
   },
   {
     STT: "3",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Chưa duyệt",
@@ -1596,6 +1599,7 @@ export const mockDataAllAppproveTopic = [
   },
   {
     STT: "4",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đang xử lý",
@@ -1611,6 +1615,7 @@ export const mockDataAllAppproveTopic = [
   },
   {
     STT: "5",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã duyệt",
@@ -1626,6 +1631,7 @@ export const mockDataAllAppproveTopic = [
   },
   {
     STT: "6",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Chưa duyệt",
@@ -1643,6 +1649,7 @@ export const mockDataAllAppproveTopic = [
 export const mockDataAppprovedTopic = [
   {
     STT: "1",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã duyệt",
@@ -1661,6 +1668,7 @@ export const mockDataAppprovedTopic = [
 export const mockDataNotAppproveTopic = [
   {
     STT: "1",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Chưa duyệt",
@@ -1677,6 +1685,7 @@ export const mockDataNotAppproveTopic = [
   },
   {
     STT: "2",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Chưa duyệt",
@@ -1693,6 +1702,7 @@ export const mockDataNotAppproveTopic = [
   },
   {
     STT: "3",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Chưa duyệt",
@@ -1711,6 +1721,7 @@ export const mockDataNotAppproveTopic = [
 export const mockDataProcessingTopic = [
   {
     STT: "1",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đang xử lý",
@@ -1728,6 +1739,7 @@ export const mockDataProcessingTopic = [
   },
   {
     STT: "2",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đang xử lý",
@@ -1745,6 +1757,7 @@ export const mockDataProcessingTopic = [
   },
   {
     STT: "3",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đang xử lý",
@@ -1764,6 +1777,7 @@ export const mockDataProcessingTopic = [
 export const mockDataRefuseTopic = [
   {
     STT: "1",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã từ chối",
@@ -1780,6 +1794,7 @@ export const mockDataRefuseTopic = [
   },
   {
     STT: "2",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã từ chối",
@@ -1796,6 +1811,7 @@ export const mockDataRefuseTopic = [
   },
   {
     STT: "3",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã từ chối",
@@ -1921,6 +1937,7 @@ export const mockPostReviewDetail = [
 export const mockDataAllReviewGrading = [
   {
     STT: "1",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Chưa phúc khảo",
@@ -1934,6 +1951,7 @@ export const mockDataAllReviewGrading = [
   },
   {
     STT: "2",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã phúc khảo",
@@ -1947,6 +1965,7 @@ export const mockDataAllReviewGrading = [
   },
   {
     STT: "3",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Chưa phúc khảo",
@@ -1960,6 +1979,7 @@ export const mockDataAllReviewGrading = [
   },
   {
     STT: "4",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã phúc khảo",
@@ -1973,6 +1993,7 @@ export const mockDataAllReviewGrading = [
   },
   {
     STT: "5",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Chưa phúc khảo",
@@ -1986,6 +2007,7 @@ export const mockDataAllReviewGrading = [
   },
   {
     STT: "6",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã phúc khảo",
@@ -2001,6 +2023,7 @@ export const mockDataAllReviewGrading = [
 export const mockDataReviewedGrading = [
   {
     STT: "1",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Chưa phúc khảo",
@@ -2014,6 +2037,7 @@ export const mockDataReviewedGrading = [
   },
   {
     STT: "2",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Chưa phúc khảo",
@@ -2027,6 +2051,7 @@ export const mockDataReviewedGrading = [
   },
   {
     STT: "3",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Chưa phúc khảo",
@@ -2042,6 +2067,7 @@ export const mockDataReviewedGrading = [
 export const mockDataNotReviewGrading = [
   {
     STT: "4",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã phúc khảo",
@@ -2055,6 +2081,7 @@ export const mockDataNotReviewGrading = [
   },
   {
     STT: "5",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã phúc khảo",
@@ -2068,6 +2095,7 @@ export const mockDataNotReviewGrading = [
   },
   {
     STT: "6",
+    type: "topic",
     isDeleted: false,
     data: {
       "Trạng thái": "Đã phúc khảo",
