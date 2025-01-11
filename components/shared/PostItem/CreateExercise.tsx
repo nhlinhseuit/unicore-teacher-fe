@@ -98,6 +98,16 @@ const CreateExercise = (params: Props) => {
       fetchDetailExercise(params.exerciseId!)
         .then((data: any) => {
           console.log("fetchDetailExercise data", data);
+
+          const res =
+            gradeColumn.find((item) => {
+              console.log("gradeColumn item", item);
+
+              return item.type === data?.weight_type;
+            })?.id || -1;
+
+          console.log("res", res);
+
           setExercise(data);
           setIsLoading(false);
         })
@@ -114,11 +124,13 @@ const CreateExercise = (params: Props) => {
       setNumberOfRecheck(
         exercise.review_times ? exercise.review_times.toString() : ""
       );
+      setSelectedGroupOption(exercise.in_group ? 2 : 1)
+      setSelectedScheduleOption(exercise.publish_date !== '' ? 2 : 1)
       setDatePost(
         exercise.publish_date
           ? formatISOToDayDatatype(exercise.publish_date)
           : undefined
-      );
+      )
       setDateStart(
         exercise.startDate
           ? formatISOToDayDatatype(exercise.startDate)
@@ -361,16 +373,23 @@ const CreateExercise = (params: Props) => {
       description: values.description,
       weight: ratio,
       class_id: "1",
-      subclass_codes: ["IT002.PMCL"],
+      subclass_codes: ["IT002.PMCL", ...selectedCourses],
       allow_grade_review: selectedRecheckOption === 2,
       review_times: numberOfRecheck === "" ? 0 : numberOfRecheck,
       weight_type: gradeColumn.find((item) => item.id === selectedGradeColumn)
         ?.type,
       publish_date: formatDayToISODateWithDefaultTime(datePost ?? new Date()),
-      in_group: true,
+      in_group: selectedGroupOption === 2,
 
       //TODO: get trong submissionOptions và chuyển thành mảng
       submission_option: "FILE",
+      // submission_option: selectedSubmitOption
+      //   .map(
+      //     (item) => submissionOptions.find((option) => option.id === item)?.type
+      //   )
+      //   .filter(Boolean), // Loại bỏ giá trị undefined nếu không tìm thấy khớp
+      //?
+
       start_date: formatDayToISO(dateStart ?? new Date(), timeStart),
       end_date: formatDayToISO(dateEnd ?? new Date(), timeEnd),
       remind_grading_date: formatDayToISO(
@@ -386,7 +405,7 @@ const CreateExercise = (params: Props) => {
     createExercise(params).then((data) => {
       console.log("createExerciseAPI data:", data);
 
-      handleClickBack();
+      //! handleClickBack();
 
       toast({
         title: "Tạo thông báo thành công.",
@@ -436,11 +455,6 @@ const CreateExercise = (params: Props) => {
 
       toast({
         title: "Chỉnh sửa thông báo thành công.",
-        description: `Thông báo đã được gửi đến lớp ${
-          selectedCourses.length > 0
-            ? `và các lớp ${selectedCourses.join(", ")}`
-            : ""
-        }`,
         variant: "success",
         duration: 3000,
       });
@@ -528,7 +542,7 @@ const CreateExercise = (params: Props) => {
                         }
                         onBlur={field.onBlur}
                         onEditorChange={(content) => field.onChange(content)}
-                        initialValue=""
+                        value={field.value || ""}
                         init={{
                           height: 500,
                           menubar: false,
@@ -947,97 +961,99 @@ const CreateExercise = (params: Props) => {
               />
 
               {/* ĐĂNG NHIỀU LỚP */}
-              <FormField
-                control={form.control}
-                name="multipleCourses"
-                render={({ field }) => (
-                  <FormItem className="flex w-full flex-col">
-                    <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                      Đăng nhiều lớp
-                    </FormLabel>
-                    <FormControl className="mt-3.5 ">
-                      <Dropdown
-                        className="z-30 rounded-lg"
-                        label=""
-                        dismissOnClick={true}
-                        renderTrigger={() => (
-                          <div>
-                            <IconButton
-                              text="Chọn lớp khác"
-                              onClick={() => {}}
-                              iconRight={"/assets/icons/chevron-down.svg"}
-                              bgColor="bg-white"
-                              textColor="text-black"
-                              border
-                              otherClasses="w-full"
-                            />
-                          </div>
-                        )}
-                      >
-                        <TableSearch
-                          setSearchTerm={() => {}}
-                          searchTerm={""}
-                          otherClasses="p-2"
-                        />
-                        <div className="scroll-container scroll-container-dropdown-content">
-                          {mockCoursesList.map((course: any, index) => (
-                            <Dropdown.Item
-                              key={`${course}_${index}`}
-                              onClick={() => {
-                                setSelectedCourses((prev) =>
-                                  prev.includes(course.value)
-                                    ? prev.filter(
-                                        (item) => item !== course.value
-                                      )
-                                    : [...prev, course.value]
-                                );
-                              }}
-                            >
-                              <div className="flex justify-between w-full">
-                                <p className="w-[80%] text-left line-clamp-1">
-                                  {course.value}
-                                </p>
-                                {selectedCourses.includes(course.value) ? (
-                                  <Image
-                                    src="/assets/icons/check.svg"
-                                    alt="search"
-                                    width={21}
-                                    height={21}
-                                    className="cursor-pointer mr-2"
-                                  />
-                                ) : (
-                                  <></>
-                                )}
-                              </div>
-                            </Dropdown.Item>
-                          ))}
-                        </div>
-                      </Dropdown>
-                    </FormControl>
-                    <div className="flex flex-wrap gap-2">
-                      {selectedCourses.map((item: any) => (
-                        <ClosedButton
-                          key={item}
-                          iconHeight={16}
-                          iconWidth={16}
-                          onClose={() => {
-                            setSelectedCourses((prev) =>
-                              prev.filter((course) => course !== item)
-                            );
-                          }}
+              {params.isEdit ? null : (
+                <FormField
+                  control={form.control}
+                  name="multipleCourses"
+                  render={({ field }) => (
+                    <FormItem className="flex w-full flex-col">
+                      <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                        Đăng nhiều lớp
+                      </FormLabel>
+                      <FormControl className="mt-3.5 ">
+                        <Dropdown
+                          className="z-30 rounded-lg"
+                          label=""
+                          dismissOnClick={true}
+                          renderTrigger={() => (
+                            <div>
+                              <IconButton
+                                text="Chọn lớp khác"
+                                onClick={() => {}}
+                                iconRight={"/assets/icons/chevron-down.svg"}
+                                bgColor="bg-white"
+                                textColor="text-black"
+                                border
+                                otherClasses="w-full"
+                              />
+                            </div>
+                          )}
                         >
-                          <RenderCourse _id={item} name={item} />
-                        </ClosedButton>
-                      ))}
-                    </div>
-                    <FormDescription className="body-regular mt-2.5 text-light-500">
-                      Thông báo này sẽ được đăng trong các lớp bạn chọn ngoài
-                      lớp hiện tại.
-                    </FormDescription>
-                    <FormMessage className="text-red-500" />
-                  </FormItem>
-                )}
-              />
+                          <TableSearch
+                            setSearchTerm={() => {}}
+                            searchTerm={""}
+                            otherClasses="p-2"
+                          />
+                          <div className="scroll-container scroll-container-dropdown-content">
+                            {mockCoursesList.map((course: any, index) => (
+                              <Dropdown.Item
+                                key={`${course}_${index}`}
+                                onClick={() => {
+                                  setSelectedCourses((prev) =>
+                                    prev.includes(course.value)
+                                      ? prev.filter(
+                                          (item) => item !== course.value
+                                        )
+                                      : [...prev, course.value]
+                                  );
+                                }}
+                              >
+                                <div className="flex justify-between w-full">
+                                  <p className="w-[80%] text-left line-clamp-1">
+                                    {course.value}
+                                  </p>
+                                  {selectedCourses.includes(course.value) ? (
+                                    <Image
+                                      src="/assets/icons/check.svg"
+                                      alt="search"
+                                      width={21}
+                                      height={21}
+                                      className="cursor-pointer mr-2"
+                                    />
+                                  ) : (
+                                    <></>
+                                  )}
+                                </div>
+                              </Dropdown.Item>
+                            ))}
+                          </div>
+                        </Dropdown>
+                      </FormControl>
+                      <div className="flex flex-wrap gap-2">
+                        {selectedCourses.map((item: any) => (
+                          <ClosedButton
+                            key={item}
+                            iconHeight={16}
+                            iconWidth={16}
+                            onClose={() => {
+                              setSelectedCourses((prev) =>
+                                prev.filter((course) => course !== item)
+                              );
+                            }}
+                          >
+                            <RenderCourse _id={item} name={item} />
+                          </ClosedButton>
+                        ))}
+                      </div>
+                      <FormDescription className="body-regular mt-2.5 text-light-500">
+                        Thông báo này sẽ được đăng trong các lớp bạn chọn ngoài
+                        lớp hiện tại.
+                      </FormDescription>
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
+              )}
 
               {/* GROUP OPTION */}
               <FormField

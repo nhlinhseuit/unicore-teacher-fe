@@ -70,9 +70,9 @@ const ExercisePostItem = (params: Props) => {
             className={`object-contain cursor-pointer ml-4`}
             onClick={() => {
               console.log("click image");
-              console.log("mock exercise id: 67821862edcdf344a5270a24");
+              console.log("mock exercise id: 67822286edcdf344a5270a26");
 
-              const id = "67821862edcdf344a5270a24";
+              const id = "67822286edcdf344a5270a26";
               router.push(`edit-exercise?id=${id}`);
 
               // router.push(`edit-exercise?id=${params.id}`)
