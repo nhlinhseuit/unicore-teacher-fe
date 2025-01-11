@@ -5,6 +5,7 @@ import BigExerciseItem from "@/components/shared/BigExercise/BigExerciseItem";
 import CreateBigExercise from "@/components/shared/BigExercise/CreateBigExercise";
 import BorderContainer from "@/components/shared/BorderContainer";
 import IconButton from "@/components/shared/Button/IconButton";
+import LoadingComponent from "@/components/shared/LoadingComponent";
 import ToggleTitle from "@/components/shared/ToggleTitle";
 import { mockCentralizedExam } from "@/mocks";
 import { fetchProjectsInClass } from "@/services/projectServices";
@@ -70,6 +71,7 @@ const BigExercises = () => {
 
   return (
     <div>
+      {isLoading ? <LoadingComponent /> : null}
       {isCreate ? (
         <>
           <BackToPrev

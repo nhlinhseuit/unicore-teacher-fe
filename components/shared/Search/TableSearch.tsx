@@ -10,7 +10,7 @@ interface TableSearchParams {
 
 const TableSearch = (params: TableSearchParams) => {
   return (
-    <form className={`flex items-center ${params.otherClasses}`}>
+    <div className={`flex items-center ${params.otherClasses}`}>
       <label className="sr-only">Tìm kiếm</label>
       <div className="relative w-full bg-white border border-gray-300 rounded-lg ">
         {/* searchTerm */}
@@ -52,7 +52,7 @@ const TableSearch = (params: TableSearchParams) => {
           />
         </div>
       </div>
-    </form>
+    </div>
   );
 };
 

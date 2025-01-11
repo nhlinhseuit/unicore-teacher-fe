@@ -2,7 +2,7 @@
 
 import { IBackendRes } from "@/types/commonType";
 import { sendRequest } from "@/utils/api";
-import { formatStartDayToISO } from "@/utils/dateTimeUtil";
+import { formatDayToISO } from "@/utils/dateTimeUtil";
 import { revalidateTag } from "next/cache";
 
 export const fetchGroupRegisterData = async () => {

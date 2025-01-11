@@ -16,8 +16,11 @@ import { mockPostDataCourseIdPage } from "@/mocks";
 import { Dropdown } from "flowbite-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
+import { ITExerciseResponseData } from "@/types/entity/Exercise";
+import { fetchExercises } from "@/services/exerciseServices";
+import LoadingComponent from "@/components/shared/LoadingComponent";
 
 const page = () => {
   const pathName = usePathname();
@@ -30,6 +33,31 @@ const page = () => {
   const renderAnnouncementTypes = isNotRegularCourse
     ? AnnouncementTypesNotRegularCourse
     : AnnouncementTypes;
+
+  //? API: EXERCISE - REPORT - ANNOUCEMENT
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const [exercises, setExercises] = useState<ITExerciseResponseData[]>([]);
+
+  const params = {
+    class_id: "677fefdd854d3e02e4191707",
+    subclass_code: "IT002.O21.CLC",
+  };
+
+  useEffect(() => {
+    fetchExercises(params)
+      .then((data: any) => {
+        console.log("fetchExercises data", data);
+        setExercises(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setIsLoading(false);
+      });
+  }, []);
 
   const getRenderPostItem = (item: any): JSX.Element => {
     switch (item.typePost) {
@@ -105,6 +133,7 @@ const page = () => {
     </>
   ) : (
     <div>
+      {isLoading ? <LoadingComponent /> : null}
       <div
         className="
         mt-6 mb-10 flex w-full gap-6 sm:flex-row sm:items-center justify-between"

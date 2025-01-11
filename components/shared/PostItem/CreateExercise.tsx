@@ -35,6 +35,17 @@ import {
   mockDbLeftRatio,
   mockGradeColumnList,
 } from "@/mocks";
+import {
+  createExercise,
+  editExercise,
+  fetchDetailExercise,
+} from "@/services/exerciseServices";
+import {
+  formatDayToISO,
+  formatDayToISODateWithDefaultTime,
+  formatISOToDayDatatype,
+  formatISOToTimeCalendarType,
+} from "@/utils/dateTimeUtil";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { format } from "date-fns";
@@ -43,31 +54,132 @@ import { Dropdown } from "flowbite-react";
 import { Calendar as CalendarIcon } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import LoadingComponent from "../LoadingComponent";
+import { ITExerciseResponseData } from "@/types/entity/Exercise";
 
 // ! CẬP NHẬT
 const type: any = "create";
 
 // TODO: Search debouce tìm kiếm lớp nếu cần
 
-interface DateTimeState {
-  date: Date | undefined;
-  time: string;
+interface Props {
+  isEdit?: boolean;
+  exerciseId?: string;
 }
 
-const CreateExercise = () => {
+const CreateExercise = (params: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const pathName = usePathname();
+
+  const gradeColumn = [
+    { id: 1, type: "COURSEWORK", value: "Quá trình" },
+    { id: 2, type: "PRACTICAL", value: "Thực hành" },
+    { id: 3, type: "MIDTERM", value: "Giữa kỳ" },
+    { id: 4, type: "FINAL_TERM", value: "Cuối kỳ" },
+  ];
+
+  //? API: Get detail exercise for EDIT
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const [exercise, setExercise] = useState<ITExerciseResponseData>();
+
+  useEffect(() => {
+    if (params.isEdit && params.exerciseId && params.exerciseId !== "") {
+      setExercise(undefined);
+      setIsLoading(true);
+
+      fetchDetailExercise(params.exerciseId!)
+        .then((data: any) => {
+          console.log("fetchDetailExercise data", data);
+          setExercise(data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setError(error.message);
+          setIsLoading(false);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (exercise) {
+      setSelectedRecheckOption(exercise.allow_grade_review ? 2 : 1);
+      setNumberOfRecheck(
+        exercise.review_times ? exercise.review_times.toString() : ""
+      );
+      setDatePost(
+        exercise.publish_date
+          ? formatISOToDayDatatype(exercise.publish_date)
+          : undefined
+      );
+      setDateStart(
+        exercise.startDate
+          ? formatISOToDayDatatype(exercise.startDate)
+          : undefined
+      );
+      setTimeStart(
+        exercise.startDate
+          ? formatISOToTimeCalendarType(exercise.startDate)
+          : ""
+      );
+      setDateEnd(
+        exercise.endDate ? formatISOToDayDatatype(exercise.endDate) : undefined
+      );
+      setTimeEnd(
+        exercise.endDate ? formatISOToTimeCalendarType(exercise.endDate) : ""
+      );
+      setDateRemindGrade(
+        exercise.remind_grading_date
+          ? formatISOToDayDatatype(exercise.remind_grading_date)
+          : undefined
+      );
+      setTimeRemindGrade(
+        exercise.remind_grading_date
+          ? formatISOToTimeCalendarType(exercise.remind_grading_date)
+          : ""
+      );
+      setDateClose(
+        exercise.close_submission_date
+          ? formatISOToDayDatatype(exercise.close_submission_date)
+          : undefined
+      );
+      setTimeClose(
+        exercise.close_submission_date
+          ? formatISOToTimeCalendarType(exercise.close_submission_date)
+          : ""
+      );
+      setRatio(exercise.weight ? exercise.weight.toString() : "");
+      setSelectedGradeColumn(
+        gradeColumn.find((item) => item.type === exercise.weight_type)?.id || -1
+      );
+
+      form.reset({
+        title: exercise?.name,
+        description: exercise?.description,
+        file: exercise?.attachment_url,
+        submitOption: exercise?.submission_option,
+      });
+    }
+  }, [exercise]);
 
   const [selectedScheduleOption, setSelectedScheduleOption] = useState(1);
   const [selectedRecheckOption, setSelectedRecheckOption] = useState(1);
   const [numberOfRecheck, setNumberOfRecheck] = useState<string>("");
   const [selectedGroupOption, setSelectedGroupOption] = useState(1);
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
+
+  const submissionOptions = [
+    { id: 1, type: "FILE", value: "Quá trình" },
+    { id: 2, type: "DRIVE", value: "Thực hành" },
+  ];
+
   const [selectedSubmitOption, setSelectedSubmitOption] = useState<number[]>([
     1,
   ]);
@@ -153,7 +265,6 @@ const CreateExercise = () => {
       multipleCourses: z.number().optional(),
       groupOption: z.any().optional(),
       submitOption: z.any().optional(),
-      date: z.date().optional(),
       maxRecheck: z.number().optional(),
       gradeColumn: z.any().optional(),
       ratio: z.number().optional(),
@@ -241,28 +352,41 @@ const CreateExercise = () => {
       description: "",
       file: undefined,
       submitOption: undefined,
-      date: undefined,
     },
   });
 
-  // 2. Define a submit handler.
-  async function onSubmit(values: any) {
-    setIsSubmitting(true);
+  const createExerciseAPI = async (values: any) => {
+    const params = {
+      name: values.title,
+      description: values.description,
+      weight: ratio,
+      class_id: "1",
+      subclass_codes: ["IT002.PMCL"],
+      allow_grade_review: selectedRecheckOption === 2,
+      review_times: numberOfRecheck === "" ? 0 : numberOfRecheck,
+      weight_type: gradeColumn.find((item) => item.id === selectedGradeColumn)
+        ?.type,
+      publish_date: formatDayToISODateWithDefaultTime(datePost ?? new Date()),
+      in_group: true,
 
-    try {
-      // make an async call to your API -> create a question
-      // contain all form data
+      //TODO: get trong submissionOptions và chuyển thành mảng
+      submission_option: "FILE",
+      start_date: formatDayToISO(dateStart ?? new Date(), timeStart),
+      end_date: formatDayToISO(dateEnd ?? new Date(), timeEnd),
+      remind_grading_date: formatDayToISO(
+        dateRemindGrade ?? new Date(),
+        timeRemindGrade
+      ),
+      close_submission_date: formatDayToISO(dateClose ?? new Date(), timeClose),
+      attachment_url: "string",
+    };
 
-      console.log({
-        title: values.title,
-        description: values.description,
-        file: selectedFiles,
-        target: selectedGradeColumn,
-        path: pathName,
-      });
+    console.log("params createExerciseAPI:", params);
 
-      // naviate to home page
-      router.push("/");
+    createExercise(params).then((data) => {
+      console.log("createExerciseAPI data:", data);
+
+      handleClickBack();
 
       toast({
         title: "Tạo thông báo thành công.",
@@ -274,9 +398,69 @@ const CreateExercise = () => {
         variant: "success",
         duration: 3000,
       });
-    } catch {
-    } finally {
+
       setIsSubmitting(false);
+    });
+  };
+
+  const editExerciseAPI = async (values: any) => {
+    const paramsAPI = {
+      name: values.title,
+      description: values.description,
+      weight: ratio,
+      allow_grade_review: selectedRecheckOption === 2,
+      review_times: numberOfRecheck === "" ? 0 : numberOfRecheck,
+      weight_type: gradeColumn.find((item) => item.id === selectedGradeColumn)
+        ?.type,
+      publish_date: formatDayToISODateWithDefaultTime(datePost ?? new Date()),
+      in_group: true,
+
+      //TODO: get trong submissionOptions và chuyển thành mảng
+      submission_option: "FILE",
+      start_date: formatDayToISO(dateStart ?? new Date(), timeStart),
+      end_date: formatDayToISO(dateEnd ?? new Date(), timeEnd),
+      remind_grading_date: formatDayToISO(
+        dateRemindGrade ?? new Date(),
+        timeRemindGrade
+      ),
+      close_submission_date: formatDayToISO(dateClose ?? new Date(), timeClose),
+      attachment_url: "string",
+    };
+
+    console.log("paramsAPI editExerciseAPI:", paramsAPI); // Log paramsAPI sau khi khởi tạo
+
+    editExercise(params.exerciseId ?? "", paramsAPI).then((data) => {
+      console.log("createExerciseAPI data:", data);
+
+      handleClickBack();
+
+      toast({
+        title: "Chỉnh sửa thông báo thành công.",
+        description: `Thông báo đã được gửi đến lớp ${
+          selectedCourses.length > 0
+            ? `và các lớp ${selectedCourses.join(", ")}`
+            : ""
+        }`,
+        variant: "success",
+        duration: 3000,
+      });
+
+      setIsSubmitting(false);
+    });
+  };
+
+  // 2. Define a submit handler.
+  async function onSubmit(values: any) {
+    try {
+      setIsSubmitting(true);
+
+      if (params.isEdit && params.exerciseId && params.exerciseId !== "") {
+        editExerciseAPI(values);
+      } else {
+        createExerciseAPI(values);
+      }
+    } catch (error) {
+    } finally {
     }
   }
 
@@ -284,13 +468,14 @@ const CreateExercise = () => {
 
   const { toast } = useToast();
 
-  const handleClick = () => {
+  const handleClickBack = () => {
     const newPath = pathName.substring(0, pathName.lastIndexOf("/"));
     router.push(newPath);
   };
 
   return (
     <div className="flex-1 mt-10">
+      {isSubmitting ? <LoadingComponent /> : null}
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <div className="flex px-6 gap-12">
@@ -1095,7 +1280,7 @@ const CreateExercise = () => {
               text="Hủy"
               red
               otherClasses="w-fit"
-              onClick={handleClick}
+              onClick={handleClickBack}
             />
           </div>
         </form>

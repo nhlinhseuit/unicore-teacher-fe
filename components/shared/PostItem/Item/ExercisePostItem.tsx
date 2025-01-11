@@ -8,6 +8,7 @@ import OtherComment from "../../../courses/OtherComment";
 import RenderFile from "../../Annoucements/RenderFile";
 import StatusButton from "../../Button/StatusButton";
 import Divider from "../../Divider";
+import { useRouter } from "next/navigation";
 
 interface Comment {
   id: string;
@@ -27,6 +28,8 @@ interface Props {
 }
 
 const ExercisePostItem = (params: Props) => {
+  const router = useRouter();
+
   return (
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex-col w-full p-6">
@@ -48,7 +51,7 @@ const ExercisePostItem = (params: Props) => {
                     Thời hạn nộp bài: 12h SA 8/11/2024 - 11h30 SA 15/11/2024
                   </span>
                 </li>
-              <li role="menuitem">
+                <li role="menuitem">
                   <span>
                     Thời hạn nộp trễ: 12h SA 8/11/2024 - 11h30 SA 15/11/2024
                   </span>
@@ -65,6 +68,15 @@ const ExercisePostItem = (params: Props) => {
             height={26}
             alt={"edit"}
             className={`object-contain cursor-pointer ml-4`}
+            onClick={() => {
+              console.log("click image");
+              console.log("mock exercise id: 67821862edcdf344a5270a24");
+
+              const id = "67821862edcdf344a5270a24";
+              router.push(`edit-exercise?id=${id}`);
+
+              // router.push(`edit-exercise?id=${params.id}`)
+            }}
           />
         </div>
 
@@ -79,12 +91,12 @@ const ExercisePostItem = (params: Props) => {
             <Divider />
 
             <GradingInPost
-          setGrading={params.setGrading}
-          submissionNumber={mockSubmissionPost.submissionNumber}
-          totalNumber={mockSubmissionPost.totalNumber}
-          lateTime={mockSubmissionPost.lateTime}
-          columnGrade={mockSubmissionPost.columnGrade}
-        />
+              setGrading={params.setGrading}
+              submissionNumber={mockSubmissionPost.submissionNumber}
+              totalNumber={mockSubmissionPost.totalNumber}
+              lateTime={mockSubmissionPost.lateTime}
+              columnGrade={mockSubmissionPost.columnGrade}
+            />
           </>
         )}
 

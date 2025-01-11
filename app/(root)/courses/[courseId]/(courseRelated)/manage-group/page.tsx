@@ -19,7 +19,7 @@ import { createGroupRegisterSchedule } from "@/services/groupRegisterServices";
 import { RegisterGroupDataItem } from "@/types";
 import {
   formatDayToISODateWithDefaultTime,
-  formatStartDayToISO,
+  formatDayToISO,
 } from "@/utils/dateTimeUtil";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";

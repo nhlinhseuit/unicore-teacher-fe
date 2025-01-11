@@ -261,6 +261,8 @@ const CreateBigExercise = (props: Props) => {
       };
 
       createBigExerciseAPI(params).then((data) => {
+        console.log('createBigExerciseAPI', data)
+        
         // naviate to home page
         props.navigateBack();
 
