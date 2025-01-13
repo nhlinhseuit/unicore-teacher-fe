@@ -36,7 +36,7 @@ import { Dropdown } from "flowbite-react";
 import { Calendar as CalendarIcon } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -49,18 +49,116 @@ import {
   sTimeEnd,
   sTimeStart,
 } from "./(store)/createReportStore";
+import { formatDayToISO, formatDayToISODateWithDefaultTime, formatISOToDayDatatype, formatISOToTimeCalendarType } from "@/utils/dateTimeUtil";
+import { createReport, editReport, fetchDetailReport } from "@/services/reportServices";
+import { ITReportResponseData } from "@/types/entity/Report";
 
 // ! CẬP NHẬT
 const type: any = "create";
 
-const ReportInfo = () => {
+
+interface Props {
+  isEdit?: boolean;
+  reportId?: string;
+}
+
+const ReportInfo = (props: Props) => {
   //! CALL API để xem course này có phải có type là internCourse hay thesisCourse hay không
+  const { isEdit, reportId } = props;
   const isNotRegularCourse = false;
 
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const pathName = usePathname();
+
+
+  const gradeColumn = [
+    { id: 1, type: "COURSEWORK", value: "Quá trình" },
+    { id: 2, type: "MIDTERM", value: "Giữa kỳ" },
+    { id: 3, type: "FINAL_TERM", value: "Cuối kỳ" },
+  ];
+
+  const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+  
+    const [report, setReport] = useState<ITReportResponseData>();
+  
+    useEffect(() => {
+      if (props.isEdit && props.reportId && props.reportId !== "") {
+        setReport(undefined);
+        setIsLoading(true);
+  
+        fetchDetailReport(props.reportId!)
+          .then((data: any) => {
+            console.log("fetchDetailReport data", data);
+  
+            const res =
+              gradeColumn.find((item) => {
+                console.log("gradeColumn item", item);
+  
+                return item.type === data?.weight_type;
+              })?.id || -1;
+  
+            console.log("res", res);
+  
+            setReport(data);
+            setIsLoading(false);
+          })
+          .catch((error) => {
+            setError(error.message);
+            setIsLoading(false);
+          });
+      }
+    }, []);
+  
+    useEffect(() => {
+      if (report) {
+        setSelectedRecheckOption(report.allow_grade_review ? 2 : 1);
+        setNumberOfRecheck(
+          report.review_times ? report.review_times.toString() : ""
+        );
+        setSelectedGroupOption(report.in_group ? 2 : 1)
+        setSelectedScheduleOption(report.publish_date !== '' ? 2 : 1)
+        setDatePost(
+          report.publish_date
+            ? formatISOToDayDatatype(report.publish_date)
+            : undefined
+        )
+        setDateRemindGrade(
+          report.remind_grading_date
+            ? formatISOToDayDatatype(report.remind_grading_date)
+            : undefined
+        );
+        setTimeRemindGrade(
+          report.remind_grading_date
+            ? formatISOToTimeCalendarType(report.remind_grading_date)
+            : ""
+        );
+        setDateClose(
+          report.close_submission_date
+            ? formatISOToDayDatatype(report.close_submission_date)
+            : undefined
+        );
+        setTimeClose(
+          report.close_submission_date
+            ? formatISOToTimeCalendarType(report.close_submission_date)
+            : ""
+        );
+        setRatio(report.weight ? report.weight.toString() : "");
+        setSelectedGradeColumn(
+          gradeColumn.find((item) => item.type === report.weight_type)?.id || -1
+        );
+  
+        form.reset({
+          title: report?.name,
+          description: report?.description,
+          file: report?.attachment_url,
+          submitOption: report?.submission_option,
+        });
+      }
+    }, [report]);
+
 
   const [selectedScheduleOption, setSelectedScheduleOption] = useState(1);
   const [selectedRecheckOption, setSelectedRecheckOption] = useState(1);
@@ -256,6 +354,122 @@ const ReportInfo = () => {
     },
   });
 
+  const createReportAPI = async (values: any) => {
+    const params = {
+      name: values.title,
+      description: values.description,
+      weight: ratio,
+      date: formatDayToISODateWithDefaultTime(datePost ?? new Date()),
+      query: {
+        start_date: formatDayToISO(dateStart ?? new Date(), timeStart),
+        end_date: formatDayToISO(dateEnd ?? new Date(), timeEnd),
+        allowMultiple: true,
+        allowSuggestion: true,
+        options: [
+          {}
+        ]
+      },
+      class_id: "1",
+      allow_grade_review: selectedRecheckOption === 2,
+      review_times: numberOfRecheck === "" ? 0 : numberOfRecheck,
+      publish_date: formatDayToISODateWithDefaultTime(datePost ?? new Date()),
+      in_group: selectedGroupOption === 2,
+
+      //TODO: get trong submissionOptions và chuyển thành mảng
+      submission_option: "FILE",
+      // submission_option: selectedSubmitOption
+      //   .map(
+      //     (item) => submissionOptions.find((option) => option.id === item)?.type
+      //   )
+      //   .filter(Boolean), // Loại bỏ giá trị undefined nếu không tìm thấy khớp
+      //?
+
+      remind_grading_date: formatDayToISO(
+        dateRemindGrade ?? new Date(),
+        timeRemindGrade
+      ),
+      close_submission_date: formatDayToISO(dateClose ?? new Date(), timeClose),
+      attachment_url: "string",
+    };
+
+    console.log("params createReportAPI:", params);
+
+    createReport(params).then((data) => {
+      console.log("createReportAPI data:", data);
+
+      //! handleClickBack();
+
+      toast({
+        title: "Tạo thông báo thành công.",
+        variant: "success",
+        duration: 3000,
+      });
+
+      setIsSubmitting(false);
+    });
+  };
+  
+
+  const editReportAPI = async (values: any) => {
+    const paramsAPI = {
+      name: values.title,
+      description: values.description,
+      weight: ratio,
+      date: formatDayToISODateWithDefaultTime(datePost ?? new Date()),
+      query: {
+        start_date: formatDayToISO(dateStart ?? new Date(), timeStart),
+        end_date: formatDayToISO(dateEnd ?? new Date(), timeEnd),
+        allowMultiple: true,
+        allowSuggestion: true,
+        options: [
+          {}
+        ]
+      },
+      class_id: "1", // Chưa hiểu chỗ này lắm
+      allow_grade_review: selectedRecheckOption === 2,
+      review_times: numberOfRecheck === "" ? 0 : numberOfRecheck,
+      publish_date: formatDayToISODateWithDefaultTime(datePost ?? new Date()),
+      in_group: selectedGroupOption === 2,
+
+      //TODO: get trong submissionOptions và chuyển thành mảng
+      submission_option: "FILE",
+      // submission_option: selectedSubmitOption
+      //   .map(
+      //     (item) => submissionOptions.find((option) => option.id === item)?.type
+      //   )
+      //   .filter(Boolean), // Loại bỏ giá trị undefined nếu không tìm thấy khớp
+      //?
+
+      remind_grading_date: formatDayToISO(
+        dateRemindGrade ?? new Date(),
+        timeRemindGrade
+      ),
+      close_submission_date: formatDayToISO(dateClose ?? new Date(), timeClose),
+      attachment_url: "string",
+    };
+  
+      console.log("paramsAPI editExerciseAPI:", paramsAPI); // Log paramsAPI sau khi khởi tạo
+  
+      editReport(props.reportId ?? "", paramsAPI).then((data) => {
+        console.log("createExerciseAPI data:", data);
+  
+        handleClickBack();
+  
+        toast({
+          title: "Chỉnh sửa thông báo thành công.",
+          variant: "success",
+          duration: 3000,
+        });
+  
+        setIsSubmitting(false);
+      });
+    };
+
+  const handleClickBack = () => {
+    const newPath = pathName.substring(0, pathName.lastIndexOf("/"));
+    router.push(newPath);
+  };
+
   // 2. Define a submit handler.
   async function onSubmit(values: any) {
     setIsSubmitting(true);
@@ -271,6 +485,12 @@ const ReportInfo = () => {
         target: selectedGradeColumn,
         path: pathName,
       });
+
+      if (props.isEdit && props.reportId && props.reportId !== "") {
+        editReportAPI(values);
+      } else {
+        createReportAPI(values);
+      }
 
       // naviate to home page
       router.push("/");
