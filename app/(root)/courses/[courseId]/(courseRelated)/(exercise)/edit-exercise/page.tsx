@@ -12,9 +12,9 @@ const page = () => {
    const exerciseId = searchParams.get("id");
  
    const handleClick = () => {
-     const newPath = pathName.substring(0, pathName.lastIndexOf("/"));
-     router.push(newPath);
-   };
+    const newPath = pathName.substring(0, pathName.lastIndexOf("/"));
+    router.push(newPath);
+  };
 
   return (
     <div>

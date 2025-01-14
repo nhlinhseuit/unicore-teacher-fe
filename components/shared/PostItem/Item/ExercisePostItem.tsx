@@ -1,3 +1,5 @@
+"use client";
+
 import { getAvatarName } from "@/lib/utils";
 import { mockSubmissionPost } from "@/mocks";
 import Image from "next/image";
@@ -8,7 +10,7 @@ import OtherComment from "../../../courses/OtherComment";
 import RenderFile from "../../Annoucements/RenderFile";
 import StatusButton from "../../Button/StatusButton";
 import Divider from "../../Divider";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Comment {
   id: string;
@@ -22,19 +24,20 @@ interface Props {
   createdAt: string;
   title: string;
   fileName: string;
-  comments: Comment[];
+  comments?: Comment[];
   setGrading: () => void;
   isOnlyView?: boolean;
 }
 
 const ExercisePostItem = (params: Props) => {
   const router = useRouter();
+  const pathName = usePathname();
 
   return (
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex-col w-full p-6">
         <div className="flex justify-start items-center gap-2">
-          <MyAvatar text="MT" />
+          <MyAvatar text={params.creator} />
           <p className="body-regular">{params.creator}</p>
           <p className="small-regular italic text-[#636363] line-clamp-1 ">
             - {params.createdAt}
@@ -69,13 +72,7 @@ const ExercisePostItem = (params: Props) => {
             alt={"edit"}
             className={`object-contain cursor-pointer ml-4`}
             onClick={() => {
-              console.log("click image");
-              console.log("mock exercise id: 67822286edcdf344a5270a26");
-
-              const id = "67822286edcdf344a5270a26";
-              router.push(`edit-exercise?id=${id}`);
-
-              // router.push(`edit-exercise?id=${params.id}`)
+              router.push(`${pathName}/edit-exercise?id=${params.id}`)
             }}
           />
         </div>
@@ -102,18 +99,23 @@ const ExercisePostItem = (params: Props) => {
 
         <Divider />
 
-        <div className="flex flex-col gap-4">
-          {params.comments.map((item, index) => (
-            <OtherComment
-              key={item.id}
-              textAvatar={getAvatarName(item.author)}
-              name={item.author}
-              comment={item.content}
-            />
-          ))}
-        </div>
+        {params.comments ? (
+          <>
+            <div className="flex flex-col gap-4">
+              {params.comments.map((item, index) => (
+                <OtherComment
+                  key={`${item.id}_${index}`}
+                  textAvatar={getAvatarName(item.author)}
+                  name={item.author}
+                  comment={item.content}
+                />
+              ))}
+            </div>
+          <Divider />
+          </>
 
-        <Divider />
+        ) : null}
+
 
         <MyComment textAvatar="HL" />
       </div>

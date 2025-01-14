@@ -242,8 +242,10 @@ const CreateBigExercise = (props: Props) => {
       });
 
       const params = {
-        class_id: "1",
-        subclass_code: "IT002.PMCL",
+        class_id: "677cd4ae0a706479b8773770",
+        subclass_code: "SE113.O21.PMCL",
+        // class_id: sClassId.value,
+        // subclass_code: sClassCode.value,
         name: values.title,
         description: values.description,
         weight: ratio,
@@ -259,6 +261,8 @@ const CreateBigExercise = (props: Props) => {
         allow_topic_suggestion: selectedSuggestOption,
         ...TopicAPIdataTable,
       };
+      
+      console.log('params', params)
 
       createBigExerciseAPI(params).then((data) => {
         console.log('createBigExerciseAPI', data)
@@ -267,12 +271,7 @@ const CreateBigExercise = (props: Props) => {
         props.navigateBack();
 
         toast({
-          title: "Tạo thông báo thành công.",
-          description: `Thông báo đã được gửi đến lớp ${
-            selectedCourses.length > 0
-              ? `và các lớp ${selectedCourses.join(", ")}`
-              : ""
-          }`,
+          title: "Tạo bài tập lớn thành công.",
           variant: "success",
           duration: 3000,
         });
@@ -327,7 +326,7 @@ const CreateBigExercise = (props: Props) => {
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Tên bài tập lớn<span className="text-red-600">*</span>
+                        Tên bài tập lớn<span className="text-red-600">{" *"}</span>
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
                         <Input

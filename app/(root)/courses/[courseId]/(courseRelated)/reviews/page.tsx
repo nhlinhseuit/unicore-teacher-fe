@@ -1,11 +1,8 @@
 "use client";
 
 import GradingReviewTable from "@/components/shared/Table/TableReview/GradingReviewTable";
-import {
-  mockDataAllReviewGrading,
-  mockPostReviewDetail,
-} from "@/mocks";
-import { useState } from "react";
+import { mockDataAllReviewGrading, mockPostReviewDetail } from "@/mocks";
+import { useEffect, useState } from "react";
 
 import PostReviewScoreItem from "@/components/shared/Table/TableReview/PostReviewScoreItem";
 import {
@@ -17,7 +14,9 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import IconButton from "@/components/shared/Button/IconButton";
+import SubmitButton from "@/components/shared/Button/SubmitButton";
 import InputComponent from "@/components/shared/Table/components/InputComponent";
+import TextAreaComponent from "@/components/shared/TextAreaComponent";
 import {
   Form,
   FormControl,
@@ -28,15 +27,15 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { ReviewOptions } from "@/constants";
 import { toast } from "@/hooks/use-toast";
+import { fetchReviewsInClass } from "@/services/reviewServices";
+import { IReviewResponseData } from "@/types/entity/Review";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import SubmitButton from "@/components/shared/Button/SubmitButton";
-import TextAreaComponent from "@/components/shared/TextAreaComponent";
-import { ReviewOptions } from "@/constants";
 
 const Review = () => {
   const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
@@ -46,6 +45,30 @@ const Review = () => {
   const [score, setScore] = useState("");
   const [feedback, setFeedback] = useState("");
   const [reason, setReason] = useState("");
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [reviews, setReviews] = useState<IReviewResponseData[]>([]);
+
+  const params = {
+    class_id: "677cd4ae0a706479b8773770",
+    subclass_code: "SE113.O21.PMCL",
+  };
+
+  useEffect(() => {
+    fetchReviewsInClass(params)
+      .then((data: IReviewResponseData[]) => {
+        
+        console.log('fetchReviewsInClass', data)
+        
+        setReviews(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setIsLoading(false);
+      });
+  }, []);
 
   const AnnoucementSchema = z
     .object({

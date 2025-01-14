@@ -81,8 +81,7 @@ const GradingReviewTable = (params: DataTableParams) => {
                 dataItem.isDeleted ? (
                   <></>
                 ) : (
-                  <>
-                    {/* //TODO: Main Row: Leader */}
+                    //TODO: Main Row: Leader 
                     <RowGradingReviewTable
                       key={`${dataItem.STT}_${index}`}
                       dataItem={dataItem}
@@ -90,7 +89,6 @@ const GradingReviewTable = (params: DataTableParams) => {
                         params.viewDetailGradeColumn(dataItem.STT);
                       }}
                     />
-                  </>
                 )
               )}
             </Table.Body>

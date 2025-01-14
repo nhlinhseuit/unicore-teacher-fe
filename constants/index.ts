@@ -65,11 +65,11 @@ export const TeacherCourseTabItems = [
     label: "Hoạt động đang diễn ra",
     route: "/happening-event",
   },
-  {
-    value: "exercises",
-    label: "Bài tập",
-    route: "/exercises",
-  },
+  // {
+  //   value: "exercises",
+  //   label: "Bài tập",
+  //   route: "/exercises",
+  // },
   {
     value: "manageGroup",
     label: "Quản lý nhóm",

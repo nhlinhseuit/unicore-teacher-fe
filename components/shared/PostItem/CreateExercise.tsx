@@ -405,7 +405,7 @@ const CreateExercise = (params: Props) => {
     createExercise(params).then((data) => {
       console.log("createExerciseAPI data:", data);
 
-      //! handleClickBack();
+      handleClickBack();
 
       toast({
         title: "Tạo thông báo thành công.",
@@ -451,7 +451,7 @@ const CreateExercise = (params: Props) => {
     editExercise(params.exerciseId ?? "", paramsAPI).then((data) => {
       console.log("createExerciseAPI data:", data);
 
-      handleClickBack();
+      handleClickBack()
 
       toast({
         title: "Chỉnh sửa thông báo thành công.",
