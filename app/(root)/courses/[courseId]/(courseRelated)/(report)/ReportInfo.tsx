@@ -354,7 +354,8 @@ const ReportInfo = (props: Props) => {
   });
 
   const createReportAPI = async (values: any) => {
-    const params = {
+    const mockParams = {
+      class_id: "1",
       name: values.title,
       description: values.description,
       weight: ratio,
@@ -368,7 +369,6 @@ const ReportInfo = (props: Props) => {
           {}
         ]
       },
-      class_id: "1",
       allow_grade_review: selectedRecheckOption === 2,
       review_times: numberOfRecheck === "" ? 0 : numberOfRecheck,
       publish_date: formatDayToISODateWithDefaultTime(datePost ?? new Date()),
@@ -391,9 +391,9 @@ const ReportInfo = (props: Props) => {
       attachment_url: "string",
     };
 
-    console.log("params createReportAPI:", params);
+    console.log("mockParams createReportAPI:", mockParams);
 
-    createReport(params).then((data) => {
+    createReport(mockParams).then((data) => {
       console.log("createReportAPI data:", data);
 
       //! handleClickBack();
@@ -410,7 +410,7 @@ const ReportInfo = (props: Props) => {
   
 
   const editReportAPI = async (values: any) => {
-    const paramsAPI = {
+    const mockParamsAPI = {
       //! Ở BTL thì có project_id
       class_id: "1",
       subclass_codes: ["IT002.PMCL"],
@@ -451,9 +451,9 @@ const ReportInfo = (props: Props) => {
       attachment_url: "string",
     };
   
-      console.log("paramsAPI editExerciseAPI:", paramsAPI); // Log paramsAPI sau khi khởi tạo
+      console.log("mockParamsAPI editExerciseAPI:", mockParamsAPI); // Log mockParamsAPI sau khi khởi tạo
   
-      editReport(props.reportId ?? "", paramsAPI).then((data) => {
+      editReport(props.reportId ?? "", mockParamsAPI).then((data) => {
         console.log("createExerciseAPI data:", data);
   
         handleClickBack();

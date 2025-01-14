@@ -88,7 +88,7 @@ const ManageGroup = () => {
         maxMembers: maxMember,
       });
 
-      const params = {
+      const mockParams = {
         class_id: "6728d58b38829046d82ccc3c",
         subclass_code: "IT006.CLC",
         start_register_date: formatDayToISODateWithDefaultTime(
@@ -105,7 +105,7 @@ const ManageGroup = () => {
       };
 
       setIsLoading(true);
-      createGroupRegisterSchedule(params).then((data) => {
+      createGroupRegisterSchedule(mockParams).then((data) => {
         setIsLoading(false);
         console.log("data API", data);
 

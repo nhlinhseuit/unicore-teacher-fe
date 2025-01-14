@@ -1,3 +1,4 @@
+import { WeightType } from "./Project";
 import { ITTopicResponseData } from "./Topic";
 
 export enum ReportType {
@@ -32,7 +33,7 @@ export interface ITReportResponseData {
   created_by: string;
   modified_by: string | null; // Nullable
   in_group: boolean;
-  weight_type: string; // e.g., "COURSEWORK"
+  weight_type: WeightType; 
   class_id: string;
   subclass_code: string; // Single string
   allow_grade_review: boolean;

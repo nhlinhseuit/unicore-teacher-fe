@@ -368,12 +368,12 @@ const CreateExercise = (params: Props) => {
   });
 
   const createExerciseAPI = async (values: any) => {
-    const params = {
+    const mockParams = {
+      class_id: "1",
+      subclass_codes: ["IT002.PMCL", ...selectedCourses],
       name: values.title,
       description: values.description,
       weight: ratio,
-      class_id: "1",
-      subclass_codes: ["IT002.PMCL", ...selectedCourses],
       allow_grade_review: selectedRecheckOption === 2,
       review_times: numberOfRecheck === "" ? 0 : numberOfRecheck,
       weight_type: gradeColumn.find((item) => item.id === selectedGradeColumn)
@@ -400,9 +400,9 @@ const CreateExercise = (params: Props) => {
       attachment_url: "string",
     };
 
-    console.log("params createExerciseAPI:", params);
+    console.log("mockParams createExerciseAPI:", mockParams);
 
-    createExercise(params).then((data) => {
+    createExercise(mockParams).then((data) => {
       console.log("createExerciseAPI data:", data);
 
       handleClickBack();

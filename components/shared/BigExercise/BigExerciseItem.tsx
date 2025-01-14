@@ -1,9 +1,10 @@
 interface Props {
+  isCentralizedExam?: boolean;
   id: string;
   name: string;
   creator: string;
   createdAt: string;
-  happeningEvent: string;
+  happeningEvent?: string;
   deadline: string;
 }
 
@@ -20,12 +21,17 @@ const BigExerciseItem = (params: Props) => {
         <p className="small-regular text-[#636363] line-clamp-1 ">
           {params.createdAt}
         </p>
+        {params.happeningEvent ? (
+          <p className="mt-4 small-regular line-clamp-1 text-red-400">
+            <span className="italic">Sự kiện đang diễn ra: </span>
+            Đăng ký nhóm và đề tài báo cáo.
+          </p>
+        ) : null}
         <p className="mt-4 small-regular line-clamp-1 text-red-400">
-          <span className="italic">Sự kiện đang diễn ra: </span>
-          Đăng ký nhóm và đề tài báo cáo
-        </p>
-        <p className="small-regular line-clamp-1 text-red-400">
-          <span className="italic">Hạn cuối: </span> 10/09/2024 - 00:00AM
+          <span className="italic">
+            {params.isCentralizedExam ? "Ngày diễn ra" : "Hạn cuối"}:{" "}
+          </span>
+          {params.deadline}
         </p>
       </div>
     </div>

@@ -241,7 +241,7 @@ const CreateBigExercise = (props: Props) => {
         data: dataTable,
       });
 
-      const params = {
+      const mockParams = {
         class_id: "677cd4ae0a706479b8773770",
         subclass_code: "SE113.O21.PMCL",
         // class_id: sClassId.value,
@@ -262,9 +262,9 @@ const CreateBigExercise = (props: Props) => {
         ...TopicAPIdataTable,
       };
       
-      console.log('params', params)
+      console.log('mockParams', mockParams)
 
-      createBigExerciseAPI(params).then((data) => {
+      createBigExerciseAPI(mockParams).then((data) => {
         console.log('createBigExerciseAPI', data)
         
         // naviate to home page

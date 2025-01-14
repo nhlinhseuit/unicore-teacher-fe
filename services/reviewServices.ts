@@ -27,7 +27,7 @@ export const fetchReviewsOfTeacher = async (teacherId: any) => {
   try {
     const res = await sendRequest<IBackendRes<any>>({
       url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/classevent/submissions/review/reviewer/${teacherId}`,
-      method: "POST",
+      method: "GET",
     });
 
     if (res?.data) {

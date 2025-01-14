@@ -7,8 +7,11 @@ import BorderContainer from "@/components/shared/BorderContainer";
 import IconButton from "@/components/shared/Button/IconButton";
 import LoadingComponent from "@/components/shared/LoadingComponent";
 import ToggleTitle from "@/components/shared/ToggleTitle";
-import { mockCentralizedExam } from "@/mocks";
-import { fetchProjectsInClass } from "@/services/projectServices";
+import {
+  fetchCentralizedExamInClass,
+  fetchProjectsInClass,
+} from "@/services/projectServices";
+import { ITCentralizedTestResponseData } from "@/types/entity/CentralizedTest";
 import { ITProjectResponseData } from "@/types/entity/Project";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -21,21 +24,51 @@ const BigExercises = () => {
   const [error, setError] = useState<string | null>(null);
 
   const [projects, setProjects] = useState<ITProjectResponseData[]>([]);
+  const [centralizedExams, setCentralizedExams] = useState<
+    ITCentralizedTestResponseData[]
+  >([]);
 
-  const params = {
+  const mockParams1 = {
     class_id: "677cd4ae0a706479b8773770",
     subclass_code: "SE113.O21.PMCL",
   };
 
+  const mockParams2 = {
+    class_id: "6780ff6e854d3e02e4191716",
+    subclass_code: "IT001.O21.CLC",
+  };
+
   useEffect(() => {
-    fetchProjectsInClass(params)
+    let pendingRequests = 2; // Theo dõi số lượng lời gọi đang xử lý
+    setIsLoading(true);
+
+    fetchProjectsInClass(mockParams1)
       .then((data: any) => {
         setProjects(data);
-        setIsLoading(false);
       })
       .catch((error) => {
         setError(error.message);
-        setIsLoading(false);
+      })
+      .finally(() => {
+        pendingRequests -= 1;
+        if (pendingRequests === 0) {
+          setIsLoading(false);
+        }
+      });
+
+    fetchCentralizedExamInClass(mockParams2)
+      .then((data: any) => {
+        console.log("fetchCentralizedExamInClass", data);
+        setCentralizedExams(data);
+      })
+      .catch((error) => {
+        setError(error.message);
+      })
+      .finally(() => {
+        pendingRequests -= 1;
+        if (pendingRequests === 0) {
+          setIsLoading(false);
+        }
       });
   }, []);
 
@@ -81,7 +114,11 @@ const BigExercises = () => {
             }}
           />
 
-          <CreateBigExercise navigateBack={()=> {setIsCreate(false)}}/>
+          <CreateBigExercise
+            navigateBack={() => {
+              setIsCreate(false);
+            }}
+          />
         </>
       ) : (
         <>
@@ -125,20 +162,15 @@ const BigExercises = () => {
               value={isToggleShowCentralizedExam}
             />
             {isToggleShowCentralizedExam
-              ? mockCentralizedExam.map((item) => (
-                  <Link
-                    key={item.id}
-                    href={`${pathName}/big-exercises/${item.id}`}
-                  >
+              ? centralizedExams.map((item) => (
                     <BigExerciseItem
+                      isCentralizedExam
                       id={item.id}
                       name={item.name}
-                      creator={item.creator}
-                      createdAt={item.createdAt}
-                      happeningEvent={item.happeningEvent}
-                      deadline={item.deadline}
+                      creator={item.created_by}
+                      createdAt={item.created_date}
+                      deadline={item.date}
                     />
-                  </Link>
                 ))
               : null}
 

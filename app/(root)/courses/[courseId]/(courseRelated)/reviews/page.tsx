@@ -64,13 +64,13 @@ const Review = () => {
   const [reviews, setReviews] = useState<IReviewResponseData[]>([]);
   let tableData;
 
-  const params = {
+  const mockParams = {
     class_id: "677cd4ae0a706479b8773770",
     subclass_code: "SE113.O21.PMCL",
   };
 
   useEffect(() => {
-    fetchReviewsInClass(params)
+    fetchReviewsInClass(mockParams)
       .then((data: IReviewResponseData[]) => {
         console.log("fetchReviewsInClass", data);
 

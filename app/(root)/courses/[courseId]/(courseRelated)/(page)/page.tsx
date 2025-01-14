@@ -53,7 +53,7 @@ const page = () => {
 
   const [exercises, setExercises] = useState<ITExerciseResponseData[]>([]);
 
-  const params = {
+  const mockParams = {
     class_id: "677fefdd854d3e02e4191707",
     subclass_code: "IT002.O21.CLC",
   };
@@ -69,7 +69,7 @@ const page = () => {
   }, [selectedAnnoucementType]);
 
   const fetchExercisesAPI = () => {
-    fetchExercises(params)
+    fetchExercises(mockParams)
       .then((data: any) => {
         console.log("fetchExercises data", data);
         setExercises(data);
@@ -81,7 +81,7 @@ const page = () => {
       });
   };
   const fetchReportsAPI = () => {
-    // fetchExercises(params)
+    // fetchExercises(mockParams)
     //   .then((data: any) => {
     //     console.log("fetchExercises data", data);
     //     setExercises(data);
@@ -93,7 +93,7 @@ const page = () => {
     //   });
   };
   const fetchAnnoucementsAPI = () => {
-    // fetchExercises(params)
+    // fetchExercises(mockParams)
     //   .then((data: any) => {
     //     console.log("fetchExercises data", data);
     //     setExercises(data);

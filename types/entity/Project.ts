@@ -1,6 +1,6 @@
 import { ITTopicResponseData } from "./Topic";
 
-export enum ProjectType {
+export enum WeightType {
   COURSEWORK = "COURSEWORK",
   PRACTICAL = "PRACTICAL",
   MIDTERM = "MIDTERM",
@@ -10,22 +10,16 @@ export enum ProjectType {
 export interface ITProjectResponseData {
   id: string;
   weight: number;
-
   name: string;
-
   description: string;
   topics: ITTopicResponseData[];
   eventType: string;
-
   created_date: string; // ISO date string
-
   modified_date: string | null;
-
   created_by: string;
-
   modified_by: string | null;
   in_group: boolean;
-  weight_type: string;
+  weight_type: WeightType;
   class_id: string;
   subclass_code: string;
   allow_grade_review: boolean;
