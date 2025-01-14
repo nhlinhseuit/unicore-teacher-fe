@@ -11,7 +11,7 @@ import {
   fetchCentralizedExamInClass,
   fetchProjectsInClass,
 } from "@/services/projectServices";
-import { ITCentralizedTestResponseData } from "@/types/entity/CentralizedTest";
+import { ICentralizedTestResponseData } from "@/types/entity/CentralizedTest";
 import { ITProjectResponseData } from "@/types/entity/Project";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -25,7 +25,7 @@ const BigExercises = () => {
 
   const [projects, setProjects] = useState<ITProjectResponseData[]>([]);
   const [centralizedExams, setCentralizedExams] = useState<
-    ITCentralizedTestResponseData[]
+    ICentralizedTestResponseData[]
   >([]);
 
   const mockParams1 = {
@@ -163,14 +163,14 @@ const BigExercises = () => {
             />
             {isToggleShowCentralizedExam
               ? centralizedExams.map((item) => (
-                    <BigExerciseItem
-                      isCentralizedExam
-                      id={item.id}
-                      name={item.name}
-                      creator={item.created_by}
-                      createdAt={item.created_date}
-                      deadline={item.date}
-                    />
+                  <BigExerciseItem
+                    isCentralizedExam
+                    id={item.id}
+                    name={item.name}
+                    creator={item.created_by}
+                    createdAt={item.created_date}
+                    deadline={item.date}
+                  />
                 ))
               : null}
 

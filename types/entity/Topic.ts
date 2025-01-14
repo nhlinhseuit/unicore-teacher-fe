@@ -18,7 +18,7 @@ export interface TopicData {
   "Họ và tên": string[];
 }
 
-export interface ITTopicResponseData {
+export interface ITopicResponseData {
   id: string;
   name: string;
   nameEn: string;

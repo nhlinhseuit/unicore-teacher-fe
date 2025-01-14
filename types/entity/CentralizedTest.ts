@@ -1,6 +1,6 @@
 import { WeightType } from "./Project";
 
-export interface ITCentralizedTestResponseData {
+export interface ICentralizedTestResponseData {
   id: string; // ID của bài thi
   weight: number; // Trọng số của bài thi
   name: string; // Tên bài thi

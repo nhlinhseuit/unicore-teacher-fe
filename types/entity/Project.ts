@@ -1,4 +1,4 @@
-import { ITTopicResponseData } from "./Topic";
+import { ITopicResponseData } from "./Topic";
 
 export enum WeightType {
   COURSEWORK = "COURSEWORK",
@@ -12,7 +12,7 @@ export interface ITProjectResponseData {
   weight: number;
   name: string;
   description: string;
-  topics: ITTopicResponseData[];
+  topics: ITopicResponseData[];
   eventType: string;
   created_date: string; // ISO date string
   modified_date: string | null;
