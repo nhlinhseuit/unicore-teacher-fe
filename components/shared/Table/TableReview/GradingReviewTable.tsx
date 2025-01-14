@@ -1,4 +1,3 @@
-import { GradingReviewDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import { useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
@@ -6,6 +5,7 @@ import MyFooter from "../components/MyFooter";
 import RowGradingReviewTable from "./RowGradingReviewTable";
 import { itemsPerPageRegisterTable } from "@/constants";
 import { tableTheme } from "../components/DataTable";
+import { GradingReviewDataItem } from "@/types/entity/Review";
 
 interface DataTableParams {
   isMultipleDelete: boolean;

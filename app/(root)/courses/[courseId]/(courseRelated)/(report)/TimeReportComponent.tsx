@@ -4,7 +4,7 @@ import {
   sCompletedReportSchedule,
   sReportOptions,
   sSubmitReportSchedule,
-} from "@/app/(root)/courses/[courseId]/(courseRelated)/create-report/(store)/createReportStore";
+} from "./(store)/createReportStore";
 import MiniButton from "@/components/shared/Button/MiniButton";
 import { Button } from "@/components/ui/button";
 import { TimeCalendar } from "@/components/ui/custom-time-calendar";

@@ -90,13 +90,11 @@ export interface ReviewerThesisReviewTicketData {
   "Phản biện": string;
 }
 
-
 export interface TopicRegisterGroupData {
   MSSV: string;
   SĐT: string;
   "Họ và tên": string;
 }
-
 
 export interface FileData {
   "Tên file": string;
@@ -115,14 +113,6 @@ export interface GradingExerciseData {
   "Họ và tên": string[];
   Điểm: number[];
   "Góp ý": string;
-}
-export interface GradingReviewData {
-  Lớp: string?;
-  "Bài tập": string;
-  "Bài nộp": string;
-  Điểm: number[];
-  MSSV: string;
-  "Họ và tên": string;
 }
 
 export interface GradingReportData {
@@ -254,8 +244,6 @@ export interface ReviewerThesisReviewTicketDataItem {
   data: ReviewerThesisReviewTicketData;
 }
 
-
-
 export interface TopicRegisterGroupDataItem {
   STT: string;
   data: TopicRegisterGroupData;
@@ -272,11 +260,6 @@ export interface GradingExerciseDataItem {
   isDeleted: boolean;
   data: GradingExerciseData;
 }
-export interface GradingReviewDataItem {
-  STT: string;
-  isDeleted: boolean;
-  data: GradingReviewData;
-}
 
 export interface PostDataGradingDetailItem {
   id: string;
@@ -286,24 +269,12 @@ export interface PostDataGradingDetailItem {
   fileName: string;
   scoreDetail: DataGradingDetailItem;
 }
-export interface PostDataGradingReviewItem {
-  id: string;
-  creator: string;
-  createdAt: string;
-  title: string;
-  fileName: string;
-  scoreDetail: DataGradingReviewItem;
-}
+
 export interface DataGradingDetailItem {
   "Bài nộp": string;
   Điểm: number;
   "Góp ý": string;
   "Tỉ lệ điểm": number;
-}
-export interface DataGradingReviewItem {
-  "Bài nộp": string;
-  historyGrade: number[];
-  historyFeedback: string[];
 }
 
 export interface GradingReportDataItem {

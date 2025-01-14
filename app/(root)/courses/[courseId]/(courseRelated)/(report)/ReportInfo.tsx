@@ -52,11 +52,10 @@ import {
 import { formatDayToISO, formatDayToISODateWithDefaultTime, formatISOToDayDatatype, formatISOToTimeCalendarType } from "@/utils/dateTimeUtil";
 import { createReport, editReport, fetchDetailReport } from "@/services/reportServices";
 import { ITReportResponseData } from "@/types/entity/Report";
+import LoadingComponent from "@/components/shared/LoadingComponent";
 
 // ! CẬP NHẬT
 const type: any = "create";
-
-
 interface Props {
   isEdit?: boolean;
   reportId?: string;
@@ -412,11 +411,15 @@ const ReportInfo = (props: Props) => {
 
   const editReportAPI = async (values: any) => {
     const paramsAPI = {
+      //! Ở BTL thì có project_id
+      class_id: "1",
+      subclass_codes: ["IT002.PMCL"],
+
       name: values.title,
       description: values.description,
       weight: ratio,
-      date: formatDayToISODateWithDefaultTime(datePost ?? new Date()),
-      query: {
+      date: formatDayToISODateWithDefaultTime(datePost ?? new Date()), //TODO: dư trường này
+      query: { //?: mở đăng ký báo cáo
         start_date: formatDayToISO(dateStart ?? new Date(), timeStart),
         end_date: formatDayToISO(dateEnd ?? new Date(), timeEnd),
         allowMultiple: true,
@@ -425,7 +428,6 @@ const ReportInfo = (props: Props) => {
           {}
         ]
       },
-      class_id: "1", // Chưa hiểu chỗ này lắm
       allow_grade_review: selectedRecheckOption === 2,
       review_times: numberOfRecheck === "" ? 0 : numberOfRecheck,
       publish_date: formatDayToISODateWithDefaultTime(datePost ?? new Date()),
@@ -438,9 +440,10 @@ const ReportInfo = (props: Props) => {
       //     (item) => submissionOptions.find((option) => option.id === item)?.type
       //   )
       //   .filter(Boolean), // Loại bỏ giá trị undefined nếu không tìm thấy khớp
-      //?
+      
+//TODO: thiếu trường ngày đăng
 
-      remind_grading_date: formatDayToISO(
+      remind_grading_date: formatDayToISO( 
         dateRemindGrade ?? new Date(),
         timeRemindGrade
       ),
@@ -527,6 +530,8 @@ const ReportInfo = (props: Props) => {
 
   return (
     <div>
+      {isLoading ? <LoadingComponent /> : null}
+      
       <div className="flex-1 mt-10">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>

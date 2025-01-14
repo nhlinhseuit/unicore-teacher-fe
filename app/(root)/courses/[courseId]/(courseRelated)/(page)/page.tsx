@@ -132,58 +132,58 @@ const page = () => {
     }
   };
 
-  // const getRenderPostItem = (item: any): JSX.Element => {
-  //   switch (item.typePost) {
-  //     case "report":
-  //       return (
-  //         //TODO: báo cáo và Báo cáo khóa luận tốt nghiệp có nhập điểm...
+  const getRenderPostItem = (item: any): JSX.Element => {
+    switch (item.typePost) {
+      case "report":
+        return (
+          //TODO: báo cáo và Báo cáo khóa luận tốt nghiệp có nhập điểm...
 
-  //         //? Ở đây có thể là Chấm điểm báo cáo hoặc Nhận xét khóa luận / hội đồng
-  //         <ReportPostItem
-  //           key={item.id}
-  //           id={item.id}
-  //           creator={item.creator}
-  //           createdAt={item.createdAt}
-  //           title={item.title}
-  //           fileName={item.fileName}
-  //           comments={item.comments}
-  //           isFinalReport={item.isFinalReport}
-  //           setGrading={() => {
-  //             // if (item.isFinalReport) setIsGradeThesisReport(true);
-  //             setIsGradeReport(true);
-  //           }}
-  //         />
-  //       );
-  //     case "exercise":
-  //       return (
-  //         <ExercisePostItem
-  //           key={item.id}
-  //           id={item.id}
-  //           creator={item.creator}
-  //           createdAt={item.createdAt}
-  //           title={item.title}
-  //           fileName={item.fileName}
-  //           comments={item.comments}
-  //           setGrading={() => {
-  //             setIsGradeExercise(true);
-  //           }}
-  //         />
-  //       );
-  //     case "announcement":
-  //     default:
-  //       return (
-  //         <PostItem
-  //           key={item.id}
-  //           id={item.id}
-  //           creator={item.creator}
-  //           createdAt={item.createdAt}
-  //           title={item.title}
-  //           fileName={item.fileName}
-  //           comments={item.comments}
-  //         />
-  //       );
-  //   }
-  // };
+          //? Ở đây có thể là Chấm điểm báo cáo hoặc Nhận xét khóa luận / hội đồng
+          <ReportPostItem
+            key={item.id}
+            id={item.id}
+            creator={item.creator}
+            createdAt={item.createdAt}
+            title={item.title}
+            fileName={item.fileName}
+            comments={item.comments}
+            isFinalReport={item.isFinalReport}
+            setGrading={() => {
+              // if (item.isFinalReport) setIsGradeThesisReport(true);
+              setIsGradeReport(true);
+            }}
+          />
+        );
+      case "exercise":
+        return (
+          <ExercisePostItem
+            key={item.id}
+            id={item.id}
+            creator={item.creator}
+            createdAt={item.createdAt}
+            title={item.title}
+            fileName={item.fileName}
+            comments={item.comments}
+            setGrading={() => {
+              setIsGradeExercise('1');
+            }}
+          />
+        );
+      case "announcement":
+      default:
+        return (
+          <PostItem
+            key={item.id}
+            id={item.id}
+            creator={item.creator}
+            createdAt={item.createdAt}
+            title={item.title}
+            fileName={item.fileName}
+            comments={item.comments}
+          />
+        );
+    }
+  };
 
   const cancelDetailFilter = () => {
     setTypeFilter(FilterType.None);
@@ -406,10 +406,10 @@ const page = () => {
 
       {/* PostList */}
       <div className="mt-6 flex flex-col gap-4">
-        {/* {mockPostDataCourseIdPage.map((item, index) => {
+        {mockPostDataCourseIdPage.map((item, index) => {
           return getRenderPostItem(item);
-        })} */}
-        {getRenderItems()}
+        })}
+        {/* {getRenderItems()} */}
       </div>
     </div>
   );

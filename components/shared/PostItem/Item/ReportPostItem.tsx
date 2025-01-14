@@ -8,6 +8,7 @@ import Divider from "../../Divider";
 import GradingInPost from "@/components/courses/GradingInPost";
 import OtherComment from "@/components/courses/OtherComment";
 import MyComment from "@/components/courses/MyComment";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Comment {
   id: string;
@@ -28,6 +29,9 @@ interface Props {
 }
 
 const ReportPostItem = (params: Props) => {
+  const router = useRouter();
+  const pathName = usePathname();
+
   return (
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex-col w-full p-6">
@@ -66,6 +70,12 @@ const ReportPostItem = (params: Props) => {
             height={26}
             alt={"edit"}
             className={`object-contain cursor-pointer ml-4`}
+            onClick={() => {
+              console.log("123123");
+              const id = "67813602b925f9491c589889";
+
+              router.push(`${pathName}/edit-report?id=${id}`);
+            }}
           />
         </div>
 

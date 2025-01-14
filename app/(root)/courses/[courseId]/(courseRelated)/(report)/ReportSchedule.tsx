@@ -1,6 +1,5 @@
 "use client";
 
-import TimeReportComponent from "@/app/(root)/courses/[courseId]/(courseRelated)/create-report/TimeReportComponent";
 import BorderContainer from "@/components/shared/BorderContainer";
 import MiniButton from "@/components/shared/Button/MiniButton";
 import CheckboxComponent from "@/components/shared/CheckboxComponent";
@@ -23,6 +22,7 @@ import {
   sTimeEnd,
   sTimeStart,
 } from "./(store)/createReportStore";
+import TimeReportComponent from "./TimeReportComponent";
 
 // ! CẬP NHẬT
 const type: any = "create";

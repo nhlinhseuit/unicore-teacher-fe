@@ -1,7 +1,95 @@
-export enum CourseType {
+export enum ReviewType {
   TURNED_DOWN = "TURNED_DOWN",
   UNPROCESSED = "UNPROCESSED",
   REVIEWED = "REVIEWED",
+}
+
+export const convertToDataTableReviewsViKeys = (
+  data: IReviewResponseData[]
+): GradingReviewDataItem[] => {
+  return data.map((item, index) => {
+    const requiredFields: GradingReviewData = {
+      "Trạng thái": getReviewType(item.status),
+      Lớp: item.subclass_code,
+      "Bài tập": item.event_name || "ĐỢI BACKEND CẬP NHẬT", // Nếu `event_name` null, gán "N/A"
+      "Bài nộp": item.submission_id,
+      Điểm: item.grades,
+      MSSV: item.submitter_id,
+      "Họ và tên": item.submitter_name,
+    };
+
+    return {
+      STT: (index + 1).toString(), // STT bắt đầu từ 1
+      type: "topic",
+      isDeleted: false, // Mặc định là false
+      data: requiredFields,
+    };
+  });
+};
+
+export const convertReviewToPostData = (
+  review: IReviewResponseData
+): PostDataGradingReviewItem => {
+  return {
+    id: review.id,
+    creator: review.created_by,
+    createdAt: review.created_date,
+    submitter_id: review.submitter_id, // ID người nộp
+    submitter_name: review.submitter_name, // Tên người nộp
+    title: review.event_name || "ĐỢI BACKEND CẬP NHẬT", // Nếu `event_name` null, dùng giá trị mặc định
+    fileName: review.submission_id,
+    scoreDetail: {
+      "Bài nộp": review.submission_id,
+      historyGrade: review.grades,
+      historyFeedback: review.feedbacks,
+    },
+  };
+};
+
+export const getReviewType = (type: any) => {
+  switch (type) {
+    case ReviewType.TURNED_DOWN:
+      return "Đã từ chối";
+    case ReviewType.UNPROCESSED:
+      return "Chưa phúc khảo";
+    case ReviewType.REVIEWED:
+      return "Đã phúc khảo";
+    default:
+      return "Không xác định";
+  }
+};
+
+export interface GradingReviewDataItem {
+  STT: string;
+  isDeleted: boolean;
+  data: GradingReviewData;
+}
+
+export interface GradingReviewData {
+  "Trạng thái": string;
+  Lớp?: string;
+  "Bài tập": string;
+  "Bài nộp": string;
+  Điểm: number[];
+  MSSV: string;
+  "Họ và tên": string;
+}
+
+export interface PostDataGradingReviewItem {
+  id: string;
+  creator: string;
+  createdAt: string;
+  submitter_id: string; // ID người nộp
+  submitter_name: string; // Tên người nộp
+  title: string;
+  fileName: string;
+  scoreDetail: DataGradingReviewItem;
+}
+
+export interface DataGradingReviewItem {
+  "Bài nộp": string;
+  historyGrade: number[];
+  historyFeedback: string[];
 }
 
 export interface IReviewResponseData {

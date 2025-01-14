@@ -1,4 +1,3 @@
-import { PostDataGradingReviewItem } from "@/types";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import MyAvatar from "../../../courses/MyAvatar";
@@ -6,6 +5,7 @@ import RenderFile from "../../Annoucements/RenderFile";
 import IconButton from "../../Button/IconButton";
 import Divider from "../../Divider";
 import ReviewGradeTable from "./ReviewGradeTable";
+import { PostDataGradingReviewItem } from "@/types/entity/Review";
 
 interface Props {
   postScoreDetail: PostDataGradingReviewItem;
@@ -18,7 +18,7 @@ const PostReviewScoreItem = (params: Props) => {
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex-col w-full p-6">
         <div className="flex justify-start items-center gap-2">
-          <MyAvatar text="MT" />
+          <MyAvatar text={params.postScoreDetail.creator} />
           <p className="body-regular">{params.postScoreDetail.creator}</p>
           <p className="small-regular italic text-[#636363] line-clamp-1 ">
             - {params.postScoreDetail.createdAt}

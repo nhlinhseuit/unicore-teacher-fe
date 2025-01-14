@@ -4,7 +4,7 @@ import BackToPrev from "@/components/shared/BackToPrev";
 import NavigateButton from "@/components/shared/Button/NavigateButton";
 import { mockStepsCreateReport } from "@/mocks";
 import Image from "next/image";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 import {
   sCompletedReportSchedule,
@@ -15,11 +15,11 @@ import {
   sSubmitReportSchedule,
   sTimeEnd,
   sTimeStart,
-} from "../(store)/createReportStore";
-import ReportInfo from "../ReportInfo";
-import ReportSchedule from "../ReportSchedule";
+} from "../../(store)/createReportStore";
+import ReportInfo from "../../ReportInfo";
+import ReportSchedule from "../../ReportSchedule";
 
-const CreateReport = () => {
+const EditReport = () => {
   const [currentStep, setCurrentStep] = useState(1);
 
   const router = useRouter();
@@ -43,6 +43,11 @@ const CreateReport = () => {
   const goToPrevStep = () => {
     if (currentStep > 0) setCurrentStep(currentStep - 1);
   };
+
+
+   // Lấy id từ query string
+   const searchParams = useSearchParams(); 
+   const exerciseId = searchParams.get("id");
 
   const handleClick = () => {
     const newPath = pathName.substring(0, pathName.lastIndexOf("/"));
@@ -136,7 +141,7 @@ const CreateReport = () => {
           )}
           {currentStep === 2 && (
             <div>
-              <ReportInfo />
+              <ReportInfo isEdit reportId={exerciseId ?? ''} />
               <div className="flex-center mt-12">
                 <NavigateButton
                   back
@@ -153,4 +158,4 @@ const CreateReport = () => {
   );
 };
 
-export default CreateReport;
+export default EditReport;
