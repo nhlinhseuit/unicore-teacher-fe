@@ -170,12 +170,10 @@ export const ListCourseColors = [
   { type: CourseType.ThesisCourse, color: "#ecf2ff" },
 ];
 
-
 export const GradingThesisTopicFilterType = [
   { id: 0, value: "Đã hoàn thành" },
   { id: 1, value: "Chưa hoàn thành" },
 ];
-
 
 export const AnnouncementsFilterType = [
   { id: 0, value: "Thông báo đã đăng" },
@@ -198,8 +196,8 @@ export const ReviewThesisFilterType = [
 // TODO: Review
 //
 export const ReviewOptions = [
-  { id: 1, value: "Tất cả" },
-  { id: 2, value: "Đã phúc khảo" },
+  { id: 1, value: "Đã phúc khảo" },
+  { id: 2, value: "Đã từ chối" },
   { id: 3, value: "Chưa phúc khảo" },
 ];
 
@@ -261,9 +259,7 @@ export const FileTableDataMoreComponentItems = [
   { value: "delete", label: "Xóa" },
 ];
 
-export const CourseItemMoreComponentItems = [
-  { value: "hide", label: "Ẩn" },
-];
+export const CourseItemMoreComponentItems = [{ value: "hide", label: "Ẩn" }];
 
 // TODO: SIDEBAR
 export const sidebarTeacherLinks: SidebarLink[] = [

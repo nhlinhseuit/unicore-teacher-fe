@@ -4,6 +4,19 @@ export enum ReviewType {
   REVIEWED = "REVIEWED",
 }
 
+export const getReviewType = (type: any) => {
+  switch (type) {
+    case ReviewType.TURNED_DOWN:
+      return "Đã từ chối";
+    case ReviewType.UNPROCESSED:
+      return "Chưa phúc khảo";
+    case ReviewType.REVIEWED:
+      return "Đã phúc khảo";
+    default:
+      return "Không xác định";
+  }
+};
+
 export const convertToDataTableReviewsViKeys = (
   data: IReviewResponseData[]
 ): GradingReviewDataItem[] => {
@@ -44,19 +57,6 @@ export const convertReviewToPostData = (
       historyFeedback: review.feedbacks,
     },
   };
-};
-
-export const getReviewType = (type: any) => {
-  switch (type) {
-    case ReviewType.TURNED_DOWN:
-      return "Đã từ chối";
-    case ReviewType.UNPROCESSED:
-      return "Chưa phúc khảo";
-    case ReviewType.REVIEWED:
-      return "Đã phúc khảo";
-    default:
-      return "Không xác định";
-  }
 };
 
 export interface GradingReviewDataItem {

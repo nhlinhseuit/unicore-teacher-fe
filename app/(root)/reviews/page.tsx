@@ -1,11 +1,7 @@
 "use client";
 
 import GradingReviewTable from "@/components/shared/Table/TableReview/GradingReviewTable";
-import {
-  mockDataAllReviewGrading,
-  mockPostReviewDetail,
-} from "@/mocks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import PostReviewScoreItem from "@/components/shared/Table/TableReview/PostReviewScoreItem";
 import {
@@ -17,7 +13,11 @@ import {
 } from "@/components/ui/alert-dialog";
 
 import IconButton from "@/components/shared/Button/IconButton";
+import SubmitButton from "@/components/shared/Button/SubmitButton";
+import NoResult from "@/components/shared/Status/NoResult";
 import InputComponent from "@/components/shared/Table/components/InputComponent";
+import TableSkeleton from "@/components/shared/Table/components/TableSkeleton";
+import TextAreaComponent from "@/components/shared/TextAreaComponent";
 import {
   Form,
   FormControl,
@@ -28,24 +28,56 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { ReviewOptions } from "@/constants";
 import { toast } from "@/hooks/use-toast";
+import {
+  declineAReview,
+  fetchReviewsOfTeacher,
+  gradeAReview,
+} from "@/services/reviewServices";
+import {
+  convertReviewToPostData,
+  convertToDataTableReviewsViKeys,
+  IReviewResponseData,
+} from "@/types/entity/Review";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import SubmitButton from "@/components/shared/Button/SubmitButton";
-import TextAreaComponent from "@/components/shared/TextAreaComponent";
-import { ReviewOptions } from "@/constants";
 
 const Review = () => {
-  const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
+  const [
+    selectedReviewViewDetailGradeColumn,
+    setSelectedReviewViewDetailGradeColumn,
+  ] = useState("");
+
   const [isReview, setIsReview] = useState(-1);
-  const [selectedReviewOption, setSelectedReviewOption] = useState(1);
+  const [selectedReviewOption, setSelectedReviewOption] = useState("");
 
   const [score, setScore] = useState("");
   const [feedback, setFeedback] = useState("");
   const [reason, setReason] = useState("");
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [reviews, setReviews] = useState<IReviewResponseData[]>([]);
+
+  const teacherId = "4";
+
+  useEffect(() => {
+    fetchReviewsOfTeacher(teacherId)
+      .then((data: IReviewResponseData[]) => {
+        console.log("fetchReviewsOfTeacher", data);
+
+        setReviews(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setIsLoading(false);
+      });
+  }, []);
 
   const AnnoucementSchema = z
     .object({
@@ -77,6 +109,18 @@ const Review = () => {
 
   const { reset } = form;
 
+  const getReview = () => {
+    return reviews[parseInt(selectedReviewViewDetailGradeColumn) - 1];
+  };
+
+  const getReviewByStatus = () => {
+    if (selectedReviewOption === "")
+      return convertToDataTableReviewsViKeys(reviews);
+    return convertToDataTableReviewsViKeys(reviews).filter(
+      (item) => item.data["Trạng thái"] === selectedReviewOption
+    );
+  };
+
   async function onSubmit(values: any) {
     try {
       console.log({
@@ -85,22 +129,39 @@ const Review = () => {
         reason: reason,
       });
 
-      // naviate to home page
-      // router.push("/");
+      if (isReview === 1) {
+        const params = {
+          grade: score,
+          feedback: feedback,
+        };
 
-      toast({
-        title: "Phúc khảo bài làm thành công.",
-        variant: "success",
-        duration: 3000,
-      });
+        gradeAReview(getReview().id, params).then((data) => {
+          console.log("gradeAReview", data);
 
-      setIsReview(-1);
-      setIsViewDetailGradeColumn(false);
+          toast({
+            title: "Phúc khảo bài làm thành công.",
+            variant: "success",
+            duration: 3000,
+          });
+        });
+      } else if (isReview === 2) {
+        declineAReview(getReview().id).then((data) => {
+          console.log("declineAReview", data);
 
-      // reset({
-      // });
+          toast({
+            title: "Từ chối phúc khảo bài làm thành công.",
+            variant: "success",
+            duration: 3000,
+          });
+        });
+      }
     } catch {
     } finally {
+      setIsReview(-1);
+      setSelectedReviewViewDetailGradeColumn("");
+      setScore("");
+      setFeedback("");
+      setReason("");
     }
   }
 
@@ -118,9 +179,9 @@ const Review = () => {
             <div>
               <IconButton
                 text={`${
-                  selectedReviewOption !== -1
-                    ? ReviewOptions[selectedReviewOption - 1].value
-                    : "Chọn lớp"
+                  selectedReviewOption !== ""
+                    ? selectedReviewOption
+                    : "Chọn bộ lọc"
                 }`}
                 onClick={() => {}}
                 iconRight={"/assets/icons/chevron-down.svg"}
@@ -136,16 +197,16 @@ const Review = () => {
               <Dropdown.Item
                 key={`${course}_${index}`}
                 onClick={() => {
-                  if (selectedReviewOption === course.id) {
-                    setSelectedReviewOption(-1);
+                  if (selectedReviewOption === course.value) {
+                    setSelectedReviewOption("");
                   } else {
-                    setSelectedReviewOption(course.id);
+                    setSelectedReviewOption(course.value);
                   }
                 }}
               >
                 <div className="flex justify-between w-full gap-4">
                   <p className="text-left line-clamp-1">{course.value}</p>
-                  {selectedReviewOption === course.id ? (
+                  {selectedReviewOption === course.value ? (
                     <Image
                       src="/assets/icons/check.svg"
                       alt="search"
@@ -163,16 +224,25 @@ const Review = () => {
         </Dropdown>
       </div>
 
-      <GradingReviewTable
-        isMultipleDelete={false}
-        dataTable={mockDataAllReviewGrading}
-        viewDetailGradeColumn={() => {
-          setIsViewDetailGradeColumn(true);
-        }}
-      />
+      {isLoading ? (
+        <TableSkeleton />
+      ) : reviews && getReviewByStatus().length > 0 ? (
+        <GradingReviewTable
+          isMultipleDelete={false}
+          dataTable={getReviewByStatus()}
+          viewDetailGradeColumn={(reviewNumber: string) => {
+            setSelectedReviewViewDetailGradeColumn(reviewNumber);
+          }}
+        />
+      ) : (
+        <NoResult
+          title="Không có dữ liệu!"
+          description="Không có đơn phúc khảo nào!"
+        />
+      )}
 
       {/* EDIT GRADE COLUMN */}
-      <AlertDialog open={isViewDetailGradeColumn}>
+      <AlertDialog open={selectedReviewViewDetailGradeColumn !== ""}>
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle className="text-center">
@@ -182,16 +252,22 @@ const Review = () => {
 
           <AlertDialogDescription className="text-center text-light-500 body-regular ">
             Sinh viên:{" "}
-            <span className="font-semibold">Nguyễn Hoàng Linh - 21522289</span>
+            {selectedReviewViewDetailGradeColumn !== "" ? (
+              <span className="font-semibold">
+                {getReview().submitter_name} - {getReview().submitter_id}
+              </span>
+            ) : null}
           </AlertDialogDescription>
 
-          <PostReviewScoreItem
-            postScoreDetail={mockPostReviewDetail[0]}
-            setGrading={() => {
-              // setIsGrading(true);
-            }}
-            isEdit={false}
-          />
+          {selectedReviewViewDetailGradeColumn !== "" ? (
+            <PostReviewScoreItem
+              postScoreDetail={convertReviewToPostData(getReview())}
+              setGrading={() => {
+                // setIsGrading(true);
+              }}
+              isEdit={false}
+            />
+          ) : null}
 
           {isReview !== 1 && isReview !== 2 ? (
             <div className="relative flex justify-center gap-2 mt-4">
@@ -212,7 +288,7 @@ const Review = () => {
                 cancel
                 text={"Hủy"}
                 onClick={() => {
-                  setIsViewDetailGradeColumn(false);
+                  setSelectedReviewViewDetailGradeColumn("");
                 }}
               />
             </div>
@@ -260,8 +336,8 @@ const Review = () => {
                             <InputComponent
                               value={feedback}
                               placeholder="Nhập góp ý..."
-                              onChange={() => (newValue: string) => {
-                                setFeedback(newValue);
+                              onChange={(newValue: string | number) => {
+                                setFeedback(newValue.toString());
                               }}
                               isDescription
                             />
@@ -304,7 +380,7 @@ const Review = () => {
                           </FormDescription>
 
                           <FormControl className="mt-3.5 ">
-                          <TextAreaComponent
+                            <TextAreaComponent
                               value={reason}
                               placeholder="Nhập phản hồi..."
                               onChange={(e) => {

@@ -30,7 +30,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { ReviewOptions } from "@/constants";
 import { toast } from "@/hooks/use-toast";
-import { fetchReviewsInClass } from "@/services/reviewServices";
+import {
+  declineAReview,
+  fetchReviewsInClass,
+  gradeAReview,
+} from "@/services/reviewServices";
 import {
   convertReviewToPostData,
   convertToDataTableReviewsViKeys,
@@ -49,7 +53,7 @@ const Review = () => {
   ] = useState("");
 
   const [isReview, setIsReview] = useState(-1);
-  const [selectedReviewOption, setSelectedReviewOption] = useState(1);
+  const [selectedReviewOption, setSelectedReviewOption] = useState("");
 
   const [score, setScore] = useState("");
   const [feedback, setFeedback] = useState("");
@@ -109,6 +113,18 @@ const Review = () => {
 
   const { reset } = form;
 
+  const getReview = () => {
+    return reviews[parseInt(selectedReviewViewDetailGradeColumn) - 1];
+  };
+
+  const getReviewByStatus = () => {
+    if (selectedReviewOption === "")
+      return convertToDataTableReviewsViKeys(reviews);
+    return convertToDataTableReviewsViKeys(reviews).filter(
+      (item) => item.data["Trạng thái"] === selectedReviewOption
+    );
+  };
+
   async function onSubmit(values: any) {
     try {
       console.log({
@@ -117,22 +133,39 @@ const Review = () => {
         reason: reason,
       });
 
-      // naviate to home page
-      // router.push("/");
+      if (isReview === 1) {
+        const params = {
+          grade: score,
+          feedback: feedback,
+        };
 
-      toast({
-        title: "Phúc khảo bài làm thành công.",
-        variant: "success",
-        duration: 3000,
-      });
+        gradeAReview(getReview().id, params).then((data) => {
+          console.log("gradeAReview", data);
 
-      setIsReview(-1);
-      setSelectedReviewViewDetailGradeColumn("");
+          toast({
+            title: "Phúc khảo bài làm thành công.",
+            variant: "success",
+            duration: 3000,
+          });
+        });
+      } else if (isReview === 2) {
+        declineAReview(getReview().id).then((data) => {
+          console.log("declineAReview", data);
 
-      // reset({
-      // });
+          toast({
+            title: "Từ chối phúc khảo bài làm thành công.",
+            variant: "success",
+            duration: 3000,
+          });
+        });
+      }
     } catch {
     } finally {
+      setIsReview(-1);
+      setSelectedReviewViewDetailGradeColumn("");
+      setScore("");
+      setFeedback("");
+      setReason("");
     }
   }
 
@@ -150,9 +183,9 @@ const Review = () => {
             <div>
               <IconButton
                 text={`${
-                  selectedReviewOption !== -1
-                    ? ReviewOptions[selectedReviewOption - 1].value
-                    : "Chọn lớp"
+                  selectedReviewOption !== ""
+                    ? selectedReviewOption
+                    : "Chọn bộ lọc"
                 }`}
                 onClick={() => {}}
                 iconRight={"/assets/icons/chevron-down.svg"}
@@ -168,16 +201,16 @@ const Review = () => {
               <Dropdown.Item
                 key={`${course}_${index}`}
                 onClick={() => {
-                  if (selectedReviewOption === course.id) {
-                    setSelectedReviewOption(-1);
+                  if (selectedReviewOption === course.value) {
+                    setSelectedReviewOption("");
                   } else {
-                    setSelectedReviewOption(course.id);
+                    setSelectedReviewOption(course.value);
                   }
                 }}
               >
                 <div className="flex justify-between w-full gap-4">
                   <p className="text-left line-clamp-1">{course.value}</p>
-                  {selectedReviewOption === course.id ? (
+                  {selectedReviewOption === course.value ? (
                     <Image
                       src="/assets/icons/check.svg"
                       alt="search"
@@ -197,10 +230,10 @@ const Review = () => {
 
       {isLoading ? (
         <TableSkeleton />
-      ) : convertToDataTableReviewsViKeys(reviews) ? (
+      ) : reviews && getReviewByStatus().length > 0 ? (
         <GradingReviewTable
           isMultipleDelete={false}
-          dataTable={convertToDataTableReviewsViKeys(reviews)}
+          dataTable={getReviewByStatus()}
           viewDetailGradeColumn={(reviewNumber: string) => {
             setSelectedReviewViewDetailGradeColumn(reviewNumber);
           }}
@@ -225,24 +258,14 @@ const Review = () => {
             Sinh viên:{" "}
             {selectedReviewViewDetailGradeColumn !== "" ? (
               <span className="font-semibold">
-                {
-                  reviews[parseInt(selectedReviewViewDetailGradeColumn) - 1]
-                    .submitter_name
-                }{" "}
-                -{" "}
-                {
-                  reviews[parseInt(selectedReviewViewDetailGradeColumn) - 1]
-                    .submitter_id
-                }
+                {getReview().submitter_name} - {getReview().submitter_id}
               </span>
             ) : null}
           </AlertDialogDescription>
 
           {selectedReviewViewDetailGradeColumn !== "" ? (
             <PostReviewScoreItem
-              postScoreDetail={convertReviewToPostData(
-                reviews[parseInt(selectedReviewViewDetailGradeColumn) - 1]
-              )}
+              postScoreDetail={convertReviewToPostData(getReview())}
               setGrading={() => {
                 // setIsGrading(true);
               }}
@@ -317,8 +340,8 @@ const Review = () => {
                             <InputComponent
                               value={feedback}
                               placeholder="Nhập góp ý..."
-                              onChange={() => (newValue: string) => {
-                                setFeedback(newValue);
+                              onChange={(newValue: string | number) => {
+                                setFeedback(newValue.toString());
                               }}
                               isDescription
                             />
@@ -376,12 +399,7 @@ const Review = () => {
                   </div>
 
                   <div className="relative flex justify-center gap-2 mt-4">
-                    <SubmitButton
-                      text={"Đồng ý"}
-                      onClick={() => {
-                        setIsReview(1);
-                      }}
-                    />
+                    <SubmitButton text={"Đồng ý"} />
                     <IconButton
                       cancel
                       text={"Hủy"}
