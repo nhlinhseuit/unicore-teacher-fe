@@ -1,7 +1,9 @@
 "use client";
+
 import IconButton from "@/components/shared/Button/IconButton";
 import SubmitButton from "@/components/shared/Button/SubmitButton";
 import CheckboxComponent from "@/components/shared/CheckboxComponent";
+import LoadingComponent from "@/components/shared/LoadingComponent";
 import NoResult from "@/components/shared/Status/NoResult";
 import RegisterGroupTable from "@/components/shared/Table/TableRegisterGroup/RegisterGroupTable";
 import ToggleTitle from "@/components/shared/ToggleTitle";
@@ -15,17 +17,23 @@ import {
 } from "@/components/ui/popover";
 import { useToast } from "@/hooks/use-toast";
 import { mockDataStudentRegisterGroup } from "@/mocks";
-import { createGroupRegisterSchedule } from "@/services/groupRegisterServices";
-import { RegisterGroupDataItem } from "@/types";
 import {
-  formatDayToISODateWithDefaultTime,
-  formatDayToISO,
-} from "@/utils/dateTimeUtil";
+  createGroupRegisterSchedule,
+  fetchGroupRegisterSchedule,
+} from "@/services/groupRegisterServices";
+import {
+  convertGroupDataToRegisterGroupDataItem,
+  IGroupRegisterResponseData,
+  RegisterGroupDataItem,
+} from "@/types/entity/GroupRegister";
+import { formatDayToISODateWithDefaultTime } from "@/utils/dateTimeUtil";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { groupingIdAtom } from "../../../(courses)/(store)/courseStore";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -64,8 +72,48 @@ const ManageGroup = () => {
     },
   ]);
 
+  //TODO: TANBLE
+  const [isEditTable, setIsEditTable] = useState(false);
+  const [isMultipleDelete, setIsMultipleDelete] = useState(false);
+  const [dataTable, setDataTable] = useState<RegisterGroupDataItem[]>();
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  const [groupRegisterSchedule, setGroupRegisterSchedule] =
+    useState<IGroupRegisterResponseData>();
+
+  const groupingId = useAtomValue(groupingIdAtom);
+  const mockParamsGroupingId = "2f92d554-747d-4183-b8e3-f767437cabd3";
+
+  useEffect(() => {
+    //@ts-ignore
+    if (mockParamsGroupingId !== "") {
+      fetchGroupRegisterSchedule(mockParamsGroupingId)
+        .then((data: IGroupRegisterResponseData) => {
+          console.log("fetchGroupRegisterSchedule", data);
+          console.log(
+            "convertGroupDataToRegisterGroupDataItem(data.groups)",
+            convertGroupDataToRegisterGroupDataItem(data.groups)
+          );
+
+          setDataTable(convertGroupDataToRegisterGroupDataItem(data.groups));
+
+          setGroupRegisterSchedule(data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setError(error.message);
+          setIsLoading(false);
+        });
+    } else {
+      setIsLoading(false);
+    }
+  }, []);
+
+  console.log("dataTable", dataTable);
+
+  const setGroupingId = useSetAtom(groupingIdAtom);
 
   // 2. Define a submit handler.
   async function handleSubmit() {
@@ -81,36 +129,26 @@ const ManageGroup = () => {
     }
 
     try {
-      console.log({
-        dateStart: dateStart,
-        dateEnd: dateEnd,
-        minMembers: minMember,
-        maxMembers: maxMember,
-      });
-
       const mockParams = {
-        class_id: "6728d58b38829046d82ccc3c",
-        subclass_code: "IT006.CLC",
+        class_id: "677fefdd854d3e02e4191707",
+        subclass_code: "IT002.O21.CLC",
         start_register_date: formatDayToISODateWithDefaultTime(
           dateStart ?? new Date()
         ),
         end_register_date: formatDayToISODateWithDefaultTime(
           dateEnd ?? new Date()
         ),
-        has_leader: true,
         max_size: maxMember,
         min_size: minMember,
-        create_subclass: false,
-        groups: [],
+        // hasLeader: true,
       };
 
       setIsLoading(true);
       createGroupRegisterSchedule(mockParams).then((data) => {
+        console.log("createGroupRegisterSchedule", data);
+        setGroupingId(data.data.id);
+
         setIsLoading(false);
-        console.log("data API", data);
-
-        router.push("/");
-
         toast({
           title: "Tạo lịch thành công.",
           description: `Đăng ký nhóm sẽ diễn ra vào ngày ${format(
@@ -121,8 +159,6 @@ const ManageGroup = () => {
           duration: 3000,
         });
       });
-
-      // naviate to home page
     } catch {
     } finally {
       setIsSubmitting(false);
@@ -190,15 +226,9 @@ const ManageGroup = () => {
     setMaxMember(e.target.value);
   };
 
-  //TODO: TANBLE
-  const [isEditTable, setIsEditTable] = useState(false);
-  const [isMultipleDelete, setIsMultipleDelete] = useState(false);
-  const [dataTable, setDataTable] = useState<RegisterGroupDataItem[]>(
-    mockDataStudentRegisterGroup
-  );
-
   return (
     <div>
+      {isLoading ? <LoadingComponent /> : null}
       <ToggleTitle
         text="Lịch đăng ký nhóm"
         showStatus
@@ -364,7 +394,7 @@ const ManageGroup = () => {
       </div>
 
       {isToggleViewTable ? (
-        dataTable.filter((item) => !item.isDeleted).length > 0 ? (
+        dataTable && dataTable.filter((item) => !item.isDeleted).length > 0 ? (
           <div>
             <RegisterGroupTable
               dataTable={dataTable}
@@ -386,10 +416,11 @@ const ManageGroup = () => {
               }}
               onClickDeleteAll={() => {
                 setDataTable((prevData) => {
-                  return prevData.map((item) => ({
-                    ...item,
-                    isDeleted: true,
-                  }));
+                  if (prevData)
+                    return prevData.map((item) => ({
+                      ...item,
+                      isDeleted: true,
+                    }));
                 });
 
                 toast({
@@ -402,15 +433,16 @@ const ManageGroup = () => {
               onClickDelete={(itemsSelected: string[]) => {
                 // ? DELETE THEO MÃ LỚP
                 setDataTable((prevData) => {
-                  return prevData.map((item) => {
-                    if (itemsSelected.includes(item.STT.toString())) {
-                      return {
-                        ...item,
-                        isDeleted: true,
-                      };
-                    }
-                    return item;
-                  });
+                  if (prevData)
+                    return prevData.map((item) => {
+                      if (itemsSelected.includes(item.STT.toString())) {
+                        return {
+                          ...item,
+                          isDeleted: true,
+                        };
+                      }
+                      return item;
+                    });
                 });
 
                 toast({

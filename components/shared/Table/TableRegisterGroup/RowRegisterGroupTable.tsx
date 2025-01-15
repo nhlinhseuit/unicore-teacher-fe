@@ -1,10 +1,10 @@
-import {
-  RegisterGroupData,
-  RegisterGroupDataItem
-} from "@/types";
 import { Table } from "flowbite-react";
 import React, { useRef } from "react";
 import InputComponent from "../components/InputComponent";
+import {
+  RegisterGroupData,
+  RegisterGroupDataItem,
+} from "@/types/entity/GroupRegister";
 
 interface RowParams {
   dataItem: RegisterGroupDataItem;
@@ -52,7 +52,6 @@ const RowRegisterGroupTable = React.memo(
 
       params.onChangeRow && params.onChangeRow(updatedDataItem); // Gọi callback để truyền dữ liệu đã chỉnh sửa lên DataTable
     };
-
 
     const renderCellStyle = (key: string) => {
       let style = "";
@@ -183,7 +182,7 @@ const RowRegisterGroupTable = React.memo(
 
         {/* STT - Là STT của nhóm */}
         <Table.Cell className="w-10 border-r-[1px]  text-left">
-          <span>{params.dataItem.data["Mã nhóm"]}</span>
+          <span>{params.dataItem.STT}</span>
         </Table.Cell>
 
         {/* Các giá trị khác */}

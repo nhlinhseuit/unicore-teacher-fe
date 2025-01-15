@@ -20,7 +20,11 @@ import { ListCourseColors } from "@/constants";
 import { fetchCourses } from "@/services/courseServices";
 import { ICourseResponseData } from "@/types/entity/Course";
 import { useRouter } from "next/navigation";
-import { classCodeAtom, classIdAtom } from "../(store)/courseStore";
+import {
+  classCodeAtom,
+  classIdAtom,
+  groupingIdAtom,
+} from "../(store)/courseStore";
 import { useAtom } from "jotai";
 
 const JoinedCourses = () => {
@@ -50,6 +54,7 @@ const JoinedCourses = () => {
 
   const [, setClassId] = useAtom(classIdAtom);
   const [, setClassCode] = useAtom(classCodeAtom);
+  const [, setGroupingId] = useAtom(groupingIdAtom);
 
   return (
     <>
@@ -61,63 +66,64 @@ const JoinedCourses = () => {
         <DetailFilterComponent />
       </div>
 
-        {isLoading ? (
-          <LoadingComponent />
-        ) : courses ? (
-          <div className="flex gap-4 flex-wrap">
-            {courses.map((item, index) => (
-              <div
+      {isLoading ? (
+        <LoadingComponent />
+      ) : courses ? (
+        <div className="flex gap-4 flex-wrap">
+          {courses.map((item, index) => (
+            <div
+              key={item.id}
+              className="relative"
+              onClick={() => {
+                if (item.subclasses.length > 1) {
+                  //? Lưu code, id vào store
+                  setClassId(item.id);
+
+                  setCurrentCourseId(item.code);
+                } else {
+                  router.push(`/courses/${item.code}`);
+
+                  //? Lưu code, id vào store
+                  setClassId(item.id);
+                  setClassCode(item.subclasses[0].code);
+                  setGroupingId(item.subclasses[0].grouping_id ?? "");
+                }
+              }}
+            >
+              <CourseItem
                 key={item.id}
-                className="relative"
-                onClick={() => {
-                  if (item.subclasses.length > 1) {
-                    //? Lưu code, id vào store
-                    setClassId(item.id);
-  
-                    setCurrentCourseId(item.code);
-                  } else {
-                    router.push(`/courses/${item.code}`);
-  
-                    //? Lưu code, id vào store
-                    setClassId(item.id);
-                    setClassCode(item.subclasses[0].code);
-                  }
-                }}
-              >
-                <CourseItem
-                  key={item.id}
-                  id={item.code}
-                  name={item.subject_metadata.name}
-                  semester={item.semester.toString()}
-                  year={item.semester.toString()}
-                  teachers={item.subclasses
-                    .map((item) => item.teacher_codes)
-                    .filter(
-                      (item) =>
-                        item &&
-                        !(
-                          item.length === 0 ||
-                          (item.length === 1 && item[0] === "")
-                        )
-                    )
-                    .join(", ")}
-                  color={
-                    ListCourseColors.find((course) => course.type === item.type)
-                      ?.color || "#e8f7ff"
-                  } // các lớp như LT, HT1, HT2... đều là lớp thường nên màu vàng
-                />
-                <div className="absolute right-0 top-0">
-                  <MoreButtonCourseItem handleEdit={() => {}} />
-                </div>
+                id={item.code}
+                name={item.subject_metadata.name}
+                semester={item.semester.toString()}
+                year={item.semester.toString()}
+                teachers={item.subclasses
+                  .map((item) => item.teacher_codes)
+                  .filter(
+                    (item) =>
+                      item &&
+                      !(
+                        item.length === 0 ||
+                        (item.length === 1 && item[0] === "")
+                      )
+                  )
+                  .join(", ")}
+                color={
+                  ListCourseColors.find((course) => course.type === item.type)
+                    ?.color || "#e8f7ff"
+                } // các lớp như LT, HT1, HT2... đều là lớp thường nên màu vàng
+              />
+              <div className="absolute right-0 top-0">
+                <MoreButtonCourseItem handleEdit={() => {}} />
               </div>
-            ))}
-          </div>
-        ) : (
-          <NoResult
-            title="Không có dữ liệu lớp học!"
-            description="🚀 Thử tải lại trang để xem dữ liệu lớp học."
-          />
-        )}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <NoResult
+          title="Không có dữ liệu lớp học!"
+          description="🚀 Thử tải lại trang để xem dữ liệu lớp học."
+        />
+      )}
 
       {currentCourseId != "" && getCurrentCourse() ? (
         <AlertDialog open={currentCourseId !== ""}>
@@ -139,6 +145,10 @@ const JoinedCourses = () => {
                         //? Lưu code, id vào store
                         setClassCode(
                           getCurrentCourse()?.subclasses[index].code ?? ""
+                        );
+                        setGroupingId(
+                          getCurrentCourse()?.subclasses[index].grouping_id ??
+                            ""
                         );
 
                         router.push(

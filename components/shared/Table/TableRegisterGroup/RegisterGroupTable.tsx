@@ -11,7 +11,6 @@ import {
 import { itemsPerPageRegisterTable } from "@/constants";
 import useDebounceSearchDataTable from "@/hooks/table/useDebounceSearchDataTable";
 import useSetDebounceSearchTerm from "@/hooks/table/useSetDebounceSearchTerm";
-import { RegisterGroupDataItem } from "@/types";
 import { Dropdown, Table } from "flowbite-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import IconButton from "../../Button/IconButton";
@@ -20,6 +19,7 @@ import NoResult from "../../Status/NoResult";
 import { tableTheme } from "../components/DataTable";
 import MyFooter from "../components/MyFooter";
 import RowRegisterGroupTable from "./RowRegisterGroupTable";
+import { RegisterGroupDataItem } from "@/types/entity/GroupRegister";
 
 interface DataTableParams {
   isEditTable: boolean;
@@ -226,19 +226,21 @@ const RegisterGroupTable = (params: DataTableParams) => {
                   STT
                 </Table.HeadCell>
 
-                {Object.keys(filteredDataTable[0]?.data || {}).map((key) => {
-                  if (key === "Mã nhóm") return null;
+                {Object.keys(filteredDataTable[0]?.data || {}).map(
+                  (key, index) => {
+                    if (key === "Mã nhóm") return null;
 
-                  return (
-                    <Table.HeadCell
-                      key={key}
-                      theme={tableTheme?.head?.cell}
-                      className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
-                    >
-                      {key}
-                    </Table.HeadCell>
-                  );
-                })}
+                    return (
+                      <Table.HeadCell
+                        key={`${key}_${index}`}
+                        theme={tableTheme?.head?.cell}
+                        className={`px-2 py-4 border-r-[1px] uppercase whitespace-nowrap`}
+                      >
+                        {key}
+                      </Table.HeadCell>
+                    );
+                  }
+                )}
               </Table.Head>
 
               {/* BODY */}
@@ -249,35 +251,33 @@ const RegisterGroupTable = (params: DataTableParams) => {
                   return dataItem.isDeleted ? (
                     <></>
                   ) : (
-                    <>
-                      {/* //TODO: Main Row: Leader */}
-                      <RowRegisterGroupTable
-                        key={dataItem.STT}
-                        dataItem={dataItem}
-                        valueUniqueInput={valueUniqueInput.toString()}
-                        itemsSelected={itemsSelected}
-                        isEditTable={params.isEditTable}
-                        isMultipleDelete={params.isMultipleDelete}
-                        onClickCheckBoxSelect={(item: string) => {
-                          setItemsSelected((prev) => {
-                            if (prev.includes(item)) {
-                              return prev.filter((i) => i !== item);
-                            } else {
-                              return [...prev, item];
-                            }
-                          });
-                        }}
-                        onChangeRow={(updatedDataItem: any) => {
-                          updateLocalDataTableRef(
-                            localDataTableRef.current.map((item) =>
-                              item.STT === updatedDataItem.STT
-                                ? updatedDataItem
-                                : item
-                            )
-                          );
-                        }}
-                      />
-                    </>
+                    //  //TODO: Main Row: Leader
+                    <RowRegisterGroupTable
+                      key={dataItem.STT}
+                      dataItem={dataItem}
+                      valueUniqueInput={valueUniqueInput.toString()}
+                      itemsSelected={itemsSelected}
+                      isEditTable={params.isEditTable}
+                      isMultipleDelete={params.isMultipleDelete}
+                      onClickCheckBoxSelect={(item: string) => {
+                        setItemsSelected((prev) => {
+                          if (prev.includes(item)) {
+                            return prev.filter((i) => i !== item);
+                          } else {
+                            return [...prev, item];
+                          }
+                        });
+                      }}
+                      onChangeRow={(updatedDataItem: any) => {
+                        updateLocalDataTableRef(
+                          localDataTableRef.current.map((item) =>
+                            item.STT === updatedDataItem.STT
+                              ? updatedDataItem
+                              : item
+                          )
+                        );
+                      }}
+                    />
                   );
                 })}
               </Table.Body>
@@ -286,7 +286,10 @@ const RegisterGroupTable = (params: DataTableParams) => {
         )}
 
         {/* FOOTER */}
-        {!isShowFooter || params.isEditTable || params.isMultipleDelete || (currentItems.length > 0 && filteredDataTable.length === 0) ? (
+        {!isShowFooter ||
+        params.isEditTable ||
+        params.isMultipleDelete ||
+        (currentItems.length > 0 && filteredDataTable.length === 0) ? (
           <></>
         ) : (
           <MyFooter
@@ -313,7 +316,7 @@ const RegisterGroupTable = (params: DataTableParams) => {
                   onClick={() => {
                     setIsShowDialog(-1);
                     setItemsSelected([]);
-                    params.onClickGetOut && params.onClickGetOut(); 
+                    params.onClickGetOut && params.onClickGetOut();
                   }}
                 >
                   Hủy

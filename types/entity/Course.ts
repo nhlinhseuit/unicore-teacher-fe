@@ -63,7 +63,7 @@ export interface ISubCourseResponseData {
   end_date: string;
   max_size: number;
   current_size: number;
-  grouping_id: string;
+  grouping_id?: string;
 }
 
 interface ISubjectMetada {

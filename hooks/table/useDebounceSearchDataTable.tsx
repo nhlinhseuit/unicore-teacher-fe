@@ -6,11 +6,11 @@ import {
   StudentDataItem,
   SubjectDataItem,
   TeacherDataItem,
-  RegisterGroupDataItem,
   InternReviewDataItem,
   SupervisorThesisReviewTicketDataItem,
 ReviewerThesisReviewTicketDataItem,
 } from "@/types";
+import { RegisterGroupDataItem } from "@/types/entity/GroupRegister";
 import { TopicDataItem } from "@/types/entity/Topic";
 import { useEffect } from "react";
 
