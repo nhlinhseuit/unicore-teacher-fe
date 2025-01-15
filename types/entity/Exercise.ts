@@ -1,5 +1,4 @@
 import { WeightType } from "./Project";
-import { ITTopicResponseData } from "./Topic";
 
 export enum ExerciseType {
   HOMEWORK = "HOMEWORK",

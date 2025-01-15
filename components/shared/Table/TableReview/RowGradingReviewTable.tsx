@@ -1,4 +1,4 @@
-import { GradingReviewDataItem } from "@/types";
+import { GradingReviewDataItem } from "@/types/entity/Review";
 import { Table } from "flowbite-react";
 import React from "react";
 

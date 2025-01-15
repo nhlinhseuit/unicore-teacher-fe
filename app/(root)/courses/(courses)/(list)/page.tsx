@@ -20,7 +20,8 @@ import { ListCourseColors } from "@/constants";
 import { fetchCourses } from "@/services/courseServices";
 import { ICourseResponseData } from "@/types/entity/Course";
 import { useRouter } from "next/navigation";
-import { sClassCode, sClassId } from "../(store)/courseStore";
+import { classCodeAtom, classIdAtom } from "../(store)/courseStore";
+import { useAtom } from "jotai";
 
 const JoinedCourses = () => {
   const [currentCourseId, setCurrentCourseId] = useState("");
@@ -47,6 +48,9 @@ const JoinedCourses = () => {
     return courses.find((item) => item.code === currentCourseId);
   };
 
+  const [, setClassId] = useAtom(classIdAtom);
+  const [, setClassCode] = useAtom(classCodeAtom);
+
   return (
     <>
       <div className="items-center flex w-full gap-2 mb-8">
@@ -68,15 +72,15 @@ const JoinedCourses = () => {
                 onClick={() => {
                   if (item.subclasses.length > 1) {
                     //? Lưu code, id vào store
-                    sClassId.set(item.id);
-
+                    setClassId(item.id);
+  
                     setCurrentCourseId(item.code);
                   } else {
                     router.push(`/courses/${item.code}`);
-
+  
                     //? Lưu code, id vào store
-                    sClassId.set(item.id);
-                    sClassCode.set(item.subclasses[0].code);
+                    setClassId(item.id);
+                    setClassCode(item.subclasses[0].code);
                   }
                 }}
               >
@@ -87,7 +91,7 @@ const JoinedCourses = () => {
                   semester={item.semester.toString()}
                   year={item.semester.toString()}
                   teachers={item.subclasses
-                    .map((item) => item.teacher_code)
+                    .map((item) => item.teacher_codes)
                     .filter(
                       (item) =>
                         item &&
@@ -133,7 +137,7 @@ const JoinedCourses = () => {
                     <div
                       onClick={() => {
                         //? Lưu code, id vào store
-                        sClassCode.set(
+                        setClassCode(
                           getCurrentCourse()?.subclasses[index].code ?? ""
                         );
 
@@ -148,13 +152,13 @@ const JoinedCourses = () => {
                         key={item.code}
                         id={item.code}
                         teacher={
-                          item.teacher_code &&
-                          item.teacher_code.length !== 0 &&
+                          item.teacher_codes &&
+                          item.teacher_codes.length !== 0 &&
                           !(
-                            item.teacher_code.length === 1 &&
-                            item.teacher_code[0] === ""
+                            item.teacher_codes.length === 1 &&
+                            item.teacher_codes[0] === ""
                           )
-                            ? item.teacher_code.join(", ")
+                            ? item.teacher_codes.join(", ")
                             : ""
                         }
                         type={item.type}

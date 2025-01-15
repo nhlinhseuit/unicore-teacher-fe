@@ -5,7 +5,9 @@ import MoreButtonCourseItem from "@/components/courses/MoreButtonCourseItem";
 import BackToPrev from "@/components/shared/BackToPrev";
 import IconButton from "@/components/shared/Button/IconButton";
 import DetailFilterComponentScore from "@/components/shared/DetailFilterComponentScore";
+import LoadingComponent from "@/components/shared/LoadingComponent";
 import ScoreColumnDetailPage from "@/components/shared/ScoreTranscript/ScoreColumnDetailPage";
+import NoResult from "@/components/shared/Status/NoResult";
 import ScoreTranscriptTable from "@/components/shared/Table/TableScoreTranscript/ScoreTranscriptTable";
 import { ListCourseColors } from "@/constants";
 import {
@@ -14,15 +16,33 @@ import {
   mockGradeColumnPercent,
   mockSubCoursesOfCourseScoreTranscript,
 } from "@/mocks";
+import { fetchCourses } from "@/services/courseServices";
+import { ICourseResponseData } from "@/types/entity/Course";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const ScoreTranscript = () => {
   const [isEditTable, setIsEditTable] = useState(false);
   const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
   const [selectedCourse, setSelectedCourse] = useState(-1);
   const [currentCourseId, setCurrentCourseId] = useState("");
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [courses, setCourses] = useState<ICourseResponseData[]>([]);
+
+  useEffect(() => {
+    fetchCourses()
+      .then((data: ICourseResponseData[]) => {
+        setCourses(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <>
@@ -138,7 +158,7 @@ const ScoreTranscript = () => {
                 </div>
               </div>
 
-              <div className="flex gap-4 flex-wrap">
+              {/* <div className="flex gap-4 flex-wrap">
                 {mockCourses.map((item, index) => (
                   <div
                     key={item.id}
@@ -152,6 +172,7 @@ const ScoreTranscript = () => {
                       id={item.id}
                       name={item.name}
                       semester={item.semester}
+                      year={item.semester}
                       teachers={item.teachers}
                       color={
                         ListCourseColors.find(
@@ -164,7 +185,65 @@ const ScoreTranscript = () => {
                     </div>
                   </div>
                 ))}
-              </div>
+              </div> */}
+
+              {isLoading ? (
+                <LoadingComponent />
+              ) : courses ? (
+                <div className="flex gap-4 flex-wrap">
+                  {courses.map((item, index) => (
+                    <div
+                      key={item.id}
+                      className="relative"
+                      onClick={() => {
+                        // if (item.subclasses.length > 1) {
+                        //   //? Lưu code, id vào store
+                        //   sClassId.set(item.id);
+                        //   setCurrentCourseId(item.code);
+                        // } else {
+                        //   router.push(`/courses/${item.code}`);
+                        //   //? Lưu code, id vào store
+                        //   sClassId.set(item.id);
+                        //   sClassCode.set(item.subclasses[0].code);
+                        // }
+                        setCurrentCourseId("SE114.N21.PMCL");
+                      }}
+                    >
+                      <CourseItem
+                        key={item.id}
+                        id={item.code}
+                        name={item.subject_metadata.name}
+                        semester={item.semester.toString()}
+                        year={item.semester.toString()}
+                        teachers={item.subclasses
+                          .map((item) => item.teacher_codes)
+                          .filter(
+                            (item) =>
+                              item &&
+                              !(
+                                item.length === 0 ||
+                                (item.length === 1 && item[0] === "")
+                              )
+                          )
+                          .join(", ")}
+                        color={
+                          ListCourseColors.find(
+                            (course) => course.type === item.type
+                          )?.color || "#e8f7ff"
+                        } // các lớp như LT, HT1, HT2... đều là lớp thường nên màu vàng
+                      />
+                      <div className="absolute right-0 top-0">
+                        <MoreButtonCourseItem handleEdit={() => {}} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <NoResult
+                  title="Không có dữ liệu lớp học!"
+                  description="🚀 Thử tải lại trang để xem dữ liệu lớp học."
+                />
+              )}
             </>
           )}
         </>

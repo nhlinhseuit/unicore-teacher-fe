@@ -1,9 +1,9 @@
 //? Data lấy về ở dạng ICourseResponseData, cần convert sang TopicDataItem
 
-import { ITTopicResponseData, TopicDataItem } from "@/types/entity/Topic";
+import { ITopicResponseData, TopicDataItem } from "@/types/entity/Topic";
 
 export const convertToDataTableTopicsViKeys = (
-  data: ITTopicResponseData[]
+  data: ITopicResponseData[]
 ): TopicDataItem[] => {
   return data.map((item, index) => {
     return {

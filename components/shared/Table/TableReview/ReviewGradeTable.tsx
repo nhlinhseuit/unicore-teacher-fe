@@ -1,7 +1,7 @@
-import { DataGradingReviewItem } from "@/types";
 import { Table } from "flowbite-react";
 import { useState } from "react";
 import { tableTheme } from "../components/DataTable";
+import { DataGradingReviewItem } from "@/types/entity/Review";
 
 interface DataTableParams {
   dataTable: DataGradingReviewItem;

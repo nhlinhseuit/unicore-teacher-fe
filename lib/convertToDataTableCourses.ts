@@ -12,7 +12,7 @@ export const convertToDataTableCoursesViKeys = (
           "Mã môn học": item.subject_code,
           "Mã lớp": subclass.code,
           "Tên môn học": item.subject_metadata.name ?? "",
-          "Mã GV": subclass.teacher_code,
+          "Mã GV": subclass.teacher_codes,
           "Tên GV": [], // Nếu cần tên GV, có thể sửa lại để lấy thông tin từ nguồn khác
           HTGD: subclass.type,
           "Số TC": subclass.credits.toString(),
@@ -59,8 +59,8 @@ export const convertToAPIDataTableCourses = ({
       is_org_managed:
         item.data["Tên GV"].length === 0 ||
         (item.data["Tên GV"].length === 1 && item.data["Tên GV"][0] === ""),
-      teacher_code: item.data["Mã GV"],
-      teacher_name: item.data["Tên GV"],
+      teacher_codes: item.data["Mã GV"],
+      teacher_names: item.data["Tên GV"],
       type: item.data["HTGD"],
       credits: parseInt(item.data["Số TC"], 10) || 0, // Chuyển số tín chỉ về số nguyên
       start_date: item.data["Ngày BĐ"],

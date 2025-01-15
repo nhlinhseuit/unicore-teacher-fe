@@ -47,8 +47,6 @@ export const convertReviewToPostData = (
     id: review.id,
     creator: review.created_by,
     createdAt: review.created_date,
-    submitter_id: review.submitter_id, // ID người nộp
-    submitter_name: review.submitter_name, // Tên người nộp
     title: review.event_name || "ĐỢI BACKEND CẬP NHẬT", // Nếu `event_name` null, dùng giá trị mặc định
     fileName: review.submission_id,
     scoreDetail: {
@@ -79,8 +77,6 @@ export interface PostDataGradingReviewItem {
   id: string;
   creator: string;
   createdAt: string;
-  submitter_id: string; // ID người nộp
-  submitter_name: string; // Tên người nộp
   title: string;
   fileName: string;
   scoreDetail: DataGradingReviewItem;

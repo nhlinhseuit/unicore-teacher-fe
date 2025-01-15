@@ -16,8 +16,8 @@ export const convertToAPIHomeworkParams = ({
       is_org_managed:
         item.data["Tên GV"].length === 0 ||
         (item.data["Tên GV"].length === 1 && item.data["Tên GV"][0] === ""),
-      teacher_code: item.data["Mã GV"],
-      teacher_name: item.data["Tên GV"],
+      teacher_codes: item.data["Mã GV"],
+      teacher_names: item.data["Tên GV"],
       type: item.data["HTGD"],
       credits: parseInt(item.data["Số TC"], 10) || 0, // Chuyển số tín chỉ về số nguyên
       start_date: item.data["Ngày BĐ"],

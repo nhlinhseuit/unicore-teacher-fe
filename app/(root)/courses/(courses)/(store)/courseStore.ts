@@ -1,8 +1,5 @@
-import { signify } from "react-signify";
+import { atom } from 'jotai'
 
-
-export const sClassId = signify<string>("");
-export const sClassCode = signify<string>("");
-export const sProjectId = signify<string>("");
-
-
+export const classIdAtom = atom<string>('')
+export const classCodeAtom = atom<string>('')
+export const projectIdAtom = atom<string>('')

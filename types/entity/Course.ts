@@ -5,6 +5,16 @@ export enum CourseType {
   ProjectCourse = "DA",
   ThesisCourse = "KLTN",
 }
+export enum CourseNotDoneImportAction {
+  //?
+  NotImportStudentInCourse,
+  NotImportMidtermExamSchedule,
+  NotImportFinalExamSchedule,
+  NotImportReviewerListThesis,
+  NotImportScheduleAndCouncilListThesis,
+  NotImportScheduleAndCouncilListIntern,
+  None,
+}
 
 export interface CourseDataItem {
   type: string;
@@ -38,6 +48,7 @@ export interface ICourseResponseData {
   subclasses: ISubCourseResponseData[];
   organization_id: string;
   subject_code: string;
+  subject_name: string;
   org_managed: boolean;
   subject_metadata: ISubjectMetada;
 }
@@ -46,12 +57,13 @@ export interface ISubCourseResponseData {
   credits: number;
   type: string;
   note: string;
-  teacher_code: string[];
-  teacher_assistant_code: string[];
+  teacher_codes: string[];
+  teacher_names: string[];
   start_date: string;
   end_date: string;
   max_size: number;
   current_size: number;
+  grouping_id: string;
 }
 
 interface ISubjectMetada {
