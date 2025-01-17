@@ -29,17 +29,19 @@ import {
 } from "@/components/ui/popover";
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
-import {
-  mockCourseGradeColumn,
-  mockCoursesList,
-  mockDbLeftRatio,
-  mockGradeColumnList,
-} from "@/mocks";
+import { mockCoursesList } from "@/mocks";
 import {
   createExercise,
   editExercise,
   fetchDetailExercise,
 } from "@/services/exerciseServices";
+import { fetchCreationVariables } from "@/services/reportServices";
+import { ITExerciseResponseData } from "@/types/entity/Exercise";
+import { getWeightType } from "@/types/entity/Project";
+import {
+  ITCreationVariablesWeight,
+  ITCreationVariablesWeightData,
+} from "@/types/entity/Report";
 import {
   formatDayToISO,
   formatDayToISODateWithDefaultTime,
@@ -58,7 +60,6 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import LoadingComponent from "../LoadingComponent";
-import { ITExerciseResponseData } from "@/types/entity/Exercise";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -89,8 +90,35 @@ const CreateExercise = (params: Props) => {
   const [error, setError] = useState<string | null>(null);
 
   const [exercise, setExercise] = useState<ITExerciseResponseData>();
+  const [listCreationVariables, setListCreationVariables] =
+    useState<ITCreationVariablesWeightData[]>();
+
+  const mockParamsSubclassCode = "IT002.O21.CLC";
+
+  console.log("listCreationVariables", listCreationVariables);
 
   useEffect(() => {
+    //TODO: Fetch cột điểm, hệ số điểm còn lại
+    const mockParams = {
+      classId: "67811f38854d3e02e4191719",
+      subclassCode: "IT002.O21.CLC",
+      teacherCode: "80173",
+    };
+
+    fetchCreationVariables(mockParams).then((data) => {
+      if (data.data.weights.length > 0) {
+        setListCreationVariables(
+          data.data.weights
+            .filter(
+              (item: ITCreationVariablesWeight) =>
+                item.subclassCode === mockParamsSubclassCode
+            )
+            .flatMap((item: ITCreationVariablesWeight) => item.weights)
+        );
+      }
+    });
+
+    //TODO: Fetch detail exercise
     if (params.isEdit && params.exerciseId && params.exerciseId !== "") {
       setExercise(undefined);
       setIsLoading(true);
@@ -124,13 +152,13 @@ const CreateExercise = (params: Props) => {
       setNumberOfRecheck(
         exercise.review_times ? exercise.review_times.toString() : ""
       );
-      setSelectedGroupOption(exercise.in_group ? 2 : 1)
-      setSelectedScheduleOption(exercise.publish_date !== '' ? 2 : 1)
+      setSelectedGroupOption(exercise.in_group ? 2 : 1);
+      setSelectedScheduleOption(exercise.publish_date !== "" ? 2 : 1);
       setDatePost(
         exercise.publish_date
           ? formatISOToDayDatatype(exercise.publish_date)
           : undefined
-      )
+      );
       setDateStart(
         exercise.startDate
           ? formatISOToDayDatatype(exercise.startDate)
@@ -334,10 +362,22 @@ const CreateExercise = (params: Props) => {
       message: "Hệ số phải lớn hơn 0",
       path: ["ratio"],
     })
-    .refine((data) => parseInt(ratio) < mockDbLeftRatio, {
-      message: `Hệ số phải nhỏ hơn hệ số còn lại của cột điểm (${mockDbLeftRatio}%)`,
-      path: ["ratio"],
-    })
+    .refine(
+      (data) => {
+        if (selectedGradeColumn !== -1 && listCreationVariables) {
+          return (
+            parseInt(ratio) <
+            listCreationVariables[selectedGradeColumn].remaining
+          );
+        } else return true;
+      },
+      {
+        message: `Hệ số phải nhỏ hơn hệ số còn lại của cột điểm (${
+          listCreationVariables![selectedGradeColumn].remaining
+        }%)`,
+        path: ["ratio"],
+      }
+    )
     .refine(
       (data) =>
         selectedRecheckOption === 2
@@ -451,7 +491,7 @@ const CreateExercise = (params: Props) => {
     editExercise(params.exerciseId ?? "", paramsAPI).then((data) => {
       console.log("createExerciseAPI data:", data);
 
-      handleClickBack()
+      handleClickBack();
 
       toast({
         title: "Chỉnh sửa thông báo thành công.",
@@ -532,6 +572,10 @@ const CreateExercise = (params: Props) => {
                       Nội dung chi tiết của bài tập{" "}
                       <span className="text-red-600">*</span>
                     </FormLabel>
+                    <FormDescription className="body-regular mt-2.5 text-light-500">
+                      Thông tin chi tiết của thông báo. Tối thiểu 20 kí tự. Nhấn
+                      tổ hợp Ctrl + V để chèn hình ảnh.
+                    </FormDescription>
                     <FormControl className="mt-3.5 ">
                       {/* editor  */}
                       <Editor
@@ -565,10 +609,7 @@ const CreateExercise = (params: Props) => {
                         }}
                       />
                     </FormControl>
-                    <FormDescription className="body-regular mt-2.5 text-light-500">
-                      Thông tin chi tiết của thông báo. Tối thiểu 20 kí tự. Nhấn
-                      tổ hợp Ctrl + V để chèn hình ảnh.
-                    </FormDescription>
+
                     <FormMessage className="text-red-500" />
                   </FormItem>
                 )}
@@ -868,14 +909,16 @@ const CreateExercise = (params: Props) => {
                           <div>
                             <IconButton
                               text={`${
-                                selectedGradeColumn === -1
+                                selectedGradeColumn === -1 ||
+                                !listCreationVariables
                                   ? "Chọn cột điểm"
-                                  : mockCourseGradeColumn[
-                                      selectedGradeColumn - 1
-                                    ].value
+                                  : getWeightType(
+                                      listCreationVariables[selectedGradeColumn]
+                                        .type
+                                    )
                               }`}
                               onClick={() => {}}
-                              iconRight={"/assets/icons/chevron-down.svg"}
+                              iconRight="/assets/icons/chevron-down.svg"
                               bgColor="bg-white"
                               textColor="text-black"
                               border
@@ -885,32 +928,31 @@ const CreateExercise = (params: Props) => {
                         )}
                       >
                         <div className="scroll-container scroll-container-dropdown-content">
-                          {mockGradeColumnList.map((gradeColumn, index) => (
+                          {listCreationVariables?.map((weight, index) => (
                             <Dropdown.Item
-                              key={`${gradeColumn.id}_${index}`}
+                              key={`${weight.type}_${index}`}
                               onClick={() => {
-                                if (selectedGradeColumn === gradeColumn.id) {
+                                if (selectedGradeColumn === index) {
                                   setSelectedGradeColumn(-1);
                                 } else {
-                                  setSelectedGradeColumn(gradeColumn.id);
+                                  setSelectedGradeColumn(index);
                                 }
                               }}
                             >
                               <div className="flex justify-between w-full">
                                 <p className="w-[80%] text-left line-clamp-1">
-                                  {gradeColumn.value}
+                                  {getWeightType(weight.type)} - Còn lại{" "}
+                                  {weight.remaining}%
                                 </p>
-                                {selectedGradeColumn === gradeColumn.id ? (
+                                {selectedGradeColumn === index ? (
                                   <Image
                                     src="/assets/icons/check.svg"
-                                    alt="search"
+                                    alt="check"
                                     width={21}
                                     height={21}
                                     className="cursor-pointer mr-2"
                                   />
-                                ) : (
-                                  <></>
-                                )}
+                                ) : null}
                               </div>
                             </Dropdown.Item>
                           ))}
@@ -932,11 +974,16 @@ const CreateExercise = (params: Props) => {
                     <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
                       Hệ số điểm <span className="text-red-600">*</span>
                     </FormLabel>
-                    <FormDescription className="body-regular mt-2.5 text-light-500">
-                      Hệ số còn lại trong cột điểm **Quá trình để phân bổ là{" "}
-                      {mockDbLeftRatio}% (**Bài tập đã chiếm{" "}
-                      {100 - mockDbLeftRatio}%).
-                    </FormDescription>
+                    {selectedGradeColumn !== -1 && listCreationVariables ? (
+                      <FormDescription className="body-regular mt-2.5 text-light-500">
+                        Hệ số còn lại trong cột điểm{" "}
+                        {getWeightType(
+                          listCreationVariables[selectedGradeColumn].type
+                        )}{" "}
+                        để phân bổ là{" "}
+                        {listCreationVariables[selectedGradeColumn].remaining}%
+                      </FormDescription>
+                    ) : null}
                     <FormDescription className="body-regular mt-2.5 text-light-500">
                       Nếu không đặt hệ số, hệ thống sẽ tự động phân bổ điểm đều
                       giữa các thành phần trong cùng cột điểm.

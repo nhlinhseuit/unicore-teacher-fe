@@ -8,6 +8,8 @@ interface Props {
   value: boolean;
   showStatus?: boolean;
   showEditButton?: boolean;
+  handleEdit?: () => void;
+  isActive?: boolean;
 }
 
 const ToggleTitle = (params: Props) => {
@@ -31,13 +33,21 @@ const ToggleTitle = (params: Props) => {
         />
       </div>
       {params.showStatus ? (
-        <StatusButton
-          gray
-          text="Chưa diễn ra"
-          infoComponent="Sẽ diễn ra vào ngày 20/11/2024"
-          smallText
-          otherClasses="ml-4"
-        />
+        params.isActive ? (
+          <StatusButton
+            green
+            text="Đang diễn ra"
+            smallText
+            otherClasses="ml-4"
+          />
+        ) : (
+          <StatusButton
+            gray
+            text="Chưa diễn ra"
+            smallText
+            otherClasses="ml-4"
+          />
+        )
       ) : (
         <></>
       )}
@@ -48,6 +58,9 @@ const ToggleTitle = (params: Props) => {
           height={26}
           alt={"edit"}
           className={`ml-4 -translate-y-[2px] object-contain cursor-pointer`}
+          onClick={() => {
+            params.handleEdit && params.handleEdit();
+          }}
         />
       ) : (
         <></>

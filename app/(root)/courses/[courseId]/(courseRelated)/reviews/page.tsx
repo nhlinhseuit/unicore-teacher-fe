@@ -147,6 +147,19 @@ const Review = () => {
             variant: "success",
             duration: 3000,
           });
+
+          setReviews((prev) => {
+            // Kiểm tra nếu ID đã tồn tại
+            if (prev.some((item) => item.id === data.data.id)) {
+              // Nếu đã tồn tại, cập nhật phần tử
+              return prev.map((item) =>
+                item.id === data.data.id ? data.data : item
+              );
+            }
+
+            // Nếu chưa tồn tại, thêm phần tử mới
+            return [...prev, data.data];
+          });
         });
       } else if (isReview === 2) {
         declineAReview(getReview().id).then((data) => {

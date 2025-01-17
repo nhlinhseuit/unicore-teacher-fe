@@ -42,6 +42,8 @@ const RegisterTopic = () => {
   const [dateStart, setDateStart] = useState<Date>();
   const [dateEnd, setDateEnd] = useState<Date>();
 
+  const [isAlreadyHasSchedule, setIsAlreadyHasSchedule] = useState(false);
+
   const [errorList, setErrorList] = useState([
     {
       id: "1",
@@ -181,14 +183,15 @@ const RegisterTopic = () => {
     <>
       <ToggleTitle
         text="Lịch đăng ký đề tài"
+        isActive={isAlreadyHasSchedule}
         showStatus
-        showEditButton
+        showEditButton={isAlreadyHasSchedule}
         handleClick={handleClickCreateSchedule}
         value={isToggleCreateSchedule}
       />
 
       {isToggleCreateSchedule ? (
-        <div className="flex px-6 gap-12">
+        <div className="px-6">
           <div className="flex w-full flex-col gap-10">
             {/* //TODO: CUSTOM FORM FIELD */}
             <div>
@@ -382,6 +385,21 @@ const RegisterTopic = () => {
               </BorderContainer>
             </div>
           </div>
+
+          <div className="flex mt-12 gap-2">
+            <SubmitButton
+              text="Đăng"
+              otherClasses="w-fit"
+              onClick={handleSubmit}
+            />
+
+            <IconButton
+              text="Hủy"
+              red
+              otherClasses="w-fit"
+              onClick={() => {}}
+            />
+          </div>
         </div>
       ) : (
         <></>
@@ -457,6 +475,9 @@ const RegisterTopic = () => {
             onClickGetOut={() => {
               setIsMultipleDelete(false);
             }}
+            onClickCancelEdit={() => {
+              setIsEditTable(false);
+            }}
           />
         ) : (
           <NoResult
@@ -467,12 +488,6 @@ const RegisterTopic = () => {
       ) : (
         <></>
       )}
-
-      <div className="flex mt-12 gap-2">
-        <SubmitButton text="Đăng" otherClasses="w-fit" onClick={handleSubmit} />
-
-        <IconButton text="Hủy" red otherClasses="w-fit" onClick={() => {}} />
-      </div>
     </>
   );
 };

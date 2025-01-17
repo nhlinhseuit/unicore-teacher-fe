@@ -100,7 +100,7 @@ const MobileNav = () => {
           </SignedOut> */}
           <div className="flex flex-col gap-3">
             <SheetClose asChild>
-              <Link href="/sign-in">
+              <Link href="/login">
                 <Button
                   className="
                         small-medium btn-secondary 

@@ -20,6 +20,22 @@ export enum SubmissionType {
 //   { id: 4, type: "FINAL_TERM", value: "Cuối kỳ" },
 // ];
 
+export interface ITCreationVariables {
+  classId: string;
+  weights: ITCreationVariablesWeight[];
+}
+
+export interface ITCreationVariablesWeight {
+  subclassCode: string;
+  type: string;
+  weights: ITCreationVariablesWeightData[];
+}
+
+export interface ITCreationVariablesWeightData {
+  type: WeightType;
+  remaining: number;
+}
+
 export interface ITReportResponseData {
   id: string;
   weight: number;
@@ -33,7 +49,7 @@ export interface ITReportResponseData {
   created_by: string;
   modified_by: string | null; // Nullable
   in_group: boolean;
-  weight_type: WeightType; 
+  weight_type: WeightType;
   class_id: string;
   subclass_code: string; // Single string
   allow_grade_review: boolean;
@@ -45,4 +61,3 @@ export interface ITReportResponseData {
   close_submission_date: string; // ISO 8601 date string
   attachment_url: string;
 }
-

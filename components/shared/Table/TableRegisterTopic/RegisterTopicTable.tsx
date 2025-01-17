@@ -38,6 +38,7 @@ interface DataTableParams {
   onClickDelete?: (itemsSelected: string[]) => void;
   onClickDeleteAll?: () => void;
   onClickGetOut?: () => void;
+  onClickCancelEdit?: () => void;
 }
 
 const RegisterTopicTable = (params: DataTableParams) => {
@@ -132,7 +133,16 @@ const RegisterTopicTable = (params: DataTableParams) => {
         {params.isOnlyView ? null : (
           <div className="flex flex-col items-stretch justify-end flex-shrink-0 w-full space-y-2 md:w-auto md:flex-row md:space-y-0 md:items-center">
             {params.isEditTable ? (
+              <div className="flex items-center gap-2">
               <IconButton text="Lưu" onClick={saveDataTable} />
+              <IconButton
+                bgColor="bg-gray-500"
+                text="Hủy"
+                onClick={() => {
+                  params.onClickCancelEdit && params.onClickCancelEdit();
+                }}
+              />
+            </div>
             ) : isShowDeleteInfo ? (
               <div className="flex items-center gap-2">
                 <p className="text-sm font-medium">

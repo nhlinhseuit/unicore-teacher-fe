@@ -90,11 +90,11 @@ export const TeacherCourseTabItems = [
     label: "Phúc khảo",
     route: "/reviews",
   },
-  {
-    value: "files",
-    label: "Lưu trữ",
-    route: "/files",
-  },
+  // {
+  //   value: "files",
+  //   label: "Lưu trữ",
+  //   route: "/files",
+  // },
   {
     value: "setting",
     label: "Cài đặt",
@@ -118,21 +118,22 @@ export const BigExerciseTabItems = [
     label: "Duyệt đề xuất đề tài",
     route: "/approve-topic",
   },
-  {
-    value: "reviews",
-    label: "Phúc khảo",
-    route: "/reviews",
-  },
-  {
-    value: "files",
-    label: "Lưu trữ",
-    route: "/files",
-  },
+  // {
+  //   value: "reviews",
+  //   label: "Phúc khảo",
+  //   route: "/reviews",
+  // },
+  // {
+  //   value: "files",
+  //   label: "Lưu trữ",
+  //   route: "/files",
+  // },
 ];
 
 // TODO: OTHERS
 export const AnnouncementTypes = [
   { route: "/create-announcement", label: "Tạo thông báo" },
+  { route: "/create-check-attendance", label: "Tạo form điểm danh" },
   { route: "/create-exercise", label: "Tạo bài tập" },
   { route: "/create-report", label: "Tạo báo cáo đồ án" },
 ];

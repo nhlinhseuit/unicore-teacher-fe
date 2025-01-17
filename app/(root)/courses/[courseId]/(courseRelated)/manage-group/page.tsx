@@ -19,6 +19,7 @@ import { useToast } from "@/hooks/use-toast";
 import { mockDataStudentRegisterGroup } from "@/mocks";
 import {
   createGroupRegisterSchedule,
+  editGroupRegisterSchedule,
   fetchGroupRegisterSchedule,
 } from "@/services/groupRegisterServices";
 import {
@@ -26,7 +27,10 @@ import {
   IGroupRegisterResponseData,
   RegisterGroupDataItem,
 } from "@/types/entity/GroupRegister";
-import { formatDayToISODateWithDefaultTime } from "@/utils/dateTimeUtil";
+import {
+  formatDayToISODateWithDefaultTime,
+  formatISOToDayDatatype,
+} from "@/utils/dateTimeUtil";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
@@ -72,7 +76,10 @@ const ManageGroup = () => {
     },
   ]);
 
-  //TODO: TANBLE
+  const [isAlreadyHasSchedule, setIsAlreadyHasSchedule] = useState(false);
+  const [isEditting, setIsEditting] = useState(false);
+
+  //TODO: TABLE
   const [isEditTable, setIsEditTable] = useState(false);
   const [isMultipleDelete, setIsMultipleDelete] = useState(false);
   const [dataTable, setDataTable] = useState<RegisterGroupDataItem[]>();
@@ -91,16 +98,27 @@ const ManageGroup = () => {
     if (mockParamsGroupingId !== "") {
       fetchGroupRegisterSchedule(mockParamsGroupingId)
         .then((data: IGroupRegisterResponseData) => {
-          console.log("fetchGroupRegisterSchedule", data);
-          console.log(
-            "convertGroupDataToRegisterGroupDataItem(data.groups)",
-            convertGroupDataToRegisterGroupDataItem(data.groups)
-          );
+          if (data) {
+            console.log("fetchGroupRegisterSchedule", data);
+            console.log(
+              "convertGroupDataToRegisterGroupDataItem(data.groups)",
+              convertGroupDataToRegisterGroupDataItem(data.groups)
+            );
 
-          setDataTable(convertGroupDataToRegisterGroupDataItem(data.groups));
+            setDataTable(convertGroupDataToRegisterGroupDataItem(data.groups));
 
-          setGroupRegisterSchedule(data);
-          setIsLoading(false);
+            //?
+            setDateStart(formatISOToDayDatatype(data.start_register_date));
+            setDateEnd(formatISOToDayDatatype(data.end_register_date));
+            setMaxMember(data.max_size.toString());
+            setMinMember(data.min_size.toString());
+            // ! mockParams
+            // setSelectedLeaderOption(data.hasLeader)
+            setIsAlreadyHasSchedule(true);
+
+            setGroupRegisterSchedule(data);
+            setIsLoading(false);
+          }
         })
         .catch((error) => {
           setError(error.message);
@@ -140,25 +158,44 @@ const ManageGroup = () => {
         ),
         max_size: maxMember,
         min_size: minMember,
-        // hasLeader: true,
+        // hasLeader: selectedLeaderOption,
       };
 
-      setIsLoading(true);
-      createGroupRegisterSchedule(mockParams).then((data) => {
-        console.log("createGroupRegisterSchedule", data);
-        setGroupingId(data.data.id);
+      if (isAlreadyHasSchedule) {
+        setIsLoading(true);
+        editGroupRegisterSchedule(mockParamsGroupingId, mockParams).then(
+          (data) => {
+            console.log("editGroupRegisterSchedule", data);
+            setGroupingId(data.data.id);
 
-        setIsLoading(false);
-        toast({
-          title: "Tạo lịch thành công.",
-          description: `Đăng ký nhóm sẽ diễn ra vào ngày ${format(
-            dateStart ?? "",
-            "dd/MM/yyyy"
-          )}`,
-          variant: "success",
-          duration: 3000,
+            setIsLoading(false);
+            toast({
+              title: "Chỉnh sửa lịch đăng ký nhóm thành công.",
+              variant: "success",
+              duration: 3000,
+            });
+          }
+        );
+
+        setIsEditting(false);
+      } else {
+        setIsLoading(true);
+        createGroupRegisterSchedule(mockParams).then((data) => {
+          console.log("createGroupRegisterSchedule", data);
+          setGroupingId(data.data.id);
+
+          setIsLoading(false);
+          toast({
+            title: "Tạo lịch thành công.",
+            description: `Đăng ký nhóm sẽ diễn ra vào ngày ${format(
+              dateStart ?? "",
+              "dd/MM/yyyy"
+            )}`,
+            variant: "success",
+            duration: 3000,
+          });
         });
-      });
+      }
     } catch {
     } finally {
       setIsSubmitting(false);
@@ -231,159 +268,226 @@ const ManageGroup = () => {
       {isLoading ? <LoadingComponent /> : null}
       <ToggleTitle
         text="Lịch đăng ký nhóm"
+        isActive={isAlreadyHasSchedule}
         showStatus
-        showEditButton
+        showEditButton={isAlreadyHasSchedule}
+        handleEdit={() => {
+          setIsEditting(true);
+        }}
         handleClick={handleClickCreateSchedule}
         value={isToggleCreateSchedule}
       />
 
       {isToggleCreateSchedule ? (
-        <div className="flex px-6 gap-12">
-          <div className="flex w-full flex-col gap-10">
-            {/* //TODO: CUSTOM FORM FIELD */}
-            <div>
-              <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                Thời hạn <span className="text-red-600">*</span>
-              </label>
-
-              <div className="mt-3.5 flex gap-4 items-center">
-                <div className="w-1/4">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={"outline"}
-                        className={`w-full flex items-center text-center font-normal ${
-                          !dateStart && "text-muted-foreground"
-                        } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
-                      >
-                        <span
-                          className={`flex-grow text-center ${
-                            !dateStart && "text-muted-foreground"
-                          }`}
-                        >
-                          {dateStart
-                            ? format(dateStart, "dd/MM/yyyy")
-                            : "Ngày bắt đầu"}
-                        </span>
-                        <CalendarIcon className="ml-2 h-4 w-4" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={dateStart}
-                        onSelect={setDateStart}
-                        initialFocus
-                        locale={vi}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-                <span> - </span>
-                <div className="w-1/4">
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Button
-                        variant={"outline"}
-                        className={`w-full flex items-center text-center font-normal ${
-                          !dateEnd && "text-muted-foreground"
-                        } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
-                      >
-                        <span
-                          className={`flex-grow text-center ${
-                            !dateEnd && "text-muted-foreground"
-                          }`}
-                        >
-                          {dateEnd
-                            ? format(dateEnd, "dd/MM/yyyy")
-                            : "Ngày kết thúc"}
-                        </span>
-                        <CalendarIcon className="ml-2 h-4 w-4" />
-                      </Button>
-                    </PopoverTrigger>
-                    <PopoverContent className="w-auto p-0">
-                      <Calendar
-                        mode="single"
-                        selected={dateEnd}
-                        onSelect={setDateEnd}
-                        initialFocus
-                        locale={vi}
-                      />
-                    </PopoverContent>
-                  </Popover>
-                </div>
-              </div>
-
-              <p className="text-[0.8rem] dark:text-slate-400 body-regular mt-2.5 text-light-500">
-                Thời hạn sinh viên được phép đăng ký nhóm.
-              </p>
-
-              {/* //! ERROR */}
-              {errorList[0].value ? (
-                <p className="mt-3.5 text-[0.8rem] font-medium dark:text-red-900 text-red-500">
-                  {errorList[0].content}
-                </p>
-              ) : (
-                <></>
-              )}
-            </div>
-
-            <div>
-              <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                Số lượng thành viên nhóm <span className="text-red-600">*</span>
-              </label>
-
-              <div className="mt-3.5 flex gap-6">
-                <div className="flex gap-2 w-1/3 items-center">
-                  <span className="body-regular w-auto flex-shrink-0">
-                    Tối thiểu
+        isAlreadyHasSchedule && !isEditting ? (
+          <div className="px-6 ">
+            <div className="flex w-full flex-col gap-10">
+              {/* //TODO: CUSTOM FORM FIELD */}
+              <div>
+                <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                  Thời hạn:
+                  <span className="ml-2 body-regular">
+                    {dateStart
+                      ? format(dateStart, "dd/MM/yyyy")
+                      : "Ngày bắt đầu"}{" "}
+                    -{" "}
+                    {dateEnd ? format(dateEnd, "dd/MM/yyyy") : "Ngày kết thúc"}
                   </span>
-                  <Input
-                    value={minMember}
-                    onChange={handleChangeMinMember}
-                    name="minMembers"
-                    placeholder="Nhập số lượng..."
-                    className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[46px] border"
-                  />
-                </div>
-                <div className="flex gap-2 w-1/3 items-center">
-                  <p className="body-regular w-auto flex-shrink-0">Tối đa</p>
-                  <Input
-                    value={maxMember}
-                    onChange={handleChangeMaxMember}
-                    name="maxMembers"
-                    placeholder="Nhập số lượng..."
-                    className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[46px] border"
-                  />
-                </div>
+                </label>
+
+                <p className="text-[0.8rem] dark:text-slate-400 body-regular mt-2.5 text-light-500">
+                  Thời hạn sinh viên được phép đăng ký nhóm.
+                </p>
               </div>
 
-              {/* //! ERROR */}
-              {errorList.map((item, index) => {
-                if (index != 0 && item.id && item.value)
-                  return (
-                    <p
-                      key={`${index}_${item.id}`}
-                      className="mt-3.5 text-[0.8rem] font-medium dark:text-red-900 text-red-500"
-                    >
-                      {item.content}
-                    </p>
-                  );
-              })}
-            </div>
+              <div>
+                <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                  Số lượng thành viên nhóm{" "}
+                  <span className="ml-2 mr-2 body-regular w-auto flex-shrink-0">
+                    Tối thiểu: {minMember}
+                  </span>
+                  {" - "}
+                  <span className="ml-2 body-regular w-auto flex-shrink-0">
+                    Tối đa: {maxMember}
+                  </span>
+                </label>
+              </div>
 
-            <CheckboxComponent
-              handleClick={() => {
-                setSelectedLeaderOption(!selectedLeaderOption);
-              }}
-              value={selectedLeaderOption}
-              text="Nhóm có nhóm trưởng"
-            />
+              <CheckboxComponent
+                handleClick={() => {
+                  setSelectedLeaderOption(!selectedLeaderOption);
+                }}
+                value={selectedLeaderOption}
+                text="Nhóm có nhóm trưởng"
+              />
+            </div>
           </div>
-        </div>
-      ) : (
-        <></>
-      )}
+        ) : (
+          <div className="px-6 ">
+            <div className="flex w-full flex-col gap-10">
+              {/* //TODO: CUSTOM FORM FIELD */}
+              <div>
+                <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                  Thời hạn <span className="text-red-600">*</span>
+                </label>
+
+                <div className="mt-3.5 flex gap-4 items-center">
+                  <div className="w-1/4">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant={"outline"}
+                          className={`w-full flex items-center text-center font-normal ${
+                            !dateStart && "text-muted-foreground"
+                          } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
+                        >
+                          <span
+                            className={`flex-grow text-center ${
+                              !dateStart && "text-muted-foreground"
+                            }`}
+                          >
+                            {dateStart
+                              ? format(dateStart, "dd/MM/yyyy")
+                              : "Ngày bắt đầu"}
+                          </span>
+                          <CalendarIcon className="ml-2 h-4 w-4" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={dateStart}
+                          onSelect={setDateStart}
+                          initialFocus
+                          locale={vi}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                  <span> - </span>
+                  <div className="w-1/4">
+                    <Popover>
+                      <PopoverTrigger asChild>
+                        <Button
+                          variant={"outline"}
+                          className={`w-full flex items-center text-center font-normal ${
+                            !dateEnd && "text-muted-foreground"
+                          } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
+                        >
+                          <span
+                            className={`flex-grow text-center ${
+                              !dateEnd && "text-muted-foreground"
+                            }`}
+                          >
+                            {dateEnd
+                              ? format(dateEnd, "dd/MM/yyyy")
+                              : "Ngày kết thúc"}
+                          </span>
+                          <CalendarIcon className="ml-2 h-4 w-4" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-auto p-0">
+                        <Calendar
+                          mode="single"
+                          selected={dateEnd}
+                          onSelect={setDateEnd}
+                          initialFocus
+                          locale={vi}
+                        />
+                      </PopoverContent>
+                    </Popover>
+                  </div>
+                </div>
+
+                <p className="text-[0.8rem] dark:text-slate-400 body-regular mt-2.5 text-light-500">
+                  Thời hạn sinh viên được phép đăng ký nhóm.
+                </p>
+
+                {/* //! ERROR */}
+                {errorList[0].value ? (
+                  <p className="mt-3.5 text-[0.8rem] font-medium dark:text-red-900 text-red-500">
+                    {errorList[0].content}
+                  </p>
+                ) : (
+                  <></>
+                )}
+              </div>
+
+              <div>
+                <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                  Số lượng thành viên nhóm{" "}
+                  <span className="text-red-600">*</span>
+                </label>
+
+                <div className="mt-3.5 flex gap-6">
+                  <div className="flex gap-2 w-1/3 items-center">
+                    <span className="body-regular w-auto flex-shrink-0">
+                      Tối thiểu
+                    </span>
+                    <Input
+                      value={minMember}
+                      onChange={handleChangeMinMember}
+                      name="minMembers"
+                      placeholder="Nhập số lượng..."
+                      className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[46px] border"
+                    />
+                  </div>
+                  <div className="flex gap-2 w-1/3 items-center">
+                    <p className="body-regular w-auto flex-shrink-0">Tối đa</p>
+                    <Input
+                      value={maxMember}
+                      onChange={handleChangeMaxMember}
+                      name="maxMembers"
+                      placeholder="Nhập số lượng..."
+                      className="no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[46px] border"
+                    />
+                  </div>
+                </div>
+
+                {/* //! ERROR */}
+                {errorList.map((item, index) => {
+                  if (index != 0 && item.id && item.value)
+                    return (
+                      <p
+                        key={`${index}_${item.id}`}
+                        className="mt-3.5 text-[0.8rem] font-medium dark:text-red-900 text-red-500"
+                      >
+                        {item.content}
+                      </p>
+                    );
+                })}
+              </div>
+
+              <CheckboxComponent
+                handleClick={() => {
+                  setSelectedLeaderOption(!selectedLeaderOption);
+                }}
+                value={selectedLeaderOption}
+                text="Nhóm có nhóm trưởng"
+              />
+            </div>
+          </div>
+        )
+      ) : null}
+
+      <div className="flex mx-6 mt-12 gap-2">
+        {!isAlreadyHasSchedule || (isAlreadyHasSchedule && isEditting) ? (
+          <SubmitButton
+            text="Lưu lịch đăng ký nhóm"
+            otherClasses="w-fit"
+            onClick={handleSubmit}
+          />
+        ) : null}
+        {isAlreadyHasSchedule && isEditting ? (
+          <IconButton
+            bgColor="bg-gray-500"
+            text="Hủy"
+            onClick={() => {
+              setIsEditting(false);
+            }}
+          />
+        ) : null}
+      </div>
 
       <div className="mt-10">
         <ToggleTitle
@@ -457,6 +561,9 @@ const ManageGroup = () => {
               onClickGetOut={() => {
                 setIsMultipleDelete(false);
               }}
+              onClickCancelEdit={() => {
+                setIsEditTable(false);
+              }}
             />
           </div>
         ) : (
@@ -468,12 +575,6 @@ const ManageGroup = () => {
       ) : (
         <></>
       )}
-
-      <div className="flex mt-12 gap-2">
-        <SubmitButton text="Đăng" otherClasses="w-fit" onClick={handleSubmit} />
-
-        <IconButton text="Hủy" red otherClasses="w-fit" onClick={() => {}} />
-      </div>
     </div>
   );
 };

@@ -575,6 +575,10 @@ const ReportInfo = (props: Props) => {
                         Nội dung chi tiết của báo cáo{" "}
                         <span className="text-red-600">*</span>
                       </FormLabel>
+                      <FormDescription className="body-regular mt-2.5 text-light-500">
+                        Thông tin chi tiết của thông báo. Tối thiểu 20 kí tự.
+                        Nhấn tổ hợp Ctrl + V để chèn hình ảnh.
+                      </FormDescription>
                       <FormControl className="mt-3.5 ">
                         {/* editor  */}
                         <Editor
@@ -608,10 +612,7 @@ const ReportInfo = (props: Props) => {
                           }}
                         />
                       </FormControl>
-                      <FormDescription className="body-regular mt-2.5 text-light-500">
-                        Thông tin chi tiết của thông báo. Tối thiểu 20 kí tự.
-                        Nhấn tổ hợp Ctrl + V để chèn hình ảnh.
-                      </FormDescription>
+                      
                       <FormMessage className="text-red-500" />
                     </FormItem>
                   )}
@@ -1019,7 +1020,7 @@ const ReportInfo = (props: Props) => {
                 )}
 
                 {/* TẠO FORM ĐIỂM DANH */}
-                <div>
+                {/* <div>
                   <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
                     Tạo form điểm danh
                   </label>
@@ -1041,10 +1042,10 @@ const ReportInfo = (props: Props) => {
                         }}
                         value={selectedCheckAttendance}
                         text="Có"
-                      />
+                      /> */}
 
                       {/* CheckAttendance */}
-                      {selectedCheckAttendance === 2 ? (
+                      {/* {selectedCheckAttendance === 2 ? (
                         <FormField
                           control={form.control}
                           name="dateCloseCheckAttendance"
@@ -1102,7 +1103,7 @@ const ReportInfo = (props: Props) => {
                       )}
                     </div>
                   </BorderContainer>
-                </div>
+                </div> */}
 
                 {/* GROUP OPTION */}
                 <FormField

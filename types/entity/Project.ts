@@ -7,6 +7,19 @@ export enum WeightType {
   FINAL_TERM = "FINAL_TERM",
 }
 
+export const getWeightType = (type: WeightType) => {
+  switch (type) {
+    case WeightType.COURSEWORK:
+      return "Lý thuyết";
+    case WeightType.PRACTICAL:
+      return "Thực hành";
+    case WeightType.MIDTERM:
+      return "Giữa kỳ";
+    case WeightType.FINAL_TERM:
+      return "Cuối kỳ";
+  }
+};
+
 export interface ITProjectResponseData {
   id: string;
   weight: number;

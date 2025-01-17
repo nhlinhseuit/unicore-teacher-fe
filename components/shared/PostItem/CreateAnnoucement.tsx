@@ -226,6 +226,10 @@ const CreateAnnouncement = () => {
                       Nội dung chi tiết của thông báo{" "}
                       <span className="text-red-600">*</span>
                     </FormLabel>
+                    <FormDescription className="body-regular mt-2.5 text-light-500">
+                      Thông tin chi tiết của thông báo. Tối thiểu 20 kí tự. Nhấn
+                      tổ hợp Ctrl + V để chèn hình ảnh.
+                    </FormDescription>
                     <FormControl className="mt-3.5 ">
                       {/* editor  */}
                       <Editor
@@ -259,10 +263,7 @@ const CreateAnnouncement = () => {
                         }}
                       />
                     </FormControl>
-                    <FormDescription className="body-regular mt-2.5 text-light-500">
-                      Thông tin chi tiết của thông báo. Tối thiểu 20 kí tự. Nhấn
-                      tổ hợp Ctrl + V để chèn hình ảnh.
-                    </FormDescription>
+
                     <FormMessage className="text-red-500" />
                   </FormItem>
                 )}
@@ -331,7 +332,7 @@ const CreateAnnouncement = () => {
 
             <div className="flex w-[30%] flex-col gap-10">
               {/* TẠO FORM ĐIỂM DANH */}
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="multipleCourses"
                 render={({ field }) => (
@@ -361,10 +362,10 @@ const CreateAnnouncement = () => {
                               value={selectedCheckAttendance}
                               text="Có"
                             />
-                          </div>
+                          </div> */}
 
-                          {/* CheckAttendance */}
-                          {selectedCheckAttendance === 2 ? (
+              {/* CheckAttendance */}
+              {/* {selectedCheckAttendance === 2 ? (
                             <FormField
                               control={form.control}
                               name="dateCloseCheckAttendance"
@@ -427,7 +428,7 @@ const CreateAnnouncement = () => {
                     <FormMessage className="text-red-500" />
                   </FormItem>
                 )}
-              />
+              /> */}
 
               {/* ĐĂNG NHIỀU LỚP */}
               <FormField

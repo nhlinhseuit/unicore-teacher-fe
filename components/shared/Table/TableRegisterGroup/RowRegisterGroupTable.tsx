@@ -181,7 +181,7 @@ const RowRegisterGroupTable = React.memo(
         </Table.Cell>
 
         {/* STT - Là STT của nhóm */}
-        <Table.Cell className="w-10 border-r-[1px]  text-left">
+        <Table.Cell className="w-10 border-r-[1px] text-center">
           <span>{params.dataItem.STT}</span>
         </Table.Cell>
 

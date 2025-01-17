@@ -54,3 +54,18 @@ export const fetchDetailReport = async (reportId: string) => {
     throw error;
   }
 };
+
+export const fetchCreationVariables = async (data: any) => {
+  console.log("fetchCreationVariables");
+  console.log("data", data);
+
+  const res = await sendRequest<IBackendRes<any>>({
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/classevent/creation-variables`,
+    method: "POST",
+    body: { ...data },
+  });
+
+  revalidateTag("fetch-creation-variables");
+
+  return res;
+};

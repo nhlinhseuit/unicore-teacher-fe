@@ -321,6 +321,10 @@ const CreateExerciseBigExercise = () => {
                       Nội dung chi tiết của bài tập{" "}
                       <span className="text-red-600">*</span>
                     </FormLabel>
+                    <FormDescription className="body-regular mt-2.5 text-light-500">
+                      Thông tin chi tiết của thông báo. Tối thiểu 20 kí tự. Nhấn
+                      tổ hợp Ctrl + V để chèn hình ảnh.
+                    </FormDescription>
                     <FormControl className="mt-3.5 ">
                       {/* editor  */}
                       <Editor
@@ -354,10 +358,7 @@ const CreateExerciseBigExercise = () => {
                         }}
                       />
                     </FormControl>
-                    <FormDescription className="body-regular mt-2.5 text-light-500">
-                      Thông tin chi tiết của thông báo. Tối thiểu 20 kí tự. Nhấn
-                      tổ hợp Ctrl + V để chèn hình ảnh.
-                    </FormDescription>
+
                     <FormMessage className="text-red-500" />
                   </FormItem>
                 )}
