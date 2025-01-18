@@ -372,9 +372,9 @@ const CreateExercise = (params: Props) => {
         } else return true;
       },
       {
-        message: `Hệ số phải nhỏ hơn hệ số còn lại của cột điểm (${
+        message: selectedGradeColumn !== -1 && listCreationVariables ? `Hệ số phải nhỏ hơn hệ số còn lại của cột điểm (${
           listCreationVariables![selectedGradeColumn].remaining
-        }%)`,
+        }%)` : '',
         path: ["ratio"],
       }
     )

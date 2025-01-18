@@ -8,6 +8,8 @@ import TableSkeleton from "@/components/shared/Table/components/TableSkeleton";
 import RegisterTopicTable from "@/components/shared/Table/TableRegisterTopic/RegisterTopicTable";
 import { RegisterTopicTableType } from "@/constants";
 import { toast } from "@/hooks/use-toast";
+import { convertToAPIDataTableTopics } from "@/lib/convertToDataTableTopic";
+import { handleCreateTopicAction } from "@/services/topicInProjectServices";
 import { TopicDataItem } from "@/types/entity/Topic";
 
 import { parseToArray } from "@/utils/utils";
@@ -22,6 +24,7 @@ const ImportListTopic = (params: Props) => {
   const [dataTable, setDataTable] = useState<TopicDataItem[]>([]);
   const [errorMessages, setErrorMessages] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingAPI, setIsLoadingAPI] = useState(false);
 
   const [isEditTable, setIsEditTable] = useState(false);
   const [isMultipleDelete, setIsMultipleDelete] = useState(false);
@@ -89,6 +92,24 @@ const ImportListTopic = (params: Props) => {
     };
   };
 
+  const createTopicsAPI = async () => {
+    console.log("createTopicsAPI");
+
+    const mockParamsProjectId = "67813766b925f9491c58988b";
+
+    const APIdataTable = convertToAPIDataTableTopics({
+      data: dataTable,
+    });
+
+    console.log("APIdataTable", APIdataTable);
+
+    setIsLoadingAPI(true)
+    const res = await handleCreateTopicAction(mockParamsProjectId, APIdataTable);
+    setIsLoadingAPI(false)
+
+    console.log("res", res);
+  };
+
   return (
     <>
       <BackToPrev
@@ -133,7 +154,7 @@ const ImportListTopic = (params: Props) => {
             />
           </div>
           {dataTable.length > 0 && (
-            <IconButton text="Lưu" onClick={() => {}} otherClasses="ml-2" />
+            <IconButton text="Lưu" onClick={createTopicsAPI} otherClasses="ml-2" />
           )}
         </div>
 

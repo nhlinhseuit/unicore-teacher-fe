@@ -2,9 +2,13 @@
 
 import IconButton from "@/components/shared/Button/IconButton";
 import TopicGroupTable from "@/components/shared/Table/TableTopic/TopicDataTable";
-import { mockTopicDataTable } from "@/mocks";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
+import LoadingComponent from "@/components/shared/LoadingComponent";
+import NoResult from "@/components/shared/Status/NoResult";
+import { convertToDataTableTopicsViKeys } from "@/lib/convertToDataTableTopic";
+import { fetchDetailProject } from "@/services/projectServices";
+import { TopicDataItem } from "@/types/entity/Topic";
 import AlertCreateNewTopic from "./AlertCreateNewTopic";
 import ImportListTopic from "./ImportListTopic";
 
@@ -17,6 +21,25 @@ const UploadTopicResult = () => {
   const handleSetCreateNew = (value: boolean) => {
     setIsCreateNew(value);
   };
+
+  const [dataTable, setDataTable] = useState<TopicDataItem[]>();
+
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const mockParamsProjectId = "67813766b925f9491c58988b";
+
+  useEffect(() => {
+    fetchDetailProject(mockParamsProjectId)
+      .then((data: any) => {
+        if (data) setDataTable(convertToDataTableTopicsViKeys(data?.topics));
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setIsLoading(false);
+      });
+  }, []);
 
   return (
     <>
@@ -46,12 +69,22 @@ const UploadTopicResult = () => {
           </div>
 
           {/* //! SỬ DỤNG TopicGroupTable ĐỂ KHÔNG CHỈNH SỬA */}
-          <TopicGroupTable
-            isEditTable={false}
-            isMultipleDelete={false}
-            // @ts-ignore
-            dataTable={mockTopicDataTable}
-          />
+          {isLoading ? (
+            <LoadingComponent />
+          ) : dataTable &&
+            dataTable.filter((item) => !item.isDeleted).length > 0 ? (
+            <TopicGroupTable
+              isEditTable={false}
+              isMultipleDelete={false}
+              // @ts-ignore
+              dataTable={dataTable}
+            />
+          ) : (
+            <NoResult
+              title="Không có dữ liệu!"
+              description="🚀 Import file danh sách để thấy được dữ liệu."
+            />
+          )}
         </>
       ) : (
         <ImportListTopic handleSetImport={handleSetImport} />

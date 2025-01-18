@@ -6,6 +6,7 @@ import BorderContainer from "@/components/shared/BorderContainer";
 import IconButton from "@/components/shared/Button/IconButton";
 import SubmitButton from "@/components/shared/Button/SubmitButton";
 import CheckboxComponent from "@/components/shared/CheckboxComponent";
+import LoadingComponent from "@/components/shared/LoadingComponent";
 import RadioboxComponent from "@/components/shared/RadioboxComponent";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -27,7 +28,24 @@ import {
 } from "@/components/ui/popover";
 import { ALLOWED_FILE_TYPES, MAX_FILE_SIZE, MAX_FILE_VALUE } from "@/constants";
 import { useToast } from "@/hooks/use-toast";
-import { mockCourseGradeColumn, mockDbLeftRatio } from "@/mocks";
+import {
+  createReport,
+  editReport,
+  fetchCreationVariables,
+  fetchDetailReport,
+} from "@/services/reportServices";
+import { getWeightType } from "@/types/entity/Project";
+import {
+  ITCreationVariablesWeight,
+  ITCreationVariablesWeightData,
+  ITReportResponseData,
+} from "@/types/entity/Report";
+import {
+  formatDayToISO,
+  formatDayToISODateWithDefaultTime,
+  formatISOToDayDatatype,
+  formatISOToTimeCalendarType,
+} from "@/utils/dateTimeUtil";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Editor } from "@tinymce/tinymce-react";
 import { format } from "date-fns";
@@ -49,10 +67,6 @@ import {
   sTimeEnd,
   sTimeStart,
 } from "./(store)/createReportStore";
-import { formatDayToISO, formatDayToISODateWithDefaultTime, formatISOToDayDatatype, formatISOToTimeCalendarType } from "@/utils/dateTimeUtil";
-import { createReport, editReport, fetchDetailReport } from "@/services/reportServices";
-import { ITReportResponseData } from "@/types/entity/Report";
-import LoadingComponent from "@/components/shared/LoadingComponent";
 
 // ! CẬP NHẬT
 const type: any = "create";
@@ -71,7 +85,6 @@ const ReportInfo = (props: Props) => {
   const router = useRouter();
   const pathName = usePathname();
 
-
   const gradeColumn = [
     { id: 1, type: "COURSEWORK", value: "Quá trình" },
     { id: 2, type: "MIDTERM", value: "Giữa kỳ" },
@@ -79,85 +92,111 @@ const ReportInfo = (props: Props) => {
   ];
 
   const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
-  
-    const [report, setReport] = useState<ITReportResponseData>();
-  
-    useEffect(() => {
-      if (props.isEdit && props.reportId && props.reportId !== "") {
-        setReport(undefined);
-        setIsLoading(true);
-  
-        fetchDetailReport(props.reportId!)
-          .then((data: any) => {
-            console.log("fetchDetailReport data", data);
-  
-            const res =
-              gradeColumn.find((item) => {
-                console.log("gradeColumn item", item);
-  
-                return item.type === data?.weight_type;
-              })?.id || -1;
-  
-            console.log("res", res);
-  
-            setReport(data);
-            setIsLoading(false);
-          })
-          .catch((error) => {
-            setError(error.message);
-            setIsLoading(false);
-          });
-      }
-    }, []);
-  
-    useEffect(() => {
-      if (report) {
-        setSelectedRecheckOption(report.allow_grade_review ? 2 : 1);
-        setNumberOfRecheck(
-          report.review_times ? report.review_times.toString() : ""
-        );
-        setSelectedGroupOption(report.in_group ? 2 : 1)
-        setSelectedScheduleOption(report.publish_date !== '' ? 2 : 1)
-        setDatePost(
-          report.publish_date
-            ? formatISOToDayDatatype(report.publish_date)
-            : undefined
-        )
-        setDateRemindGrade(
-          report.remind_grading_date
-            ? formatISOToDayDatatype(report.remind_grading_date)
-            : undefined
-        );
-        setTimeRemindGrade(
-          report.remind_grading_date
-            ? formatISOToTimeCalendarType(report.remind_grading_date)
-            : ""
-        );
-        setDateClose(
-          report.close_submission_date
-            ? formatISOToDayDatatype(report.close_submission_date)
-            : undefined
-        );
-        setTimeClose(
-          report.close_submission_date
-            ? formatISOToTimeCalendarType(report.close_submission_date)
-            : ""
-        );
-        setRatio(report.weight ? report.weight.toString() : "");
-        setSelectedGradeColumn(
-          gradeColumn.find((item) => item.type === report.weight_type)?.id || -1
-        );
-  
-        form.reset({
-          title: report?.name,
-          description: report?.description,
-          file: report?.attachment_url,
-          submitOption: report?.submission_option,
-        });
-      }
-    }, [report]);
+  const [error, setError] = useState<string | null>(null);
 
+  const [report, setReport] = useState<ITReportResponseData>();
+  const [listCreationVariables, setListCreationVariables] =
+    useState<ITCreationVariablesWeightData[]>();
+
+  const mockParamsSubclassCode = "IT002.O21.CLC";
+
+  console.log("listCreationVariables", listCreationVariables);
+
+  useEffect(() => {
+    //TODO: Fetch cột điểm, hệ số điểm còn lại
+    const mockParams = {
+      classId: "67811f38854d3e02e4191719",
+      subclassCode: "IT002.O21.CLC",
+      teacherCode: "80173",
+    };
+
+    fetchCreationVariables(mockParams).then((data) => {
+      if (data.data.weights.length > 0) {
+        setListCreationVariables(
+          data.data.weights
+            .filter(
+              (item: ITCreationVariablesWeight) =>
+                item.subclassCode === mockParamsSubclassCode
+            )
+            .flatMap((item: ITCreationVariablesWeight) => item.weights)
+        );
+      }
+    });
+
+    //TODO: Fetch detail report
+    if (props.isEdit && props.reportId && props.reportId !== "") {
+      setReport(undefined);
+      setIsLoading(true);
+
+      fetchDetailReport(props.reportId!)
+        .then((data: any) => {
+          console.log("fetchDetailReport data", data);
+
+          const res =
+            gradeColumn.find((item) => {
+              console.log("gradeColumn item", item);
+
+              return item.type === data?.weight_type;
+            })?.id || -1;
+
+          console.log("res", res);
+
+          setReport(data);
+          setIsLoading(false);
+        })
+        .catch((error) => {
+          setError(error.message);
+          setIsLoading(false);
+        });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (report) {
+      setSelectedRecheckOption(report.allow_grade_review ? 2 : 1);
+      setNumberOfRecheck(
+        report.review_times ? report.review_times.toString() : ""
+      );
+      setSelectedGroupOption(report.in_group ? 2 : 1);
+      setSelectedScheduleOption(report.publish_date !== "" ? 2 : 1);
+      setDatePost(
+        report.publish_date
+          ? formatISOToDayDatatype(report.publish_date)
+          : undefined
+      );
+      setDateRemindGrade(
+        report.remind_grading_date
+          ? formatISOToDayDatatype(report.remind_grading_date)
+          : undefined
+      );
+      setTimeRemindGrade(
+        report.remind_grading_date
+          ? formatISOToTimeCalendarType(report.remind_grading_date)
+          : ""
+      );
+      setDateClose(
+        report.close_submission_date
+          ? formatISOToDayDatatype(report.close_submission_date)
+          : undefined
+      );
+      setTimeClose(
+        report.close_submission_date
+          ? formatISOToTimeCalendarType(report.close_submission_date)
+          : ""
+      );
+      setRatio(report.weight ? report.weight.toString() : "");
+      setSelectedGradeColumn(
+        gradeColumn.find((item) => item.type === report.weight_type)?.id || -1
+      );
+
+      form.reset({
+        title: report?.name,
+        description: report?.description,
+        file: report?.attachment_url,
+        submitOption: report?.submission_option,
+      });
+    }
+  }, [report]);
 
   const [selectedScheduleOption, setSelectedScheduleOption] = useState(1);
   const [selectedRecheckOption, setSelectedRecheckOption] = useState(1);
@@ -319,10 +358,25 @@ const ReportInfo = (props: Props) => {
       message: "Hệ số phải lớn hơn 0",
       path: ["ratio"],
     })
-    .refine((data) => parseInt(ratio) < mockDbLeftRatio, {
-      message: `Hệ số phải nhỏ hơn hệ số còn lại của cột điểm (${mockDbLeftRatio}%)`,
-      path: ["ratio"],
-    })
+    .refine(
+      (data) => {
+        if (selectedGradeColumn !== -1 && listCreationVariables) {
+          return (
+            parseInt(ratio) <
+            listCreationVariables[selectedGradeColumn].remaining
+          );
+        } else return true;
+      },
+      {
+        message:
+          selectedGradeColumn !== -1 && listCreationVariables
+            ? `Hệ số phải nhỏ hơn hệ số còn lại của cột điểm (${
+                listCreationVariables![selectedGradeColumn].remaining
+              }%)`
+            : "",
+        path: ["ratio"],
+      }
+    )
     .refine(
       (data) =>
         selectedRecheckOption === 2
@@ -365,9 +419,7 @@ const ReportInfo = (props: Props) => {
         end_date: formatDayToISO(dateEnd ?? new Date(), timeEnd),
         allowMultiple: true,
         allowSuggestion: true,
-        options: [
-          {}
-        ]
+        options: [{}],
       },
       allow_grade_review: selectedRecheckOption === 2,
       review_times: numberOfRecheck === "" ? 0 : numberOfRecheck,
@@ -407,7 +459,6 @@ const ReportInfo = (props: Props) => {
       setIsSubmitting(false);
     });
   };
-  
 
   const editReportAPI = async (values: any) => {
     const mockParamsAPI = {
@@ -419,14 +470,13 @@ const ReportInfo = (props: Props) => {
       description: values.description,
       weight: ratio,
       date: formatDayToISODateWithDefaultTime(datePost ?? new Date()), //TODO: dư trường này
-      query: { //?: mở đăng ký báo cáo
+      query: {
+        //?: mở đăng ký báo cáo
         start_date: formatDayToISO(dateStart ?? new Date(), timeStart),
         end_date: formatDayToISO(dateEnd ?? new Date(), timeEnd),
         allowMultiple: true,
         allowSuggestion: true,
-        options: [
-          {}
-        ]
+        options: [{}],
       },
       allow_grade_review: selectedRecheckOption === 2,
       review_times: numberOfRecheck === "" ? 0 : numberOfRecheck,
@@ -440,33 +490,33 @@ const ReportInfo = (props: Props) => {
       //     (item) => submissionOptions.find((option) => option.id === item)?.type
       //   )
       //   .filter(Boolean), // Loại bỏ giá trị undefined nếu không tìm thấy khớp
-      
-//TODO: thiếu trường ngày đăng
 
-      remind_grading_date: formatDayToISO( 
+      //TODO: thiếu trường ngày đăng
+
+      remind_grading_date: formatDayToISO(
         dateRemindGrade ?? new Date(),
         timeRemindGrade
       ),
       close_submission_date: formatDayToISO(dateClose ?? new Date(), timeClose),
       attachment_url: "string",
     };
-  
-      console.log("mockParamsAPI editExerciseAPI:", mockParamsAPI); // Log mockParamsAPI sau khi khởi tạo
-  
-      editReport(props.reportId ?? "", mockParamsAPI).then((data) => {
-        console.log("createExerciseAPI data:", data);
-  
-        handleClickBack();
-  
-        toast({
-          title: "Chỉnh sửa thông báo thành công.",
-          variant: "success",
-          duration: 3000,
-        });
-  
-        setIsSubmitting(false);
+
+    console.log("mockParamsAPI editExerciseAPI:", mockParamsAPI); // Log mockParamsAPI sau khi khởi tạo
+
+    editReport(props.reportId ?? "", mockParamsAPI).then((data) => {
+      console.log("createExerciseAPI data:", data);
+
+      handleClickBack();
+
+      toast({
+        title: "Chỉnh sửa thông báo thành công.",
+        variant: "success",
+        duration: 3000,
       });
-    };
+
+      setIsSubmitting(false);
+    });
+  };
 
   const handleClickBack = () => {
     const newPath = pathName.substring(0, pathName.lastIndexOf("/"));
@@ -531,7 +581,7 @@ const ReportInfo = (props: Props) => {
   return (
     <div>
       {isLoading ? <LoadingComponent /> : null}
-      
+
       <div className="flex-1 mt-10">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -612,7 +662,7 @@ const ReportInfo = (props: Props) => {
                           }}
                         />
                       </FormControl>
-                      
+
                       <FormMessage className="text-red-500" />
                     </FormItem>
                   )}
@@ -906,8 +956,7 @@ const ReportInfo = (props: Props) => {
                             Cột điểm <span className="text-red-600">*</span>
                           </FormLabel>
                           <FormDescription className="body-regular mt-2.5 text-light-500">
-                            Báo cáo được tạo sẽ là thành phần của cột điểm
-                            này.
+                            Báo cáo được tạo sẽ là thành phần của cột điểm này.
                           </FormDescription>
                           <FormControl className="mt-3.5 ">
                             <Dropdown
@@ -918,14 +967,17 @@ const ReportInfo = (props: Props) => {
                                 <div>
                                   <IconButton
                                     text={`${
-                                      selectedGradeColumn === -1
+                                      selectedGradeColumn === -1 ||
+                                      !listCreationVariables
                                         ? "Chọn cột điểm"
-                                        : mockCourseGradeColumn[
-                                            selectedGradeColumn - 1
-                                          ].value
+                                        : getWeightType(
+                                            listCreationVariables[
+                                              selectedGradeColumn
+                                            ].type
+                                          )
                                     }`}
                                     onClick={() => {}}
-                                    iconRight={"/assets/icons/chevron-down.svg"}
+                                    iconRight="/assets/icons/chevron-down.svg"
                                     bgColor="bg-white"
                                     textColor="text-black"
                                     border
@@ -935,42 +987,34 @@ const ReportInfo = (props: Props) => {
                               )}
                             >
                               <div className="scroll-container scroll-container-dropdown-content">
-                                {mockCourseGradeColumn.map(
-                                  (gradeColumn, index) => (
-                                    <Dropdown.Item
-                                      key={`${gradeColumn.id}_${index}`}
-                                      onClick={() => {
-                                        if (
-                                          selectedGradeColumn === gradeColumn.id
-                                        ) {
-                                          setSelectedGradeColumn(-1);
-                                        } else {
-                                          setSelectedGradeColumn(
-                                            gradeColumn.id
-                                          );
-                                        }
-                                      }}
-                                    >
-                                      <div className="flex justify-between w-full">
-                                        <p className="w-[80%] text-left line-clamp-1">
-                                          {gradeColumn.value}
-                                        </p>
-                                        {selectedGradeColumn ===
-                                        gradeColumn.id ? (
-                                          <Image
-                                            src="/assets/icons/check.svg"
-                                            alt="search"
-                                            width={21}
-                                            height={21}
-                                            className="cursor-pointer mr-2"
-                                          />
-                                        ) : (
-                                          <></>
-                                        )}
-                                      </div>
-                                    </Dropdown.Item>
-                                  )
-                                )}
+                                {listCreationVariables?.map((weight, index) => (
+                                  <Dropdown.Item
+                                    key={`${weight.type}_${index}`}
+                                    onClick={() => {
+                                      if (selectedGradeColumn === index) {
+                                        setSelectedGradeColumn(-1);
+                                      } else {
+                                        setSelectedGradeColumn(index);
+                                      }
+                                    }}
+                                  >
+                                    <div className="flex justify-between w-full">
+                                      <p className="w-[80%] text-left line-clamp-1">
+                                        {getWeightType(weight.type)} - Còn lại{" "}
+                                        {weight.remaining}%
+                                      </p>
+                                      {selectedGradeColumn === index ? (
+                                        <Image
+                                          src="/assets/icons/check.svg"
+                                          alt="check"
+                                          width={21}
+                                          height={21}
+                                          className="cursor-pointer mr-2"
+                                        />
+                                      ) : null}
+                                    </div>
+                                  </Dropdown.Item>
+                                ))}
                               </div>
                             </Dropdown>
                           </FormControl>
@@ -989,11 +1033,21 @@ const ReportInfo = (props: Props) => {
                           <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
                             Hệ số điểm <span className="text-red-600">*</span>
                           </FormLabel>
-                          <FormDescription className="body-regular mt-2.5 text-light-500">
-                            Hệ số còn lại trong cột điểm **Quá trình để phân bổ
-                            là {mockDbLeftRatio}% (**Bài tập đã chiếm{" "}
-                            {100 - mockDbLeftRatio}%).
-                          </FormDescription>
+                          {selectedGradeColumn !== -1 &&
+                          listCreationVariables ? (
+                            <FormDescription className="body-regular mt-2.5 text-light-500">
+                              Hệ số còn lại trong cột điểm{" "}
+                              {getWeightType(
+                                listCreationVariables[selectedGradeColumn].type
+                              )}{" "}
+                              để phân bổ là{" "}
+                              {
+                                listCreationVariables[selectedGradeColumn]
+                                  .remaining
+                              }
+                              %
+                            </FormDescription>
+                          ) : null}
                           <FormDescription className="body-regular mt-2.5 text-light-500">
                             Nếu không đặt hệ số, hệ thống sẽ tự động phân bổ
                             điểm đều giữa các thành phần trong cùng cột điểm.
@@ -1018,92 +1072,6 @@ const ReportInfo = (props: Props) => {
                     />
                   </>
                 )}
-
-                {/* TẠO FORM ĐIỂM DANH */}
-                {/* <div>
-                  <label className="peer-disabled:cursor-not-allowed peer-disabled:opacity-70 dark:text-red-900 text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                    Tạo form điểm danh
-                  </label>
-
-                  <BorderContainer otherClasses="mt-3.5">
-                    <div className="p-4 flex flex-col gap-10">
-                      <RadioboxComponent
-                        id={1}
-                        handleClick={() => {
-                          setSelectedCheckAttendance(1);
-                        }}
-                        value={selectedCheckAttendance}
-                        text="Không"
-                      />
-                      <RadioboxComponent
-                        id={2}
-                        handleClick={() => {
-                          setSelectedCheckAttendance(2);
-                        }}
-                        value={selectedCheckAttendance}
-                        text="Có"
-                      /> */}
-
-                      {/* CheckAttendance */}
-                      {/* {selectedCheckAttendance === 2 ? (
-                        <FormField
-                          control={form.control}
-                          name="dateCloseCheckAttendance"
-                          render={({ field }) => (
-                            <FormItem className="flex w-full flex-col">
-                              <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                                Chọn ngày đóng form
-                              </FormLabel>
-                              <FormControl className="mt-3.5">
-                                <Popover>
-                                  <PopoverTrigger asChild>
-                                    <Button
-                                      variant={"outline"}
-                                      className={` flex items-center text-center font-normal ${
-                                        !dateCloseCheckAttendance &&
-                                        "text-muted-foreground"
-                                      } hover:bg-transparent active:bg-transparent rounded-lg shadow-none`}
-                                    >
-                                      <span
-                                        className={`flex-grow text-center ${
-                                          !dateCloseCheckAttendance &&
-                                          "text-muted-foreground"
-                                        }`}
-                                      >
-                                        {dateCloseCheckAttendance
-                                          ? format(
-                                              dateCloseCheckAttendance,
-                                              "dd/MM/yyyy"
-                                            )
-                                          : "Chọn ngày"}
-                                      </span>
-                                      <CalendarIcon className="ml-2 h-4 w-4" />
-                                    </Button>
-                                  </PopoverTrigger>
-                                  <PopoverContent className="w-auto p-0">
-                                    <Calendar
-                                      mode="single"
-                                      selected={dateCloseCheckAttendance}
-                                      onSelect={setDateCloseCheckAttendance}
-                                      initialFocus
-                                      locale={vi}
-                                    />
-                                  </PopoverContent>
-                                </Popover>
-                              </FormControl>
-                              <FormDescription className="body-regular mt-2.5 text-light-500">
-                                Form điểm danh sẽ khóa vào ngày này mà bạn chọn.
-                              </FormDescription>
-                              <FormMessage className="text-red-500" />
-                            </FormItem>
-                          )}
-                        />
-                      ) : (
-                        <></>
-                      )}
-                    </div>
-                  </BorderContainer>
-                </div> */}
 
                 {/* GROUP OPTION */}
                 <FormField
