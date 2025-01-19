@@ -20,6 +20,7 @@ import { tableTheme } from "../components/DataTable";
 import MyFooter from "../components/MyFooter";
 import RowRegisterGroupTable from "./RowRegisterGroupTable";
 import { RegisterGroupDataItem } from "@/types/entity/GroupRegister";
+import { deleteBulkGroup } from "@/services/groupRegisterServices";
 
 interface DataTableParams {
   isEditTable: boolean;
@@ -110,6 +111,25 @@ const RegisterGroupTable = (params: DataTableParams) => {
     }
   };
 
+  const handleDelete = () => {
+      console.log('itemsSelected', itemsSelected)
+      
+      deleteBulkGroup(itemsSelected).then(data => {
+        console.log('deleteBulkGroup2', data)
+        
+        setItemsSelected([]);
+        params.onClickGetOut && params.onClickGetOut();
+        if (isShowDialog === 1) {
+          params.onClickDelete && params.onClickDelete(itemsSelected);
+        } else if (isShowDialog === 2) {
+          params.onClickDeleteAll && params.onClickDeleteAll();
+        }
+        setIsShowDialog(-1);
+      })
+      
+      
+  }
+
   return (
     <>
       <div className="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0">
@@ -179,9 +199,6 @@ const RegisterGroupTable = (params: DataTableParams) => {
                 </div>
               )}
             >
-              <Dropdown.Item onClick={params.onClickEditTable}>
-                Chỉnh sửa
-              </Dropdown.Item>
 
               <Dropdown.Item onClick={params.onClickMultipleDelete}>
                 Xóa nhiều
@@ -332,17 +349,7 @@ const RegisterGroupTable = (params: DataTableParams) => {
                   Hủy
                 </AlertDialogCancel>
                 <AlertDialogAction
-                  onClick={() => {
-                    setItemsSelected([]);
-                    params.onClickGetOut && params.onClickGetOut();
-                    if (isShowDialog === 1) {
-                      params.onClickDelete &&
-                        params.onClickDelete(itemsSelected);
-                    } else if (isShowDialog === 2) {
-                      params.onClickDeleteAll && params.onClickDeleteAll();
-                    }
-                    setIsShowDialog(-1);
-                  }}
+                  onClick={handleDelete}
                   className="bg-primary-500 hover:bg-primary-500/90"
                 >
                   Đồng ý

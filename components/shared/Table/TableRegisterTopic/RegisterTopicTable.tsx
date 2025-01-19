@@ -115,6 +115,19 @@ const RegisterTopicTable = (params: DataTableParams) => {
     }
   };
 
+  const handleDelete = () => {
+      console.log('itemsSelected', itemsSelected)
+      
+      setItemsSelected([]);
+      params.onClickGetOut && params.onClickGetOut();
+      if (isShowDialog === 1) {
+        params.onClickDelete && params.onClickDelete(itemsSelected);
+      } else if (isShowDialog === 2) {
+        params.onClickDeleteAll && params.onClickDeleteAll();
+      }
+      setIsShowDialog(-1);
+  }
+
   return (
     <div>
       <div className="flex flex-col items-center justify-between p-4 space-y-3 md:flex-row md:space-y-0">
@@ -185,10 +198,6 @@ const RegisterTopicTable = (params: DataTableParams) => {
                   </div>
                 )}
               >
-                <Dropdown.Item onClick={params.onClickEditTable}>
-                  Chỉnh sửa
-                </Dropdown.Item>
-
                 <Dropdown.Item onClick={params.onClickMultipleDelete}>
                   Xóa nhiều
                 </Dropdown.Item>
@@ -341,16 +350,7 @@ const RegisterTopicTable = (params: DataTableParams) => {
                 Hủy
               </AlertDialogCancel>
               <AlertDialogAction
-                onClick={() => {
-                  setItemsSelected([]);
-                  params.onClickGetOut && params.onClickGetOut();
-                  if (isShowDialog === 1) {
-                    params.onClickDelete && params.onClickDelete(itemsSelected);
-                  } else if (isShowDialog === 2) {
-                    params.onClickDeleteAll && params.onClickDeleteAll();
-                  }
-                  setIsShowDialog(-1);
-                }}
+                onClick={handleDelete}
                 className="bg-primary-500 hover:bg-primary-500/90"
               >
                 Đồng ý

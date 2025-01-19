@@ -44,7 +44,10 @@ export const createGroupRegisterSchedule = async (data: any) => {
   return res;
 };
 
-export const editGroupRegisterSchedule = async (groupingId: string, data: any) => {
+export const editGroupRegisterSchedule = async (
+  groupingId: string,
+  data: any
+) => {
   // const session = await auth();
   const res = await sendRequest<IBackendRes<any>>({
     url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/classevent/grouping/${groupingId}`,
@@ -59,24 +62,35 @@ export const editGroupRegisterSchedule = async (groupingId: string, data: any) =
   return res;
 };
 
-
 //TODO: GroupRegister
 
-
-export const editGroup = async (data: any) => {
+export const editGroup = async (groupId: string, data: any) => {
   // const session = await auth();
   const res = await sendRequest<IBackendRes<any>>({
-    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/classevent/grouping/add`,
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/classevent/grouping/update/${groupId}`,
     method: "POST",
     // headers: {
     //   Authorization: `Bearer ${session?.user?.access_token}`,
     // },
     body: { ...data },
   });
-  revalidateTag("create-group-register");
+  revalidateTag("update-group-register");
 
   return res;
 };
 
+export const deleteBulkGroup = async (data: any) => {
+  // const session = await auth();
+  console.log("deleteBulkGroup", data);
 
+  const res = await sendRequest<IBackendRes<any>>({
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/classevent/grouping/delete-bulk`,
+    method: "POST",
+    // headers: {
+    //   Authorization: `Bearer ${session?.user?.access_token}`,
+    // },
+    body: { ...data },
+  });
 
+  return res;
+};
