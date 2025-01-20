@@ -68,9 +68,15 @@ const CreateCheckAttendance = () => {
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [selectedCourses, setSelectedCourses] = useState<string[]>([]);
 
+  const [timeCheckAttendance, setTimeCheckAttendance] = useState<string>("");
   const [selectedCheckAttendance, setSelectedCheckAttendance] = useState(2);
   const [dateCloseCheckAttendance, setDateCloseCheckAttendance] =
     React.useState<Date>();
+  const handleChangeTimeCheckAttendance = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setTimeCheckAttendance(e.target.value);
+  };
 
   const handleChooseFile = (event: React.ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
@@ -114,6 +120,14 @@ const CreateCheckAttendance = () => {
       date: z.date().optional(),
       dateCloseCheckAttendance: z.date().optional(),
     })
+    .refine(
+      (data) =>
+        timeCheckAttendance !== "" && !isNaN(parseInt(timeCheckAttendance)),
+      {
+        message: "Thời gian điểm danh phải là chữ số và không được để trống",
+        path: ["timeCheckAttendance"],
+      }
+    )
     .refine(
       (data) =>
         selectedCheckAttendance === 2
@@ -280,6 +294,30 @@ const CreateCheckAttendance = () => {
             {/* //TODO: SECTION 2 */}
 
             <div className="flex w-[30%] flex-col gap-10">
+              {/*  THỜI GIAN ĐIỂM DANH */}
+              <FormField
+                control={form.control}
+                name="title"
+                render={({ field }) => (
+                  <FormItem className="flex w-full flex-col">
+                    <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
+                      Thời gian điểm danh (giây){" "}
+                      <span className="text-red-600">*</span>
+                    </FormLabel>
+                    <FormControl className="mt-3.5 ">
+                      <Input
+                        value={timeCheckAttendance}
+                        onChange={handleChangeTimeCheckAttendance}
+                        placeholder="Nhập tên..."
+                        className="
+                            no-focus paragraph-regular background-light900_dark300 light-border-2 text-dark300_light700 min-h-[56px] border"
+                      />
+                    </FormControl>
+                    <FormMessage className="text-red-500" />
+                  </FormItem>
+                )}
+              />
+
               {/*  FORM ĐIỂM DANH */}
               <FormField
                 control={form.control}

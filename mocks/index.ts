@@ -664,6 +664,7 @@ export const mockSubCoursesOfCourseScoreTranscript = [
   { id: 2, value: "SE114.N23.PMCL - TH" },
   { id: 3, value: "Điểm tổng kết" },
 ];
+
 export const mockDataScoreTranscript = [
   {
     STT: "1",

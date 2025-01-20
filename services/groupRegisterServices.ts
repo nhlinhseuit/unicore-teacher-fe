@@ -89,7 +89,7 @@ export const deleteBulkGroup = async (data: any) => {
     // headers: {
     //   Authorization: `Bearer ${session?.user?.access_token}`,
     // },
-    body: { ...data },
+    body: data,
   });
 
   return res;

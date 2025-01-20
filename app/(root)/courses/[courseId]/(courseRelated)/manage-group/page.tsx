@@ -539,7 +539,7 @@ const ManageGroup = () => {
                 setDataTable((prevData) => {
                   if (prevData)
                     return prevData.map((item) => {
-                      if (itemsSelected.includes(item.STT.toString())) {
+                      if (itemsSelected.includes(item.data["Mã nhóm"].toString())) {
                         return {
                           ...item,
                           isDeleted: true,

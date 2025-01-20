@@ -7,6 +7,7 @@ import RenderFile from "../../Annoucements/RenderFile";
 import Divider from "../../Divider";
 import OtherComment from "@/components/courses/OtherComment";
 import MyComment from "@/components/courses/MyComment";
+import parse from "html-react-parser";
 
 interface Comment {
   id: string;
@@ -19,8 +20,9 @@ interface Props {
   creator: string;
   createdAt: string;
   title: string;
+  desc: string;
   fileName: string;
-  comments: Comment[];
+  comments?: Comment[];
 }
 
 const PostItem = (params: Props) => {
@@ -49,23 +51,26 @@ const PostItem = (params: Props) => {
         </div>
 
         <p className="base-regular mt-3 ml-2 ">{params.title}</p>
+        <p className="body-regular mt-2 ml-2 ">{parse(params.desc)}</p>
 
-        <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-2 px-2"} />
+        <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-3 px-2"} />
 
         <Divider />
 
         <div className="flex flex-col gap-4">
-          {params.comments.map((item, index) => (
-            <OtherComment
-              key={item.id}
-              textAvatar={getAvatarName(item.author)}
-              name={item.author}
-              comment={item.content}
-            />
-          ))}
+          {params.comments &&
+            params.comments.map((item, index) => (
+              <>
+                <OtherComment
+                  key={item.id}
+                  textAvatar={getAvatarName(item.author)}
+                  name={item.author}
+                  comment={item.content}
+                />
+                <Divider />
+              </>
+            ))}
         </div>
-
-        <Divider />
 
         <MyComment textAvatar="HL" />
       </div>

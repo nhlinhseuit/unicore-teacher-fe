@@ -209,15 +209,12 @@ const LeftSideBar = () => {
           >
             <Button
               className="
-          small-medium btn-secondary 
-          min-h-[41px] w-full rounded-lg
-          px-4 py-3 shadow-none
-          max-lg:hidden
-        "
+              small-medium btn-tertiary light-border-2 
+              min-h-[41px] w-full rounded-lg
+              px-4 py-3 shadow-none text-dark400_light900
+              max-lg:hidden"
             >
-              <span className=" max-lg:hidden primary-text-gradient">
-                Đăng nhập
-              </span>
+              Đăng nhập
             </Button>
             <Image
               src="/assets/icons/account.svg"

@@ -1,8 +1,6 @@
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
-// TODO: Chuyển đổi các giá trị biến sang Label
-
 export function createInitials(name: string): string {
   const words = name
     .trim() // Xóa khoảng trắng thừa ở đầu và cuối
@@ -12,10 +10,11 @@ export function createInitials(name: string): string {
   const lastTwoWords = words.length > 2 ? words.slice(-2) : words;
 
   return lastTwoWords
-    .map(word => word.charAt(0).toUpperCase()) // Lấy chữ cái đầu của từng từ và chuyển thành chữ in hoa
-    .join(''); // Ghép lại thành chuỗi
+    .map((word) => word.charAt(0).toUpperCase()) // Lấy chữ cái đầu của từng từ và chuyển thành chữ in hoa
+    .join(""); // Ghép lại thành chuỗi
 }
 
+// TODO: Chuyển đổi các giá trị biến sang Label
 export enum Permission {
   ActivityTracking = "activityTracking",
   CreateExercise = "createExercise",
@@ -39,7 +38,6 @@ export const getPermissionLabel = (key: string): string => {
 };
 
 //
-
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));

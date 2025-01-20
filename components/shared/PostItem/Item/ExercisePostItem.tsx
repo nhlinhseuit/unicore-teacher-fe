@@ -11,6 +11,7 @@ import RenderFile from "../../Annoucements/RenderFile";
 import StatusButton from "../../Button/StatusButton";
 import Divider from "../../Divider";
 import { usePathname, useRouter } from "next/navigation";
+import parse from "html-react-parser";
 
 interface Comment {
   id: string;
@@ -23,6 +24,7 @@ interface Props {
   creator: string;
   createdAt: string;
   title: string;
+  desc: string;
   fileName: string;
   comments?: Comment[];
   setGrading: () => void;
@@ -77,11 +79,10 @@ const ExercisePostItem = (params: Props) => {
           />
         </div>
 
-        <div className=" mt-3 ml-2 flex gap-4 items-center">
-          <p className="base-regular">{params.title}</p>
-        </div>
+        <p className="base-regular mt-3 ml-2 ">{params.title}</p>
+        <p className="body-regular mt-2 ml-2 ">{parse(params.desc)}</p>
 
-        <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-2 px-2"} />
+        <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-3 px-2"} />
 
         {params.isOnlyView ? null : (
           <>

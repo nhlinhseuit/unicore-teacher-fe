@@ -207,6 +207,7 @@ const RegisterGroupTable = (params: DataTableParams) => {
               <Dropdown.Item
                 onClick={() => {
                   setIsShowDialog(2);
+                  setItemsSelected(dataTable.map(item => item.data["Mã nhóm"]))
                 }}
               >
                 Xóa tất cả

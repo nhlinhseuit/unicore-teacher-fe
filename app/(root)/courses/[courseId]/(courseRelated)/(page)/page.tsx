@@ -27,7 +27,7 @@ import { useEffect, useState } from "react";
 const page = () => {
   const pathName = usePathname();
   const [isGradeThesisReport, setIsGradeThesisReport] = useState(false);
-  const [isGradeExercise, setIsGradeExercise] = useState('');
+  const [isGradeExercise, setIsGradeExercise] = useState("");
   const [isGradeReport, setIsGradeReport] = useState(false);
 
   const [typeFilter, setTypeFilter] = useState(FilterType.None);
@@ -118,6 +118,7 @@ const page = () => {
                   creator={item.created_by}
                   createdAt={item.created_date}
                   title={item.name}
+                  desc={item.description}
                   fileName={item.attachment_url}
                   setGrading={() => {
                     setIsGradeExercise(item.id);
@@ -145,6 +146,7 @@ const page = () => {
             creator={item.creator}
             createdAt={item.createdAt}
             title={item.title}
+            desc={item.title}
             fileName={item.fileName}
             comments={item.comments}
             isFinalReport={item.isFinalReport}
@@ -162,10 +164,11 @@ const page = () => {
             creator={item.creator}
             createdAt={item.createdAt}
             title={item.title}
+            desc={item.title}
             fileName={item.fileName}
             comments={item.comments}
             setGrading={() => {
-              setIsGradeExercise('1');
+              setIsGradeExercise("1");
             }}
           />
         );
@@ -178,6 +181,7 @@ const page = () => {
             creator={item.creator}
             createdAt={item.createdAt}
             title={item.title}
+            desc={item.title}
             fileName={item.fileName}
             comments={item.comments}
           />
@@ -199,10 +203,10 @@ const page = () => {
       />
       <ReviewForm />
     </>
-  ) : isGradeExercise !== '' ? (
+  ) : isGradeExercise !== "" ? (
     <GradeExerciseItem
       onClickPrev={() => {
-        setIsGradeExercise('');
+        setIsGradeExercise("");
       }}
       exerciseId={isGradeExercise}
     />
@@ -406,10 +410,12 @@ const page = () => {
 
       {/* PostList */}
       <div className="mt-6 flex flex-col gap-4">
-        {mockPostDataCourseIdPage.map((item, index) => {
+        {/* //! mockParams */}
+        {/* {mockPostDataCourseIdPage.map((item, index) => {
           return getRenderPostItem(item);
-        })}
-        {/* {getRenderItems()} */}
+        })} */}
+
+        {getRenderItems()}
       </div>
     </div>
   );
