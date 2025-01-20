@@ -48,6 +48,7 @@ const ScoreTranscript = () => {
     <>
       {isViewDetailGradeColumn ? (
         <ScoreColumnDetailPage
+          onSave={() => {}}
           onClickPrev={() => {
             setIsViewDetailGradeColumn(false);
           }}
