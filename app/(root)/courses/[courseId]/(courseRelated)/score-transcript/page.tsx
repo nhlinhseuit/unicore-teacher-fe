@@ -16,10 +16,27 @@ const ScoreTranscript = () => {
   const [selectedCourse, setSelectedCourse] = useState(-1);
   const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
 
+  const [dataTable, setDataTable] = useState(mockDataScoreTranscript)
+
   return (
     <>
       {isViewDetailGradeColumn ? (
         <ScoreColumnDetailPage
+        //! mockParams
+        
+        onSave={() => {
+          const updatedData = dataTable.map((item) => {
+            return {
+              ...item,
+              data: {
+                ...item.data,
+                "Quá trình": 9.2,
+              },
+            };
+          });
+        
+          setDataTable(updatedData);
+        }}
           onClickPrev={() => {
             setIsViewDetailGradeColumn(false);
           }}
@@ -113,7 +130,7 @@ const ScoreTranscript = () => {
 
           {/* //TODO: BÀI TẬP */}
           <ScoreTranscriptTable
-            dataTable={mockDataScoreTranscript}
+            dataTable={dataTable}
             dataGradeColumnPercent={mockGradeColumnPercent}
             viewDetailGradeColumn={() => {
               setIsViewDetailGradeColumn(true);

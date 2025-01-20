@@ -7,12 +7,6 @@ interface RowParams {
   dataItem: ScoreTranscriptDataItem;
   viewDetailGradeColumn: () => void;
 }
-interface handleInputChangeParams {
-  key: ScoreTranscriptData;
-  newValue: any;  isMultipleInput?: boolean;
-  currentIndex?: number;
-  isCheckbox?: boolean;
-}
 
 const RowGradingGroupTable = React.memo(
   (params: RowParams) => {
@@ -25,10 +19,11 @@ const RowGradingGroupTable = React.memo(
         key === "Cuối kỳ" ||
         key === "Thực hành"
       ) {
+        if (value === 0) return <span>{value}</span>;
         return (
           <span
             className="cursor-pointer underline"
-            onClick={params.viewDetailGradeColumn}
+            onClick={() => {params.viewDetailGradeColumn()}}
           >
             {value}
           </span>

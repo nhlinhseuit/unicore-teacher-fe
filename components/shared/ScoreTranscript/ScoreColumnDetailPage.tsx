@@ -32,6 +32,9 @@ import SubmitButton from "../Button/SubmitButton";
 import PostScoreColumnDetailItem from "./PostScoreColumnDetailItem";
 
 interface Props {
+        //! mockParams
+
+  onSave: () => void;
   onClickPrev: () => void;
 }
 
@@ -131,6 +134,9 @@ const ScoreColumnDetailPage = (params: Props) => {
       console.log({
         ratios: scoreRatios,
       });
+      
+        //! mockParams
+      params.onSave();
 
       const res = scoreRatios.reduce((sum, ratio) => sum + parseInt(ratio), 0);
       if (res !== 100) {
