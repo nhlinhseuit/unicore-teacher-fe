@@ -106,7 +106,7 @@ const CreateExercise = (params: Props) => {
     };
 
     fetchCreationVariables(mockParams).then((data) => {
-      if (data.data.weights.length > 0) {
+      if (data.data && data.data.weights.length > 0) {
         setListCreationVariables(
           data.data.weights
             .filter(
@@ -372,9 +372,12 @@ const CreateExercise = (params: Props) => {
         } else return true;
       },
       {
-        message: selectedGradeColumn !== -1 && listCreationVariables ? `Hệ số phải nhỏ hơn hệ số còn lại của cột điểm (${
-          listCreationVariables![selectedGradeColumn].remaining
-        }%)` : '',
+        message:
+          selectedGradeColumn !== -1 && listCreationVariables
+            ? `Hệ số phải nhỏ hơn hệ số còn lại của cột điểm (${
+                listCreationVariables![selectedGradeColumn].remaining
+              }%)`
+            : "",
         path: ["ratio"],
       }
     )

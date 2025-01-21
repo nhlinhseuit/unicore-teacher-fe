@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import LoadingComponent from "@/components/shared/LoadingComponent";
 import NoResult from "@/components/shared/Status/NoResult";
 import { convertToDataTableTopicsViKeys } from "@/lib/convertToDataTableTopic";
-import { fetchDetailProject } from "@/services/projectServices";
+import { fetchTopicsInProject } from "@/services/topicInProjectServices";
 import { TopicDataItem } from "@/types/entity/Topic";
 import AlertCreateNewTopic from "./AlertCreateNewTopic";
 import ImportListTopic from "./ImportListTopic";
@@ -27,12 +27,17 @@ const UploadTopicResult = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  const mockParamsProjectId = "67813766b925f9491c58988b";
+  //TODO: trong lớp
+  // class_id: "678e0290551a4b14f9d22bed",
+  // subclass_code: "SE113.O21.PMCL",
+
+  const mockParamsProjectId = "678f1384cee96711b92d894c";
 
   useEffect(() => {
-    fetchDetailProject(mockParamsProjectId)
+    fetchTopicsInProject(mockParamsProjectId)
       .then((data: any) => {
-        if (data) setDataTable(convertToDataTableTopicsViKeys(data?.topics));
+        console.log("fetchTopicsInProject", data);
+        if (data) setDataTable(convertToDataTableTopicsViKeys(data.data));
         setIsLoading(false);
       })
       .catch((error) => {
@@ -40,6 +45,8 @@ const UploadTopicResult = () => {
         setIsLoading(false);
       });
   }, []);
+
+  console.log("dataTable", dataTable);
 
   return (
     <>

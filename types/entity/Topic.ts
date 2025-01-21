@@ -6,8 +6,7 @@ export interface TopicDataItem {
 }
 
 export interface TopicData {
-  "GV phụ trách"?: string;
-
+  
   "Mã đề tài": string;
   "Tên đề tài tiếng Việt": string;
   "Tên đề tài tiếng Anh": string;
@@ -16,6 +15,9 @@ export interface TopicData {
   MSSV: string[];
   SĐT: string[];
   "Họ và tên": string[];
+  "Email giảng viên"?: string;
+  "Mã giảng viên"?: string;
+  "GV phụ trách"?: string;
 }
 
 export interface ITopicResponseData {

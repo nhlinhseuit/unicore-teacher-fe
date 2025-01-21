@@ -62,7 +62,9 @@ const ImportListTopic = (params: Props) => {
           SĐT: parseToArray(item["SĐT"]),
           "Tên đề tài tiếng Việt": item["Tên đề tài tiếng Việt"],
           "Tên đề tài tiếng Anh": item["Tên đề tài tiếng Anh"],
-          "Mô tả": item["Mô tả"],
+          "Email giảng viên": item["Email giảng viên"],
+          "Mã giảng viên": item["Mã giảng viên"],
+          "GV phụ trách": item["GV phụ trách"],
         };
 
         // Lặp qua các trường để kiểm tra nếu có giá trị undefined
@@ -95,17 +97,27 @@ const ImportListTopic = (params: Props) => {
   const createTopicsAPI = async () => {
     console.log("createTopicsAPI");
 
-    const mockParamsProjectId = "67813766b925f9491c58988b";
+    //TODO: trong lớp
+    // class_id: "678e0290551a4b14f9d22bed",
+    // subclass_code: "SE113.O21.PMCL",
+
+    const mockParamsProjectId = "678f1384cee96711b92d894c";
 
     const APIdataTable = convertToAPIDataTableTopics({
       data: dataTable,
+      class_id: "678e0290551a4b14f9d22bed",
+      subclass_code: "SE113.O21.PMCL",
+      projectId: mockParamsProjectId,
     });
 
     console.log("APIdataTable", APIdataTable);
 
-    setIsLoadingAPI(true)
-    const res = await handleCreateTopicAction(mockParamsProjectId, APIdataTable);
-    setIsLoadingAPI(false)
+    setIsLoadingAPI(true);
+    const res = await handleCreateTopicAction(
+      mockParamsProjectId,
+      APIdataTable
+    );
+    setIsLoadingAPI(false);
 
     console.log("res", res);
   };
@@ -154,7 +166,11 @@ const ImportListTopic = (params: Props) => {
             />
           </div>
           {dataTable.length > 0 && (
-            <IconButton text="Lưu" onClick={createTopicsAPI} otherClasses="ml-2" />
+            <IconButton
+              text="Lưu"
+              onClick={createTopicsAPI}
+              otherClasses="ml-2"
+            />
           )}
         </div>
 

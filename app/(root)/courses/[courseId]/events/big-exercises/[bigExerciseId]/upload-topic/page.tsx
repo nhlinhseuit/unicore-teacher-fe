@@ -8,10 +8,10 @@ const UploadTopic = () => {
     //! Chỉ hiện đăng đề tài nếu admin mở lịch đăng đề tài
 
     <div>
-      {/* <TitleDescription
+      <TitleDescription
         title="Đăng đề tài"
         description={["Thời hạn: 7/12/2024 - 28/12/2024"]}
-      /> */}
+      />
       <UploadTopicResult />
     </div>
   );

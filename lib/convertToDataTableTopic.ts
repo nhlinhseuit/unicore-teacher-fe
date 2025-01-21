@@ -29,16 +29,49 @@ export const convertToDataTableTopicsViKeys = (
 //? Data import vào ở dạng TopicDataItem, cần convert sang ICourseResponseData
 export const convertToAPIDataTableTopics = ({
   data,
+  class_id,
+  subclass_code,
+  projectId,
 }: {
   data: TopicDataItem[];
+  class_id: string;
+  subclass_code: string;
+  projectId: string;
 }) => {
   const classesData = data.map((item, index) => {
     return {
       name: item.data["Tên đề tài tiếng Việt"],
-      nameEn: item.data["Tên đề tài tiếng Anh"],
       description: item.data["Mô tả"],
-      limit: 1,
+      note: "",
+      nameEn: item.data["Tên đề tài tiếng Anh"],
+      projectId: projectId,
+      groupRequest: {
+        // "name": "string",
+        members: item.data.MSSV.map((studentCode, index) => {
+          return {
+            name: item.data["Họ và tên"][index],
+            phone: item.data.SĐT[index],
+            student_code: studentCode,
+            class_id: class_id,
+            subclass_code: subclass_code,
+          };
+        }),
+
+        // [
+        //   {
+        //     "name": "string",
+        //     "phone": "string",
+        //     "student_code": "string",
+        //     // "class_id": "string",
+        //     // "subclass_code": "string",
+        //     // "group_name": "string"
+        //   }
+        // ]
+      },
+      teacher_mails: [item.data["Email giảng viên"]],
+      teacher_codes: [item.data["Mã giảng viên"]],
       teacher_names: [item.data["GV phụ trách"]],
+      // "student_id": "string"
     };
   });
 
