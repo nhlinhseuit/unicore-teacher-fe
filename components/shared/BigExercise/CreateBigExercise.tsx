@@ -237,8 +237,17 @@ const CreateBigExercise = (props: Props) => {
     setIsSubmitting(true);
 
     try {
+      //TODO: trong lớp
+      // class_id: "678e0290551a4b14f9d22bed",
+      // subclass_code: "SE113.O21.PMCL",
+
+      const mockParamsProjectId = "678f1384cee96711b92d894c";
+
       const TopicAPIdataTable = convertToAPIDataTableTopics({
         data: dataTable,
+        class_id: "678e0290551a4b14f9d22bed",
+        subclass_code: "SE113.O21.PMCL",
+        projectId: mockParamsProjectId,
       });
 
       const mockParams = {
@@ -261,12 +270,12 @@ const CreateBigExercise = (props: Props) => {
         allow_topic_suggestion: selectedSuggestOption,
         ...TopicAPIdataTable,
       };
-      
-      console.log('mockParams', mockParams)
+
+      console.log("mockParams", mockParams);
 
       createBigExerciseAPI(mockParams).then((data) => {
-        console.log('createBigExerciseAPI', data)
-        
+        console.log("createBigExerciseAPI", data);
+
         // naviate to home page
         props.navigateBack();
 
@@ -326,7 +335,8 @@ const CreateBigExercise = (props: Props) => {
                   render={({ field }) => (
                     <FormItem className="flex w-full flex-col">
                       <FormLabel className="text-dark400_light800 text-[14px] font-semibold leading-[20.8px]">
-                        Tên bài tập lớn<span className="text-red-600">{" *"}</span>
+                        Tên bài tập lớn
+                        <span className="text-red-600">{" *"}</span>
                       </FormLabel>
                       <FormControl className="mt-3.5 ">
                         <Input
