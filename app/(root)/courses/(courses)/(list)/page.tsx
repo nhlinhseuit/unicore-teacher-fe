@@ -86,6 +86,8 @@ const JoinedCourses = () => {
                   //? Lưu code, id vào store
                   setClassId(item.id);
                   setClassCode(item.subclasses[0].code);
+                  
+                  //* cho đăng ký lịch đề tài
                   setGroupingId(item.subclasses[0].grouping_id ?? "");
                 }
               }}

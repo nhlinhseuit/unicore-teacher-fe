@@ -13,9 +13,14 @@ import {
 } from "@/services/projectServices";
 import { ICentralizedTestResponseData } from "@/types/entity/CentralizedTest";
 import { ITProjectResponseData } from "@/types/entity/Project";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useAtom } from "jotai";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import {
+  endTopicImportTimeAtom,
+  projectIdAtom,
+  startTopicImportTimeAtom,
+} from "../../../(courses)/(store)/courseStore";
 
 const BigExercises = () => {
   const pathName = usePathname();
@@ -29,7 +34,7 @@ const BigExercises = () => {
   >([]);
 
   const mockParams1 = {
-    class_id: "677cd4ae0a706479b8773770",
+    class_id: "678e0290551a4b14f9d22bed",
     subclass_code: "SE113.O21.PMCL",
   };
 
@@ -102,6 +107,12 @@ const BigExercises = () => {
     },
   ];
 
+  const [, setProjectId] = useAtom(projectIdAtom);
+  const [, setStartTopicImportTime] = useAtom(startTopicImportTimeAtom);
+  const [, setEndTopicImportTime] = useAtom(endTopicImportTimeAtom);
+
+  const router = useRouter();
+
   return (
     <div>
       {isLoading ? <LoadingComponent /> : null}
@@ -170,6 +181,7 @@ const BigExercises = () => {
                     creator={item.created_by}
                     createdAt={item.created_date}
                     deadline={item.date}
+                    onClick={() => {}}
                   />
                 ))
               : null}
@@ -183,19 +195,22 @@ const BigExercises = () => {
             />
             {isToggleShowBigExercise
               ? projects.map((item) => (
-                  <Link
+                  <BigExerciseItem
                     key={item.id}
-                    href={`${pathName}/big-exercises/${item.id}`}
-                  >
-                    <BigExerciseItem
-                      id={item.id}
-                      name={item.name}
-                      creator={item.created_by}
-                      createdAt={item.created_date}
-                      happeningEvent={""}
-                      deadline={""}
-                    />
-                  </Link>
+                    id={item.id}
+                    name={item.name}
+                    creator={item.created_by}
+                    createdAt={item.created_date}
+                    happeningEvent={""}
+                    deadline={""}
+                    onClick={() => {
+                      setProjectId(item.id);
+                      setStartTopicImportTime(item?.start_topic_import_time);
+                      setEndTopicImportTime(item?.end_topic_import_time);
+
+                      router.push(`${pathName}/big-exercises/${item.id}`);
+                    }}
+                  />
                 ))
               : null}
           </div>

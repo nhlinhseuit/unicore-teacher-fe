@@ -55,6 +55,13 @@ export const isDateValid = (selectedDate: Date): boolean => {
   return selectedDate >= today;
 };
 
+export const isDateBeforeToday = (selectedDate: Date): boolean => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0); // Đặt thời gian của ngày hiện tại về 00:00:00
+
+  return selectedDate < today; // Kiểm tra nếu ngày được chọn nhỏ hơn ngày hiện tại
+};
+
 //TODO: DATETIME
 
 //? ISO để params cho API
@@ -165,3 +172,13 @@ export const formatISOToTimeCalendarType = (isoString: string): string => {
 };
 
 //? Truyền ISO lấy ra String để hiển thị
+
+export const parseISODateToDisplayDate = (isoDate: string): string => {
+  const date = new Date(isoDate);
+
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${day}/${month}/${year}`;
+};

@@ -24,8 +24,8 @@ export interface ITExerciseResponseData {
   weight: number;
   name: string;
   description: string;
-  startDate: string; // ISO 8601 date string
-  endDate: string; // ISO 8601 date string
+  start_date: string; // ISO 8601 date string
+  end_date: string; // ISO 8601 date string
   eventType: ExerciseType; // e.g., "HOMEWORK"
   created_date: string; // ISO 8601 date string
   modified_date: string | null; // Nullable

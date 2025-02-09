@@ -8,6 +8,7 @@ import Divider from "../../Divider";
 import OtherComment from "@/components/courses/OtherComment";
 import MyComment from "@/components/courses/MyComment";
 import parse from "html-react-parser";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Comment {
   id: string;
@@ -26,11 +27,14 @@ interface Props {
 }
 
 const PostItem = (params: Props) => {
+  const router = useRouter();
+  const pathName = usePathname();
+
   return (
     <div className="card-wrapper rounded-[10px]">
       <div className="relative flex-col w-full p-6">
         <div className="flex justify-start items-center gap-2">
-          <MyAvatar text="MT" />
+          <MyAvatar text={params.creator} />
           <p className="body-regular">{params.creator}</p>
           <p className="small-regular italic text-[#636363] line-clamp-1 ">
             - {params.createdAt}
@@ -47,13 +51,17 @@ const PostItem = (params: Props) => {
             height={26}
             alt={"edit"}
             className={`object-contain cursor-pointer ml-4`}
+            onClick={() => {
+              router.push(`${pathName}/edit-announcement?id=${params.id}`);
+            }}
           />
         </div>
 
         <p className="base-regular mt-3 ml-2 ">{params.title}</p>
         <p className="body-regular mt-2 ml-2 ">{parse(params.desc)}</p>
 
-        <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-3 px-2"} />
+        {/* //! KHI NÀO CÓ NỘP FILE  */}
+        {/* <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-3 px-2"} /> */}
 
         <Divider />
 

@@ -91,7 +91,7 @@ const ManageGroup = () => {
     useState<IGroupRegisterResponseData>();
 
   const groupingId = useAtomValue(groupingIdAtom);
-  const mockParamsGroupingId = "2f92d554-747d-4183-b8e3-f767437cabd3";
+  const mockParamsGroupingId = "25337c8d-4f9f-441a-8344-de809c094972";
 
   useEffect(() => {
     //@ts-ignore

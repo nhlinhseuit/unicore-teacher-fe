@@ -10,6 +10,7 @@ import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import LoadingComponent from "../../LoadingComponent";
+import { parseISODateToDisplayDate } from "@/utils/dateTimeUtil";
 
 interface Props {
   exerciseId: string;
@@ -101,7 +102,8 @@ const GradeExerciseItem = (params: Props) => {
                   >
                     <span className="font-semibold">Thời hạn nộp bài: </span>
                     <span>
-                      {exercise?.startDate} - {exercise?.endDate}
+                      {parseISODateToDisplayDate(exercise?.start_date ?? "")} -{" "}
+                      {parseISODateToDisplayDate(exercise?.end_date ?? "")}
                     </span>
                   </button>
                 </li>
@@ -114,7 +116,9 @@ const GradeExerciseItem = (params: Props) => {
                       Thời hạn đóng bài nộp:{" "}
                     </span>
                     <span>
-                      {exercise?.close_submission_date}
+                      {parseISODateToDisplayDate(
+                        exercise?.close_submission_date ?? ""
+                      )}
                     </span>
                   </button>
                 </li>

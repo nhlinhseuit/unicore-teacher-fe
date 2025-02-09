@@ -60,6 +60,7 @@ const ImportListTopic = (params: Props) => {
           MSSV: parseToArray(item["MSSV"]),
           "Họ và tên": parseToArray(item["Họ và tên"]),
           SĐT: parseToArray(item["SĐT"]),
+          "Mô tả": item["Mô tả"],
           "Tên đề tài tiếng Việt": item["Tên đề tài tiếng Việt"],
           "Tên đề tài tiếng Anh": item["Tên đề tài tiếng Anh"],
           "Email giảng viên": item["Email giảng viên"],
@@ -101,7 +102,9 @@ const ImportListTopic = (params: Props) => {
     // class_id: "678e0290551a4b14f9d22bed",
     // subclass_code: "SE113.O21.PMCL",
 
-    const mockParamsProjectId = "678f1384cee96711b92d894c";
+    const mockParamsProjectId = "67a6e790dcf5f232aead4372";
+
+    console.log("dataTable", dataTable);
 
     const APIdataTable = convertToAPIDataTableTopics({
       data: dataTable,

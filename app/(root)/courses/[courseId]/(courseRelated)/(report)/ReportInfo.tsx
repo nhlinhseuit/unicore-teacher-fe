@@ -98,6 +98,7 @@ const ReportInfo = (props: Props) => {
   const [listCreationVariables, setListCreationVariables] =
     useState<ITCreationVariablesWeightData[]>();
 
+  const mockParamsClassId = "678e0290551a4b14f9d22bed";
   const mockParamsSubclassCode = "IT002.O21.CLC";
 
   console.log("listCreationVariables", listCreationVariables);
@@ -463,8 +464,8 @@ const ReportInfo = (props: Props) => {
   const editReportAPI = async (values: any) => {
     const mockParamsAPI = {
       //! Ở BTL thì có project_id
-      class_id: "1",
-      subclass_codes: ["IT002.PMCL"],
+      class_id: mockParamsClassId,
+      subclass_codes: mockParamsSubclassCode,
 
       name: values.title,
       description: values.description,

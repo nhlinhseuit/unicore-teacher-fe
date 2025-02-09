@@ -39,4 +39,8 @@ export interface ITProjectResponseData {
   review_times: number;
   start_date: string | null;
   allow_topic_suggestion: boolean;
+  start_topic_register_time?: string;
+  end_topic_register_time?: string;
+  start_topic_import_time?: string;
+  end_topic_import_time?: string;
 }

@@ -10,13 +10,15 @@ import PostItem from "@/components/shared/PostItem/Item/PostItem";
 import ReportPostItem from "@/components/shared/PostItem/Item/ReportPostItem";
 import ReviewForm from "@/components/shared/ScoreReport/ReviewForm";
 import TableSearch from "@/components/shared/Search/TableSearch";
+import NoResult from "@/components/shared/Status/NoResult";
 import {
   AnnouncementTypes,
   AnnouncementTypesNotRegularCourse,
   FilterType,
 } from "@/constants";
 import { mockPostDataCourseIdPage } from "@/mocks";
-import { fetchExercises } from "@/services/exerciseServices";
+import { fetchAnnoucements, fetchExercises } from "@/services/exerciseServices";
+import { IAnnouncementResponseData } from "@/types/entity/Annoucement";
 import { ITExerciseResponseData } from "@/types/entity/Exercise";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
@@ -52,23 +54,32 @@ const page = () => {
   const [selectedAnnoucementType, setSelectedAnnoucementType] = useState(2);
 
   const [exercises, setExercises] = useState<ITExerciseResponseData[]>([]);
+  const [annoucements, setAnnoucements] = useState<IAnnouncementResponseData[]>(
+    []
+  );
 
   const mockParams = {
-    class_id: "677fefdd854d3e02e4191707",
-    subclass_code: "IT002.O21.CLC",
+    class_id: "678e0290551a4b14f9d22bed",
+    subclass_code: "SE113.O21.PMCL",
   };
 
-  useEffect(() => {
-    if (selectedAnnoucementType === 1) fetchAnnoucementsAPI();
-  }, []);
+  const mockParamsClass_id = "678e0290551a4b14f9d22bed";
+
+  // useEffect(() => {
+  //   if (selectedAnnoucementType === 1) fetchAnnoucementsAPI();
+  // }, []);
 
   useEffect(() => {
+    if (selectedAnnoucementType === 1 && annoucements.length === 0)
+      fetchAnnoucementsAPI();
     if (selectedAnnoucementType === 2 && exercises.length === 0)
       fetchExercisesAPI();
     // if (selectedAnnoucementType === 3 && exercises.length === 0) fetchReportsAPI();
   }, [selectedAnnoucementType]);
 
   const fetchExercisesAPI = () => {
+    setIsLoading(true);
+
     fetchExercises(mockParams)
       .then((data: any) => {
         console.log("fetchExercises data", data);
@@ -81,6 +92,7 @@ const page = () => {
       });
   };
   const fetchReportsAPI = () => {
+    // setIsLoading(true)
     // fetchExercises(mockParams)
     //   .then((data: any) => {
     //     console.log("fetchExercises data", data);
@@ -93,22 +105,50 @@ const page = () => {
     //   });
   };
   const fetchAnnoucementsAPI = () => {
-    // fetchExercises(mockParams)
-    //   .then((data: any) => {
-    //     console.log("fetchExercises data", data);
-    //     setExercises(data);
-    //     setIsLoading(false);
-    //   })
-    //   .catch((error) => {
-    //     setError(error.message);
-    //     setIsLoading(false);
-    //   });
+    setIsLoading(true);
+
+    fetchAnnoucements(mockParamsClass_id)
+      .then((data: any) => {
+        console.log("fetchAnnoucements", data);
+        setAnnoucements(data.data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        setError(error.message);
+        setIsLoading(false);
+      });
   };
 
   const getRenderItems = (): JSX.Element => {
     switch (selectedAnnoucementType) {
+      case 1:
+        return annoucements.length > 0 ? (
+          <>
+            {annoucements.map((item, index) => {
+              console.log("case item", item);
+              return (
+                <PostItem
+                  key={item.id}
+                  id={item.id}
+                  creator={item.create_by}
+                  createdAt={item.created_date}
+                  title={item.name}
+                  desc={item.description}
+                  fileName={""}
+                  // comments={}
+                />
+              );
+            })}
+          </>
+        ) : (
+          <NoResult
+            title="Không có thông báo lớp học!"
+            description="🚀 Thử tải lại trang để xem thông báo lớp học."
+          />
+        );
+
       case 2:
-        return (
+        return exercises.length > 0 ? (
           <>
             {exercises.map((item, index) => {
               return (
@@ -127,9 +167,14 @@ const page = () => {
               );
             })}
           </>
+        ) : (
+          <NoResult
+            title="Không có bài tập lớp học!"
+            description="🚀 Thử tải lại trang để xem bài tập lớp học."
+          />
         );
       default:
-        return <div>No items to display</div>;
+        return <NoResult title="Không có thông báo lớp học!" description="" />;
     }
   };
 
@@ -415,7 +460,7 @@ const page = () => {
           return getRenderPostItem(item);
         })} */}
 
-        {getRenderItems()}
+        {!isLoading ? getRenderItems() : null}
       </div>
     </div>
   );

@@ -93,20 +93,25 @@ const CreateExercise = (params: Props) => {
   const [listCreationVariables, setListCreationVariables] =
     useState<ITCreationVariablesWeightData[]>();
 
-  const mockParamsSubclassCode = "IT002.O21.CLC";
+  const mockParamsSubclassCode = "SE113.O21.PMCL";
+  const mockParamsClassId = "678e0290551a4b14f9d22bed";
+  const mockTeacherCode = "80210"; //ứng với lớp mock trên
 
   console.log("listCreationVariables", listCreationVariables);
 
   useEffect(() => {
     //TODO: Fetch cột điểm, hệ số điểm còn lại
     const mockParams = {
-      classId: "67811f38854d3e02e4191719",
-      subclassCode: "IT002.O21.CLC",
-      teacherCode: "80173",
+      classId: mockParamsClassId,
+      subclassCode: mockParamsSubclassCode,
+      teacherCode: mockTeacherCode,
     };
 
     fetchCreationVariables(mockParams).then((data) => {
       if (data.data && data.data.weights.length > 0) {
+
+        console.log('data fetchCreationVariables', data)
+
         setListCreationVariables(
           data.data.weights
             .filter(
@@ -160,20 +165,20 @@ const CreateExercise = (params: Props) => {
           : undefined
       );
       setDateStart(
-        exercise.startDate
-          ? formatISOToDayDatatype(exercise.startDate)
+        exercise.start_date
+          ? formatISOToDayDatatype(exercise.start_date)
           : undefined
       );
       setTimeStart(
-        exercise.startDate
-          ? formatISOToTimeCalendarType(exercise.startDate)
+        exercise.start_date
+          ? formatISOToTimeCalendarType(exercise.start_date)
           : ""
       );
       setDateEnd(
-        exercise.endDate ? formatISOToDayDatatype(exercise.endDate) : undefined
+        exercise.end_date ? formatISOToDayDatatype(exercise.end_date) : undefined
       );
       setTimeEnd(
-        exercise.endDate ? formatISOToTimeCalendarType(exercise.endDate) : ""
+        exercise.end_date ? formatISOToTimeCalendarType(exercise.end_date) : ""
       );
       setDateRemindGrade(
         exercise.remind_grading_date
@@ -410,10 +415,12 @@ const CreateExercise = (params: Props) => {
     },
   });
 
+
+
   const createExerciseAPI = async (values: any) => {
     const mockParams = {
-      class_id: "1",
-      subclass_codes: ["IT002.PMCL", ...selectedCourses],
+      class_id: mockParamsClassId,
+      subclass_codes: [mockParamsSubclassCode, ...selectedCourses],
       name: values.title,
       description: values.description,
       weight: ratio,

@@ -74,7 +74,7 @@ const ExercisePostItem = (params: Props) => {
             alt={"edit"}
             className={`object-contain cursor-pointer ml-4`}
             onClick={() => {
-              router.push(`${pathName}/edit-exercise?id=${params.id}`)
+              router.push(`${pathName}/edit-exercise?id=${params.id}`);
             }}
           />
         </div>
@@ -82,7 +82,8 @@ const ExercisePostItem = (params: Props) => {
         <p className="base-regular mt-3 ml-2 ">{params.title}</p>
         <p className="body-regular mt-2 ml-2 ">{parse(params.desc)}</p>
 
-        <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-3 px-2"} />
+        {/* //! KHI NÀO CÓ NỘP FILE  */}
+        {/* <RenderFile _id={1} name={"exercise.docx"} otherClasses={"mt-3 px-2"} /> */}
 
         {params.isOnlyView ? null : (
           <>
@@ -112,11 +113,9 @@ const ExercisePostItem = (params: Props) => {
                 />
               ))}
             </div>
-          <Divider />
+            <Divider />
           </>
-
         ) : null}
-
 
         <MyComment textAvatar="HL" />
       </div>

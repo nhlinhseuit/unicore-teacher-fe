@@ -31,7 +31,7 @@ const UploadTopicResult = () => {
   // class_id: "678e0290551a4b14f9d22bed",
   // subclass_code: "SE113.O21.PMCL",
 
-  const mockParamsProjectId = "678f1384cee96711b92d894c";
+  const mockParamsProjectId = "67a6e790dcf5f232aead4372";
 
   useEffect(() => {
     fetchTopicsInProject(mockParamsProjectId)
