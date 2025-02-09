@@ -12,7 +12,7 @@ import {
   fetchProjectsInClass,
 } from "@/services/projectServices";
 import { ICentralizedTestResponseData } from "@/types/entity/CentralizedTest";
-import { ITProjectResponseData } from "@/types/entity/Project";
+import { ITProjectResponseData, WeightType } from "@/types/entity/Project";
 import { useAtom } from "jotai";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -33,15 +33,18 @@ const BigExercises = () => {
     ICentralizedTestResponseData[]
   >([]);
 
+  const [fakeAPICentralizedExam, setfakeAPICentralizedExam] =
+    useState<ICentralizedTestResponseData>();
+
   const mockParams1 = {
     class_id: "678e0290551a4b14f9d22bed",
     subclass_code: "SE113.O21.PMCL",
   };
 
-  const mockParams2 = {
-    class_id: "6780ff6e854d3e02e4191716",
-    subclass_code: "IT001.O21.CLC",
-  };
+  // const mockParams2 = {
+  //   class_id: "6780ff6e854d3e02e4191716",
+  //   subclass_code: "IT001.O21.CLC",
+  // };
 
   useEffect(() => {
     let pendingRequests = 2; // Theo dõi số lượng lời gọi đang xử lý
@@ -61,20 +64,44 @@ const BigExercises = () => {
         }
       });
 
-    fetchCentralizedExamInClass(mockParams2)
-      .then((data: any) => {
-        console.log("fetchCentralizedExamInClass", data);
-        setCentralizedExams(data);
-      })
-      .catch((error) => {
-        setError(error.message);
-      })
-      .finally(() => {
-        pendingRequests -= 1;
-        if (pendingRequests === 0) {
-          setIsLoading(false);
-        }
-      });
+    //! fake API
+
+    // fetchCentralizedExamInClass(mockParams1)
+    //   .then((data: any) => {
+    //     console.log("fetchCentralizedExamInClass", data);
+    //     setCentralizedExams(data);
+    //   })
+    //   .catch((error) => {
+    //     setError(error.message);
+    //   })
+    //   .finally(() => {
+    //     pendingRequests -= 1;
+    //     if (pendingRequests === 0) {
+    //       setIsLoading(false);
+    //     }
+    //   });
+
+    //     setCentralizedExams(data);
+
+    setfakeAPICentralizedExam({
+      id: "1",
+      weight: 20,
+      name: "Thi cuối kỳ",
+      description: "1",
+      place: "1",
+      date: "1",
+      eventType: "1",
+      created_date: "9/2/2025",
+      modified_date: "1",
+      created_by: "Trần Hạnh Xuân",
+      modified_by: "1",
+      in_group: true,
+      weight_type: WeightType.FINAL_TERM,
+      class_id: "1",
+      subclass_code: "1",
+      allow_grade_review: true,
+      review_times: 2,
+    });
   }, []);
 
   const [isCreate, setIsCreate] = useState(false);
@@ -172,19 +199,18 @@ const BigExercises = () => {
               }}
               value={isToggleShowCentralizedExam}
             />
-            {isToggleShowCentralizedExam
-              ? centralizedExams.map((item) => (
-                  <BigExerciseItem
-                    isCentralizedExam
-                    id={item.id}
-                    name={item.name}
-                    creator={item.created_by}
-                    createdAt={item.created_date}
-                    deadline={item.date}
-                    onClick={() => {}}
-                  />
-                ))
-              : null}
+            {isToggleShowCentralizedExam && fakeAPICentralizedExam ? (
+              //! fakeAPI
+              <BigExerciseItem
+                isCentralizedExam
+                id={fakeAPICentralizedExam.id}
+                name={fakeAPICentralizedExam.name}
+                creator={fakeAPICentralizedExam.created_by}
+                createdAt={fakeAPICentralizedExam.created_date}
+                deadline={fakeAPICentralizedExam.date}
+                onClick={() => {}}
+              />
+            ) : null}
 
             <ToggleTitle
               text="Bài tập lớn"

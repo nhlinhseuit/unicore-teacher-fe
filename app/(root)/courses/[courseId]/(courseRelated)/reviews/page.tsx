@@ -65,7 +65,7 @@ const Review = () => {
   let tableData;
 
   const mockParams = {
-    class_id: "677cd4ae0a706479b8773770",
+    class_id: "678e0290551a4b14f9d22bed",
     subclass_code: "SE113.O21.PMCL",
   };
 

@@ -29,9 +29,9 @@ const BigExerciseItem = (params: Props) => {
           </p>
         ) : null}
         {params.isCentralizedExam ? (
-          <p className="mt-4 small-regular line-clamp-1 text-red-400">
-            <span className="italic">Ngày diễn ra</span>
-            {params.deadline}
+          <p className="mt-4 small-regular line-clamp-1">
+            <span className="italic">Ngày diễn ra: </span>
+            15/2/2025
           </p>
         ) : null}
       </div>
