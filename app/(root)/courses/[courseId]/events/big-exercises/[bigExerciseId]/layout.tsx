@@ -100,7 +100,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {/* //! HERE */}
         <div className="mt-2">
           <BackToPrev
-            text={"Seminar Giữa kỳ"}
+            text={"Đồ án cuối kỳ"}
             bold
             linkPrev={linkToBigExercises}
           />
