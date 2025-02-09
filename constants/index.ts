@@ -1,6 +1,17 @@
 import { SidebarLink } from "@/types";
 import { CourseType } from "@/types/entity/Course";
-import { CustomFlowbiteTheme } from "flowbite-react";
+
+export const statusThesis = [
+  { id: 1, value: "Đạt" },
+  { id: 2, value: "Không đạt" },
+];
+export const ratingThesis = [
+  { id: 1, value: "Xuất sắc" },
+  { id: 2, value: "Giỏi" },
+  { id: 3, value: "Khá" },
+  { id: 4, value: "Trung bình" },
+  { id: 5, value: "kém" },
+];
 
 export const itemsPerPage = 30;
 export const maxStudentPerGroup = 2;

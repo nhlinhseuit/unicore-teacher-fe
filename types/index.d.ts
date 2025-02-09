@@ -8,6 +8,18 @@ export interface ThesisReportCouncilDataItem {
   secretary: string;
   member: string;
 }
+
+export interface ReviewTopicDataItem {
+  id: string;
+  isReviewd: int;
+  nameTopic: string;
+  supervisor: string[];
+  studentIds: string[];
+  studentNames: string[];
+  council: string;
+  councilInfo: string;
+  reviewTeacher: string;
+}
 export interface InternReportCouncilDataItem {
   id: string;
   numberOfCompletedGradingForStudents: number;

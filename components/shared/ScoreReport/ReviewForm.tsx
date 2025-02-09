@@ -3,15 +3,24 @@
 import BorderContainer from "@/components/shared/BorderContainer";
 import IconButton from "@/components/shared/Button/IconButton";
 import SubmitButton from "@/components/shared/Button/SubmitButton";
+import { ratingThesis, statusThesis } from "@/constants";
+import { ReviewTopicDataItem } from "@/types";
 import { Dropdown } from "flowbite-react";
 import Image from "next/image";
 import React, { useState } from "react";
 import GeneralOfReport from "./GeneralOfReport";
 import InputForm from "./InputForm";
-import SubGeneralOfReport from "./SubGeneralOfReport";
 import TableForm from "./TableForm";
+import SubGeneralOfReport from "./SubGeneralOfReport";
 
-const ReviewForm = () => {
+interface Props {
+  topic: ReviewTopicDataItem;
+  ownerName: string;
+
+  isReviewer: boolean;
+}
+
+const ReviewForm = (params: Props) => {
   const [formData, setFormData] = useState({
     topicTitle: "",
     student1Name: "",
@@ -39,18 +48,6 @@ const ReviewForm = () => {
 
   const [selectedThesisStatus, setSelectedThesisStatus] = useState(-1);
   const [selectedThesisRating, setSelectedThesisRating] = useState(-1);
-
-  const statusThesis = [
-    { id: 1, value: "Đạt" },
-    { id: 2, value: "Không đạt" },
-  ];
-  const ratingThesis = [
-    { id: 1, value: "Xuất sắc" },
-    { id: 2, value: "Giỏi" },
-    { id: 3, value: "Khá" },
-    { id: 4, value: "Trung bình" },
-    { id: 5, value: "kém" },
-  ];
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -99,7 +96,11 @@ const ReviewForm = () => {
 
         <div className="text-center flex flex-col gap-4">
           <p className="paragraph-semibold">NHẬN XÉT KHÓA LUẬN TỐT NGHIỆP</p>
-          <p className="paragraph-semibold">CỦA CÁN BỘ HƯỚNG DẪN</p>
+          {params.isReviewer ? (
+            <p className="paragraph-semibold">CỦA CÁN BỘ PHẢN BIỆN</p>
+          ) : (
+            <p className="paragraph-semibold">CỦA CÁN BỘ HƯỚNG DẪN</p>
+          )}
         </div>
 
         <div className="mt-10 flex flex-col gap-6">
@@ -116,26 +117,25 @@ const ReviewForm = () => {
             <div className="w-[60%]">
               <label className="base-semibold">Sinh viên thực hiện: </label>
 
-              {/*  SINH VIÊN 1 */}
-              <div className="mt-2 flex items-center gap-4">
-                <label className="base-regular">
-                  1. Nguyễn Hoàng Linh - 21522289
-                </label>
-              </div>
-
-              {/*  SINH VIÊN 2 */}
-              <div className="mt-2 flex items-center gap-4">
-                <label className="base-regular">
-                  2. Lê Thành Lộc - 21521087
-                </label>
-              </div>
+              {/* Render students dynamically */}
+              {params.topic.studentIds.map((studentId: any, index: number) => (
+                <div key={studentId} className="mt-2 flex items-center gap-4">
+                  <label className="base-regular">
+                    {`${index + 1}. ${
+                      params.topic.studentNames[index]
+                    } - ${studentId}`}
+                  </label>
+                </div>
+              ))}
             </div>
 
             {/*  CÁN BỘ */}
             <div className="w-[40%]">
-              <label className="base-semibold">Cán bộ phản biện: </label>
+              <label className="base-semibold">
+                Cán bộ {params.isReviewer ? "phản biện" : "hướng dẫn"}:{" "}
+              </label>
               <div className="mt-2 flex items-center gap-4">
-                <label className="base-regular">Huỳnh Hồ Thị Mộng Trinh</label>
+                <label className="base-regular">{params.ownerName}</label>
               </div>
             </div>
           </div>
@@ -155,29 +155,41 @@ const ReviewForm = () => {
                 </label>
               </div>
 
-              <div className="flex gap-20">
-                <div className="w-[60%]">
-                  <GeneralOfReport
-                    totalPages={formData.totalPages}
-                    totalChapters={formData.totalChapters}
-                    totalFigures={formData.totalFigures}
-                    totalTables={formData.totalTables}
-                    totalReferences={formData.totalReferences}
-                    overviewComment={formData.overviewComment}
-                    handleChange={handleChange}
-                  />
+              {params.isReviewer ? (
+                <GeneralOfReport
+                  totalPages={formData.totalPages}
+                  totalChapters={formData.totalChapters}
+                  totalFigures={formData.totalFigures}
+                  totalTables={formData.totalTables}
+                  totalReferences={formData.totalReferences}
+                  overviewComment={formData.overviewComment}
+                  handleChange={handleChange}
+                />
+              ) : (
+                <div className="flex gap-20">
+                  <div className="w-[60%]">
+                    <GeneralOfReport
+                      totalPages={formData.totalPages}
+                      totalChapters={formData.totalChapters}
+                      totalFigures={formData.totalFigures}
+                      totalTables={formData.totalTables}
+                      totalReferences={formData.totalReferences}
+                      overviewComment={formData.overviewComment}
+                      handleChange={handleChange}
+                    />
+                  </div>
+                  <div className="w-[30%]">
+                    <SubGeneralOfReport
+                      acknowledgements={formData.acknowledgements}
+                      overviewVN={formData.overviewVN}
+                      overviewEN={formData.overviewEN}
+                      abbreviations={formData.abbreviations}
+                      tableOfContents={formData.tableOfContents}
+                      handleClick={handleClick}
+                    />
+                  </div>
                 </div>
-                <div className="w-[30%]">
-                  <SubGeneralOfReport
-                    acknowledgements={formData.acknowledgements}
-                    overviewVN={formData.overviewVN}
-                    overviewEN={formData.overviewEN}
-                    abbreviations={formData.abbreviations}
-                    tableOfContents={formData.tableOfContents}
-                    handleClick={handleClick}
-                  />
-                </div>
-              </div>
+              )}
 
               <label className="base-regular italic">
                 &lt;nhận xét về định dạng, cách thức viết báo cáo, văn phong,
@@ -427,7 +439,6 @@ const ReviewForm = () => {
 
         <div className="flex mt-20 gap-2">
           <SubmitButton text="Lưu" otherClasses="w-fit" />
-
           <IconButton text="Hủy" red otherClasses="w-fit" onClick={() => {}} />
         </div>
       </form>

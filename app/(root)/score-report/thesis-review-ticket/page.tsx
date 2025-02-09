@@ -26,8 +26,11 @@ const page = () => {
     isReviewer: -1,
   });
 
+  console.log("isReviewingFormAndFormId", isReviewingFormAndFormId);
+
   //! TABLE
-  const [isEditTable, setIsEditTable] = useState(false);
+  const [isEditTableSupervisor, setIsEditTableSupervisor] = useState(false);
+  const [isEditTableReviewer, setIsEditTableReviewer] = useState(false);
   const [dataTableSupervisor, setDataTableSupervisor] = useState<
     SupervisorThesisReviewTicketDataItem[]
   >(mockSupervisorThesisReviewTicket);
@@ -89,13 +92,13 @@ const page = () => {
           {isToggleSupervisorTopic ? (
             <ThesisReviewTicketTable
               type="supervisor"
-              isEditTable={isEditTable}
+              isEditTable={isEditTableSupervisor}
               dataTable={dataTableSupervisor}
               onClickEditTable={() => {
-                setIsEditTable(true);
+                setIsEditTableSupervisor(true);
               }}
               onSaveEditTable={(localDataTable) => {
-                setIsEditTable(false);
+                setIsEditTableSupervisor(false);
                 // set lại data import hoặc patch API
                 localDataTable =
                   localDataTable as SupervisorThesisReviewTicketDataItem[];
@@ -110,24 +113,26 @@ const page = () => {
             />
           ) : null}
 
-          <ToggleTitle
-            text="Phiếu nhận giảng viên phản biện"
-            handleClick={() => {
-              setIsToggleReviewerTopic(!isToggleReviewerTopic);
-            }}
-            value={isToggleReviewerTopic}
-          />
+          <div className="mt-10">
+            <ToggleTitle
+              text="Phiếu nhận giảng viên phản biện"
+              handleClick={() => {
+                setIsToggleReviewerTopic(!isToggleReviewerTopic);
+              }}
+              value={isToggleReviewerTopic}
+            />
+          </div>
 
           {isToggleReviewerTopic ? (
             <ThesisReviewTicketTable
               type="reviewer"
-              isEditTable={isEditTable}
+              isEditTable={isEditTableReviewer}
               dataTable={dataTableReviewer}
               onClickEditTable={() => {
-                setIsEditTable(true);
+                setIsEditTableReviewer(true);
               }}
               onSaveEditTable={(localDataTable) => {
-                setIsEditTable(false);
+                setIsEditTableReviewer(false);
                 // set lại data import hoặc patch API
                 localDataTable =
                   localDataTable as ReviewerThesisReviewTicketDataItem[];

@@ -277,7 +277,15 @@ const ThesisReviewTicketTable = (params: DataTableParams) => {
                         )
                       );
                     }}
-                    onReviewForm={params.onReviewForm}
+                    onReviewForm={() => {
+                      //! fake API
+
+                      params.onReviewForm &&
+                        params.onReviewForm(
+                          "1",
+                          params.type === "reviewer" ? 1 : 0
+                        );
+                    }}
                   />
                 );
               })}

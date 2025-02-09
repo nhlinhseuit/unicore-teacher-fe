@@ -223,68 +223,76 @@ const TableForm = () => {
 
         {/* BODY */}
         <Table.Body className="text-left divide-y">
-          {dataTable.map((dataItem, index) => (
-            <Table.Row
-              key={dataItem.STT}
-              onClick={() => {}}
-              className={`bg-background-secondary text-left duration-100`}
-            >
-              <Table.Cell
-                className={`
-                w-20 border-r-[1px]  text-left  ${
-                  dataItem.isTitle ? "font-bold text-left" : "text-right"
-                }`}
+          {dataTable.map((dataItem, index) => {
+            // isOnlyView={key === 'Tiêu chí' ? true : false }
+            return (
+              <Table.Row
+                key={dataItem.STT}
+                onClick={() => {}}
+                className={`bg-background-secondary text-left duration-100`}
               >
-                <span>{dataItem.STT}</span>
-              </Table.Cell>
+                <Table.Cell
+                  className={`
+              w-20 border-r-[1px]  text-left  ${
+                dataItem.isTitle ? "font-bold text-left" : "text-right"
+              }`}
+                >
+                  <span>{dataItem.STT}</span>
+                </Table.Cell>
 
-              {Object.entries(dataItem.data).map(([key, value]) => {
-                return (
-                  <Table.Cell
-                    key={`${key}_${value}`}
-                    theme={{
-                      base: `group-first/body:group-first/row:first:rounded-tl-lg
-                      group-first/body:group-first/row:last:rounded-tr-lg
-                      group-last/body:group-last/row:first:rounded-bl-lg
-                      group-last/body:group-last/row:last:rounded-br-lg
-                      px-4 py-4 text-center text-secondary-900`,
-                    }}
-                    className={`border-r-[1px] px-2 py-4 normal-case text-left max-w-[800px]
+                {Object.entries(dataItem.data).map(([key, value]) => {
+                  return (
+                    <Table.Cell
+                      key={`${key}_${value}`}
+                      theme={{
+                        base: `group-first/body:group-first/row:first:rounded-tl-lg
+                    group-first/body:group-first/row:last:rounded-tr-lg
+                    group-last/body:group-last/row:first:rounded-bl-lg
+                    group-last/body:group-last/row:last:rounded-br-lg
+                    px-4 py-4 text-center text-secondary-900`,
+                      }}
+                      className={`border-r-[1px] px-2 py-4 normal-case text-left max-w-[800px]
 
-                        ${dataItem.isTitle ? "font-bold" : ""}
-                        `}
-                  >
-                    {key === "Điểm SV1" || key === "Điểm SV2" ? (
-                      <div className="flex justify-between items-center">
-                        <InputForm
-                          name={`${key}_${value}`}
-                          placeholder=""
-                          value={
-                            formData[dataItem.STT]?.[
-                              key === "Điểm SV1" ? "SV1" : "SV2"
-                            ]
-                          }
-                          onChange={(e) =>
-                            handleInputChange(
-                              dataItem.STT,
-                              key === "Điểm SV1" ? "SV1" : "SV2",
-                              e.target.value
-                            )
-                          }
-                          otherClassess="w-[100px]"
-                        />
-                        <span className="ml-1 whitespace-nowrap">
-                          / {value}
+                      ${dataItem.isTitle ? "font-bold" : ""}
+                      `}
+                    >
+                      {dataItem.isTitle &&
+                      (key === "Điểm SV1" || key === "Điểm SV2") ? (
+                        <span className="flex justify-end ml-1 whitespace-nowrap">
+                          _ / {value}
                         </span>
-                      </div>
-                    ) : (
-                      <span>{value}</span>
-                    )}
-                  </Table.Cell>
-                );
-              })}
-            </Table.Row>
-          ))}
+                      ) : key === "Điểm SV1" || key === "Điểm SV2" ? (
+                        <div className="flex justify-between items-center">
+                          <InputForm
+                            name={`${key}_${value}`}
+                            placeholder=""
+                            value={
+                              formData[dataItem.STT]?.[
+                                key === "Điểm SV1" ? "SV1" : "SV2"
+                              ]
+                            }
+                            onChange={(e) =>
+                              handleInputChange(
+                                dataItem.STT,
+                                key === "Điểm SV1" ? "SV1" : "SV2",
+                                e.target.value
+                              )
+                            }
+                            otherClassess="w-[100px]"
+                          />
+                          <span className="ml-1 whitespace-nowrap">
+                            / {value}
+                          </span>
+                        </div>
+                      ) : (
+                        <span>{value}</span>
+                      )}
+                    </Table.Cell>
+                  );
+                })}
+              </Table.Row>
+            );
+          })}
 
           {/* Tổng điểm */}
           <Table.Row className="bg-background-secondary">
@@ -303,19 +311,11 @@ const TableForm = () => {
                       group-last/body:group-last/row:last:rounded-br-lg
                       px-4 py-4 text-center text-secondary-900`,
               }}
-              className={`border-r-[1px] px-2 py-4 normal-case text-left max-w-[800px]
-                        `}
+              className={`border-r-[1px] px-2 py-4 normal-case text-left max-w-[800px]`}
             >
-              <div className="flex justify-between items-center">
-                <InputForm
-                  placeholder=""
-                  name="student1ID"
-                  value={sv1Score}
-                  onChange={(e) => setSv1Score(e.target.value)}
-                  otherClassess="w-[100px]"
-                />
-                <span className="ml-1 whitespace-nowrap">/ 10</span>
-              </div>
+              <span className="flex justify-end font-bold ml-1 whitespace-nowrap">
+                _ / 10
+              </span>
             </Table.Cell>
 
             <Table.Cell
@@ -329,16 +329,9 @@ const TableForm = () => {
               className={`border-r-[1px] px-2 py-4 normal-case text-left max-w-[800px]
                         `}
             >
-              <div className="flex justify-between items-center">
-                <InputForm
-                  placeholder=""
-                  name="student2ID"
-                  value={sv2Score}
-                  onChange={(e) => setSv2Score(e.target.value)}
-                  otherClassess="w-[100px]"
-                />
-                <span className="ml-1 whitespace-nowrap">/ 10</span>
-              </div>
+              <span className="flex justify-end font-bold ml-1 whitespace-nowrap">
+                _ / 10
+              </span>
             </Table.Cell>
             <Table.Cell className="border-r-[1px] text-left"></Table.Cell>
           </Table.Row>
