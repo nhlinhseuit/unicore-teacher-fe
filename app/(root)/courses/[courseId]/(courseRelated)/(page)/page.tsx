@@ -16,7 +16,7 @@ import {
   AnnouncementTypesNotRegularCourse,
   FilterType,
 } from "@/constants";
-import { mockPostDataCourseIdPage } from "@/mocks";
+import { mockPostDataCourseIdPage, mockThesisReviewTopic } from "@/mocks";
 import { fetchAnnoucements, fetchExercises } from "@/services/exerciseServices";
 import { IAnnouncementResponseData } from "@/types/entity/Annoucement";
 import { ITExerciseResponseData } from "@/types/entity/Exercise";
@@ -238,6 +238,26 @@ const page = () => {
     setTypeFilter(FilterType.None);
   };
 
+  //! review form
+
+  const getTopic = () => {
+    return mockThesisReviewTopic.find(
+      (item) => item.id === isReviewingFormAndFormId.formId
+    );
+  };
+  const getReviewer = () => {
+    return (
+      mockThesisReviewTopic.find(
+        (item) => item.id === isReviewingFormAndFormId.formId
+      )?.reviewTeacher ?? ""
+    );
+  };
+
+  const [isReviewingFormAndFormId, setIsReviewingFormAndFormId] = useState({
+    formId: "",
+    isReviewer: -1,
+  });
+
   return isGradeThesisReport ? (
     <>
       <BackToPrev
@@ -246,7 +266,12 @@ const page = () => {
           setIsGradeThesisReport(false);
         }}
       />
-      <ReviewForm />
+      <ReviewForm
+        //@ts-ignore
+        topic={getTopic()}
+        ownerName={getReviewer()}
+        isReviewer={isReviewingFormAndFormId.isReviewer === 1}
+      />
     </>
   ) : isGradeExercise !== "" ? (
     <GradeExerciseItem
