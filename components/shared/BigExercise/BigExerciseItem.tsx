@@ -11,7 +11,10 @@ interface Props {
 
 const BigExerciseItem = (params: Props) => {
   return (
-    <div onClick={params.onClick} className="card-wrapper rounded-[10px]">
+    <div
+      onClick={params.onClick}
+      className="card-wrapper rounded-[10px] cursor-pointer"
+    >
       <div className="rounded-[10px] relative flex-col w-full p-6">
         <div className="flex justify-start items-center gap-2">
           <p className="base-semibold">{params.name}</p>

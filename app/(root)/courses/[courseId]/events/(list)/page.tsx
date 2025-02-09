@@ -65,6 +65,9 @@ const BigExercises = () => {
 
         //! fake API
         pendingRequests -= 1;
+        if (pendingRequests === 0) {
+          setIsLoading(false);
+        }
         setfakeAPICentralizedExam({
           id: "1",
           weight: 20,
