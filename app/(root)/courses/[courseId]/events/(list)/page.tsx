@@ -62,6 +62,28 @@ const BigExercises = () => {
         if (pendingRequests === 0) {
           setIsLoading(false);
         }
+
+        //! fake API
+        pendingRequests -= 1;
+        setfakeAPICentralizedExam({
+          id: "1",
+          weight: 20,
+          name: "Thi cuối kỳ",
+          description: "1",
+          place: "1",
+          date: "1",
+          eventType: "1",
+          created_date: "9/2/2025",
+          modified_date: "1",
+          created_by: "Trần Hạnh Xuân",
+          modified_by: "1",
+          in_group: true,
+          weight_type: WeightType.FINAL_TERM,
+          class_id: "1",
+          subclass_code: "1",
+          allow_grade_review: true,
+          review_times: 2,
+        });
       });
 
     //! fake API
@@ -82,26 +104,6 @@ const BigExercises = () => {
     //   });
 
     //     setCentralizedExams(data);
-
-    setfakeAPICentralizedExam({
-      id: "1",
-      weight: 20,
-      name: "Thi cuối kỳ",
-      description: "1",
-      place: "1",
-      date: "1",
-      eventType: "1",
-      created_date: "9/2/2025",
-      modified_date: "1",
-      created_by: "Trần Hạnh Xuân",
-      modified_by: "1",
-      in_group: true,
-      weight_type: WeightType.FINAL_TERM,
-      class_id: "1",
-      subclass_code: "1",
-      allow_grade_review: true,
-      review_times: 2,
-    });
   }, []);
 
   const [isCreate, setIsCreate] = useState(false);
