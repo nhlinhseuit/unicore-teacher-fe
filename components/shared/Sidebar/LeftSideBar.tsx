@@ -1,6 +1,5 @@
 "use client";
 
-import { isLoginAtom } from "@/app/(root)/courses/(courses)/(store)/courseStore";
 import { Button } from "@/components/ui/button";
 import { TeacherCoursesTabItems, sidebarTeacherLinks } from "@/constants";
 import { useAtomValue } from "jotai";
@@ -66,7 +65,7 @@ const LeftSideBar = () => {
     bg-transparent px-4 py-3`;
   };
 
-  const isLogin = useAtomValue(isLoginAtom);
+  const isLogin: boolean = sessionStorage.getItem('isLoginAtom') === 'true'
 
   return (
     <section
