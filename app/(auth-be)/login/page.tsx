@@ -1,5 +1,6 @@
 "use client";
 
+import { isLoginAtom } from "@/app/(root)/courses/(courses)/(store)/courseStore";
 import One from "@/components/gallery/one";
 import MyInput from "@/components/shared/MyInput";
 import MyPasswordInput from "@/components/shared/MyPasswordInput";
@@ -16,6 +17,7 @@ const Login = () => {
   const [isChecked, setisChecked] = useState(false);
   const router = useRouter();
 
+  const setLoginAtom = useSetAtom(isLoginAtom);
 
   return (
     <main>
@@ -90,8 +92,7 @@ const Login = () => {
                   variant: "success",
                   duration: 3000,
                 });
-
-                sessionStorage.setItem('isLoginAtom', 'true')
+                setLoginAtom(true);
                 router.push("/");
               }}
               className="w-full flex justify-center items-center rounded-md gap-x-1 px-4 py-3 bg-primary-100 "
