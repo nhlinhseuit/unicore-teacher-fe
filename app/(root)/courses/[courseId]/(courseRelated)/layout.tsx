@@ -123,12 +123,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                   </li>
                   <li role="menuitem">
                     <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                      Nhập môn ứng dụng di động
+                      {courseId === "SE121.O21.PMCL"
+                        ? "Đồ án 1"
+                        : "Kiểm chứng phần mềm"}
                     </p>
                   </li>
                   <li role="menuitem">
                     <p className="flex items-center justify-start w-full px-4 py-2 text-sm text-left text-gray-700 cursor-default">
-                      GV: Huỳnh Hồ Thị Mộng Trinh
+                      GV: Nguyễn Thị Thanh Trúc
                     </p>
                   </li>
                 </ul>
@@ -137,7 +139,9 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </div>
 
           <p className="text-left line-clamp-1 body-regular ">
-            Nhập môn ứng dụng di động
+            {courseId === "SE121.O21.PMCL"
+                        ? "Đồ án 1"
+                        : "Kiểm chứng phần mềm"}
           </p>
         </div>
       </div>

@@ -45,7 +45,7 @@ const ReviewerThesisReport = () => {
     <>
       <TitleDescription
         title="Nhập điểm hội đồng Khóa luận tốt nghiệp"
-        description={["Thời hạn: 7/12/2024 - 28/12/2024"]}
+        description={["Thời hạn: 01/02/2025 - 28/02/2025"]}
       />
 
       {isGradeThesisReport ? (
