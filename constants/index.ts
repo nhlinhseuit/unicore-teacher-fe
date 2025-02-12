@@ -1,10 +1,20 @@
 import { SidebarLink } from "@/types";
 import { CourseType } from "@/types/entity/Course";
 
+export const roundRegularGrade = 0.5
+export const roundAverageGrade = 0.1
+
 export const statusThesis = [
   { id: 1, value: "Đạt" },
   { id: 2, value: "Không đạt" },
 ];
+export enum ColumnType {
+  QUA_TRINH = "Quá trình",
+  GIUA_KY = "Giữa kỳ",
+  THUC_HANH = "Thực hành",
+  CUOI_KY = "Cuối kỳ",
+  NONE = "Khác",
+}
 export const ratingThesis = [
   { id: 1, value: "Xuất sắc" },
   { id: 2, value: "Giỏi" },

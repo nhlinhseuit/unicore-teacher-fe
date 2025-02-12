@@ -1,16 +1,71 @@
-import { ScoreTranscriptData, ScoreTranscriptDataItem } from "@/types";
+import { ColumnType, roundAverageGrade, roundRegularGrade } from "@/constants";
+import {
+  DataColumnDetail,
+  ScoreTranscriptDataItem
+} from "@/types";
 import { Table } from "flowbite-react";
-import React, { useEffect, useRef, useState } from "react";
-import InputComponent from "../components/InputComponent";
+import React from "react";
 
 interface RowParams {
   dataItem: ScoreTranscriptDataItem;
-  viewDetailGradeColumn: () => void;
+  viewDetailGradeColumn: (columnType: ColumnType) => void;
 }
 
 const RowGradingGroupTable = React.memo(
   (params: RowParams) => {
     var valueUniqueInput = params.dataItem.data["MSSV"];
+
+    const calculateWeightedAverageColumn = (
+      value: DataColumnDetail
+    ): number => {
+      const detailScore = value.detailScore;
+      const detailRatio = value.detailRatio;
+
+      if (
+        detailScore.length !== detailRatio.length ||
+        detailScore.length === 0
+      ) {
+        return 0;
+      }
+
+      const totalWeightedScore = detailScore.reduce(
+        (sum, score, index) => sum + score * (detailRatio[index] / 100),
+        0
+      );
+      const res = Math.round(totalWeightedScore / roundRegularGrade) * roundRegularGrade;
+
+      return parseFloat(res.toFixed(1))
+    };
+
+    const calculateWeightedAverage = (): number => {
+      const qt = calculateWeightedAverageColumn(
+        params.dataItem.data["Quá trình"]
+      );
+      const gk = calculateWeightedAverageColumn(
+        params.dataItem.data["Giữa kỳ"]
+      );
+      const ck = calculateWeightedAverageColumn(
+        params.dataItem.data["Cuối kỳ"]
+      );
+      const th = calculateWeightedAverageColumn(
+        params.dataItem.data["Thực hành"]
+      );
+
+      const qtRatio = params.dataItem.data["Quá trình"].ratio;
+      const gkRatio = params.dataItem.data["Giữa kỳ"].ratio;
+      const ckRatio = params.dataItem.data["Cuối kỳ"].ratio;
+      const thRatio = params.dataItem.data["Thực hành"].ratio;
+
+      const totalWeightedScore =
+        (qt * qtRatio + gk * gkRatio + ck * ckRatio + th * thRatio) / 100;
+
+        const res = Math.round(totalWeightedScore / roundAverageGrade) * roundAverageGrade
+
+      console.log("totalWeightedScore", totalWeightedScore);
+
+      return parseFloat(res.toFixed(1));
+
+    };
 
     const renderTableCellValue = (keyId: string, key: string, value: any) => {
       if (
@@ -19,14 +74,40 @@ const RowGradingGroupTable = React.memo(
         key === "Cuối kỳ" ||
         key === "Thực hành"
       ) {
-        if (value === 0) return <span>{value}</span>;
+        if ((value as DataColumnDetail).ratio === 0)
+          return (
+            <span className="text-center">
+              {(value as DataColumnDetail).score}
+            </span>
+          );
         return (
           <span
-            className="cursor-pointer underline"
-            onClick={() => {params.viewDetailGradeColumn()}}
+            className="cursor-pointer underline text-center"
+            onClick={() => {
+              let columnType = ColumnType.NONE;
+              switch (key) {
+                case "Quá trình":
+                  columnType = ColumnType.QUA_TRINH;
+                  break;
+                case "Giữa kỳ":
+                  columnType = ColumnType.GIUA_KY;
+                  break;
+                case "Cuối kỳ":
+                  columnType = ColumnType.CUOI_KY;
+                  break;
+                case "Thực hành":
+                  columnType = ColumnType.THUC_HANH;
+              }
+              params.viewDetailGradeColumn(columnType);
+            }}
           >
-            {value}
+            {calculateWeightedAverageColumn(value)}
+            {/* {(value as DataColumnDetail).score} */}
           </span>
+        );
+      } else if (key === "Điểm trung bình") {
+        return (
+          <span className="text-center">{calculateWeightedAverage()}</span>
         );
       } else {
         return value;
@@ -37,10 +118,10 @@ const RowGradingGroupTable = React.memo(
       <Table.Row
         key={params.dataItem.STT}
         onClick={() => {}}
-        className={`bg-background-secondary text-left hover:bg-light-800 cursor-default duration-100`}
+        className={`bg-background-secondary text-center hover:bg-light-800 cursor-default duration-100`}
       >
         {/* STT */}
-        <Table.Cell className="w-10 border-r-[1px]  text-left">
+        <Table.Cell className="w-10 border-r-[1px]  text-center">
           <span>{params.dataItem.STT}</span>
         </Table.Cell>
 
@@ -58,7 +139,7 @@ const RowGradingGroupTable = React.memo(
               group-last/body:group-last/row:last:rounded-br-lg
               px-4 py-4 text-center text-secondary-900`,
               }}
-              className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-left 
+              className={`border-r-[1px] px-2 py-4 normal-case whitespace-nowrap text-center 
                 ${typeof value === "number" ? "text-center" : ""}
                 
                 }

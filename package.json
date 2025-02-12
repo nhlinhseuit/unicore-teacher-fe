@@ -29,6 +29,8 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-config-standard": "^17.1.0",
     "eslint-plugin-tailwindcss": "^3.17.4",
+    "exceljs": "^4.4.0",
+    "file-saver": "^2.0.5",
     "flowbite-react": "^0.10.2",
     "framer-motion": "^11.11.1",
     "html-react-parser": "^5.1.18",
@@ -49,6 +51,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.7",
     "@types/node": "^20",
     "@types/prismjs": "^1.26.5",
     "@types/react": "^18",

@@ -9,7 +9,7 @@ import LoadingComponent from "@/components/shared/LoadingComponent";
 import ScoreColumnDetailPage from "@/components/shared/ScoreTranscript/ScoreColumnDetailPage";
 import NoResult from "@/components/shared/Status/NoResult";
 import ScoreTranscriptTable from "@/components/shared/Table/TableScoreTranscript/ScoreTranscriptTable";
-import { ListCourseColors } from "@/constants";
+import { ColumnType, ListCourseColors } from "@/constants";
 import {
   mockCourses,
   mockDataScoreTranscript,
@@ -24,7 +24,8 @@ import { useEffect, useState } from "react";
 
 const ScoreTranscript = () => {
   const [isEditTable, setIsEditTable] = useState(false);
-  const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] = useState(false);
+  const [isViewDetailGradeColumn, setIsViewDetailGradeColumn] =
+    useState<ColumnType>(ColumnType.NONE);
   const [selectedCourse, setSelectedCourse] = useState(-1);
   const [currentCourseId, setCurrentCourseId] = useState("");
 
@@ -48,9 +49,11 @@ const ScoreTranscript = () => {
     <>
       {isViewDetailGradeColumn ? (
         <ScoreColumnDetailPage
+          type={isViewDetailGradeColumn}
+          listPostId={[""]}
           onSave={() => {}}
           onClickPrev={() => {
-            setIsViewDetailGradeColumn(false);
+            setIsViewDetailGradeColumn(ColumnType.NONE);
           }}
         />
       ) : (
@@ -63,8 +66,7 @@ const ScoreTranscript = () => {
                   setCurrentCourseId("");
                 }}
               />
-              <div className="flex justify-start ml-10 w-1/2 items-center gap-4">
-                {/* //!: API tên lớp */}
+              {/* <div className="flex justify-start ml-10 w-1/2 items-center gap-4">
                 <p className="inline-flex justify-start text-sm whitespace-nowrap">
                   Xem bảng điểm của lớp:
                   <span className="ml-2 font-semibold">
@@ -129,9 +131,9 @@ const ScoreTranscript = () => {
                     )}
                   </div>
                 </Dropdown>
-              </div>
+              </div> */}
 
-              <div className="flex justify-end gap-2 mt-4 mb-2">
+              <div className="w-full flex justify-end gap-2 mt-4 mb-2">
                 <IconButton text="Xuất file điểm" green />
               </div>
 
@@ -140,7 +142,7 @@ const ScoreTranscript = () => {
                 dataTable={mockDataScoreTranscript}
                 dataGradeColumnPercent={mockGradeColumnPercent}
                 viewDetailGradeColumn={() => {
-                  setIsViewDetailGradeColumn(true);
+                  // setIsViewDetailGradeColumn(true);
                 }}
               />
             </>

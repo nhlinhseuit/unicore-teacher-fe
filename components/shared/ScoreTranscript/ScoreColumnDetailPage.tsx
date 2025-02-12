@@ -30,17 +30,26 @@ import BorderContainer from "../BorderContainer";
 import IconButton from "../Button/IconButton";
 import SubmitButton from "../Button/SubmitButton";
 import PostScoreColumnDetailItem from "./PostScoreColumnDetailItem";
+import { ColumnType } from "@/constants";
 
 interface Props {
-        //! mockParams
-
-  onSave: () => void;
+  //! mockParams
+  type: ColumnType;
+  listPostId: string[];
+  onSave: (detailScore: number[], detailRatio: number[]) => void;
   onClickPrev: () => void;
 }
 
 const ScoreColumnDetailPage = (params: Props) => {
   const [isEdit, setIsEdit] = useState(false);
-  const refData = useRef(mockPostDataGradingDetail);
+
+  const [data, setData] = useState(
+    mockPostDataGradingDetail.filter((item) =>
+      params.listPostId.includes(item.id)
+    )
+  );
+
+  const refData = useRef(data);
 
   const [isPercentageValid, setIsPercentageValid] = useState(true);
   const [totalScore, setTotalScore] = useState(0);
@@ -62,9 +71,7 @@ const ScoreColumnDetailPage = (params: Props) => {
 
   // Tạo mảng trạng thái tỷ lệ điểm từ dữ liệu mock
   const [scoreRatios, setScoreRatios] = useState(
-    mockPostDataGradingDetail.map((item) =>
-      item.scoreDetail["Tỉ lệ điểm"].toString()
-    )
+    data.map((item) => item.scoreDetail["Tỉ lệ điểm"].toString())
   );
   const [ratio, setRatio] = useState(100);
 
@@ -134,15 +141,28 @@ const ScoreColumnDetailPage = (params: Props) => {
       console.log({
         ratios: scoreRatios,
       });
-      
-        //! mockParams
-      params.onSave();
+
+      //! mockParams
+      params.onSave(
+        data.map((item) => Number(item.scoreDetail.Điểm)),
+        scoreRatios.map((item) => Number(item))
+      );
 
       const res = scoreRatios.reduce((sum, ratio) => sum + parseInt(ratio), 0);
       if (res !== 100) {
         setRatio(res);
         return;
       }
+
+      //? set bên trang này
+      const updatedPostDataGradingDetail = data.map((item, index) => ({
+        ...item,
+        scoreDetail: {
+          ...item.scoreDetail,
+          "Tỉ lệ điểm": Number(scoreRatios[index]), // Chuyển đổi từ string thành number
+        },
+      }));
+      setData(updatedPostDataGradingDetail);
 
       // naviate to home page
       // router.push("/");
@@ -167,7 +187,7 @@ const ScoreColumnDetailPage = (params: Props) => {
       <div className="flex justify-between mb-6">
         <div className="ml-4 flex gap-4 items-center">
           <p className="paragraph-semibold">
-            Chi tiết cột điểm Quá trình - Sinh viên Nguyễn Hoàng Linh - MSSV
+            Chi tiết cột điểm {params.type} - Sinh viên Nguyễn Hoàng Linh - MSSV
             21522289
           </p>
           {isEdit ? (
@@ -183,6 +203,11 @@ const ScoreColumnDetailPage = (params: Props) => {
                 // ? Gọi API với ref.current data
                 setIsEdit(false);
                 setIsPercentageValid(true);
+
+                params.onSave(
+                  data.map((item) => Number(item.scoreDetail.Điểm)),
+                  scoreRatios.map((item) => Number(item))
+                );
               }}
             />
           ) : (
@@ -213,7 +238,7 @@ const ScoreColumnDetailPage = (params: Props) => {
       </div>
 
       <div className="mt-6 flex flex-col gap-4">
-        {mockPostDataGradingDetail.map((item, index) => (
+        {data.map((item, index) => (
           <PostScoreColumnDetailItem
             key={item.id}
             postScoreDetail={item}
@@ -224,7 +249,7 @@ const ScoreColumnDetailPage = (params: Props) => {
             savePostScoreDetail={(
               newPostScoreDetailItem: PostDataGradingDetailItem
             ) => {
-              refData.current = mockPostDataGradingDetail.map((item) => {
+              refData.current = data.map((item) => {
                 if (item.id === newPostScoreDetailItem.id)
                   return newPostScoreDetailItem;
                 else return item;
@@ -246,7 +271,7 @@ const ScoreColumnDetailPage = (params: Props) => {
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-6">
-                {mockPostDataGradingDetail.map((item, index) => (
+                {data.map((item, index) => (
                   <BorderContainer key={item.id}>
                     <div className="relative flex-col w-full p-6">
                       <div className=" mt-3 ml-2 flex gap-4 items-center">

@@ -133,12 +133,21 @@ export interface GradingReportData {
 
 export interface ScoreTranscriptData {
   MSSV: string;
-  Nhóm: string;
   "Họ và tên": string;
-  "Quá trình": number;
-  "Giữa kỳ": number;
-  "Cuối kỳ": number;
+  'STT Nhóm': string;
+  "Quá trình": DataColumnDetail;
+  "Thực hành": DataColumnDetail;
+  "Giữa kỳ": DataColumnDetail;
+  "Cuối kỳ": DataColumnDetail;
   "Điểm trung bình": number;
+}
+
+export interface DataColumnDetail {
+  ratio: number;
+  score: number;
+  detailPostId: string[];
+  detailScore: number[];
+  detailRatio: number[];
 }
 
 export interface SubjectData {
@@ -186,7 +195,6 @@ export interface TeacherData {
   "Địa chỉ": string;
   "Ngày sinh": string;
 }
-
 
 // export interface RegisterTopicDataItem {
 //   STT: string;
@@ -304,6 +312,7 @@ export interface ScoreTranscriptDataItem {
 export interface GradeColumnPercentDataItem {
   "Quá trình": number;
   "Giữa kỳ": number;
+  "Thực hành": number;
   "Cuối kỳ": number;
 }
 

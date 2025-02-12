@@ -1,4 +1,4 @@
-import { itemsPerPageRegisterTable } from "@/constants";
+import { ColumnType, itemsPerPageRegisterTable } from "@/constants";
 import { GradeColumnPercentDataItem, ScoreTranscriptDataItem } from "@/types";
 import { Table } from "flowbite-react";
 import { useMemo, useState } from "react";
@@ -9,7 +9,7 @@ import RowScoreTranscriptTable from "./RowScoreTranscriptTable";
 interface DataTableParams {
   dataTable: ScoreTranscriptDataItem[];
   dataGradeColumnPercent: GradeColumnPercentDataItem;
-  viewDetailGradeColumn: () => void;
+  viewDetailGradeColumn: (columnType: ColumnType) => void;
 }
 
 const ScoreTranscriptTable = (params: DataTableParams) => {
@@ -62,6 +62,7 @@ const ScoreTranscriptTable = (params: DataTableParams) => {
               if (
                 key === "Quá trình" ||
                 key === "Giữa kỳ" ||
+                key === "Thực hành" ||
                 key === "Cuối kỳ"
               ) {
                 return (
