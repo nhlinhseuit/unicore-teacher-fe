@@ -278,7 +278,7 @@ const ThesisTopicGradeTable = (params: DataTableParams) => {
 
       {/* TABLE */}
       {dataTable.length === 0 ||
-      (currentItems.length > 0 && filteredDataTable.length === 0) ? (
+      dataTable.length === 0 || (currentItems.length > 0 && filteredDataTable.length === 0) ? (
         <NoResult
           title="Không có dữ liệu!"
           description="💡 Bạn hãy thử tìm kiếm 1 từ khóa khác nhé."

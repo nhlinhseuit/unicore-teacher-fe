@@ -33,6 +33,9 @@ const ReviewerInternReport = () => {
 
           <InternTopicGradeTable
             dataTable={dataTable}
+            presidentName={mockInternReviewCouncils[0].president}
+            secretaryName={mockInternReviewCouncils[0].secretary}
+            memberName={mockInternReviewCouncils[0].member}
             isEditTable={isEditTable}
             onClickEditTable={() => {
               setIsEditTable(true);

@@ -43,8 +43,8 @@ const InternTopic = (params: Props) => {
             <p className="body-regular">{params.topic.councilInfo}</p>
           </div>
           <div className="flex gap-2">
-            <p className="body-semibold line-clamp-1 ">Số đề tài: </p>
-            <p className="body-regular">{params.topic.councilInfo}</p>
+            <p className="body-semibold line-clamp-1 ">Số sinh viên: </p>
+            <p className="body-regular">{params.topic.numberOfStudents}</p>
           </div>
           <p className="body-semibold line-clamp-1 ">Hội đồng chấm: </p>
           <p className="body-regular line-clamp-1 ">
@@ -55,6 +55,10 @@ const InternTopic = (params: Props) => {
           </p>
           <p className="body-regular line-clamp-1 ">
             - Ủy viên: {params.topic.member}
+          </p>
+          <p className="body-semibold line-clamp-1 ">
+            Vai trò của bạn trong hội đồng:{" "}
+            <span className="body-regular">{params.topic.myRole}</span>
           </p>
         </div>
       </div>
