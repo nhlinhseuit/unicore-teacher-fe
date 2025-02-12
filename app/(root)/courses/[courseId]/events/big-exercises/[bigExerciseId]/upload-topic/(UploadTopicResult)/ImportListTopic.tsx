@@ -2,6 +2,7 @@
 
 import BackToPrev from "@/components/shared/BackToPrev";
 import IconButton from "@/components/shared/Button/IconButton";
+import LoadingComponent from "@/components/shared/LoadingComponent";
 import ErrorComponent from "@/components/shared/Status/ErrorComponent";
 import NoResult from "@/components/shared/Status/NoResult";
 import TableSkeleton from "@/components/shared/Table/components/TableSkeleton";
@@ -128,6 +129,7 @@ const ImportListTopic = (params: Props) => {
 
   return (
     <>
+      {isLoadingAPI ? <LoadingComponent /> : null}
       <BackToPrev
         text={"Quay lại danh sách đề tài"}
         onClickPrev={() => {

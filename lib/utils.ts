@@ -52,6 +52,7 @@ export const getAvatarName = (name: string) => {
 };
 
 export const normalizeSearchItem = (term: string | number) => {
+  if (!term) return '';
   const lowerCaseTerm = term.toString().trim().toLowerCase();
   // Chuyển đổi ký tự có dấu thành không dấu
   const normalizedTerm = lowerCaseTerm

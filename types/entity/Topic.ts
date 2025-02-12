@@ -1,3 +1,5 @@
+import { IStudentResponseData } from "./Student";
+
 export interface TopicDataItem {
   STT: string;
   type: string;
@@ -6,7 +8,6 @@ export interface TopicDataItem {
 }
 
 export interface TopicData {
-  
   "Mã đề tài": string;
   "Tên đề tài tiếng Việt": string;
   "Tên đề tài tiếng Anh": string;
@@ -29,6 +30,7 @@ export interface ITopicResponseData {
   official: boolean;
   status: string;
   feedback: string;
+  students?: IStudentResponseData[];
   selectors: string[];
   evaluatorCode: string;
   teacher_codes: string[];

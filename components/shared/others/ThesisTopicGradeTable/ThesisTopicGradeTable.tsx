@@ -112,7 +112,7 @@ const ThesisTopicGradeTable = (params: DataTableParams) => {
     applyFilter();
   }, [currentItems]);
 
-  const [searchTerm, setSearchTerm] = useState("");
+   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm);
   const [filteredDataTable, setFilteredDataTable] = useState(currentItems);
 

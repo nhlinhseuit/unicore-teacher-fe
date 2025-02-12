@@ -17,9 +17,9 @@ export const convertToDataTableTopicsViKeys = (
         "Tên đề tài tiếng Anh": item.nameEn,
         "Mô tả": item.description,
         "Mã nhóm": item.evaluatorCode,
-        MSSV: item.selectors, // Sử dụng selectors cho danh sách MSSV
-        SĐT: [], // Thêm dữ liệu nếu cần từ nguồn khác
-        "Họ và tên": item.teacher_names, // Dùng teacher_names để làm ví dụ
+        MSSV: item.students?.map((item) => item.student_code ?? "") ?? [], // Sử dụng selectors cho danh sách MSSV
+        SĐT: item.students?.map((item) => item.phone ?? "") ?? [], // Thêm dữ liệu nếu cần từ nguồn khác
+        "Họ và tên": item.students?.map((item) => item.name ?? "") ?? [],
       },
     };
   });

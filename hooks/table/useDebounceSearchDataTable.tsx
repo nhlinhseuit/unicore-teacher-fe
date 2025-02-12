@@ -8,7 +8,7 @@ import {
   TeacherDataItem,
   InternReviewDataItem,
   SupervisorThesisReviewTicketDataItem,
-ReviewerThesisReviewTicketDataItem,
+  ReviewerThesisReviewTicketDataItem,
 } from "@/types";
 import { RegisterGroupDataItem } from "@/types/entity/GroupRegister";
 import { TopicDataItem } from "@/types/entity/Topic";
