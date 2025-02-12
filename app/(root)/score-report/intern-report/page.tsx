@@ -19,7 +19,7 @@ const ReviewerInternReport = () => {
     <>
       <TitleDescription
         title="Nhập điểm hội đồng Thực tập doanh nghiệp"
-        description={["Thời hạn: 7/12/2024 - 28/12/2024"]}
+        description={["Thời hạn: 01/02/2025 - 28/02/2025"]}
       />
 
       {isGradeThesisReport ? (

@@ -1,4 +1,4 @@
-import { ThesisTopicGradeDataItem } from "@/types";
+import { ThesisTopicGradeData, ThesisTopicGradeDataItem } from "@/types";
 import { Dropdown, Table } from "flowbite-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import NoResult from "../../Status/NoResult";
@@ -31,37 +31,62 @@ const ThesisTopicGradeTable = (params: DataTableParams) => {
   const [selectedThesisStatus, setSelectedThesisStatus] = useState(-1);
   const [selectedRole, setSelectedRole] = useState(-1);
 
-  const mockRoles = [
-    { id: 0, value: "Chủ tịch" },
-    { id: 1, value: "Thư ký" },
-    { id: 2, value: "Ủy viên" },
-    { id: 3, value: "Giảng viên hướng dẫn" },
-    { id: 4, value: "Giảng viên phản biện" },
+  const mockParamsTeacherNameCurrent = "ThS. Nguyễn Thị Thanh Trúc";
+
+  // const mockRoles = [
+  //   { id: 0, value: "Chủ tịch" },
+  //   { id: 1, value: "Thư ký" },
+  //   { id: 2, value: "Ủy viên" },
+  //   { id: 3, value: "Giảng viên hướng dẫn" },
+  //   { id: 4, value: "Giảng viên phản biện" },
+  // ];
+
+  // Gọi hàm để kiểm tra vai trò của "ThS. Nguyễn Thị Thanh Trúc"
+  const teacherRoles = [
+    { id: 0, value: "Thư ký" },
+    { id: 1, value: "Ủy viên" },
+    { id: 2, value: "Phản biện" },
   ];
+
 
   const dataTable = useMemo(() => {
     return params.dataTable.filter((dataItem) => {
-      if (selectedThesisStatus === 0) {
-        return (
-          dataItem.data["Phản biện"]?.trim() !== "" &&
-          dataItem.data["Hướng dẫn"]?.trim() !== "" &&
-          dataItem.data["Chủ tịch"]?.trim() !== "" &&
-          dataItem.data["Thư ký"]?.trim() !== "" &&
-          dataItem.data["Ủy viên"]?.trim() !== "" &&
-          dataItem.data["Điểm tổng"]?.trim() !== ""
-        );
-      } else if (selectedThesisStatus === 1) {
-        return !(
-          dataItem.data["Phản biện"]?.trim() !== "" &&
-          dataItem.data["Hướng dẫn"]?.trim() !== "" &&
-          dataItem.data["Chủ tịch"]?.trim() !== "" &&
-          dataItem.data["Thư ký"]?.trim() !== "" &&
-          dataItem.data["Ủy viên"]?.trim() !== "" &&
-          dataItem.data["Điểm tổng"]?.trim() !== ""
-        );
-      } else return dataItem;
+      // Kiểm tra trạng thái nhập điểm
+      const isCompleted =
+        dataItem.data["Điểm phản biện"]?.toString().trim() !== "" &&
+        dataItem.data["Điểm hướng dẫn"]?.toString().trim() !== "" &&
+        dataItem.data["Điểm chủ tịch"]?.toString().trim() !== "" &&
+        dataItem.data["Điểm thư ký"]?.toString().trim() !== "" &&
+        dataItem.data["Điểm ủy viên"]?.toString().trim() !== "" &&
+        dataItem.data["Điểm tổng"]?.toString().trim() !== "";
+
+      if (selectedThesisStatus === 0 && !isCompleted) return false;
+      if (selectedThesisStatus === 1 && isCompleted) return false;
+
+      // Kiểm tra vai trò giảng viên
+      if (selectedRole !== -1) {
+        const roleKey = teacherRoles[selectedRole]
+          ?.value as keyof ThesisTopicGradeData;
+        if (!roleKey || !(roleKey in dataItem.data)) return false;
+
+        const roleValue = dataItem.data[roleKey];
+
+        // Kiểm tra nếu roleValue có chứa `mockParamsTeacherNameCurrent`
+        if (Array.isArray(roleValue)) {
+          if (!roleValue.includes(mockParamsTeacherNameCurrent)) return false;
+        } else {
+          if (roleValue !== mockParamsTeacherNameCurrent) return false;
+        }
+      }
+
+      return true;
     });
-  }, [params.dataTable, selectedThesisStatus, selectedRole]);
+  }, [
+    params.dataTable,
+    selectedThesisStatus,
+    selectedRole,
+    mockParamsTeacherNameCurrent,
+  ]);
 
   const [currentPage, setCurrentPage] = useState(1);
   const totalItems = dataTable.length;
@@ -103,7 +128,7 @@ const ThesisTopicGradeTable = (params: DataTableParams) => {
   );
 
   const saveDataTable = () => {
-    const updatedDataTable = dataTable.map((item) => {
+    const updatedDataTable = params.dataTable.map((item) => {
       // Tìm item tương ứng trong localDataTable dựa vào STT (hoặc một identifier khác)
       const localItem = localDataTableRef.current.find(
         (local) => local.data["Mã nhóm"] === item.data["Mã nhóm"]
@@ -195,7 +220,7 @@ const ThesisTopicGradeTable = (params: DataTableParams) => {
                   <IconButton
                     text={`${
                       selectedRole !== -1
-                        ? mockRoles[selectedRole].value
+                        ? teacherRoles[selectedRole].value
                         : "Bộ lọc vai trò"
                     }`}
                     onClick={() => {}}
@@ -208,7 +233,7 @@ const ThesisTopicGradeTable = (params: DataTableParams) => {
               )}
             >
               <div className="scroll-container scroll-container-dropdown-content">
-                {mockRoles.map((course: any, index) => (
+                {teacherRoles.map((course: any, index) => (
                   <Dropdown.Item
                     key={`${course}_${index}`}
                     onClick={() => {
@@ -252,7 +277,8 @@ const ThesisTopicGradeTable = (params: DataTableParams) => {
       </div>
 
       {/* TABLE */}
-      {currentItems.length > 0 && filteredDataTable.length === 0 ? (
+      {dataTable.length === 0 ||
+      (currentItems.length > 0 && filteredDataTable.length === 0) ? (
         <NoResult
           title="Không có dữ liệu!"
           description="💡 Bạn hãy thử tìm kiếm 1 từ khóa khác nhé."
@@ -284,7 +310,7 @@ const ThesisTopicGradeTable = (params: DataTableParams) => {
 
               {Object.keys(filteredDataTable[0]?.data || {}).map(
                 (key, index) => {
-                  if (key === "Mã nhóm" || key === 'Mã đề tài') return null;
+                  if (key === "Mã nhóm" || key === "Mã đề tài") return null;
 
                   return (
                     <Table.HeadCell
@@ -308,6 +334,15 @@ const ThesisTopicGradeTable = (params: DataTableParams) => {
                   // {/* //TODO: Main Row: Leader */}
                   <RowThesisTopicGrade
                     key={`${dataItem.STT}_${index}`}
+                    roles={Object.keys(dataItem.data).filter((roleKey) => {
+                      //@ts-ignore
+                      const roleValue = dataItem.data[roleKey];
+
+                      if (Array.isArray(roleValue)) {
+                        return roleValue.includes(mockParamsTeacherNameCurrent);
+                      }
+                      return roleValue === mockParamsTeacherNameCurrent;
+                    })}
                     dataItem={dataItem}
                     valueUniqueInput={valueUniqueInput.toString()}
                     isEditTable={params.isEditTable}

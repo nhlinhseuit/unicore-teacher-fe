@@ -99,9 +99,9 @@ const ReviewerThesisReport = () => {
           </>
         )
       ) : (
-        <div className="flex flex-wrap gap-4">
-          {mockThesisReviewCouncils.map((item) => (
-            <div className="w-[49%]">
+        <div className="flex flex-wrap gap-4 items-stretch">
+          {mockThesisReviewCouncils.map((item, index) => (
+            <div key={index} className="w-[49%]">
               <ThesisTopic
                 topic={item}
                 onClick={() => {

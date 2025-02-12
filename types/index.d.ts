@@ -2,11 +2,9 @@ export interface ThesisReportCouncilDataItem {
   id: string;
   numberOfCompletedGradingTopic: number;
   numberOfTopic: number;
+  membersOfCouncil: string[];
   council: string;
   councilInfo: string;
-  president: string;
-  secretary: string;
-  member: string;
 }
 
 export interface ReviewTopicDataItem {
@@ -72,10 +70,15 @@ export interface ThesisTopicGradeData {
   "Tên đề tài tiếng Việt": string;
   "Tên đề tài tiếng Anh": string;
   "Phản biện": string;
-  "Hướng dẫn": string;
+  "Điểm phản biện": string;
+  "Hướng dẫn": string[];
+  "Điểm hướng dẫn": string;
   "Chủ tịch": string;
+  "Điểm chủ tịch": string;
   "Thư ký": string;
+  "Điểm thư ký": string;
   "Ủy viên": string;
+  "Điểm ủy viên": string;
   "Điểm tổng": string;
 }
 export interface SupervisorThesisReviewTicketData {
@@ -134,7 +137,7 @@ export interface GradingReportData {
 export interface ScoreTranscriptData {
   MSSV: string;
   "Họ và tên": string;
-  'STT Nhóm': string;
+  "STT Nhóm": string;
   "Quá trình": DataColumnDetail;
   "Thực hành": DataColumnDetail;
   "Giữa kỳ": DataColumnDetail;

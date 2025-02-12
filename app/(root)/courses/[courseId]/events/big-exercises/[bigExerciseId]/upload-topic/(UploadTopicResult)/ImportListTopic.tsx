@@ -99,7 +99,8 @@ const ImportListTopic = (params: Props) => {
     console.log("createTopicsAPI");
 
     //TODO: trong lớp
-    // class_id: "678e0290551a4b14f9d22bed",
+    const mockParamsClassId = "678e0290551a4b14f9d22bed";
+    const mockParamsSubClassCode = "678e0290551a4b14f9d22bed";
     // subclass_code: "SE113.O21.PMCL",
 
     const mockParamsProjectId = "67a6e790dcf5f232aead4372";
@@ -108,8 +109,8 @@ const ImportListTopic = (params: Props) => {
 
     const APIdataTable = convertToAPIDataTableTopics({
       data: dataTable,
-      class_id: "678e0290551a4b14f9d22bed",
-      subclass_code: "SE113.O21.PMCL",
+      class_id: mockParamsClassId,
+      subclass_code: mockParamsSubClassCode,
       projectId: mockParamsProjectId,
     });
 

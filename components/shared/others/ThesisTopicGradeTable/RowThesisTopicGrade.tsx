@@ -5,6 +5,7 @@ import React, { useRef } from "react";
 import InputComponent from "../../Table/components/InputComponent";
 
 interface RowParams {
+  roles: string[];
   valueUniqueInput: string;
   dataItem: ThesisTopicGradeDataItem;
   isEditTable?: boolean;
@@ -62,12 +63,12 @@ const RowThesisTopicGrade = React.memo(
         style += "!w-[800px] line-clamp-6 flex items-center";
       } else if (
         key === "STT" ||
-        key === "Phản biện" ||
-        key === "Hướng dẫn" ||
-        key === "Chủ tịch" ||
+        key === "Điểm phản biện" ||
+        key === "Điểm hướng dẫn" ||
+        key === "Điểm chủ tịch" ||
         key === "Điểm tổng" ||
-        key === "Thư ký" ||
-        key === "Ủy viên"
+        key === "Điểm thư ký" ||
+        key === "Điểm ủy viên"
       ) {
         style += "text-center";
       } else {
@@ -89,9 +90,9 @@ const RowThesisTopicGrade = React.memo(
       params: any;
     }) => {
       switch (key) {
-        case "Phản biện":
-        case "Hướng dẫn":
-          return params.isEditTable ? (
+        //? 1 cụm
+        case "Điểm phản biện":
+          return params.isEditTable && params.roles.includes("Phản biện") ? (
             <div className="flex justify-center items-center gap-2">
               {typeof value === "string" && value.trim() === "" ? (
                 <p className="text-red-600 text-center">Trống</p>
@@ -108,7 +109,7 @@ const RowThesisTopicGrade = React.memo(
                 onClick={() => {
                   params.onReviewForm(
                     params.dataItem.data["Mã nhóm"],
-                    key === "Phản biện" ? 1 : 0
+                    key === "Điểm phản biện" ? 1 : 0
                   );
                 }}
               />
@@ -118,11 +119,72 @@ const RowThesisTopicGrade = React.memo(
           ) : (
             value
           );
+        case "Điểm hướng dẫn":
+          return params.isEditTable && params.roles.includes("Hướng dẫn") ? (
+            <div className="flex justify-center items-center gap-2">
+              {typeof value === "string" && value.trim() === "" ? (
+                <p className="text-red-600 text-center">Trống</p>
+              ) : (
+                <span>{value}</span>
+              )}
 
-        case "Chủ tịch":
-        case "Thư ký":
-        case "Ủy viên":
-          return params.isEditTable ? (
+              <Image
+                src={"/assets/icons/edit-black.svg"}
+                width={24}
+                height={24}
+                alt={"edit"}
+                className={`object-contain cursor-pointer -translate-y-[2px] `}
+                onClick={() => {
+                  params.onReviewForm(params.dataItem.data["Mã nhóm"], 0);
+                }}
+              />
+            </div>
+          ) : typeof value === "string" && value.trim() === "" ? (
+            <p className="text-red-600 text-center">Trống</p>
+          ) : (
+            value
+          );
+
+        //? 1 cụm
+
+        case "Điểm chủ tịch":
+          return params.isEditTable &&
+            (params.roles.includes("Chủ tịch") ||
+              params.roles.includes("Thư ký")) ? (
+            <InputComponent
+              key={`${keyId}_input_${value}`}
+              value={value as string | number}
+              placeholder={value as string | number}
+              onChange={(newValue) => {
+                handleInputChange({ key, newValue });
+              }}
+              otherClassess="w-[100px]"
+            />
+          ) : typeof value === "string" && value.trim() === "" ? (
+            <p className="text-red-600 text-center">Trống</p>
+          ) : (
+            value
+          );
+        case "Điểm thư ký":
+          return params.isEditTable && params.roles.includes("Thư ký") ? (
+            <InputComponent
+              key={`${keyId}_input_${value}`}
+              value={value as string | number}
+              placeholder={value as string | number}
+              onChange={(newValue) => {
+                handleInputChange({ key, newValue });
+              }}
+              otherClassess="w-[100px]"
+            />
+          ) : typeof value === "string" && value.trim() === "" ? (
+            <p className="text-red-600 text-center">Trống</p>
+          ) : (
+            value
+          );
+        case "Điểm ủy viên":
+          return params.isEditTable &&
+            (params.roles.includes("Ủy viên") ||
+              params.roles.includes("Thư ký")) ? (
             <InputComponent
               key={`${keyId}_input_${value}`}
               value={value as string | number}
@@ -138,6 +200,7 @@ const RowThesisTopicGrade = React.memo(
             value
           );
 
+        //? 1 cụm
         case "Điểm tổng":
           return typeof value === "string" && value.trim() === "" ? (
             <p className="text-red-600 text-center">Trống</p>
@@ -147,6 +210,7 @@ const RowThesisTopicGrade = React.memo(
 
         case "MSSV":
         case "Họ và tên":
+        case "Hướng dẫn":
           return Array.isArray(value)
             ? value.map((item, index) => (
                 <React.Fragment key={index}>
@@ -172,7 +236,7 @@ const RowThesisTopicGrade = React.memo(
       keyId: string | number;
       params: any;
     }) => {
-      if (key === "Mã nhóm" || key === 'Mã đề tài') return null;
+      if (key === "Mã nhóm" || key === "Mã đề tài") return null;
 
       return (
         <Table.Cell
@@ -192,8 +256,6 @@ const RowThesisTopicGrade = React.memo(
         </Table.Cell>
       );
     };
-
-    console.log("re-render Row");
 
     return (
       <Table.Row
