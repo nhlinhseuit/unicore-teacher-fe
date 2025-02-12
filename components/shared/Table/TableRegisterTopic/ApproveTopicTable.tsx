@@ -3,10 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import NoResult from "../../Status/NoResult";
 import RowApproveTopicTable from "./RowApproveTopicTable";
 
-import {
-  RegisterTopicTableType,
-  itemsPerPageRegisterTable,
-} from "@/constants";
+import { RegisterTopicTableType, itemsPerPageRegisterTable } from "@/constants";
 import { toast } from "@/hooks/use-toast";
 import IconButton from "../../Button/IconButton";
 import SubmitButton from "../../Button/SubmitButton";
@@ -21,6 +18,7 @@ import BorderContainer from "../../BorderContainer";
 import TextAreaComponent from "../../TextAreaComponent";
 import { tableTheme } from "../components/DataTable";
 import { TopicDataItem } from "@/types/entity/Topic";
+import { feedbackTopicSendNoti } from "@/services/sendNoti";
 
 interface DataTableParams {
   type: RegisterTopicTableType;
@@ -141,6 +139,87 @@ const ApproveTopicTable = (params: DataTableParams) => {
 
   console.log("ishow", isShowDialog);
 
+  const handleApprove = () => {
+    if (handleInvalid()) {
+      setIsShowDialog(1);
+
+      //! send Noti
+      const params = {
+        members: [
+          {
+            name: "Nguyễn Hoàng Linh",
+            email: "21522289@gm.uit.edu.vn",
+          },
+        ],
+        topicName: "Ứng dụng social",
+        topicNameEn: "Social app",
+        topicStatus: "Đề tài đã được duyệt",
+        feedback: "Không có",
+        classCode: "SE121.O21.PMCL",
+        eventId: "67a72c1867bcae42d4b2c7a8",
+        teacherName: "Huỳnh Hồ Thị Mộng Trinh",
+        teacherMail: "dev.hoanglinh@gmail.com",
+      };
+      feedbackTopicSendNoti(params).then((data) => {
+        console.log("feedbackTopicSendNoti", data);
+      });
+    }
+  };
+
+  const handleFeedback = () => {
+    if (handleInvalid()) {
+      setIsShowDialog(1);
+
+      //! send Noti
+      const params = {
+        members: [
+          {
+            name: "Nguyễn Hoàng Linh",
+            email: "21522289@gm.uit.edu.vn",
+          },
+        ],
+        topicName: "Ứng dụng social",
+        topicNameEn: "Social app",
+        topicStatus: "Đề tài được giảng viên phản hồi với nội dung: ",
+        feedback: "Cần chỉnh sửa tại tên đề tài",
+        classCode: "SE121.O21.PMCL",
+        eventId: "67a72c1867bcae42d4b2c7a8",
+        teacherName: "Huỳnh Hồ Thị Mộng Trinh",
+        teacherMail: "dev.hoanglinh@gmail.com",
+      };
+      feedbackTopicSendNoti(params).then((data) => {
+        console.log("feedbackTopicSendNoti", data);
+      });
+    }
+  };
+  const handleDecline = () => {
+    if (handleInvalid()) {
+      setIsShowDialog(1);
+
+      //! send Noti
+
+      const params = {
+        members: [
+          {
+            name: "Nguyễn Hoàng Linh",
+            email: "21522289@gm.uit.edu.vn",
+          },
+        ],
+        topicName: "Ứng dụng social",
+        topicNameEn: "Social app",
+        topicStatus: "Đề tài không được duyệt",
+        feedback: "Đề tài chưa thiết thực",
+        classCode: "SE121.O21.PMCL",
+        eventId: "67a72c1867bcae42d4b2c7a8",
+        teacherName: "Huỳnh Hồ Thị Mộng Trinh",
+        teacherMail: "dev.hoanglinh@gmail.com",
+      };
+      feedbackTopicSendNoti(params).then((data) => {
+        console.log("feedbackTopicSendNoti", data);
+      });
+    }
+  };
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
@@ -168,11 +247,7 @@ const ApproveTopicTable = (params: DataTableParams) => {
                         {params.isOnlyShowResponseTopicButton ? null : (
                           <IconButton
                             text="Duyệt đề tài"
-                            onClick={() => {
-                              if (handleInvalid()) {
-                                setIsShowDialog(1);
-                              }
-                            }}
+                            onClick={handleApprove}
                             iconWidth={16}
                             iconHeight={16}
                           />
@@ -181,11 +256,7 @@ const ApproveTopicTable = (params: DataTableParams) => {
                         <IconButton
                           text="Phản hồi đề tài"
                           green
-                          onClick={() => {
-                            if (handleInvalid()) {
-                              setIsShowDialog(2);
-                            }
-                          }}
+                          onClick={handleFeedback}
                           iconWidth={16}
                           iconHeight={16}
                         />
@@ -194,11 +265,7 @@ const ApproveTopicTable = (params: DataTableParams) => {
                           <IconButton
                             text="Từ chối đề tài"
                             red
-                            onClick={() => {
-                              if (handleInvalid()) {
-                                setIsShowDialog(3);
-                              }
-                            }}
+                            onClick={handleDecline}
                             iconWidth={16}
                             iconHeight={16}
                           />
